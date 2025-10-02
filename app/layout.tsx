@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { SessionProvider } from "next-auth/react"
+import { getServerSession } from "next-auth/next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { authOptions } from '@/lib/auth';
 import React from "react";
 import "./globals.css";
 
@@ -19,17 +20,19 @@ export const metadata: Metadata = {
   description: "A comprehensive collection of resources",
 };
 
-export default function Nav({
+export default async function Nav({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>
+        {/* <SessionProvider> */}
           {/* <nav> */}
           <div className="w-[1919px] px-40 py-3.5 left-[1px] top-0 absolute bg-white inline-flex justify-between items-center overflow-hidden">
             <div className="w-[1601px] flex justify-between items-center">
@@ -150,7 +153,7 @@ export default function Nav({
             <img className="w-28 h-10 left-[1507px] top-[38px] absolute" src="https://placehold.co/120x42" />
           </div>
           {/* </footer> */}
-        </SessionProvider>
+        {/* </SessionProvider> */}
       </body>
     </html>
   );
