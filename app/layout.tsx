@@ -5,7 +5,7 @@ import { authOptions } from '@/lib/auth';
 import { Analytics } from "@vercel/analytics/next"
 import React from "react";
 import "./globals.css";
-
+import Nav from '@/app/nav';
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,12 +18,9 @@ import { MenuIcon } from "lucide-react";
 
 import {
   BoltIcon,
-  BookOpenIcon,
   CircleUserRoundIcon,
   Layers2Icon,
   LogOutIcon,
-  PinIcon,
-  UserPenIcon,
 } from "lucide-react"
 
 import {
@@ -31,7 +28,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,7 +44,7 @@ export const metadata: Metadata = {
   description: "A comprehensive collection of resources",
 };
 
-export default async function Nav({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -81,23 +77,16 @@ export default async function Nav({
                   <DropdownMenuItem className="cursor-pointer" asChild><a href="/help">Help</a></DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <div className="px-2.5 py-1.5 rounded-md items-center flex-shrink-0 cursor-default">
+              <div className="px-2.5 py-1.5 rounded-md items-center flex-shrink-0 cursor-default hidden xl:block lg:block md:block sm:block">
                 <div className="text-xl font-medium text-black dark:text-white font-serif">Alternipedia</div>
               </div>
             </div>
-            <div data-property-1="Default" className="w-full max-w-2xl min-w-48 px-2.5 py-1.5 bg-gray-100 rounded-md flex justify-between items-center mx-4">
-              <div className="justify-start text-gray-400 text-base font-normal  leading-7">Search Alternipedia</div>
-              <div data-svg-wrapper data-property-1="Search" className="relative">
-                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.1706 14.7147H15.3699L15.0861 14.441C16.3024 13.022 16.9309 11.086 16.5862 9.0284C16.1098 6.21059 13.7583 3.96039 10.9202 3.61577C6.63266 3.08869 3.02424 6.69711 3.55131 10.9846C3.89594 13.8227 6.14613 16.1743 8.96394 16.6507C11.0216 16.9953 12.9575 16.3669 14.3766 15.1505L14.6502 15.4344V16.2351L18.9581 20.5429C19.3736 20.9585 20.0527 20.9585 20.4683 20.5429C20.8839 20.1273 20.8839 19.4482 20.4683 19.0326L16.1706 14.7147ZM10.089 14.7147C7.56518 14.7147 5.52784 12.6774 5.52784 10.1535C5.52784 7.62963 7.56518 5.59229 10.089 5.59229C12.6129 5.59229 14.6502 7.62963 14.6502 10.1535C14.6502 12.6774 12.6129 14.7147 10.089 14.7147Z" fill="#B0B6C1" />
-                </svg>
-              </div>
-            </div>
+            <Nav />
             <div className="flex justify-end items-center gap-2.5 shrink-0">
               <div data-property-1="Default" className="size- px-2.5 py-1.5 bg-yellow-400 rounded-md flex justify-start items-center gap-1.5">
                 <div className="size- flex justify-start items-center gap-1.5">
                   <div className="size- flex justify-start items-center gap-2.5">
-                    <div className="justify-start text-neutral-800 text-sm font-bold  leading-normal">Go PRO</div>
+                    <div className="justify-start text-neutral-800 text-sm font-bold leading-normal">Go PRO</div>
                   </div>
                 </div>
               </div>

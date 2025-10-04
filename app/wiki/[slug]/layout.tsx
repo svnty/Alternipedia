@@ -26,7 +26,7 @@ export default function Article({
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
       {/* LEFT SIDEBAR - Shows first on mobile, left side on desktop */}
-      <div className="w-full lg:w-64 lg:absolute lg:left-4 xl:left-8 2xl:left-40 lg:top-16 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden">
+      <div className="w-full lg:w-64 lg:absolute lg:left-4 xl:left-8 2xl:left-40 lg:top-9 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden">
         <div className="w-full lg:w-64 relative overflow-x-hidden">
           <Collapsible open={contentsOpen} onOpenChange={setContentsOpen}>
             <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
@@ -135,7 +135,7 @@ export default function Article({
       {/* END LEFT SIDEBAR */}
 
       {/* RIGHT SIDEBAR - Shows second on mobile, right side on desktop */}
-      <div data-property-1="Default" className="w-full lg:w-64 lg:absolute lg:right-4 xl:right-8 2xl:right-40 lg:top-16 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden">
+      <div data-property-1="Default" className="w-full lg:w-64 lg:absolute lg:right-4 xl:right-8 2xl:right-40 lg:top-9 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden">
         <div className="w-full lg:w-64 relative overflow-x-hidden">
           <Collapsible open={toolsOpen} onOpenChange={setToolsOpen}>
             <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
