@@ -27,8 +27,8 @@ export default function Article({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [toolsOpen, setToolsOpen] = useState<boolean>(false)
-  const [contentsOpen, setContentsOpen] = useState<boolean>(false)
+  const [toolsOpen, setToolsOpen] = useState<boolean>(false);
+  const [contentsOpen, setContentsOpen] = useState<boolean>(false);
   const [activeBias, setBias] = useState<string>("wiki");
 
   useEffect(() => {
@@ -36,11 +36,11 @@ export default function Article({
     let resizeTimer: NodeJS.Timeout;
     let previousWidth = window.innerWidth;
     
-    const checkScreenSize = () => {
+    const checkScreenSize = (isInitial = false) => {
       const currentWidth = window.innerWidth;
       
-      // Only update if width actually changed (not just height from mobile scrolling)
-      if (currentWidth !== previousWidth) {
+      // On initial load, always set the state. On resize, only update if width actually changed
+      if (isInitial || currentWidth !== previousWidth) {
         const isLargeScreen = currentWidth >= 1024; // lg breakpoint
         setToolsOpen(isLargeScreen);
         setContentsOpen(isLargeScreen);
@@ -51,10 +51,10 @@ export default function Article({
     const handleResize = () => {
       // Debounce resize events to avoid excessive updates
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(checkScreenSize, 150);
+      resizeTimer = setTimeout(() => checkScreenSize(false), 150);
     };
 
-    checkScreenSize();
+    checkScreenSize(true); // Initial load - always set state
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -66,7 +66,7 @@ export default function Article({
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
       {/* MAIN CONTENT - ToggleGroup shown first on mobile, positioned in center on desktop */}
-      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 pt-2 overflow-x-hidden">
+      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 pt-2 overflow-x-hidden sm:-mb-4 md:-mb-4">
 
         <div className="flex items-center justify-between pb-1">
           <span className="text-xl pl-2">Reading bias</span>
@@ -101,10 +101,10 @@ export default function Article({
           className="flex-col sm:flex-row"
         >
           <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="com">
-            Collectivist
+            Socialist
           </ToggleGroupItem>
           <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="liberal">
-            Progressive
+            Liberal
           </ToggleGroupItem>
           <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="wiki">
             Wikipedia
