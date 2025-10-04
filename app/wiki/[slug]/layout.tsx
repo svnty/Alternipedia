@@ -33,16 +33,34 @@ export default function Article({
 
   useEffect(() => {
     // Check if screen is large on mount and window resize
+    let resizeTimer: NodeJS.Timeout;
+    let previousWidth = window.innerWidth;
+    
     const checkScreenSize = () => {
-      const isLargeScreen = window.innerWidth >= 1024; // lg breakpoint
-      setToolsOpen(isLargeScreen);
-      setContentsOpen(isLargeScreen);
+      const currentWidth = window.innerWidth;
+      
+      // Only update if width actually changed (not just height from mobile scrolling)
+      if (currentWidth !== previousWidth) {
+        const isLargeScreen = currentWidth >= 1024; // lg breakpoint
+        setToolsOpen(isLargeScreen);
+        setContentsOpen(isLargeScreen);
+        previousWidth = currentWidth;
+      }
+    };
+
+    const handleResize = () => {
+      // Debounce resize events to avoid excessive updates
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(checkScreenSize, 150);
     };
 
     checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
+    window.addEventListener('resize', handleResize);
 
-    return () => window.removeEventListener('resize', checkScreenSize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
+    };
   }, []);
 
   return (
@@ -51,7 +69,7 @@ export default function Article({
       <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 pt-2 overflow-x-hidden">
 
         <div className="flex items-center justify-between pb-1">
-          <span className="text-xl pl-2">Bias</span>
+          <span className="text-xl pl-2">Reading bias</span>
           <span className="text-md pr-2 pointer-default cursor-context-menu">
             <TooltipProvider delayDuration={0}>
               <Tooltip persistOnClick={true}>
@@ -83,10 +101,10 @@ export default function Article({
           className="flex-col sm:flex-row"
         >
           <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="com">
-            Socialist
+            Collectivist
           </ToggleGroupItem>
           <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="liberal">
-            Liberal
+            Progressive
           </ToggleGroupItem>
           <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="wiki">
             Wikipedia
@@ -178,18 +196,6 @@ export default function Article({
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
                       <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
-                        <div data-svg-wrapper data-property-1="Globe" className="relative">
-                          <Earth className="text-gray-500" size={16} />
-                        </div>
-                        <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                          <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Translate</div>
-                        </div>
-                      </div>
-                      </a>
-                    </div>
-                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <a href="" className="hover:underline">
-                      <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Speech" className="relative">
                           <Speech className="text-gray-500" size={16} />
                         </div>
@@ -199,6 +205,23 @@ export default function Article({
                       </div>
                       </a>
                     </div>
+
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                      <a className="hover:underline cursor-not-allowed">
+                      <div className="size- flex justify-start items-center gap-1.5">
+                        <div data-svg-wrapper data-property-1="Map" className="relative">
+                          <Earth className="text-gray-500" size={16} />
+                        </div>
+                        <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                          <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Translate</div>
+                        </div>
+                      </div>
+                      </a>
+                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                        <div className="justify-center text-white text-xs font-bold ">PRO</div>
+                      </div>
+                    </div>
+
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
                       <a className="hover:underline cursor-not-allowed">
                       <div className="size- flex justify-start items-center gap-1.5">

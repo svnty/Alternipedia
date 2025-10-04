@@ -5,7 +5,7 @@ import { authOptions } from '@/lib/auth';
 import { Analytics } from "@vercel/analytics/next"
 import React from "react";
 import "./globals.css";
-import Nav from '@/app/nav';
+import Search from '@/app/search';
 import UserMenu from '@/app/user-menu';
 
 import { Button } from "@/components/ui/button"
@@ -18,6 +18,7 @@ import {
 import { MenuIcon, Palette } from "lucide-react";
 
 import Terms from "@/app/terms"
+import GoPro from "./go-pro";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -75,9 +76,9 @@ export default async function Layout({
                 <div className="text-xl font-medium text-black dark:text-white font-serif">Alternipedia</div>
               </div>
             </div>
-            <Nav />
+            <Search />
             <div className="flex justify-end items-center gap-2.5 shrink-0">
-              <Button className="bg-yellow-400 cursor-pointer hover:bg-yellow-500 text-black font-semibold">Go PRO</Button>
+              <GoPro />
               <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5">
                 <div className="size- flex justify-center items-center gap-1.5">
                   <UserMenu />
@@ -123,7 +124,6 @@ export default async function Layout({
                 {/* First Links Column */}
                 <div className="flex flex-col gap-1">
                   <div className="text-blue-400 text-sm font-normal leading-normal">Contact Alternimedia</div>
-                  <div className="text-blue-400 text-sm font-normal leading-normal">Privacy policy</div>
                   <div className="text-blue-400 text-sm font-normal leading-normal">Disclaimers</div>
                   <div className="text-blue-400 text-sm font-normal leading-normal">Code of Conduct</div>
                 </div>

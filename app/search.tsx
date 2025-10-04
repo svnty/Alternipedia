@@ -5,7 +5,7 @@ import { LoaderCircleIcon, MicIcon, SearchIcon } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 
-export default function Nav() {
+export default function Search() {
   const id = useId()
   const [inputValue, setInputValue] = useState("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
