@@ -21,6 +21,8 @@ model User {
 
   revisions       Revision[]
   addedCategories ArticleCategory[] // categories this user added
+  watching        ArticleWatcher[]  // articles this user watches
+  savedArticles   SavedArticle[]
 }
 
 model Account {
@@ -67,6 +69,8 @@ model Article {
   slug       String            @unique
   revisions  Revision[]
   categories ArticleCategory[] // explicit join model with metadata
+  watchers    ArticleWatcher[]   // who’s watching this article
+  savedBy     SavedArticle[] // who's saved this article
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @updatedAt
 }
@@ -134,3 +138,26 @@ model ArticleCategory {
   @@id([articleId, categoryId]) // composite primary key
 }
 
+// ===================
+// WATCHERS & SAVERS
+// ===================
+
+model ArticleWatcher {
+  article     Article @relation(fields: [articleId], references: [id])
+  articleId   Int
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String
+  watchedAt   DateTime @default(now())
+
+  @@id([articleId, userId])
+}
+
+model SavedArticle {
+  article     Article @relation(fields: [articleId], references: [id])
+  articleId   Int
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String
+  savedAt     DateTime @default(now())
+
+  @@id([articleId, userId])
+}

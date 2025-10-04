@@ -150,7 +150,8 @@ export default function Article({
                 <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
                   <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <div className="size- flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
+                        <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Language" className="relative">
                           <Languages className="text-gray-500" size={16} />
                         </div>
@@ -158,8 +159,10 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Language</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Globe" className="relative">
                           <Earth className="text-gray-500" size={16} />
@@ -168,8 +171,10 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Translate</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Speech" className="relative">
                           <Speech className="text-gray-500" size={16} />
@@ -178,8 +183,10 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Text to speech</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                      <a className="hover:underline cursor-not-allowed">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Map" className="relative">
                           <Waypoints className="text-gray-500" size={16} />
@@ -188,11 +195,13 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Topic map</div>
                         </div>
                       </div>
+                      </a>
                       <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
                         <div className="justify-center text-white text-xs font-bold ">PRO</div>
                       </div>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                      <a className="hover:underline cursor-not-allowed">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Notes" className="relative">
                           <NotebookPen className="text-gray-500" size={16} />
@@ -201,11 +210,13 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">My Notes</div>
                         </div>
                       </div>
+                      </a>
                       <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
                         <div className="justify-center text-white text-xs font-bold ">PRO</div>
                       </div>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                      <a className="hover:underline cursor-not-allowed">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="AI" className="relative">
                           <Bot className="text-gray-500" size={16} />
@@ -214,11 +225,13 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Ask WikiPal</div>
                         </div>
                       </div>
+                      </a>
                       <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
                         <div className="justify-center text-white text-xs font-bold ">PRO</div>
                       </div>
                     </div>
-                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">                      
+                      <a className="hover:underline cursor-not-allowed">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Watch" className="relative">
                           <Star className="text-gray-500" size={16} />
@@ -226,12 +239,14 @@ export default function Article({
                         <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Watch changes</div>
                         </div>
+                      </div>
+                      </a>
                         <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
                           <div className="justify-center text-white text-xs font-bold ">PRO</div>
                         </div>
-                      </div>
                     </div>
                     <div data-property-1="Default" className="size- inline-flex justify-start items-start overflow-x-hidden">
+                      <a href="" className="hover:underline">
                       <div data-property-1="Default" className="w-full max-w-64 self-stretch p-1.5 rounded-md flex justify-start items-center gap-1.5 overflow-x-hidden">
                         <div className="size- flex justify-start items-center gap-1.5">
                           <div data-svg-wrapper data-property-1="Save" className="relative">
@@ -242,8 +257,10 @@ export default function Article({
                           </div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Short link" className="relative">
                           <Link className="text-gray-500" size={16} />
@@ -252,8 +269,10 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Short link</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Cite" className="relative">
                           <Quote className="text-gray-500" size={16} />
@@ -262,8 +281,10 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Cite this page</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="QR" className="relative">
                           <QrCode className="text-gray-500" size={16} />
@@ -272,8 +293,10 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">QR Code</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Download" className="relative">
                           <Download className="text-gray-500" size={16} />
@@ -282,8 +305,10 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Download PDF</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Print" className="relative">
                           <Printer className="text-gray-500" size={16} />
@@ -292,8 +317,10 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Printable version</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
                       <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Info" className="relative">
                           <Info className="text-gray-500" size={16} />
@@ -302,6 +329,7 @@ export default function Article({
                           <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Page information</div>
                         </div>
                       </div>
+                      </a>
                     </div>
                   </div>
                 </CollapsibleContent>

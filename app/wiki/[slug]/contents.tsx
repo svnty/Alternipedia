@@ -1,10 +1,6 @@
 "use client"
 
 import React from "react"
-import { hotkeysCoreFeature, syncDataLoaderFeature } from "@headless-tree/core"
-import { useTree } from "@headless-tree/react"
-
-import { Tree, TreeItem, TreeItemLabel } from "@/components/ui/tree"
 
 interface Item {
   name: string
@@ -42,41 +38,43 @@ const items: Record<string, Item> = {
 }
 
 const indent = 20
+
 interface ContentsProps {
   contents: any[];
 }
 
-export default function Contents({ contents }: ContentsProps) {
-  const tree = useTree<Item>({
-    initialState: {
-      expandedItems: ["engineering", "frontend", "design-system"],
-    },
-    indent,
-    rootItemId: "company",
-    getItemName: (item) => item.getItemData().name,
-    isItemFolder: (item) => (item.getItemData()?.children?.length ?? 0) > 0,
-    dataLoader: {
-      getItem: (itemId) => items[itemId],
-      getChildren: (itemId) => items[itemId].children ?? [],
-    },
-    features: [syncDataLoaderFeature, hotkeysCoreFeature],
-  })
+function StaticTreeItem({ itemId, level = 0 }: { itemId: string; level?: number }) {
+  const item = items[itemId]
+  if (!item) return null
+
+  const hasChildren = item.children && item.children.length > 0
+  const paddingLeft = level * indent
 
   return (
-    <div className="flex h-full flex-col gap-2 *:first:grow">
-      <Tree
-        className="relative before:absolute before:inset-0 before:-ms-1 before:bg-[repeating-linear-gradient(to_right,transparent_0,transparent_calc(var(--tree-indent)-1px),var(--border)_calc(var(--tree-indent)-1px),var(--border)_calc(var(--tree-indent)))]"
-        indent={indent}
-        tree={tree}
+    <div>
+      <div 
+        className="flex items-center px-2 py-1.5 text-sm"
+        style={{ paddingLeft: `${paddingLeft + 8}px` }}
       >
-        {tree.getItems().map((item) => {
-          return (
-            <TreeItem key={item.getId()} item={item}>
-              <TreeItemLabel className="before:bg-background relative before:absolute before:inset-x-0 before:-inset-y-0.5 before:-z-10" />
-            </TreeItem>
-          )
-        })}
-      </Tree>
+        <span className="hover:underline"><a href={`#${item.name}`}>{item.name}</a></span>
+      </div>
+      {hasChildren && (
+        <div>
+          {item.children!.map((childId) => (
+            <StaticTreeItem key={childId} itemId={childId} level={level + 1} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default function Contents({ contents }: ContentsProps) {
+  return (
+    <div className="flex h-full flex-col gap-2">
+      <div className="relative">
+        <StaticTreeItem itemId="company" />
+      </div>
     </div>
   )
 }
