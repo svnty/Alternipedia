@@ -28,7 +28,7 @@ function ToggleGroup({
       data-variant={variant}
       data-size={size}
       className={cn(
-        "group/toggle-group flex items-center rounded-md data-[variant=outline]:shadow-xs",
+        "group/toggle-group flex items-center",
         className
       )}
       {...props}
@@ -60,7 +60,19 @@ function ToggleGroupItem({
           variant: context.variant || variant,
           size: context.size || size,
         }),
-        "min-w-0 shrink-0 rounded-none shadow-none first:rounded-l-md last:rounded-r-md focus:z-10 focus-visible:z-10 data-[variant=outline]:border-l-0 data-[variant=outline]:first:border-l",
+        "min-w-0 shrink-0 rounded-none shadow-none",
+        // Horizontal layout (sm and up) - remove left border except for first element
+        "sm:data-[variant=outline]:border-l-0 sm:data-[variant=outline]:first:border-l",
+        // Small screen - simpler approach with separate classes
+        "max-sm:[&[data-variant=outline]:not(:first-child)]:border-l",
+        "max-sm:[&[data-variant=outline]:not(:first-child)]:[border-top-width:0!important]",
+        // Small screen - rounded corners for first and last elements
+        "max-sm:first:rounded-t-lg max-sm:last:rounded-b-lg",
+
+        // Rounded corners for first and last elements on sm and up (horizontal mode)
+        "sm:first:rounded-l-md sm:last:rounded-r-md",
+        "sm:not(:first-child):not(:last-child):rounded-none",
+        "focus:z-10 focus-visible:z-10",
         className
       )}
       {...props}

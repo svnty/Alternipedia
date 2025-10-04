@@ -58,6 +58,10 @@ export default async function Layout({
       >
         <Analytics />
         {/* <nav> */}
+        <div className="cursor-default text-center block md:hidden lg:hidden xl:hidden pt-3.5">
+          <div className="text-xl font-medium text-black dark:text-white font-serif">Alternipedia</div>
+        </div>
+
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-16 xl:px-40 py-3.5 bg-white flex justify-between items-center">
           <div className="w-full flex justify-between items-center">
             <div className="flex justify-start items-center gap-3 sm:gap-5 min-w-0 shrink-0">
@@ -77,7 +81,7 @@ export default async function Layout({
                   <DropdownMenuItem className="cursor-pointer" asChild><a href="/help">Help</a></DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <div className="px-2.5 py-1.5 rounded-md items-center flex-shrink-0 cursor-default hidden xl:block lg:block md:block sm:block">
+              <div className="px-2.5 py-1.5 rounded-md items-center flex-shrink-0 cursor-default hidden lg:block md:block">
                 <div className="text-xl font-medium text-black dark:text-white font-serif">Alternipedia</div>
               </div>
             </div>
