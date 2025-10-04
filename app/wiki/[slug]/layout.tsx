@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import {
   Collapsible,
@@ -13,6 +13,7 @@ import {
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 import { Bookmark, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints } from "lucide-react";
+import { SlidingLanguage } from "@/app/sliding-language";
 import {
   Tooltip,
   TooltipContent,
@@ -21,15 +22,28 @@ import {
 } from "@/components/ui/tooltip"
 import Contents from "@/app/wiki/[slug]/contents";
 
-
 export default function Article({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [toolsOpen, setToolsOpen] = useState<boolean>(true)
-  const [contentsOpen, setContentsOpen] = useState<boolean>(true)
+  const [toolsOpen, setToolsOpen] = useState<boolean>(false)
+  const [contentsOpen, setContentsOpen] = useState<boolean>(false)
   const [activeBias, setBias] = useState<string>("wiki");
+
+  useEffect(() => {
+    // Check if screen is large on mount and window resize
+    const checkScreenSize = () => {
+      const isLargeScreen = window.innerWidth >= 1024; // lg breakpoint
+      setToolsOpen(isLargeScreen);
+      setContentsOpen(isLargeScreen);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
@@ -150,16 +164,16 @@ export default function Article({
                 <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
                   <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <a href="" className="hover:underline">
                         <div className="size- flex justify-start items-center gap-1.5">
                         <div data-svg-wrapper data-property-1="Language" className="relative">
                           <Languages className="text-gray-500" size={16} />
                         </div>
                         <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                          <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">Language</div>
+                          <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">
+                            <SlidingLanguage />
+                          </div>
                         </div>
                       </div>
-                      </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
                       <a href="" className="hover:underline">

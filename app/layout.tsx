@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import React from "react";
 import "./globals.css";
 import Nav from '@/app/nav';
+import UserMenu from '@/app/user-menu';
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,20 +15,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { BookMarked, BookOpenText, KeyRound, MenuIcon, Palette, Settings, UserPlus } from "lucide-react";
+import { MenuIcon, Palette } from "lucide-react";
 
-import {
-  BoltIcon,
-  CircleUserRoundIcon,
-  Layers2Icon,
-  LogOutIcon,
-} from "lucide-react"
-
-import {
-  DropdownMenuGroup,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
+import Terms from "@/app/terms"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,67 +80,7 @@ export default async function Layout({
               <Button className="bg-yellow-400 cursor-pointer hover:bg-yellow-500 text-black font-semibold">Go PRO</Button>
               <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5">
                 <div className="size- flex justify-center items-center gap-1.5">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild
-                      className="px-4 py-2 rounded-md bg-white hover:bg-gray-100 data-[state=open]:bg-gray-200 transition-all">
-                      <Button size="icon"
-                        aria-label="Open account menu"
-                        variant="ghost"
-                        className="shadow-none cursor-pointer">
-                        <CircleUserRoundIcon size={16} aria-hidden="true" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="max-w-64">
-                      <DropdownMenuLabel className="flex items-start gap-3">
-                        <img
-                          src="avatar.jpg"
-                          alt="Avatar"
-                          width={32}
-                          height={32}
-                          className="shrink-0 rounded-full"
-                        />
-                        <div className="flex min-w-0 flex-col">
-                          <span className="text-foreground truncate text-sm font-medium">
-                            Keith Kennedy
-                          </span>
-                          <span className="text-muted-foreground truncate text-xs font-normal">
-                            k.kennedy@originui.com
-                          </span>
-                        </div>
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                          <KeyRound size={16} className="opacity-60" aria-hidden="true" />
-                          <span>Login</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <UserPlus size={16} className="opacity-60" aria-hidden="true" />
-                          <span>Create account</span>
-                        </DropdownMenuItem>
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                          <BookMarked size={16} className="opacity-60" aria-hidden="true" />
-                          <span>Saved Articles</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <BookOpenText size={16} className="opacity-60" aria-hidden="true" />
-                          <span>Contributions</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Settings size={16} className="opacity-60" aria-hidden="true" />
-                          <span>Preferences</span>
-                        </DropdownMenuItem>
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
-                        <span>Logout</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <UserMenu />
                 </div>
               </div>
               <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5 hidden lg:block md:block">
@@ -179,9 +109,9 @@ export default async function Layout({
               <div className="w-full md:w-[70%]">
                 <p className="text-neutral-800 text-sm font-normal leading-normal">
                   <span>Text is available under the </span>
-                  <span className="text-blue-400"><a href="license" className="hover:underline">Creative Commons Attribution-ShareAlike License 4.0</a></span>
+                  <span className="text-blue-400"><a href="/license" className="hover:underline">Creative Commons Attribution-ShareAlike License 4.0</a></span>
                   <span>; additional terms may apply. By using this site, you agree to the </span>
-                  <span className="text-blue-400">Terms of Use</span>
+                  <Terms />
                   <span> and </span>
                   <span className="text-blue-400">Privacy Policy</span>
                   <span>. Alternipedia is an open-source non-for-profit project.</span>

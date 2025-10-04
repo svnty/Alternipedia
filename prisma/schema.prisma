@@ -10,6 +10,17 @@ datasource db {
 // =======================
 // User + Auth Models
 // =======================
+enum UserRole {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum SubscriptionTier {
+  FREE
+  PRO
+}
+
 model User {
   id              String            @id @default(cuid())
   name            String?
@@ -18,12 +29,36 @@ model User {
   image           String?
   accounts        Account[]
   sessions        Session[]
+  role            UserRole          @default(USER)
 
   revisions       Revision[]
   addedCategories ArticleCategory[] // categories this user added
   watching        ArticleWatcher[]  // articles this user watches
   savedArticles   SavedArticle[]
+
+  biasBans        BiasBan[]         // 🚫 bans received
+  issuedBans      BiasBan[]         @relation("BiasBanModerator") // 🧑‍⚖️ bans given (mods)
+
+  subscriptionTier      SubscriptionTier @default(FREE)
+  subscriptionStartedAt DateTime?
+  subscriptionExpiresAt DateTime?
+  stripeCustomerId      String?
 }
+
+// TODO: Stripe integration for subscriptions
+/*
+model Subscription {
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  stripeSubId  String   @unique
+  plan         SubscriptionTier
+  status       String
+  currentPeriodEnd DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+*/
 
 model Account {
   id                String  @id @default(cuid())
@@ -61,6 +96,24 @@ model Bias {
   id        Int        @id @default(autoincrement())
   name      String     @unique
   revisions Revision[]
+  bans      BiasBan[]
+}
+
+// TODO: Temporary bans?
+// TODO: Warning strikes?
+model BiasBan {
+  id           Int       @id @default(autoincrement())
+  user         User      @relation(fields: [userId], references: [id])
+  userId       String
+  bias         Bias      @relation(fields: [biasId], references: [id])
+  biasId       Int
+  bannedBy     User?     @relation("BiasBanModerator", fields: [bannedByUserId], references: [id])
+  bannedByUserId String?
+  reason       String?
+  createdAt    DateTime  @default(now())
+  expiresAt    DateTime?
+
+  @@unique([userId, biasId]) // prevent duplicate bans per bias
 }
 
 model Article {
