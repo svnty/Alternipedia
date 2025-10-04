@@ -19,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import Contents from "@/app/wiki/[slug]/contents";
 
 
 export default function Article({
@@ -33,7 +34,7 @@ export default function Article({
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
       {/* MAIN CONTENT - ToggleGroup shown first on mobile, positioned in center on desktop */}
-      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden">
+      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 pt-2 overflow-x-hidden">
 
         <div className="flex items-center justify-between pb-1">
           <span className="text-xl pl-2">Bias</span>
@@ -41,9 +42,11 @@ export default function Article({
             <TooltipProvider delayDuration={0}>
               <Tooltip persistOnClick={true}>
                 <TooltipTrigger asChild>
-                  <div>?</div>
+                  <div className="p-1 cursor-help inline-flex items-center justify-center">
+                    <span>?</span>
+                  </div>
                 </TooltipTrigger>
-                <TooltipContent className="px-2 py-1 text-xs" side="left">
+                <TooltipContent className="px-2 py-1 text-xs" side="left" withBackdrop={true} collisionPadding={16}>
                   <div className="space-y-1">
                     <p className="text-[13px] font-medium">Political bias</p>
                     <p className="text-muted-foreground text-xs">
@@ -85,7 +88,7 @@ export default function Article({
       </div>
 
       {/* LEFT SIDEBAR - Shows after ToggleGroup on mobile, left side on desktop */}
-      <div className="w-full lg:w-64 lg:absolute lg:left-4 xl:left-8 2xl:left-40 lg:top-9 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden">
+      <div className="w-full lg:w-64 lg:absolute lg:left-4 xl:left-8 2xl:left-40 lg:top-9 px-4 lg:px-0 overflow-y-auto overflow-x-hidden">
         <div className="w-full lg:w-64 relative overflow-x-hidden">
           <Collapsible open={contentsOpen} onOpenChange={setContentsOpen}>
             <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
@@ -109,82 +112,9 @@ export default function Article({
                   <div className="absolute top-9 left-0 w-full h-0.5 bg-gray-300" />
                 </div>
                 <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
-                  <div className="self-stretch flex flex-col justify-start items-end gap-2.5">
-                    <div className="self-stretch inline-flex justify-between items-start">
-                      <div className="justify-start text-blue-400 text-sm font-normal  leading-normal">Extant Carnivora species</div>
-                      <div data-svg-wrapper data-property-1="Arrow Down" className="relative">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M8.47003 9.25109L11.8007 12.5817L15.1313 9.25109C15.4661 8.9163 16.0069 8.9163 16.3417 9.25109C16.6765 9.58587 16.6765 10.1267 16.3417 10.4614L12.4016 14.4016C12.0668 14.7363 11.526 14.7363 11.1912 14.4016L7.25109 10.4614C6.9163 10.1267 6.9163 9.58587 7.25109 9.25109C7.58587 8.92489 8.13525 8.9163 8.47003 9.25109Z" fill="#636C7E" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="w-56 inline-flex justify-between items-start">
-                      <div className="justify-start text-neutral-800 text-sm font-bold  leading-normal">Cats</div>
-                      <div data-svg-wrapper data-property-1="Arrow Down" className="relative">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M8.47003 9.25109L11.8007 12.5817L15.1313 9.25109C15.4661 8.9163 16.0069 8.9163 16.3417 9.25109C16.6765 9.58587 16.6765 10.1267 16.3417 10.4614L12.4016 14.4016C12.0668 14.7363 11.526 14.7363 11.1912 14.4016L7.25109 10.4614C6.9163 10.1267 6.9163 9.58587 7.25109 9.25109C7.58587 8.92489 8.13525 8.9163 8.47003 9.25109Z" fill="#636C7E" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="w-52 inline-flex justify-between items-start">
-                      <div className="justify-start text-blue-400 text-sm font-normal  leading-normal">Breeds</div>
-                      <div data-svg-wrapper data-property-1="Arrow Down" className="relative">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M8.47003 9.25109L11.8007 12.5817L15.1313 9.25109C15.4661 8.9163 16.0069 8.9163 16.3417 9.25109C16.6765 9.58587 16.6765 10.1267 16.3417 10.4614L12.4016 14.4016C12.0668 14.7363 11.526 14.7363 11.1912 14.4016L7.25109 10.4614C6.9163 10.1267 6.9163 9.58587 7.25109 9.25109C7.58587 8.92489 8.13525 8.9163 8.47003 9.25109Z" fill="#636C7E" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="w-48 inline-flex justify-between items-start">
-                      <div className="flex-1 justify-start text-blue-400 text-sm font-normal  leading-normal">American curl</div>
-                      <div data-property-1="Arrow Down" className="size-6 relative opacity-0 overflow-hidden">
-                        <div className="w-2.5 h-1.5 left-[7px] top-[9px] absolute bg-neutral-800" />
-                      </div>
-                    </div>
-                    <div className="w-48 inline-flex justify-between items-start">
-                      <div className="flex-1 justify-start text-blue-400 text-sm font-normal  leading-normal">Sphynx</div>
-                      <div data-property-1="Arrow Down" className="size-6 relative opacity-0 overflow-hidden">
-                        <div className="w-2.5 h-1.5 left-[7px] top-[9px] absolute bg-blue-400" />
-                      </div>
-                    </div>
-                    <div className="w-48 inline-flex justify-between items-start">
-                      <div className="flex-1 justify-start text-blue-400 text-sm font-normal  leading-normal">German Rex</div>
-                      <div data-property-1="Arrow Down" className="size-6 relative opacity-0 overflow-hidden">
-                        <div className="w-2.5 h-1.5 left-[7px] top-[9px] absolute bg-blue-400" />
-                      </div>
-                    </div>
-                    <div className="w-52 inline-flex justify-between items-start">
-                      <div className="justify-start text-blue-400 text-sm font-normal  leading-normal">Felinology</div>
-                      <div data-svg-wrapper data-property-1="Arrow Down" className="relative">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M8.47003 9.25109L11.8007 12.5817L15.1313 9.25109C15.4661 8.9163 16.0069 8.9163 16.3417 9.25109C16.6765 9.58587 16.6765 10.1267 16.3417 10.4614L12.4016 14.4016C12.0668 14.7363 11.526 14.7363 11.1912 14.4016L7.25109 10.4614C6.9163 10.1267 6.9163 9.58587 7.25109 9.25109C7.58587 8.92489 8.13525 8.9163 8.47003 9.25109Z" fill="#636C7E" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="w-48 inline-flex justify-between items-start">
-                      <div className="justify-start text-blue-400 text-sm font-normal  leading-normal">Anatomy</div>
-                      <div data-property-1="Arrow Down" className="size-6 relative opacity-0 overflow-hidden">
-                        <div className="w-2.5 h-1.5 left-[7px] top-[9px] absolute bg-neutral-800" />
-                      </div>
-                    </div>
-                    <div className="w-48 inline-flex justify-between items-start">
-                      <div className="flex-1 justify-start text-blue-400 text-sm font-normal  leading-normal">Genetics</div>
-                      <div data-property-1="Arrow Down" className="size-6 relative opacity-0 overflow-hidden">
-                        <div className="w-2.5 h-1.5 left-[7px] top-[9px] absolute bg-blue-400" />
-                      </div>
-                    </div>
-                    <div className="w-48 inline-flex justify-between items-start">
-                      <div className="flex-1 justify-start text-blue-400 text-sm font-normal  leading-normal">Kitten</div>
-                      <div data-property-1="Arrow Down" className="size-6 relative opacity-0 overflow-hidden">
-                        <div className="w-2.5 h-1.5 left-[7px] top-[9px] absolute bg-blue-400" />
-                      </div>
-                    </div>
-                    <div className="w-48 inline-flex justify-between items-start">
-                      <div className="flex-1 justify-start text-blue-400 text-sm font-normal  leading-normal">Calico cat</div>
-                      <div data-property-1="Arrow Down" className="size-6 relative opacity-0 overflow-hidden">
-                        <div className="w-2.5 h-1.5 left-[7px] top-[9px] absolute bg-blue-400" />
-                      </div>
-                    </div>
-                  </div>
+
+                  <Contents contents={[]} />
+
                 </CollapsibleContent>
               </div>
             </div>

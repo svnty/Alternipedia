@@ -13,6 +13,7 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
     "@headless-tree/core": "^1.5.0",
+    "@headless-tree/react": "^1.5.0",
     "@origin-space/image-cropper": "^0.1.9",
     "@prisma/client": "^6.16.3",
     "@types/prop-types": "^15.7.15",

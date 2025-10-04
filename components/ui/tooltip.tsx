@@ -130,6 +130,46 @@ function TooltipContent({
 }) {
   const { setIsOpen, setIsPersistent, closeTimeoutRef } = React.useContext(TooltipContext)
 
+  if (withBackdrop) {
+    return (
+      <TooltipPrimitive.Portal>
+        <div>
+          <div 
+            className="fixed inset-0 bg-black/10 z-40 animate-in fade-in-0 duration-200 pointer-events-none"
+          />
+          <TooltipPrimitive.Content
+            data-slot="tooltip-content"
+            sideOffset={sideOffset}
+            className={cn(
+              "bg-popover text-popover-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative max-w-70 rounded-md border px-3 py-1.5 text-sm shadow-lg z-50",
+              className
+            )}
+            onMouseEnter={() => {
+              // Clear any pending close timeout from trigger mouse leave
+              if (closeTimeoutRef.current) {
+                clearTimeout(closeTimeoutRef.current)
+                closeTimeoutRef.current = null
+              }
+              setIsPersistent(true)
+              setIsOpen(true)
+            }}
+            onMouseLeave={() => {
+              // Close when leaving tooltip content, even with backdrop
+              setIsPersistent(false)
+              setIsOpen(false)
+            }}
+            {...props}
+          >
+            {children}
+            {showArrow && (
+              <TooltipPrimitive.Arrow className="fill-popover -my-px drop-shadow-[0_1px_0_var(--border)]" />
+            )}
+          </TooltipPrimitive.Content>
+        </div>
+      </TooltipPrimitive.Portal>
+    )
+  }
+
   return (
     <TooltipPrimitive.Portal>
       <TooltipPrimitive.Content
@@ -149,23 +189,11 @@ function TooltipContent({
           setIsOpen(true)
         }}
         onMouseLeave={() => {
-          if (!withBackdrop) {
-            setIsPersistent(false)
-            setIsOpen(false)
-          }
+          setIsPersistent(false)
+          setIsOpen(false)
         }}
         {...props}
       >
-        {withBackdrop && (
-          <div 
-            className="fixed inset-0 bg-black/10 backdrop-blur-[0.5px] z-[-1] animate-in fade-in-0 duration-200"
-            onMouseLeave={() => {
-              // Close when leaving backdrop area
-              setIsPersistent(false)
-              setIsOpen(false)
-            }}
-          />
-        )}
         {children}
         {showArrow && (
           <TooltipPrimitive.Arrow className="fill-popover -my-px drop-shadow-[0_1px_0_var(--border)]" />
