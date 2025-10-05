@@ -25,6 +25,8 @@ import {
   BookMarked,
   BookOpenText,
   Settings,
+  MessageSquarePlus,
+  Earth,
 } from "lucide-react"
 import {
   RiFacebookFill,
@@ -33,8 +35,9 @@ import {
   RiTwitterXFill,
 } from "@remixicon/react";
 import Terms from "@/app/[lang]/terms";
+import type { Locale } from '@/lib/i18n/config';
 
-export default function UserMenu() {
+export default function UserMenu({ lang }: { lang: Locale }) {
   const id = useId()
 
   return (
@@ -70,7 +73,7 @@ export default function UserMenu() {
         <DropdownMenuGroup>
           <Dialog>
             <DialogTrigger asChild>
-              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer">
                 <KeyRound size={16} className="opacity-60" aria-hidden="true" />
                 <span>Login</span>
               </DropdownMenuItem>
@@ -83,16 +86,7 @@ export default function UserMenu() {
                   className="flex size-11 shrink-0 items-center justify-center rounded-full border"
                   aria-hidden="true"
                 >
-                  <svg
-                    className="stroke-zinc-800 dark:stroke-zinc-100"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 32 32"
-                    aria-hidden="true"
-                  >
-                    <circle cx="16" cy="16" r="12" fill="none" strokeWidth="8" />
-                  </svg>
+                  <Earth size={52} />
                 </div>
 
 
@@ -123,40 +117,32 @@ export default function UserMenu() {
                   </span>
                   Login with Facebook
                 </Button>
-                <Button className="bg-[#333333] text-white after:flex-1 hover:bg-[#333333]/90 cursor-pointer">
-                  <span className="pointer-events-none me-2 flex-1">
-                    <RiGithubFill className="opacity-60" size={16} aria-hidden="true" />
-                  </span>
-                  Login with GitHub
-                </Button>
               </div>
 
 
               <p className="text-muted-foreground text-center text-xs">
-                By signing in you agree to our{" "}
-                <Terms />
-                .
+                By signing in you agree to our Terms of Service and Privacy Policy.
               </p>
             </DialogContent>
           </Dialog>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
             <BookMarked size={16} className="opacity-60" aria-hidden="true" />
             <span>Saved Articles</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BookOpenText size={16} className="opacity-60" aria-hidden="true" />
+          <DropdownMenuItem className="cursor-pointer">
+            <MessageSquarePlus size={16} className="opacity-60" aria-hidden="true" />
             <span>Contributions</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
             <Settings size={16} className="opacity-60" aria-hidden="true" />
             <span>Preferences</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
           <span>Logout</span>
         </DropdownMenuItem>

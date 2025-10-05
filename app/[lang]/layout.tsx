@@ -14,13 +14,19 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import Search from '@/app/[lang]/search';
 import UserMenu from '@/app/[lang]/user-menu';
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { MenuIcon, Palette } from "lucide-react";
 
 import Terms from "@/app/[lang]/terms"
@@ -36,10 +42,10 @@ export default async function Layout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ lang: string }>;  
+  params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
-  
+
   // Validate if the language is supported
   if (!isValidLocale(lang)) {
     notFound();
@@ -81,10 +87,10 @@ export default async function Layout({
           </div>
           <Search />
           <div className="flex justify-end items-center gap-2.5 shrink-0">
-            <GoPro params={{lang}} />
+            <GoPro params={{ lang }} />
             <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5">
               <div className="size- flex justify-center items-center gap-1.5">
-                <UserMenu />
+                <UserMenu lang={lang as Locale} />
               </div>
             </div>
             <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5 hidden lg:block md:block">
@@ -115,7 +121,7 @@ export default async function Layout({
                 <span>{dict.footer.text.part1}</span>
                 <span className="text-blue-400"><Link href={`/${lang}/license`} className="hover:underline">{dict.footer.text.part2}</Link></span>
                 <span>{dict.footer.text.part3}</span>
-                <Terms text={dict.footer.text.part4}/>
+                <Terms text={dict.footer.text.part4} lang={lang as Locale} />
                 <span>{dict.footer.text.part5}</span>
                 <span className="text-blue-400">{dict.footer.text.part6}</span>
                 <span>{dict.footer.text.part7}</span>
@@ -126,16 +132,25 @@ export default async function Layout({
             <div className="w-full md:w-[30%] flex flex-row gap-8 justify-center md:justify-start">
               {/* First Links Column */}
               <div className="flex flex-col gap-1">
-                <div className="text-blue-400 text-sm font-normal leading-normal">{dict.footer.contact}</div>
-                <div className="text-blue-400 text-sm font-normal leading-normal">{dict.footer.disclaimers}</div>
-                <div className="text-blue-400 text-sm font-normal leading-normal">{dict.footer.codeOfConduct}</div>
+                <TooltipProvider delayDuration={0}>
+                  <Tooltip>
+                    <TooltipTrigger className="text-blue-400 text-sm font-normal leading-normal cursor-not-allowed w-fit">
+                      {dict.footer.contact}
+                    </TooltipTrigger>
+                    <TooltipContent className="px-2 py-1 text-xs" side="top" withBackdrop={true}>
+                      {dict.footer.pleaseLogin}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.disclaimers}</Link>
+                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.codeOfConduct}</Link>
               </div>
 
               {/* Second Links Column */}
               <div className="flex flex-col gap-1">
-                <div className="text-blue-400 text-sm font-normal leading-normal"><a href="https://github.com/svnty/Alternipedia" target="_blank" className="hover:underline">{dict.footer.developers}</a></div>
-                <div className="text-blue-400 text-sm font-normal leading-normal">{dict.footer.statistics}</div>
-                <div className="text-blue-400 text-sm font-normal leading-normal">{dict.footer.cookieStatement}</div>
+                <a href="https://github.com/svnty/Alternipedia" target="_blank" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.developers}</a>
+                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.statistics}</Link>
+                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.cookieStatement}</Link>
               </div>
             </div>
           </div>

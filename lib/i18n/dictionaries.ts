@@ -27,6 +27,7 @@ export type Dictionary = {
     help: string;
   };
   footer: {
+    pleaseLogin: string;
     text: {
       part1: string;
       part2: string;
@@ -46,6 +47,11 @@ export type Dictionary = {
     cookieStatement: string;
     developers: string;
   };
+  termsOfService: [
+    ...{ title: string; content: string[] }[]
+  ];
+  termsAndConditions: string;
+  close: string;
   notFound: {
     title: string;
     heading: string;
@@ -146,6 +152,24 @@ const en: Dictionary = {
     description: "Select your preferred language for viewing this article.",
     notFound: "No languages found matching"
   },
+  termsOfService: [
+    { title: 'Acceptance of Terms', content: ["By accessing and using this website, users agree to comply with and be bound by these Terms of Service. Users who do not agree with these terms should discontinue use of the website immediately."] },
+    { title: 'User Account Responsibilities', content: ["Users are responsible for maintaining the confidentiality of their account credentials. Any activities occurring under a user‘s account are the sole responsibility of the account holder. Users must notify the website administrators immediately of any unauthorized account access."] },
+    { title: 'Limitation of Liability', content: ['The website provides content “as is“ without any warranties. The website owners shall not be liable for direct, indirect, incidental, consequential, or punitive damages arising from user interactions with the platform.'] },
+    {
+      title: 'User Conduct Guidelines', content: [
+        'Not upload harmful or malicious content which could harm the website or its users.',
+        'Respect the rights of other users.',
+        'Avoid activities that could disrupt website functionality.',
+        'Comply with applicable local and international laws.',
+      ]
+    },
+    { title: 'Modifications to Terms', content: ['The website reserves the right to modify these terms at any time. Continued use of the website after changes constitutes acceptance of the new terms.'] },
+    { title: 'Termination Clause', content: ['The website may terminate or suspend user access without prior notice for violations of these terms or for any other reason deemed appropriate by the administration.'] },
+    { title: 'Governing Law', content: ['These terms are governed by the laws of the jurisdiction where the website is primarily operated, without regard to conflict of law principles.'] },
+  ],
+  termsAndConditions: 'Terms & Conditions',
+  close: 'Close',
   bias: {
     heading: "What is a bias?",
     explanation: "A bias is a tendency to support or favor a particular political view, party, or idea. It can shape how a person interprets events, selects information, and presents ideas. When an author has a political bias, it may influence their perspective by affecting which facts they emphasize, how they describe people or issues, and the conclusions they draw. As a result, their writing might reflect their personal beliefs rather than a completely neutral or balanced viewpoint.",
@@ -180,6 +204,7 @@ const en: Dictionary = {
     help: 'Help',
   },
   footer: {
+    pleaseLogin: 'Please log in to use this feature.',
     text: {
       part1: 'Text is available under the ',
       part2: 'Creative Commons Attribution-ShareAlike License 4.0',
@@ -268,6 +293,24 @@ const es: Dictionary = {
     description: "Seleccione su idioma preferido para ver este artículo.",
     notFound: "No se encontraron idiomas que coincidan con"
   },
+  termsOfService: [
+    { title: 'Aceptación de los Términos', content: ["Al acceder y usar este sitio web, los usuarios aceptan cumplir y estar sujetos a estos Términos de Servicio. Los usuarios que no estén de acuerdo con estos términos deben descontinuar el uso del sitio web inmediatamente."] },
+    { title: 'Responsabilidades de la Cuenta de Usuario', content: ["Los usuarios son responsables de mantener la confidencialidad de sus credenciales de cuenta. Cualquier actividad que ocurra bajo la cuenta de un usuario es responsabilidad exclusiva del titular de la cuenta. Los usuarios deben notificar inmediatamente a los administradores del sitio web de cualquier acceso no autorizado a la cuenta."] },
+    { title: 'Limitación de Responsabilidad', content: ['El sitio web proporciona contenido "tal como está" sin ninguna garantía. Los propietarios del sitio web no serán responsables por daños directos, indirectos, incidentales, consecuentes o punitivos que surjan de las interacciones del usuario con la plataforma.'] },
+    {
+      title: 'Directrices de Conducta del Usuario', content: [
+        'No subir contenido dañino o malicioso que pueda dañar el sitio web o sus usuarios.',
+        'Respetar los derechos de otros usuarios.',
+        'Evitar actividades que puedan interrumpir la funcionalidad del sitio web.',
+        'Cumplir con las leyes locales e internacionales aplicables.',
+      ]
+    },
+    { title: 'Modificaciones a los Términos', content: ['El sitio web se reserva el derecho de modificar estos términos en cualquier momento. El uso continuado del sitio web después de los cambios constituye aceptación de los nuevos términos.'] },
+    { title: 'Cláusula de Terminación', content: ['El sitio web puede terminar o suspender el acceso del usuario sin previo aviso por violaciones de estos términos o por cualquier otra razón que la administración considere apropiada.'] },
+    { title: 'Ley Aplicable', content: ['Estos términos se rigen por las leyes de la jurisdicción donde el sitio web opera principalmente, sin tener en cuenta los principios de conflicto de leyes.'] },
+  ],
+  termsAndConditions: 'Términos y condiciones',
+  close: 'Cerrar',
   bias: {
     heading: "¿Qué es un sesgo?",
     explanation: "Un sesgo es una tendencia a apoyar o favorecer un punto de vista político, partido o idea en particular. Puede influir en cómo una persona interpreta los eventos, selecciona la información y presenta ideas. Cuando un autor tiene un sesgo político, puede influir en su perspectiva al afectar qué hechos enfatiza, cómo describe a las personas o problemas, y las conclusiones que extrae. Como resultado, su escritura podría reflejar sus creencias personales en lugar de un punto de vista completamente neutral o equilibrado.",
@@ -302,15 +345,16 @@ const es: Dictionary = {
     help: 'Ayuda',
   },
   footer: {
+    pleaseLogin: 'Por favor, inicie sesión para usar esta función.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "El texto está disponible bajo la",
+      "part2": "Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional",
+      "part3": "; pueden aplicarse términos adicionales. Al utilizar este sitio, usted acepta",
+      "part4": "Términos y condiciones",
+      "part5": "y",
+      "part6": "Política de privacidad.",
+      "part7": "Alternipedia es un proyecto de código abierto sin fines de lucro."
+    },
     license: 'Licencia',
     terms: 'Términos',
     privacy: 'Privacidad',
@@ -390,6 +434,24 @@ const fr: Dictionary = {
     description: "Sélectionnez votre langue préférée pour consulter cet article.",
     notFound: "Aucune langue ne correspond à"
   },
+  termsOfService: [
+    { title: 'Acceptation des Conditions', content: ["En accédant et en utilisant ce site web, les utilisateurs acceptent de se conformer et d'être liés par ces Conditions de Service. Les utilisateurs qui ne sont pas d'accord avec ces conditions doivent arrêter d'utiliser le site web immédiatement."] },
+    { title: 'Responsabilités du Compte Utilisateur', content: ["Les utilisateurs sont responsables de maintenir la confidentialité de leurs identifiants de compte. Toute activité se produisant sous le compte d'un utilisateur est de la seule responsabilité du titulaire du compte. Les utilisateurs doivent notifier immédiatement les administrateurs du site web de tout accès non autorisé au compte."] },
+    { title: 'Limitation de Responsabilité', content: ['Le site web fournit du contenu "tel quel" sans aucune garantie. Les propriétaires du site web ne seront pas responsables des dommages directs, indirects, accessoires, consécutifs ou punitifs résultant des interactions des utilisateurs avec la plateforme.'] },
+    {
+      title: 'Directives de Conduite des Utilisateurs', content: [
+        'Ne pas télécharger de contenu nuisible ou malveillant qui pourrait nuire au site web ou à ses utilisateurs.',
+        'Respecter les droits des autres utilisateurs.',
+        'Éviter les activités qui pourraient perturber la fonctionnalité du site web.',
+        'Se conformer aux lois locales et internationales applicables.',
+      ]
+    },
+    { title: 'Modifications des Conditions', content: ['Le site web se réserve le droit de modifier ces conditions à tout moment. L\'utilisation continue du site web après les modifications constitue l\'acceptation des nouvelles conditions.'] },
+    { title: 'Clause de Résiliation', content: ['Le site web peut résilier ou suspendre l\'accès des utilisateurs sans préavis pour violations de ces conditions ou pour toute autre raison jugée appropriée par l\'administration.'] },
+    { title: 'Loi Applicable', content: ['Ces conditions sont régies par les lois de la juridiction où le site web est principalement exploité, sans égard aux principes de conflit de lois.'] },
+  ],
+  termsAndConditions: 'Termes et conditions',
+  close: 'Fermer',
   bias: {
     heading: "Qu'est-ce qu'un biais ?",
     explanation: "Un biais est une tendance à soutenir ou à favoriser un point de vue politique, un parti ou une idée particulière. Il peut influencer la façon dont une personne interprète les événements, sélectionne les informations et présente des idées. Lorsqu'un auteur a un biais politique, cela peut influencer sa perspective en affectant les faits qu'il met en avant, la façon dont il décrit les personnes ou les problèmes, et les conclusions qu'il tire. En conséquence, son écriture pourrait refléter ses croyances personnelles plutôt qu'un point de vue complètement neutre ou équilibré.",
@@ -424,15 +486,16 @@ const fr: Dictionary = {
     help: 'Aide',
   },
   footer: {
+    pleaseLogin: 'Veuillez vous connecter pour utiliser cette fonctionnalité.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Le texte est disponible sous la",
+      "part2": "Licence Creative Commons Attribution-Partage dans les Mêmes Conditions 4.0 International",
+      "part3": "; des conditions supplémentaires peuvent s'appliquer. En utilisant ce site, vous acceptez",
+      "part4": "les termes et conditions",
+      "part5": "et",
+      "part6": "la politique de confidentialité.",
+      "part7": "Alternipedia est un projet open-source à but non lucratif."
+    },
     license: 'Licence',
     terms: 'Conditions',
     privacy: 'Confidentialité',
@@ -512,6 +575,24 @@ const de: Dictionary = {
     description: "Wählen Sie Ihre bevorzugte Sprache für die Anzeige dieses Artikels.",
     notFound: "Keine passenden Sprachen gefunden"
   },
+  termsOfService: [
+    { title: 'Annahme der Bedingungen', content: ["Durch den Zugriff auf und die Nutzung dieser Website stimmen Benutzer zu, diese Nutzungsbedingungen zu befolgen und daran gebunden zu sein. Benutzer, die mit diesen Bedingungen nicht einverstanden sind, sollten die Nutzung der Website sofort einstellen."] },
+    { title: 'Verantwortlichkeiten des Benutzerkontos', content: ["Benutzer sind dafür verantwortlich, die Vertraulichkeit ihrer Kontoanmeldedaten zu wahren. Alle Aktivitäten, die unter dem Konto eines Benutzers auftreten, liegen in der alleinigen Verantwortung des Kontoinhabers. Benutzer müssen die Website-Administratoren sofort über jeden unbefugten Kontozugriff benachrichtigen."] },
+    { title: 'Haftungsbeschränkung', content: ['Die Website stellt Inhalte "wie besehen" ohne jegliche Garantien zur Verfügung. Die Website-Eigentümer haften nicht für direkte, indirekte, zufällige, Folge- oder Strafschäden, die aus Benutzerinteraktionen mit der Plattform entstehen.'] },
+    {
+      title: 'Richtlinien für Benutzerverhalten', content: [
+        'Keine schädlichen oder bösartigen Inhalte hochladen, die der Website oder ihren Benutzern schaden könnten.',
+        'Die Rechte anderer Benutzer respektieren.',
+        'Aktivitäten vermeiden, die die Website-Funktionalität stören könnten.',
+        'Geltende lokale und internationale Gesetze befolgen.',
+      ]
+    },
+    { title: 'Änderungen der Bedingungen', content: ['Die Website behält sich das Recht vor, diese Bedingungen jederzeit zu ändern. Die fortgesetzte Nutzung der Website nach Änderungen stellt die Zustimmung zu den neuen Bedingungen dar.'] },
+    { title: 'Kündigungsklausel', content: ['Die Website kann den Benutzerzugriff ohne vorherige Ankündigung bei Verstößen gegen diese Bedingungen oder aus anderen von der Verwaltung für angemessen erachteten Gründen beenden oder aussetzen.'] },
+    { title: 'Anwendbares Recht', content: ['Diese Bedingungen unterliegen den Gesetzen der Gerichtsbarkeit, in der die Website hauptsächlich betrieben wird, ohne Rücksicht auf Kollisionsrechtsprinzipien.'] },
+  ],
+  termsAndConditions: 'Geschäftsbedingungen',
+  close: 'Schließen',
   bias: {
     heading: "Was ist eine Voreingenommenheit?",
     explanation: "Eine Voreingenommenheit ist eine Tendenz, eine bestimmte politische Ansicht, Partei oder Idee zu unterstützen oder zu bevorzugen. Sie kann beeinflussen, wie eine Person Ereignisse interpretiert, Informationen auswählt und Ideen präsentiert. Wenn ein Autor eine politische Voreingenommenheit hat, kann dies seine Perspektive beeinflussen, indem es die Fakten betrifft, die er betont, wie er Menschen oder Probleme beschreibt und welche Schlussfolgerungen er zieht. Infolgedessen könnte seine Schreibweise seine persönlichen Überzeugungen widerspiegeln, anstatt eine völlig neutrale oder ausgewogene Sichtweise zu bieten.",
@@ -546,15 +627,16 @@ const de: Dictionary = {
     help: 'Hilfe',
   },
   footer: {
+    pleaseLogin: 'Bitte melden Sie sich an, um diese Funktion zu nutzen.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Text ist verfügbar unter der",
+      "part2": "Creative Commons Namensnennung-Weitergabe unter gleichen Bedingungen 4.0 International Lizenz",
+      "part3": "; zusätzliche Bedingungen können gelten. Durch die Nutzung dieser Website stimmen Sie den",
+      "part4": "Nutzungsbedingungen",
+      "part5": "und",
+      "part6": "Datenschutzrichtlinie",
+      "part7": "Alternipedia ist ein Open-Source-Nichtgewinnprojekt."
+    },
     license: 'Lizenz',
     terms: 'Bedingungen',
     privacy: 'Datenschutz',
@@ -634,6 +716,24 @@ const it: Dictionary = {
     description: "Seleziona la tua lingua preferita per visualizzare questo articolo.",
     notFound: "Nessuna lingua trovata corrispondente"
   },
+  termsOfService: [
+    { title: 'Accettazione dei Termini', content: ["Accedendo e utilizzando questo sito web, gli utenti accettano di rispettare ed essere vincolati da questi Termini di Servizio. Gli utenti che non sono d'accordo con questi termini dovrebbero interrompere immediatamente l'uso del sito web."] },
+    { title: 'Responsabilità dell\'Account Utente', content: ["Gli utenti sono responsabili di mantenere la riservatezza delle loro credenziali di account. Qualsiasi attività che si verifica sotto l'account di un utente è di esclusiva responsabilità del titolare dell'account. Gli utenti devono notificare immediatamente agli amministratori del sito web qualsiasi accesso non autorizzato all'account."] },
+    { title: 'Limitazione di Responsabilità', content: ['Il sito web fornisce contenuti "così come sono" senza alcuna garanzia. I proprietari del sito web non saranno responsabili per danni diretti, indiretti, incidentali, consequenziali o punitivi derivanti dalle interazioni degli utenti con la piattaforma.'] },
+    {
+      title: 'Linee Guida per la Condotta degli Utenti', content: [
+        'Non caricare contenuti dannosi o malevoli che potrebbero danneggiare il sito web o i suoi utenti.',
+        'Rispettare i diritti degli altri utenti.',
+        'Evitare attività che potrebbero interrompere la funzionalità del sito web.',
+        'Rispettare le leggi locali e internazionali applicabili.',
+      ]
+    },
+    { title: 'Modifiche ai Termini', content: ['Il sito web si riserva il diritto di modificare questi termini in qualsiasi momento. L\'uso continuato del sito web dopo le modifiche costituisce accettazione dei nuovi termini.'] },
+    { title: 'Clausola di Risoluzione', content: ['Il sito web può terminare o sospendere l\'accesso degli utenti senza preavviso per violazioni di questi termini o per qualsiasi altra ragione ritenuta appropriata dall\'amministrazione.'] },
+    { title: 'Legge Applicabile', content: ['Questi termini sono governati dalle leggi della giurisdizione dove il sito web è principalmente operato, senza riguardo ai principi di conflitto di leggi.'] },
+  ],
+  termsAndConditions: 'Termini e condizioni',
+  close: 'Chiudi',
   bias: {
     heading: "Cos'è un bias?",
     explanation: "Un bias è una tendenza a supportare o favorire un particolare punto di vista politico, partito o idea. Può influenzare il modo in cui una persona interpreta gli eventi, seleziona le informazioni e presenta le idee. Quando un autore ha un bias politico, può influenzare la sua prospettiva influenzando quali fatti enfatizza, come descrive le persone o i problemi e le conclusioni che trae. Di conseguenza, la sua scrittura potrebbe riflettere le sue convinzioni personali piuttosto che un punto di vista completamente neutrale o equilibrato.",
@@ -668,15 +768,16 @@ const it: Dictionary = {
     help: 'Aiuto',
   },
   footer: {
+    pleaseLogin: 'Effettua il login per utilizzare questa funzione.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Il testo è disponibile sotto la",
+      "part2": "Licenza Creative Commons Attribuzione-Condividi allo stesso modo 4.0 Internazionale",
+      "part3": "; possono applicarsi termini aggiuntivi. Utilizzando questo sito, accetti",
+      "part4": "Termini e Condizioni",
+      "part5": "e",
+      "part6": "Informativa sulla privacy.",
+      "part7": "Alternipedia è un progetto open-source senza scopo di lucro."
+    },
     license: 'Licenza',
     terms: 'Termini',
     privacy: 'Privacy',
@@ -756,6 +857,24 @@ const pt: Dictionary = {
     description: "Selecione seu idioma preferido para visualizar este artigo.",
     notFound: "Nenhum idioma correspondente encontrado"
   },
+  termsOfService: [
+    { title: 'Aceitação dos Termos', content: ["Ao acessar e usar este site, os usuários concordam em cumprir e estar vinculados a estes Termos de Serviço. Usuários que não concordam com estes termos devem descontinuar o uso do site imediatamente."] },
+    { title: 'Responsabilidades da Conta do Usuário', content: ["Os usuários são responsáveis por manter a confidencialidade de suas credenciais de conta. Quaisquer atividades que ocorram sob a conta de um usuário são de responsabilidade exclusiva do titular da conta. Os usuários devem notificar imediatamente os administradores do site sobre qualquer acesso não autorizado à conta."] },
+    { title: 'Limitação de Responsabilidade', content: ['O site fornece conteúdo "como está" sem quaisquer garantias. Os proprietários do site não serão responsáveis por danos diretos, indiretos, incidentais, consequenciais ou punitivos decorrentes de interações do usuário com a plataforma.'] },
+    {
+      title: 'Diretrizes de Conduta do Usuário', content: [
+        'Não enviar conteúdo prejudicial ou malicioso que possa prejudicar o site ou seus usuários.',
+        'Respeitar os direitos de outros usuários.',
+        'Evitar atividades que possam interromper a funcionalidade do site.',
+        'Cumprir as leis locais e internacionais aplicáveis.',
+      ]
+    },
+    { title: 'Modificações nos Termos', content: ['O site se reserva o direito de modificar estes termos a qualquer momento. O uso continuado do site após as alterações constitui aceitação dos novos termos.'] },
+    { title: 'Cláusula de Rescisão', content: ['O site pode encerrar ou suspender o acesso do usuário sem aviso prévio por violações destes termos ou por qualquer outro motivo considerado apropriado pela administração.'] },
+    { title: 'Lei Aplicável', content: ['Estes termos são governados pelas leis da jurisdição onde o site é operado principalmente, sem considerar os princípios de conflito de leis.'] },
+  ],
+  termsAndConditions: 'Termos e condições',
+  close: 'Fechar',
   bias: {
     heading: "O que é um viés?",
     explanation: "Um viés é uma tendência a apoiar ou favorecer um determinado ponto de vista político, partido ou ideia. Pode influenciar a forma como uma pessoa interpreta eventos, seleciona informações e apresenta ideias. Quando um autor tem um viés político, isso pode influenciar sua perspectiva ao afetar quais fatos ele enfatiza, como descreve pessoas ou questões e as conclusões que tira. Como resultado, sua escrita pode refletir suas crenças pessoais em vez de um ponto de vista completamente neutro ou equilibrado.",
@@ -790,15 +909,16 @@ const pt: Dictionary = {
     help: 'Ajuda',
   },
   footer: {
+    pleaseLogin: 'Por favor, faça login para usar este recurso.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "O texto está disponível sob a",
+      "part2": "Licença Creative Commons Atribuição-CompartilhaIgual 4.0 Internacional",
+      "part3": "; podem ser aplicados termos adicionais. Ao usar este site, você concorda com",
+      "part4": "Termos e Condições",
+      "part5": "e",
+      "part6": "Política de Privacidade.",
+      "part7": "Alternipedia é um projeto de código aberto sem fins lucrativos."
+    },
     license: 'Licença',
     terms: 'Termos',
     privacy: 'Privacidade',
@@ -878,6 +998,24 @@ const ja: Dictionary = {
     description: "この記事を表示するための希望の言語を選択してください。",
     notFound: "一致する言語が見つかりません"
   },
+  termsOfService: [
+    { title: '利用規約の同意', content: ["このウェブサイトにアクセスし、使用することにより、ユーザーはこれらの利用規約を遵守し、拘束されることに同意します。これらの条件に同意しないユーザーは、直ちにウェブサイトの使用を中止する必要があります。"] },
+    { title: 'ユーザーアカウントの責任', content: ["ユーザーは、アカウント認証情報の機密性を維持する責任があります。ユーザーのアカウントで発生するすべての活動は、アカウント所有者の単独の責任です。ユーザーは、不正なアカウントアクセスについて、ウェブサイト管理者に直ちに通知する必要があります。"] },
+    { title: '責任の制限', content: ['ウェブサイトは、いかなる保証もなしに「現状のまま」でコンテンツを提供します。ウェブサイト所有者は、プラットフォームとのユーザーのやり取りから生じる直接的、間接的、偶発的、結果的、または懲罰的損害について責任を負いません。'] },
+    {
+      title: 'ユーザー行動規範', content: [
+        'ウェブサイトやそのユーザーに害を与える可能性のある有害または悪意のあるコンテンツをアップロードしないでください。',
+        '他のユーザーの権利を尊重してください。',
+        'ウェブサイトの機能を妨害する可能性のある活動を避けてください。',
+        '適用される地方および国際法を遵守してください。',
+      ]
+    },
+    { title: '利用規約の変更', content: ['ウェブサイトは、これらの条件をいつでも変更する権利を留保します。変更後のウェブサイトの継続使用は、新しい条件への同意を構成します。'] },
+    { title: '終了条項', content: ['ウェブサイトは、これらの条件の違反またはその他の管理者が適切と判断する理由により、事前の通知なしにユーザーアクセスを終了または停止することができます。'] },
+    { title: '準拠法', content: ['これらの条件は、法の抵触原則を考慮することなく、ウェブサイトが主に運営されている管轄区域の法律に準拠します。'] },
+  ],
+  termsAndConditions: '利用規約',
+  close: '閉じる',
   bias: {
     heading: "バイアスとは？",
     explanation: "バイアスとは、特定の政治的見解、政党、またはアイデアを支持または好む傾向のことです。これは、人が出来事を解釈し、情報を選択し、アイデアを提示する方法に影響を与える可能性があります。著者が政治的なバイアスを持っている場合、強調する事実、人物や問題の説明方法、そして導き出す結論に影響を与えることで、その視点に影響を与える可能性があります。その結果、その著者の執筆は完全に中立的またはバランスの取れた視点ではなく、個人的な信念を反映する可能性があります。",
@@ -912,15 +1050,16 @@ const ja: Dictionary = {
     help: 'ヘルプ',
   },
   footer: {
+    pleaseLogin: 'この機能を使用するにはログインしてください。',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "テキストは以下のライセンスの下で利用可能です：",
+      "part2": "クリエイティブ・コモンズ 表示-継承 4.0 国際ライセンス",
+      "part3": "；追加の条件が適用される場合があります。このサイトを使用することで、あなたは",
+      "part4": "利用規約",
+      "part5": "および",
+      "part6": "プライバシーポリシーに同意したことになります。",
+      "part7": "Alternipediaはオープンソースの非営利プロジェクトです。"
+    },
     license: 'ライセンス',
     terms: '利用規約',
     privacy: 'プライバシー',
@@ -1000,6 +1139,24 @@ const zh: Dictionary = {
     description: "选择您喜欢的语言来查看本文。",
     notFound: "未找到匹配的语言"
   },
+  termsOfService: [
+    { title: '接受条款', content: ["通过访问和使用本网站，用户同意遵守并受这些服务条款的约束。不同意这些条款的用户应立即停止使用网站。"] },
+    { title: '用户账户责任', content: ["用户负责保持其账户凭据的机密性。用户账户下发生的任何活动都是账户持有者的唯一责任。用户必须立即通知网站管理员任何未经授权的账户访问。"] },
+    { title: '责任限制', content: ['网站"按原样"提供内容，不提供任何保证。网站所有者不对用户与平台交互产生的直接、间接、偶然、后果性或惩罚性损害负责。'] },
+    {
+      title: '用户行为准则', content: [
+        '不要上传可能损害网站或其用户的有害或恶意内容。',
+        '尊重其他用户的权利。',
+        '避免可能破坏网站功能的活动。',
+        '遵守适用的本地和国际法律。',
+      ]
+    },
+    { title: '条款修改', content: ['网站保留随时修改这些条款的权利。修改后继续使用网站即表示接受新条款。'] },
+    { title: '终止条款', content: ['网站可能因违反这些条款或管理层认为适当的任何其他原因，在不事先通知的情况下终止或暂停用户访问。'] },
+    { title: '适用法律', content: ['这些条款受网站主要运营所在管辖区的法律管辖，不考虑法律冲突原则。'] },
+  ],
+  termsAndConditions: '条款和条件',
+  close: '关闭',
   bias: {
     heading: "什么是偏见？",
     explanation: "偏见是支持或偏爱特定政治观点、政党或想法的倾向。它可以影响一个人如何解释事件、选择信息和呈现想法。当作者有政治偏见时，这可能会通过影响他们强调哪些事实、如何描述人物或问题以及得出哪些结论来影响他们的观点。因此，他们的写作可能反映了他们的个人信仰，而不是完全中立或平衡的观点。",
@@ -1034,15 +1191,16 @@ const zh: Dictionary = {
     help: '帮助',
   },
   footer: {
+    pleaseLogin: '请登录以使用此功能。',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "文本可在以下许可下使用：",
+      "part2": "知识共享署名-相同方式共享 4.0 国际许可协议",
+      "part3": "；可能适用附加条款。使用本网站即表示您同意",
+      "part4": "服务条款",
+      "part5": "和",
+      "part6": "隐私政策。",
+      "part7": "Alternipedia 是一个开源非营利项目。"
+    },
     license: '许可证',
     terms: '条款',
     privacy: '隐私',
@@ -1122,6 +1280,24 @@ const ko: Dictionary = {
     description: "이 기사를 보는 데 선호하는 언어를 선택하세요.",
     notFound: "일치하는 언어를 찾을 수 없음"
   },
+  termsOfService: [
+    { title: '이용약관 동의', content: ["이 웹사이트에 접근하고 사용함으로써 사용자는 이러한 서비스 약관을 준수하고 구속받는 데 동의합니다. 이러한 조건에 동의하지 않는 사용자는 즉시 웹사이트 사용을 중단해야 합니다."] },
+    { title: '사용자 계정 책임', content: ["사용자는 자신의 계정 자격 증명의 기밀성을 유지할 책임이 있습니다. 사용자의 계정에서 발생하는 모든 활동은 계정 소유자의 단독 책임입니다. 사용자는 무단 계정 접근에 대해 웹사이트 관리자에게 즉시 알려야 합니다."] },
+    { title: '책임 제한', content: ['웹사이트는 어떠한 보증도 없이 "있는 그대로" 콘텐츠를 제공합니다. 웹사이트 소유자는 플랫폼과의 사용자 상호작용으로 인해 발생하는 직접적, 간접적, 우발적, 결과적 또는 징벌적 손해에 대해 책임지지 않습니다.'] },
+    {
+      title: '사용자 행동 지침', content: [
+        '웹사이트나 사용자에게 해를 끼칠 수 있는 유해하거나 악의적인 콘텐츠를 업로드하지 마세요.',
+        '다른 사용자의 권리를 존중하세요.',
+        '웹사이트 기능을 방해할 수 있는 활동을 피하세요.',
+        '적용 가능한 현지 및 국제 법률을 준수하세요.',
+      ]
+    },
+    { title: '약관 수정', content: ['웹사이트는 언제든지 이러한 조건을 수정할 권리를 보유합니다. 변경 후 웹사이트의 지속적인 사용은 새로운 조건에 대한 동의를 구성합니다.'] },
+    { title: '해지 조항', content: ['웹사이트는 이러한 조건의 위반 또는 관리자가 적절하다고 판단하는 기타 이유로 사전 통지 없이 사용자 접근을 종료하거나 정지시킬 수 있습니다.'] },
+    { title: '준거법', content: ['이러한 조건은 법률 충돌 원칙을 고려하지 않고 웹사이트가 주로 운영되는 관할권의 법률에 의해 규율됩니다.'] },
+  ],
+  termsAndConditions: '약관',
+  close: '닫기',
   bias: {
     heading: "편향이란 무엇인가요?",
     explanation: "편향은 특정 정치적 견해, 정당 또는 아이디어를 지지하거나 선호하는 경향입니다. 이는 개인이 사건을 해석하고, 정보를 선택하며, 아이디어를 제시하는 방식에 영향을 미칠 수 있습니다. 저자가 정치적 편향을 가지고 있는 경우, 그들이 강조하는 사실, 사람이나 문제를 설명하는 방식, 그리고 도출하는 결론에 영향을 미쳐 그들의 관점에 영향을 줄 수 있습니다. 결과적으로 그들의 글은 완전히 중립적이거나 균형 잡힌 관점보다는 개인적인 신념을 반영할 수 있습니다.",
@@ -1156,15 +1332,16 @@ const ko: Dictionary = {
     help: '도움말',
   },
   footer: {
+    pleaseLogin: '이 기능을 사용하려면 로그인하세요.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "텍스트는 다음 라이선스 하에 제공됩니다:",
+      "part2": "크리에이티브 커먼즈 저작자표시-동일조건변경허락 4.0 국제 라이선스",
+      "part3": "; 추가 조건이 적용될 수 있습니다. 이 사이트를 사용함으로써, 귀하는 다음에 동의합니다",
+      "part4": "이용약관",
+      "part5": "및",
+      "part6": "개인정보처리방침.",
+      "part7": "Alternipedia는 오픈 소스 비영리 프로젝트입니다."
+    },
     license: '라이선스',
     terms: '약관',
     privacy: '개인정보',
@@ -1244,6 +1421,24 @@ const ru: Dictionary = {
     description: "Выберите предпочитаемый язык для просмотра этой статьи.",
     notFound: "Не найдено подходящих языков"
   },
+  termsOfService: [
+    { title: 'Принятие Условий', content: ["Получая доступ и используя этот веб-сайт, пользователи соглашаются соблюдать и быть связанными данными Условиями обслуживания. Пользователи, которые не согласны с данными условиями, должны немедленно прекратить использование веб-сайта."] },
+    { title: 'Ответственности Учетной Записи Пользователя', content: ["Пользователи несут ответственность за поддержание конфиденциальности учетных данных своей учетной записи. Любая деятельность, происходящая под учетной записью пользователя, является исключительной ответственностью владельца учетной записи. Пользователи должны немедленно уведомить администраторов веб-сайта о любом несанкционированном доступе к учетной записи."] },
+    { title: 'Ограничение Ответственности', content: ['Веб-сайт предоставляет контент "как есть" без каких-либо гарантий. Владельцы веб-сайта не несут ответственности за прямые, косвенные, случайные, косвенные или штрафные убытки, возникающие в результате взаимодействия пользователей с платформой.'] },
+    {
+      title: 'Руководящие Принципы Поведения Пользователей', content: [
+        'Не загружайте вредоносный или злонамеренный контент, который может навредить веб-сайту или его пользователям.',
+        'Уважайте права других пользователей.',
+        'Избегайте деятельности, которая может нарушить функциональность веб-сайта.',
+        'Соблюдайте применимые местные и международные законы.',
+      ]
+    },
+    { title: 'Изменения в Условиях', content: ['Веб-сайт оставляет за собой право изменять эти условия в любое время. Продолжение использования веб-сайта после изменений означает принятие новых условий.'] },
+    { title: 'Пункт о Прекращении', content: ['Веб-сайт может прекратить или приостановить доступ пользователя без предварительного уведомления за нарушения данных условий или по любой другой причине, которую администрация сочтет подходящей.'] },
+    { title: 'Применимое Право', content: ['Данные условия регулируются законами юрисдикции, где веб-сайт в основном работает, без учета принципов коллизии права.'] },
+  ],
+  termsAndConditions: 'Условия и положения',
+  close: 'Закрыть',
   bias: {
     heading: "Что такое предвзятость?",
     explanation: "Предвзятость - это склонность поддерживать или благоприятствовать определенной политической точке зрения, партии или идее. Она может влиять на то, как человек интерпретирует события, выбирает информацию и представляет идеи. Когда у автора есть политическая предвзятость, это может повлиять на его перспективу, влияя на то, какие факты он подчеркивает, как он описывает людей или проблемы и какие выводы он делает. В результате его писание может отражать его личные убеждения, а не полностью нейтральную или сбалансированную точку зрения.",
@@ -1278,15 +1473,16 @@ const ru: Dictionary = {
     help: 'Помощь',
   },
   footer: {
+    pleaseLogin: 'Пожалуйста, войдите, чтобы использовать эту функцию.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Текст доступен по",
+      "part2": "Лицензии Creative Commons Attribution-ShareAlike 4.0 International",
+      "part3": "; могут применяться дополнительные условия. Используя этот сайт, вы соглашаетесь с",
+      "part4": "Условиями",
+      "part5": "и",
+      "part6": "Политикой конфиденциальности.",
+      "part7": "Alternipedia — это проект с открытым исходным кодом и некоммерческой организацией."
+    },
     license: 'Лицензия',
     terms: 'Условия',
     privacy: 'Конфиденциальность',
@@ -1345,6 +1541,16 @@ const ru: Dictionary = {
 
 // Arabic
 const ar: Dictionary = {
+  termsOfService: [
+    { "title": "قبول الشروط", "content": ["بالوصول إلى هذا الموقع واستخدامه، يوافق المستخدمون على الالتزام بهذه الشروط. يجب على المستخدمين الذين لا يوافقون على هذه الشروط التوقف عن استخدام الموقع فوراً."] },
+    { "title": "مسؤوليات حساب المستخدم", "content": ["المستخدمون مسؤولون عن الحفاظ على سرية بيانات حساباتهم. أي نشاط يتم تحت حساب المستخدم يقع على عاتق صاحب الحساب وحده. يجب على المستخدمين إخطار إدارة الموقع فوراً بأي وصول غير مصرح به."] },
+    { "title": "تحديد المسؤولية", "content": ["الموقع يقدم المحتوى 'كما هو' دون أي ضمانات. مالكو الموقع غير مسؤولين عن أي أضرار مباشرة، غير مباشرة، عرضية، تبعية أو جزائية ناتجة عن تفاعل المستخدمين مع المنصة."] },
+    { "title": "إرشادات سلوك المستخدم", "content": ["عدم تحميل محتوى ضار أو خبيث قد يضر بالموقع أو المستخدمين.", "احترام حقوق المستخدمين الآخرين.", "تجنب الأنشطة التي قد تعطل وظائف الموقع.", "الالتزام بالقوانين المحلية والدولية المعمول بها."] },
+    { "title": "تعديلات الشروط", "content": ["يحتفظ الموقع بالحق في تعديل هذه الشروط في أي وقت. استمرار استخدام الموقع بعد التعديلات يعني قبول الشروط الجديدة."] },
+    { "title": "بند الإنهاء", "content": ["يجوز للموقع إنهاء أو تعليق وصول المستخدم دون إشعار مسبق في حال انتهاك الشروط أو لأي سبب آخر تراه الإدارة مناسباً."] },
+    { "title": "القانون الواجب التطبيق", "content": ["تخضع هذه الشروط لقوانين الولاية القضائية التي يُدار فيها الموقع أساسياً، بغض النظر عن مبادئ تعارض القوانين."] }
+
+  ],
   tools: {
     textToSpeech: "تحويل النص إلى كلام",
     translate: "ترجمة",
@@ -1366,6 +1572,8 @@ const ar: Dictionary = {
     description: "اختر لغتك المفضلة لعرض هذه المقالة.",
     notFound: "لم يتم العثور على لغات مطابقة"
   },
+  termsAndConditions: 'الشروط والأحكام',
+  close: 'إغلاق',
   bias: {
     heading: "ما هو التحيز؟",
     explanation: "التحيز هو ميل لدعم أو تفضيل وجهة نظر سياسية معينة أو حزب أو فكرة. يمكن أن يؤثر على كيفية تفسير الشخص للأحداث واختيار المعلومات وتقديم الأفكار. عندما يكون لدى المؤلف تحيز سياسي، فقد يؤثر ذلك على وجهة نظره من خلال التأثير على الحقائق التي يبرزها، وكيف يصف الأشخاص أو القضايا، والاستنتاجات التي يتوصل إليها. نتيجة لذلك، قد تعكس كتاباته معتقداته الشخصية بدلاً من وجهة نظر محايدة أو متوازنة تمامًا.",
@@ -1400,15 +1608,16 @@ const ar: Dictionary = {
     help: 'مساعدة',
   },
   footer: {
+    pleaseLogin: 'يرجى تسجيل الدخول لاستخدام هذه الميزة.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "النص متاح بموجب",
+      "part2": "ترخيص المشاع الإبداعي النسب-مشاركة على نفس الرخصة 4.0 الدولي",
+      "part3": "; قد تنطبق شروط إضافية. باستخدامك لهذا الموقع، فإنك توافق على",
+      "part4": "الشروط والأحكام",
+      "part5": "و",
+      "part6": "سياسة الخصوصية.",
+      "part7": "Alternipedia هو مشروع مفتوح المصدر غير ربحي."
+    },
     license: 'الرخصة',
     terms: 'الشروط',
     privacy: 'الخصوصية',
@@ -1506,6 +1715,17 @@ const hi: Dictionary = {
     message: 'क्षमा करें, हम उस पृष्ठ को नहीं ढूंढ सके जिसे आप खोज रहे थे। पृष्ठ को हटा दिया गया हो सकता है या लिंक गलत है।',
     goHome: 'मुख पृष्ठ पर जाएं',
   },
+  termsOfService: [
+    { "title": "Terms की स्वीकृति", "content": ["इस वेबसाइट का उपयोग करके, उपयोगकर्ता इन सेवा शर्तों से सहमत होते हैं और इन्हें स्वीकार करते हैं। जो उपयोगकर्ता इन शर्तों से सहमत नहीं हैं, उन्हें वेबसाइट का उपयोग तुरंत बंद कर देना चाहिए।"] },
+    { "title": "उपयोगकर्ता खाता जिम्मेदारियाँ", "content": ["उपयोगकर्ता अपने खाता क्रेडेंशियल्स की गोपनीयता बनाए रखने के लिए जिम्मेदार हैं। उपयोगकर्ता के खाते के तहत होने वाली कोई भी गतिविधियाँ खाता धारक की एकमात्र जिम्मेदारी हैं। उपयोगकर्ताओं को किसी भी अनधिकृत खाता पहुँच के बारे में तुरंत वेबसाइट प्रशासकों को सूचित करना चाहिए।"] },
+    { "title": "जिम्मेदारी की सीमा", "content": ["वेबसाइट 'जैसा है' के आधार पर सामग्री प्रदान करती है, बिना किसी वारंटी के। वेबसाइट मालिक उपयोगकर्ता के प्लेटफ़ॉर्म के साथ इंटरएक्शन से उत्पन्न होने वाले प्रत्यक्ष, अप्रत्यक्ष, आकस्मिक, परिणामी, या दंडात्मक नुकसानों के लिए जिम्मेदार नहीं होंगे।"] },
+    { "title": "उपयोगकर्ता आचार संहिता दिशानिर्देश", "content": ["ऐसा हानिकारक या दुर्भावनापूर्ण सामग्री अपलोड न करें जो वेबसाइट या इसके उपयोगकर्ताओं को नुकसान पहुँचा सकती है।", "अन्य उपयोगकर्ताओं के अधिकारों का सम्मान करें।", "ऐसी गतिविधियों से बचें जो वेबसाइट की कार्यक्षमता को बाधित कर सकती हैं।", "लागू स्थानीय और अंतरराष्ट्रीय कानूनों का पालन करें।"] },
+    { "title": "शर्तों में संशोधन", "content": ["वेबसाइट इन शर्तों को किसी भी समय संशोधित करने का अधिकार सुरक्षित रखती है। परिवर्तनों के बाद वेबसाइट का निरंतर उपयोग नए शर्तों की स्वीकृति मानी जाती है।"] },
+    { "title": "समाप्ति खंड", "content": ["वेबसाइट इन शर्तों का उल्लंघन करने या प्रशासन द्वारा उचित समझे जाने वाले किसी अन्य कारण से उपयोगकर्ता की पहुँच को पूर्व सूचना के बिना समाप्त या निलंबित कर सकती है।"] },
+    { "title": "प्रभावी कानून", "content": ["ये शर्तें उस क्षेत्राधिकार के कानूनों द्वारा शासित हैं जहाँ वेबसाइट मुख्य रूप से संचालित होती है, कानूनों के संघर्ष के सिद्धांतों की परवाह किए बिना।"] }
+  ],
+  termsAndConditions: 'नियम और शर्तें',
+  close: 'बंद करें',
   upgrade: {
     goPro: 'प्रो बनें',
     upgradePrompt: 'प्रीमियम सुविधाओं को अनलॉक करने के लिए अपग्रेड करें',
@@ -1544,15 +1764,16 @@ const hi: Dictionary = {
     help: 'मदद',
   },
   footer: {
+    pleaseLogin: 'इस फीचर का उपयोग करने के लिए कृपया लॉगिन करें।',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "पाठ उपलब्ध है:",
+      "part2": "क्रिएटिव कॉमन्स एट्रिब्यूशन-शेयरअलाइक 4.0 अंतर्राष्ट्रीय लाइसेंस के तहत",
+      "part3": "। अतिरिक्त शर्तें लागू हो सकती हैं। इस साइट का उपयोग करके, आप सहमत होते हैं",
+      "part4": "नियम और शर्तें",
+      "part5": "और",
+      "part6": "गोपनीयता नीति।",
+      "part7": "Alternipedia एक ओपन-सोर्स गैर-लाभकारी परियोजना है।"
+    },
     license: 'लाइसेंस',
     terms: 'शर्तें',
     privacy: 'गोपनीयता',
@@ -1589,6 +1810,15 @@ const hi: Dictionary = {
 
 // Bengali
 const bn: Dictionary = {
+  termsOfService: [
+    { "title": "শর্তাবলী মেনে চলা", "content": ["এই ওয়েবসাইটে প্রবেশ এবং এটি ব্যবহার করে, ব্যবহারকারীরা এই সেবা শর্তাবলী মেনে চলতে এবং এগুলির দ্বারা আবদ্ধ হতে সম্মত হন। যারা এই শর্তাবলী মেনে চলতে সম্মত নন, তাদের উচিত অবিলম্বে ওয়েবসাইট ব্যবহার বন্ধ করা।"] },
+    { "title": "ব্যবহারকারী অ্যাকাউন্ট দায়িত্ব", "content": ["ব্যবহারকারীরা তাদের অ্যাকাউন্টের পরিচয়পত্রের গোপনীয়তা বজায় রাখার জন্য দায়ী। ব্যবহারকারীর অ্যাকাউন্টের অধীনে ঘটে যাওয়া কোনো কার্যক্রম শুধুমাত্র অ্যাকাউন্ট ধারকের দায়িত্ব। ব্যবহারকারীদের উচিত অবিলম্বে ওয়েবসাইট প্রশাসকদের অবৈধ অ্যাকাউন্ট অ্যাক্সেস সম্পর্কে জানানো।"] },
+    { "title": "দায়িত্বের সীমাবদ্ধতা", "content": ["ওয়েবসাইট 'যেমন আছে' তেমনভাবে বিষয়বস্তু প্রদান করে, কোনো ওয়ারেন্টি ছাড়া। ওয়েবসাইটের মালিকরা প্ল্যাটফর্মের সাথে ব্যবহারকারীদের মিথস্ক্রিয়া থেকে উদ্ভূত সরাসরি, পরোক্ষ, অনাকাঙ্ক্ষিত, পরিণামস্বরূপ বা শাস্তিমূলক ক্ষতির জন্য দায়ী নয়।"] },
+    { "title": "ব্যবহারকারী আচরণ নির্দেশিকা", "content": ["এমন ক্ষতিকর বা ক্ষতিকারক বিষয়বস্তু আপলোড করবেন না যা ওয়েবসাইট বা এর ব্যবহারকারীদের ক্ষতি করতে পারে।", "অন্যান্য ব্যবহারকারীদের অধিকার সম্মান করুন।", "এমন কার্যক্রম এড়িয়ে চলুন যা ওয়েবসাইটের কার্যক্ষমতা বিঘ্নিত করতে পারে।", "প্রযোজ্য স্থানীয় এবং আন্তর্জাতিক আইন মেনে চলুন।"] },
+    { "title": "শর্তাবলীতে পরিবর্তন", "content": ["ওয়েবসাইট যেকোনো সময় এই শর্তাবলী পরিবর্তন করার অধিকার সংরক্ষণ করে। পরিবর্তনের পর ওয়েবসাইটের অব্যাহত ব্যবহার নতুন শর্তাবলী মেনে নেওয়ার সমতুল্য।"] },
+    { "title": "সমাপ্তি ধারা", "content": ["ওয়েবসাইট প্রশাসন এই শর্তাবলী লঙ্ঘন বা অন্য কোনো কারণে ব্যবহারকারীর অ্যাক্সেস পূর্বানুমতি ছাড়াই বাতিল বা স্থগিত করতে পারে।"] },
+    { "title": "প্রযোজ্য আইন", "content": ["এই শর্তাবলী সেই অঞ্চলের আইন দ্বারা শাসিত যেখানে ওয়েবসাইট মূলত পরিচালিত হয়, আইনের দ্বন্দ্ব নীতির প্রতি লক্ষ্য না করে।"] }
+  ],
   tools: {
     textToSpeech: "টেক্সট টু স্পিচ",
     translate: "অনুবাদ করুন",
@@ -1665,16 +1895,19 @@ const bn: Dictionary = {
     randomArticle: 'র্যান্ডম নিবন্ধ',
     help: 'মদদ',
   },
+  termsAndConditions: 'শর্তাবলী',
+  close: 'বন্ধ করুন',
   footer: {
+    pleaseLogin: 'এই ফিচারটি ব্যবহার করতে দয়া করে লগইন করুন।',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "পাঠ উপলব্ধ:",
+      "part2": "ক্রিয়েটিভ কমন্স অ্যাট্রিবিউশন-শেয়ারঅ্যালাইক 4.0 আন্তর্জাতিক লাইসেন্সের অধীনে",
+      "part3": "; অতিরিক্ত শর্ত প্রযোজ্য হতে পারে। এই সাইটটি ব্যবহার করে, আপনি সম্মত হন",
+      "part4": "শর্তাবলী",
+      "part5": "এবং",
+      "part6": "গোপনীয়তা নীতি।",
+      "part7": "Alternipedia একটি ওপেন-সোর্স অলাভজনক প্রকল্প।"
+    },
     license: 'লাইসেন্স',
     terms: 'শর্তাবলী',
     privacy: 'গোপনীয়তা',
@@ -1711,6 +1944,16 @@ const bn: Dictionary = {
 
 // Urdu
 const ur: Dictionary = {
+  termsOfService: [
+    { "title": "شرائط کی منظوری", "content": ["اس ویب سائٹ تک رسائی حاصل کر کے اور اسے استعمال کر کے، صارفین ان سروس کی شرائط پر عمل کرنے اور ان سے پابند ہونے پر راضی ہیں۔ جو صارفین ان شرائط سے متفق نہیں ہیں، انہیں فوری طور پر ویب سائٹ کا استعمال بند کر دینا چاہیے۔"] },
+    { "title": "صارف اکاؤنٹ کی ذمہ داریاں", "content": ["صارفین اپنے اکاؤنٹ کی اسناد کی رازداری برقرار رکھنے کے ذمہ دار ہیں۔ صارف کے اکاؤنٹ کے تحت ہونے والی کسی بھی سرگرمی کی مکمل ذمہ داری اکاؤنٹ ہولڈر کی ہے۔ صارفین کو کسی بھی غیر مجاز اکاؤنٹ تک رسائی کے بارے میں فوری طور پر ویب سائٹ کے منتظمین کو مطلع کرنا چاہیے۔"] },
+    { "title": "ذمہ داری کی حد", "content": ["ویب سائٹ 'جیسا ہے' کی بنیاد پر مواد فراہم کرتی ہے، کسی بھی وارنٹی کے بغیر۔ ویب سائٹ کے مالکان صارفین کے پلیٹ فارم کے ساتھ تعامل سے پیدا ہونے والے براہ راست، بالواسطہ، حادثاتی، نتیجے کے طور پر یا تعزیری نقصانات کے ذمہ دار نہیں ہوں گے۔"] },
+    { "title": "صارف کے رویے کی رہنما اصول", "content": ["ایسا نقصان دہ یا بدنیتی پر مبنی مواد اپ لوڈ نہ کریں جو ویب سائٹ یا اس کے صارفین کو نقصان پہنچا سکتا ہو۔", "دوسرے صارفین کے حقوق کا احترام کریں۔", "ایسی سرگرمیوں سے گریز کریں جو ویب سائٹ کی فعالیت میں خلل ڈال سکتی ہیں۔", "مناسب مقامی اور بین الاقوامی قوانین کی پابندی کریں۔"] },
+    { "title": "شرائط میں تبدیلی", "content": ["ویب سائٹ کسی بھی وقت ان شرائط کو تبدیل کرنے کا حق محفوظ رکھتی ہے۔ تبدیلی کے بعد ویب سائٹ کا جاری استعمال نئی شرائط کی منظوری کے مترادف ہوگا۔"] },
+    { "title": "اختتامی شق", "content": ["ویب سائٹ ان شرائط کی خلاف ورزی یا انتظامیہ کی مناسب سمجھی جانے والی کسی بھی وجہ سے صارف کی رسائی کو بغیر پیشگی اطلاع کے ختم یا معطل کر سکتی ہے۔"] },
+    { "title": "حاکم قانون", "content": ["یہ شرائط اس دائرہ اختیار کے قوانین کے تابع ہیں جہاں ویب سائٹ بنیادی طور پر چلائی جاتی ہے، قانون کے تصادم کے اصولوں کی پرواہ کیے بغیر۔"] }
+
+  ],
   tools: {
     textToSpeech: "ٹیکسٹ ٹو اسپیچ",
     translate: "ترجمہ کریں",
@@ -1732,6 +1975,8 @@ const ur: Dictionary = {
     description: "اس مضمون کو دیکھنے کے لیے اپنی پسند کی زبان منتخب کریں۔",
     notFound: "کوئی زبانیں نہیں ملیں"
   },
+  termsAndConditions: 'شرائط و ضوابط',
+  close: 'بند کریں',
   bias: {
     heading: "پہلو کیا ہے؟",
     explanation: "پہلو ایک رجحان ہے جو کسی خاص سیاسی نقطہ نظر، جماعت یا خیال کی حمایت یا طرفداری سے متعلق ہے۔ یہ متاثر کر سکتا ہے کہ ایک شخص واقعات کی تشریح کیسے کرتا ہے، معلومات کا انتخاب کیسے کرتا ہے اور خیالات کو کیسے پیش کرتا ہے۔ جب ایک مصنف میں سیاسی پہلو ہوتا ہے، تو یہ ان کے نقطہ نظر کو متاثر کر سکتا ہے کہ وہ کون سی معلومات پر زور دیتے ہیں، وہ لوگوں یا موضوعات کو کیسے بیان کرتے ہیں اور وہ کون سے نتائج اخذ کرتے ہیں۔ نتیجتاً، ان کے لکھنے کا انداز ان کے ذاتی عقائد کی عکاسی کر سکتا ہے بجائے اس کے کہ ایک مکمل غیر جانبدار یا متوازن نقطہ نظر ہو۔",
@@ -1766,15 +2011,16 @@ const ur: Dictionary = {
     help: 'مدد',
   },
   footer: {
+    pleaseLogin: 'اس خصوصیت کو استعمال کرنے کے لیے براہ کرم لاگ ان کریں۔',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "متن دستیاب ہے:",
+      "part2": "کریئیٹو کامنس ایٹریبیوشن-شیئرالائیک 4.0 انٹرنیشنل لائسنس کے تحت",
+      "part3": "; اضافی شرائط لاگو ہو سکتی ہیں۔ اس سائٹ کو استعمال کرتے ہوئے، آپ متفق ہیں",
+      "part4": "شرائط و ضوابط",
+      "part5": "اور",
+      "part6": "پرائیویسی پالیسی۔",
+      "part7": "Alternipedia ایک اوپن سورس غیر منافع بخش منصوبہ ہے۔"
+    },
     license: 'لائسنس',
     terms: 'شرائط',
     privacy: 'رازداری',
@@ -1833,6 +2079,16 @@ const ur: Dictionary = {
 
 // indonesia
 const id: Dictionary = {
+  termsOfService: [
+    { "title": "Penerimaan Syarat", "content": ["Dengan mengakses dan menggunakan situs web ini, pengguna setuju untuk mematuhi dan terikat oleh Syarat Layanan ini. Pengguna yang tidak setuju dengan syarat ini harus segera menghentikan penggunaan situs web."] },
+    { "title": "Tanggung Jawab Akun Pengguna", "content": ["Pengguna bertanggung jawab untuk menjaga kerahasiaan kredensial akun mereka. Setiap aktivitas yang terjadi di bawah akun pengguna adalah tanggung jawab pemilik akun sepenuhnya. Pengguna harus segera memberitahu administrator situs tentang akses akun yang tidak sah."] },
+    { "title": "Batasan Tanggung Jawab", "content": ["Situs web menyediakan konten 'apa adanya' tanpa jaminan apapun. Pemilik situs tidak bertanggung jawab atas kerusakan langsung, tidak langsung, insidental, konsekuensial, atau hukuman yang timbul dari interaksi pengguna dengan platform."] },
+    { "title": "Pedoman Perilaku Pengguna", "content": ["Jangan mengunggah konten berbahaya atau berbahaya yang dapat merusak situs web atau penggunanya.", "Hormati hak pengguna lain.", "Hindari aktivitas yang dapat mengganggu fungsionalitas situs web.", "Patuhi hukum lokal dan internasional yang berlaku."] },
+    { "title": "Modifikasi Syarat", "content": ["Situs web berhak untuk mengubah syarat ini kapan saja. Penggunaan situs web yang berkelanjutan setelah perubahan dianggap sebagai penerimaan terhadap syarat baru."] },
+    { "title": "Klausul Penghentian", "content": ["Situs web dapat menghentikan atau menangguhkan akses pengguna tanpa pemberitahuan sebelumnya jika terjadi pelanggaran syarat ini atau alasan lain yang dianggap sesuai oleh pihak administrasi."] },
+    { "title": "Hukum yang Mengatur", "content": ["Syarat ini diatur oleh hukum yurisdiksi di mana situs web beroperasi terutama, tanpa memandang prinsip konflik hukum."] }
+
+  ],
   tools: {
     textToSpeech: "Teks ke Ucapan",
     translate: "Terjemahkan",
@@ -1854,6 +2110,8 @@ const id: Dictionary = {
     description: "Pilih bahasa yang Anda inginkan untuk melihat artikel ini.",
     notFound: "Tidak ada bahasa yang ditemukan"
   },
+  termsAndConditions: 'Syarat dan Ketentuan',
+  close: 'Tutup',
   bias: {
     heading: "Apa itu bias?",
     explanation: "Bias adalah kecenderungan untuk mendukung atau berpihak pada sudut pandang, partai, atau ideologi politik tertentu. Ini dapat memengaruhi cara seseorang menafsirkan peristiwa, memilih informasi, dan menyajikan argumen. Ketika seorang penulis memiliki bias politik, itu dapat memengaruhi sudut pandangnya tentang informasi mana yang ditekankan, bagaimana orang atau topik digambarkan, dan kesimpulan apa yang diambil. Akibatnya, gaya penulisan mereka dapat mencerminkan keyakinan pribadi mereka daripada sudut pandang yang sepenuhnya netral atau seimbang.",
@@ -1888,15 +2146,16 @@ const id: Dictionary = {
     help: 'Bantuan',
   },
   footer: {
+    pleaseLogin: 'Silakan masuk untuk menggunakan fitur ini.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Teks tersedia di bawah",
+      "part2": "Lisensi Creative Commons Atribusi-BerbagiSerupa 4.0 Internasional",
+      "part3": "; syarat tambahan dapat berlaku. Dengan menggunakan situs ini, Anda setuju dengan",
+      "part4": "Syarat dan Ketentuan",
+      "part5": "dan",
+      "part6": "Kebijakan Privasi.",
+      "part7": "Alternipedia adalah proyek sumber terbuka nirlaba."
+    },
     license: 'Lisensi',
     terms: 'Syarat dan Ketentuan',
     privacy: 'Kebijakan Privasi',
@@ -1955,6 +2214,16 @@ const id: Dictionary = {
 
 // Marathi
 const mr: Dictionary = {
+  termsOfService: [
+    { "title": "अटींचे स्वीकार", "content": ["या वेबसाइटचा प्रवेश आणि वापर करून, वापरकर्ते या सेवा अटींचे पालन करण्यास आणि त्यांचे बांधील राहण्यास सहमत असतात. जे वापरकर्ते या अटींशी सहमत नाहीत, त्यांनी त्वरित वेबसाइटचा वापर थांबवावा."] },
+    { "title": "वापरकर्ता खाते जबाबदाऱ्या", "content": ["वापरकर्ते त्यांच्या खात्याच्या प्रमाणपत्रांची गोपनीयता राखण्यासाठी जबाबदार आहेत. वापरकर्त्याच्या खात्यातील कोणतीही क्रियाकलाप केवळ खाते धारकाची जबाबदारी आहे. वापरकर्त्यांनी कोणत्याही अनधिकृत खाते प्रवेशाबद्दल त्वरित वेबसाइट प्रशासकांना सूचित करणे आवश्यक आहे."] },
+    { "title": "जबाबदारीची मर्यादा", "content": ["वेबसाइट सामग्री 'जशी आहे' तशी प्रदान करते, कोणतीही हमी न देता. वेबसाइट मालक वापरकर्त्यांच्या प्लॅटफॉर्मवरील संवादामुळे उद्भवणाऱ्या थेट, अप्रत्यक्ष, आकस्मिक, परिणामी किंवा शिक्षापरक हानीसाठी जबाबदार नाहीत."] },
+    { "title": "वापरकर्ता आचारसंहिता मार्गदर्शक तत्त्वे", "content": ["अशा हानिकारक किंवा दुष्ट सामग्री अपलोड करू नका ज्यामुळे वेबसाइट किंवा तिच्या वापरकर्त्यांना हानी होऊ शकते.", "इतर वापरकर्त्यांचे हक्क सन्मान करा.", "अशा क्रियाकलाप टाळा ज्यामुळे वेबसाइटच्या कार्यक्षमतेमध्ये व्यत्यय येऊ शकतो.", "लागू स्थानिक आणि आंतरराष्ट्रीय कायद्याचे पालन करा."] },
+    { "title": "अटींमध्ये बदल", "content": ["वेबसाइटला या अटी कोणत्याही वेळी बदलण्याचा अधिकार राखीव आहे. बदलांनंतर वेबसाइटचा सतत वापर नवीन अटींचे स्वीकृती मानले जाईल."] },
+    { "title": "समाप्ती कलम", "content": ["वेबसाइट प्रशासन या अटींचे उल्लंघन किंवा इतर कोणत्याही योग्य कारणास्तव वापरकर्त्याचा प्रवेश पूर्वसूचना न देता समाप्त किंवा निलंबित करू शकते."] },
+    { "title": "संचालक कायदा", "content": ["या अटी त्या अधिकार क्षेत्राच्या कायद्याने नियंत्रित होतात जिथे वेबसाइट मुख्यत्वे कार्यरत आहे, कायद्याच्या संघर्षाच्या तत्त्वांचा विचार न करता."] }
+
+  ],
   tools: {
     textToSpeech: "टेक्स्ट टू स्पीच",
     translate: "अनुवाद",
@@ -1971,6 +2240,8 @@ const mr: Dictionary = {
     printPage: "या पृष्ठाची छापील आवृत्ती",
     pageInfo: "पृष्ठ माहिती",
   },
+  termsAndConditions: 'अटी व शर्ती',
+  close: 'बंद करा',
   language: {
     selectLanguage: "भाषा निवडा",
     description: "या लेखाचे प्रदर्शन करण्यासाठी आपली आवडती भाषा निवडा.",
@@ -2010,15 +2281,16 @@ const mr: Dictionary = {
     help: 'सहाय्य',
   },
   footer: {
+    pleaseLogin: 'ही वैशिष्ट्ये वापरण्यासाठी कृपया लॉगिन करा.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "पाठ उपलब्ध आहे:",
+      "part2": "क्रिएटिव्ह कॉमन्स अ‍ॅट्रिब्यूशन-शेअरअलाइक 4.0 आंतरराष्ट्रीय परवाना अंतर्गत",
+      "part3": "; अतिरिक्त अटी लागू होऊ शकतात. या साइटचा वापर करून, आपण सहमत आहात",
+      "part4": "नियम आणि अटी",
+      "part5": "आणि",
+      "part6": "गोपनीयता धोरण.",
+      "part7": "Alternipedia हे एक मुक्त स्रोत, नफा न कमवणारे प्रकल्प आहे."
+    },
     license: 'लायसन्स',
     terms: 'अटी',
     privacy: 'गोपनीयता',
@@ -2077,6 +2349,15 @@ const mr: Dictionary = {
 
 // Telugu
 const te: Dictionary = {
+  termsOfService: [
+    { "title": "నియమాల స్వీకారం", "content": ["ఈ వెబ్‌సైట్‌ని యాక్సెస్ చేసి ఉపయోగించడం ద్వారా, వినియోగదారులు ఈ సేవా నిబంధనలను పాటించడానికి మరియు వాటికి బంధించబడటానికి అంగీకరిస్తారు. ఈ నిబంధనలకు అంగీకరించని వినియోగదారులు వెంటనే వెబ్‌సైట్ వాడకాన్ని నిలిపివేయాలి."] },
+    { "title": "వినియోగదారు ఖాతా బాధ్యతలు", "content": ["వినియోగదారులు తమ ఖాతా గుర్తింపు సమాచార గోప్యతను కాపాడడానికి బాధ్యత వహిస్తారు. వినియోగదారుని ఖాతా క్రింద జరిగే ఏదైనా కార్యకలాపం ఖాతా యజమాని యొక్క ప్రత్యేక బాధ్యత. అనధికారిక ఖాతా యాక్సెస్ ఏమైనా ఉంటే, వినియోగదారులు వెంటనే వెబ్‌సైట్ నిర్వాహకులను తెలియజేయాలి."] },
+    { "title": "బాధ్యత పరిమితి", "content": ["వెబ్‌సైట్ 'అనుసరించి' కంటెంట్‌ను అందిస్తుంది, ఎలాంటి వారంటీలు లేవు. వినియోగదారుల వేదికతో ఉన్న పరస్పర చర్యల కారణంగా వచ్చిన నేరుగా, పరోక్ష, అనూహ్య, ఫలితాత్మక లేదా శిక్షాత్మక నష్టాలకు వెబ్‌సైట్ యజమానులు బాధ్యులు కావరు."] },
+    { "title": "వినియోగదారు నడక మార్గదర్శకాలు", "content": ["వెబ్‌సైట్ లేదా దాని వినియోగదారులను హానిచేసే హానికరమైన లేదా చెడైన కంటెంట్‌ను అప్లోడ్ చేయవద్దు.", "ఇతర వినియోగదారుల హక్కులను గౌరవించండి.", "వెబ్‌సైట్ ఫంక్షనాలిటీకి వ్యతిరేకంగా వచ్చే కార్యకలాపాలను నివారించండి.", "ప్రసక్తి ఉన్న స్థానిక మరియు అంతర్జాతీయ చట్టాలను పాటించండి."] },
+    { "title": "నియమాలలో మార్పులు", "content": ["వెబ్‌సైట్ ఈ నియమాలను ఎప్పుడు అయినా మార్చుకునే హక్కును సురక్షితం చేసుకుంటుంది. మార్పుల తరువాత వెబ్‌సైట్‌ను కొనసాగించే వాడకం కొత్త నియమాలను అంగీకరించడం అంటే."] },
+    { "title": "పరిమాణపు క్లాజ్", "content": ["వెబ్‌సైట్ ఈ నియమాలను ఉల్లంఘించినందుకు లేదా పరిపాలన సరియని భావించే ఇతర కారణాల కోసం వినియోగదారుల యాక్సెస్‌ను ముందస్తు నోటీసు లేకుండా ముగించవచ్చు లేదా నిలిపివేయవచ్చు."] },
+    { "title": "ప్రభావవంతమైన చట్టం", "content": ["ఈ నియమాలు వెబ్‌సైట్ ప్రధానంగా నడుస్తున్న అధికారిక ప్రాంతంలోని చట్టాలచే పాలించబడతాయి, చట్టం ఘర్షణ సిద్ధాంతాల పట్ల సంబంధం లేకుండా."] }
+  ],
   tools: {
     textToSpeech: "టెక్స్ట్ టు స్పీచ్",
     translate: "అనువాదం",
@@ -2093,6 +2374,8 @@ const te: Dictionary = {
     printPage: "ఈ పేజీని ముద్రించండి",
     pageInfo: "పేజీ సమాచారం",
   },
+  termsAndConditions: 'నియమాలు మరియు షరతులు',
+  close: 'మూసివేయి',
   language: {
     selectLanguage: "భాషను ఎంచుకోండి",
     description: "ఈ వ్యాసాన్ని వీక్షించడానికి మీ ఇష్టమైన భాషను ఎంచుకోండి.",
@@ -2132,15 +2415,16 @@ const te: Dictionary = {
     help: 'సహాయం',
   },
   footer: {
+    pleaseLogin: 'ఈ ఫీచర్‌ను ఉపయోగించడానికి దయచేసి లాగిన్ చేయండి.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "పాఠ్యం అందుబాటులో ఉంది:",
+      "part2": "క్రియేటివ్ కామన్స్ అట్రిబ్యూషన్-షేర్‌అలైక్ 4.0 ఇంటర్నేషనల్ లైసెన్స్ కింద",
+      "part3": "; అదనపు నిబంధనలు వర్తించవచ్చు. ఈ సైట్‌ను ఉపయోగించడం ద్వారా, మీరు అంగీకరిస్తున్నారు",
+      "part4": "నిబంధనలు మరియు షరతులు",
+      "part5": "మరియు",
+      "part6": "గోప్యతా విధానం.",
+      "part7": "Alternipedia అనేది ఓపెన్ సోర్స్ లాభాపేక్ష లేని ప్రాజెక్ట్."
+    },
     license: 'లైసెన్స్',
     terms: 'నిబంధనలు',
     privacy: 'గోప్యత',
@@ -2199,6 +2483,15 @@ const te: Dictionary = {
 
 // Turkish dictionary
 const tr: Dictionary = {
+  termsOfService: [
+    { "title": "Hükümlerin Kabulü", "content": ["Bu web sitesine erişerek ve kullanarak, kullanıcılar bu Hizmet Şartlarına uymayı ve bunlara bağlı kalmayı kabul eder. Bu şartları kabul etmeyen kullanıcılar web sitesini derhal kullanmayı bırakmalıdır."] },
+    { "title": "Kullanıcı Hesabı Sorumlulukları", "content": ["Kullanıcılar, hesap bilgilerinin gizliliğini korumaktan sorumludur. Kullanıcının hesabı altında gerçekleşen tüm faaliyetler hesap sahibinin sorumluluğundadır. Kullanıcılar, yetkisiz hesap erişimlerini derhal web site yöneticilerine bildirmelidir."] },
+    { "title": "Sorumluluğun Sınırlandırılması", "content": ["Web sitesi, içeriği 'olduğu gibi' sağlar, herhangi bir garanti vermez. Web sitesi sahipleri, kullanıcıların platformla etkileşimlerinden kaynaklanan doğrudan, dolaylı, rastlantısal, sonuçsal veya cezai zararlardan sorumlu değildir."] },
+    { "title": "Kullanıcı Davranış Kuralları", "content": ["Web sitesine veya kullanıcılarına zarar verebilecek zararlı veya kötü niyetli içerik yüklemeyin.", "Diğer kullanıcıların haklarına saygı gösterin.", "Web sitesinin işlevselliğini bozabilecek faaliyetlerden kaçının.", "Geçerli yerel ve uluslararası yasalara uyun."] },
+    { "title": "Şartlarda Değişiklikler", "content": ["Web sitesi, bu şartları herhangi bir zamanda değiştirme hakkını saklı tutar. Değişikliklerden sonra web sitesinin kullanılması, yeni şartların kabulü anlamına gelir."] },
+    { "title": "Fesih Maddesi", "content": ["Web sitesi, bu şartların ihlali veya yönetim tarafından uygun görülen diğer herhangi bir nedenle, kullanıcı erişimini önceden bildirimde bulunmadan sonlandırabilir veya askıya alabilir."] },
+    { "title": "Geçerli Hukuk", "content": ["Bu şartlar, web sitesinin öncelikle faaliyet gösterdiği yargı bölgesinin yasalarına tabidir, hukuk çatışması ilkeleri dikkate alınmaz."] }
+  ],
   tools: {
     textToSpeech: "Metinden Sese",
     translate: "Çeviri",
@@ -2215,6 +2508,8 @@ const tr: Dictionary = {
     printPage: "Bu sayfayı yazdır",
     pageInfo: "Sayfa bilgisi",
   },
+  termsAndConditions: 'Hüküm ve Koşullar',
+  close: 'Kapat',
   language: {
     selectLanguage: "Dil Seçin",
     description: "Bu makaleyi görüntülemek için tercih ettiğiniz dili seçin.",
@@ -2254,15 +2549,16 @@ const tr: Dictionary = {
     help: 'Yardım',
   },
   footer: {
+    pleaseLogin: 'Bu özelliği kullanmak için lütfen giriş yapın.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Metin aşağıdaki lisansla mevcuttur:",
+      "part2": "Creative Commons Atıf-Benzer Paylaş 4.0 Uluslararası Lisansı",
+      "part3": "; ek şartlar uygulanabilir. Bu siteyi kullanarak, aşağıdaki şartları kabul etmiş olursunuz",
+      "part4": "Şartlar ve Koşullar",
+      "part5": "ve",
+      "part6": "Gizlilik Politikası.",
+      "part7": "Alternipedia, açık kaynaklı kar amacı gütmeyen bir projedir."
+    },
     license: 'Lisans',
     terms: 'Şartlar',
     privacy: 'Gizlilik',
@@ -2321,6 +2617,16 @@ const tr: Dictionary = {
 
 // Tamil dictionary (placeholder - needs translation)
 const ta: Dictionary = {
+  termsOfService: [
+    { "title": "கொள்கைகளின் ஏற்றுக்கொள்கை", "content": ["இந்த வலைத்தளத்தை அணுகி பயன்படுத்துவதன் மூலம், பயனர்கள் இந்த சேவை விதிமுறைகளை பின்பற்றவும், அதற்கே உட்பட்டவராக இருக்கவும் சம்மதிக்கிறார்கள். இந்த விதிமுறைகளை ஒப்புக்கொள்ளாத பயனர்கள் உடனடியாக வலைத்தள பயன்பாட்டை நிறுத்த வேண்டும்."] },
+    { "title": "பயனர் கணக்கு பொறுப்புகள்", "content": ["பயனர்கள் தங்கள் கணக்கு நற்சான்றுகளை ரகசியமாக வைத்திருப்பதில் பொறுப்பாக இருக்க வேண்டும். பயனர் கணக்கின் கீழ் நடக்கும் அனைத்து செயல்பாடுகளும் கணக்கு உரிமையாளரின் தனிப்பட்ட பொறுப்பாகும். பயனர்கள் எந்தவொரு அனுமதி இல்லாத கணக்கு அணுகலையும் உடனடியாக வலைத்தள நிர்வாகிகளுக்கு தெரிவிக்க வேண்டும்."] },
+    { "title": "பொறுப்பின் வரம்பு", "content": ["வலைத்தளம் உள்ளடக்கத்தை 'அப்படியே' வழங்குகிறது, எந்தவொரு உத்தரவாதமும் இல்லை. வலைத்தள உரிமையாளர்கள், பயனர் பரிமாற்றங்களால் நேரடியாக, மறைமுக, அவசர, விளைவுசார்ந்த அல்லது தண்டனைச் சேதங்களுக்குப் பொறுப்பாக இல்லை."] },
+    { "title": "பயனர் நடத்தை வழிகாட்டிகள்", "content": ["வலைத்தளம் அல்லது அதன் பயனர்களுக்கு தீங்கு விளைவிக்கும் தீங்கான அல்லது தீய செயல்பாடுகளைக் பதிவேற்ற வேண்டாம்.", "மற்ற பயனர்களின் உரிமைகளை மதிக்கவும்.", "வலைத்தள செயல்பாட்டை இடையூறு செய்யக்கூடிய செயல்பாடுகளைத் தவிர்க்கவும்.", "பயன்படும் உள்ளூர் மற்றும் சர்வதேச சட்டங்களை பின்பற்றவும்."] },
+    { "title": "விதிமுறைகளில் மாற்றங்கள்", "content": ["வலைத்தளத்திற்கு இந்த விதிமுறைகளை எந்த நேரத்திலும் மாற்ற உரிமை உள்ளது. மாற்றங்களுக்குப் பிறகு வலைத்தளத்தின் தொடர்ந்த பயன்பாடு புதிய விதிமுறைகளை ஏற்கும் என பொருள்."] },
+    { "title": "முடிவு கிளாசு", "content": ["வலைத்தளம் இந்த விதிமுறைகளை மீறினால் அல்லது நிர்வாகம் ஏற்றுக்கொண்ட பிற காரணங்களுக்காக பயனர் அணுகலை முன்கூட்டிய அறிவிப்பின்றி நிறுத்தவோ, இடைநிறுத்தவோ செய்யலாம்."] },
+    { "title": "ஆட்சி சட்டம்", "content": ["இந்த விதிமுறைகள் வலைத்தளம் முதன்மையாக இயங்கும் பிராந்தியத்தின் சட்டங்களினால் நிர்வகிக்கப்படும், சட்ட மோதல் கொள்கைகளை புறக்கணித்து."] }
+
+  ],
   tools: {
     textToSpeech: "டெக்ஸ்ட் டு ஸ்பீச்",
     translate: "மொழிபெயர்ப்பு",
@@ -2337,6 +2643,8 @@ const ta: Dictionary = {
     printPage: "இந்த பக்கத்தை அச்சிடவும்",
     pageInfo: "பக்கம் தகவல்",
   },
+  termsAndConditions: 'விதிமுறைகள் மற்றும் நிபந்தனைகள்',
+  close: 'மூடு',
   language: {
     selectLanguage: "மொழி தேர்ந்தெடுக்கவும்",
     description: "இந்த கட்டுரையை காண்பதற்கான உங்கள் விருப்பமான மொழியைத் தேர்ந்தெடுக்கவும்.",
@@ -2376,15 +2684,16 @@ const ta: Dictionary = {
     help: 'உதவி',
   },
   footer: {
+    pleaseLogin: 'இந்த அம்சத்தை பயன்படுத்த தயவுசெய்து உள்நுழைக.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "உரை கீழ்காணும் உரிமத்தின் கீழ் கிடைக்கிறது:",
+      "part2": "கிரியேட்டிவ் காமன்ஸ் அசைப்ரூஷன்-ஷேர் அலைக் 4.0 சர்வதேச உரிமம்",
+      "part3": "; கூடுதல் நிபந்தனைகள் பொருந்தலாம். இந்த தளத்தை பயன்படுத்துவதன் மூலம், நீங்கள்",
+      "part4": "விபரங்கள் மற்றும் நிபந்தனைகள்",
+      "part5": "மற்றும்",
+      "part6": "தனியுரிமை கொள்கை",
+      "part7": "Alternipedia என்பது திறந்த மூல, இலாப நோக்கமற்ற திட்டமாகும்."
+    },
     license: 'லிசென்ஸ்',
     terms: 'விதிமுறைகள்',
     privacy: 'தனியுரிமை',
@@ -2443,6 +2752,16 @@ const ta: Dictionary = {
 
 // Cantonese dictionary (placeholder - needs translation)
 const yue: Dictionary = {
+  termsOfService: [
+    { "title": "接受條款", "content": ["透過訪問及使用本網站，用戶同意遵守並受這些服務條款約束。不接受條款的用戶應立即停止使用本網站。"] },
+    { "title": "用戶帳戶責任", "content": ["用戶需負責保密其帳戶資料。帳戶下的任何活動均由帳戶持有人全權負責。若發現未經授權的帳戶訪問，用戶須立即通知網站管理員。"] },
+    { "title": "責任限制", "content": ["網站提供內容「按現狀」提供，不作任何保證。網站擁有者對使用者與平台互動所引致的直接、間接、附帶、衍生或懲罰性損害概不負責。"] },
+    { "title": "用戶行為準則", "content": ["不要上載可能傷害網站或用戶的有害或惡意內容。", "尊重其他用戶的權利。", "避免可能破壞網站功能的行為。", "遵守適用的本地及國際法律。"] },
+    { "title": "條款修改", "content": ["網站保留隨時修改條款的權利。條款更改後繼續使用網站即表示接受新的條款。"] },
+    { "title": "終止條款", "content": ["如違反條款或管理層認為適當的其他原因，網站可在無需提前通知的情況下終止或暫停用戶的訪問權限。"] },
+    { "title": "適用法律", "content": ["這些條款受網站主要運營地區法律管轄，不考慮法律衝突原則。"] }
+
+  ],
   tools: {
     textToSpeech: "文本轉語音",
     translate: "翻譯",
@@ -2459,6 +2778,8 @@ const yue: Dictionary = {
     printPage: "列印此頁面",
     pageInfo: "頁面資訊",
   },
+  termsAndConditions: '條款與細則',
+  close: '關閉',
   language: {
     selectLanguage: "選擇語言",
     description: "選擇您首選的語言以查看此文章。",
@@ -2498,15 +2819,16 @@ const yue: Dictionary = {
     help: '幫助',
   },
   footer: {
+    pleaseLogin: '請登錄以使用此功能。',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "文字可在以下條款下使用：",
+      "part2": "創用CC 姓名標示-相同方式分享 4.0 國際授權條款",
+      "part3": "；可能適用額外條款。使用本網站即表示您同意",
+      "part4": "條款與細則",
+      "part5": "及",
+      "part6": "私隱政策。",
+      "part7": "Alternipedia 是一個開源非牟利項目。"
+    },
     license: '許可證',
     terms: '條款',
     privacy: '隱私',
@@ -2565,6 +2887,16 @@ const yue: Dictionary = {
 
 // Vietnamese dictionary
 const vi: Dictionary = {
+  termsOfService: [
+    { "title": "Chấp nhận Điều khoản", "content": ["Bằng việc truy cập và sử dụng trang web này, người dùng đồng ý tuân thủ và bị ràng buộc bởi Điều khoản Dịch vụ này. Người dùng không đồng ý với các điều khoản này nên ngừng sử dụng trang web ngay lập tức."] },
+    { "title": "Trách nhiệm Tài khoản Người dùng", "content": ["Người dùng có trách nhiệm duy trì tính bảo mật của thông tin đăng nhập tài khoản của họ. Mọi hoạt động diễn ra dưới tài khoản của người dùng là trách nhiệm duy nhất của chủ tài khoản. Người dùng phải thông báo ngay cho quản trị viên trang web về bất kỳ truy cập trái phép nào."] },
+    { "title": "Giới hạn Trách nhiệm", "content": ["Trang web cung cấp nội dung 'nguyên trạng' mà không có bất kỳ bảo đảm nào. Chủ sở hữu trang web không chịu trách nhiệm về bất kỳ thiệt hại trực tiếp, gián tiếp, ngẫu nhiên, hệ quả hoặc trừng phạt nào phát sinh từ tương tác của người dùng với nền tảng."] },
+    { "title": "Hướng dẫn Hành vi Người dùng", "content": ["Không tải lên nội dung gây hại hoặc độc hại có thể gây tổn hại cho trang web hoặc người dùng.", "Tôn trọng quyền của người dùng khác.", "Tránh các hoạt động có thể làm gián đoạn chức năng của trang web.", "Tuân thủ các luật hiện hành ở địa phương và quốc tế."] },
+    { "title": "Sửa đổi Điều khoản", "content": ["Trang web có quyền sửa đổi các điều khoản này bất cứ lúc nào. Việc tiếp tục sử dụng trang web sau khi có thay đổi đồng nghĩa với việc chấp nhận các điều khoản mới."] },
+    { "title": "Điều khoản Chấm dứt", "content": ["Trang web có thể chấm dứt hoặc tạm ngưng quyền truy cập của người dùng mà không cần thông báo trước nếu vi phạm các điều khoản này hoặc vì bất kỳ lý do nào khác mà ban quản trị thấy phù hợp."] },
+    { "title": "Luật Điều chỉnh", "content": ["Các điều khoản này được điều chỉnh bởi luật pháp của khu vực mà trang web chủ yếu hoạt động, không xem xét các nguyên tắc xung đột pháp luật."] }
+
+  ],
   tools: {
     textToSpeech: "Văn bản thành giọng nói",
     translate: "Dịch",
@@ -2581,6 +2913,8 @@ const vi: Dictionary = {
     printPage: "In trang này",
     pageInfo: "Thông tin trang",
   },
+  termsAndConditions: 'Điều khoản và Điều kiện',
+  close: 'Đóng',
   language: {
     selectLanguage: "Chọn ngôn ngữ",
     description: "Chọn ngôn ngữ ưa thích của bạn để xem bài viết này.",
@@ -2620,15 +2954,16 @@ const vi: Dictionary = {
     help: 'Trợ giúp',
   },
   footer: {
+    pleaseLogin: 'Vui lòng đăng nhập để sử dụng tính năng này.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Văn bản có sẵn theo",
+      "part2": "Giấy phép Creative Commons Ghi công-Chia sẻ tương tự 4.0 Quốc tế",
+      "part3": "; có thể áp dụng các điều khoản bổ sung. Bằng cách sử dụng trang web này, bạn đồng ý với",
+      "part4": "Điều khoản & Điều kiện",
+      "part5": "và",
+      "part6": "Chính sách Quyền riêng tư.",
+      "part7": "Alternipedia là một dự án mã nguồn mở phi lợi nhuận."
+    },
     license: 'Giấy phép',
     terms: 'Điều khoản',
     privacy: 'Quyền riêng tư',
@@ -2687,6 +3022,16 @@ const vi: Dictionary = {
 
 // Filipino dictionary
 const fil: Dictionary = {
+  termsOfService: [
+    { "title": "Pagtanggap sa Mga Tuntunin", "content": ["Sa pamamagitan ng pag-access at paggamit ng website na ito, sumasang-ayon ang mga gumagamit na sumunod at maging sakop ng Mga Tuntunin ng Serbisyo na ito. Ang mga gumagamit na hindi sumasang-ayon sa mga tuntuning ito ay dapat itigil ang paggamit ng website kaagad."] },
+    { "title": "Mga Responsibilidad ng Account ng Gumagamit", "content": ["Ang mga gumagamit ay responsable sa pagpapanatili ng pagiging pribado ng kanilang kredensyal ng account. Ang anumang aktibidad na nagaganap sa ilalim ng account ng isang gumagamit ay tanging responsibilidad ng may-ari ng account. Dapat agad ipaalam ng mga gumagamit sa mga administrador ng website ang anumang hindi awtorisadong pag-access sa account."] },
+    { "title": "Limitasyon ng Pananagutan", "content": ["Ang website ay nagbibigay ng nilalaman 'as is' nang walang anumang garantiya. Ang mga may-ari ng website ay hindi mananagot sa anumang direktang, di-direktang, hindi inaasahang, consequential, o punitive na pinsalang nagmumula sa pakikipag-ugnayan ng mga gumagamit sa platform."] },
+    { "title": "Patnubay sa Pag-uugali ng Gumagamit", "content": ["Huwag mag-upload ng nakakasama o malisyosong nilalaman na maaaring makasama sa website o sa mga gumagamit nito.", "Igalang ang mga karapatan ng ibang mga gumagamit.", "Iwasan ang mga aktibidad na maaaring makagambala sa functionality ng website.", "Sumunod sa mga umiiral na lokal at internasyonal na batas."] },
+    { "title": "Mga Pagbabago sa Mga Tuntunin", "content": ["Ang website ay may karapatang baguhin ang mga tuntunin anumang oras. Ang patuloy na paggamit ng website pagkatapos ng mga pagbabago ay itinuturing na pagtanggap sa mga bagong tuntunin."] },
+    { "title": "Klausula sa Pagwawakas", "content": ["Maaaring wakasan o suspindihin ng website ang access ng gumagamit nang walang paunang abiso kung may paglabag sa mga tuntuning ito o para sa anumang dahilan na itinuturing na angkop ng administrasyon."] },
+    { "title": "Batas na Namamahala", "content": ["Ang mga tuntuning ito ay pinamamahalaan ng mga batas ng hurisdiksyon kung saan pangunahing pinapatakbo ang website, nang hindi isinasaalang-alang ang mga prinsipyo ng pagtatalo sa batas."] }
+
+  ],
   tools: {
     textToSpeech: "Teksto sa Pananalita",
     translate: "Isalin",
@@ -2703,6 +3048,8 @@ const fil: Dictionary = {
     printPage: "I-print ang pahinang ito",
     pageInfo: "Impormasyon ng pahina",
   },
+  termsAndConditions: 'Mga Tuntunin at Kundisyon',
+  close: 'Isara',
   language: {
     selectLanguage: "Pumili ng Wika",
     description: "Pumili ng wika na gusto mo para sa pagtingin sa artikulong ito.",
@@ -2742,15 +3089,16 @@ const fil: Dictionary = {
     help: 'Tulong',
   },
   footer: {
+    pleaseLogin: 'Mangyaring mag-log in upang magamit ang tampok na ito.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Ang teksto ay makukuha sa ilalim ng",
+      "part2": "Creative Commons Attribution-ShareAlike License 4.0 International",
+      "part3": "; maaaring may karagdagang mga tuntunin. Sa paggamit ng site na ito, sumasang-ayon ka sa",
+      "part4": "Mga Tuntunin at Kondisyon",
+      "part5": "at",
+      "part6": "Patakaran sa Privacy.",
+      "part7": "Ang Alternipedia ay isang open-source na non-profit na proyekto."
+    },
     license: 'Lisensya',
     terms: 'Mga Tuntunin',
     privacy: 'Pribasiya',
@@ -2809,6 +3157,16 @@ const fil: Dictionary = {
 
 // Hausa dictionary
 const ha: Dictionary = {
+  termsOfService: [
+    { "title": "Karɓar Sharuɗɗa", "content": ["Ta hanyar samun damar wannan gidan yanar gizo da amfani da shi, masu amfani sun yarda da bin waɗannan Sharuɗɗan Sabis. Masu amfani waɗanda ba su yarda da waɗannan sharuɗɗan ba ya kamata su dakatar da amfani da gidan yanar gizon nan da nan."] },
+    { "title": "Hakkokin Asusun Mai Amfani", "content": ["Masu amfani suna da alhakin kiyaye sirrin bayanan asusun su. Duk wani aiki da ya faru a ƙarƙashin asusun mai amfani ya kasance nauyin mai asusun kaɗai. Masu amfani dole ne su sanar da masu gudanar da gidan yanar gizo nan da nan idan wani ya sami damar shiga asusun ba tare da izini ba."] },
+    { "title": "Iyakar Alhaki", "content": ["Gidan yanar gizon yana samar da abun ciki 'kamar yadda yake' ba tare da kowace irin garanti ba. Masu mallakar gidan yanar gizon ba za su ɗauki alhaki ba don duk wata lalacewa kai tsaye, ba kai tsaye ba, na bazata, sakamakon haka, ko hukunci da ya taso daga mu'amala da masu amfani da dandamali."] },
+    { "title": "Ka’idojin Hali na Mai Amfani", "content": ["Kada a ɗora abun da zai iya cutar da gidan yanar gizo ko masu amfani.", "Girmama hakkin sauran masu amfani.", "Guji ayyukan da za su iya tsangwama ga aikin gidan yanar gizo.", "Bi dokokin gida da na ƙasa da ƙasa da suka dace."] },
+    { "title": "Canje-canje ga Sharuɗɗa", "content": ["Gidan yanar gizo yana da haƙƙin canza waɗannan sharuɗɗan a kowane lokaci. Ci gaba da amfani da gidan yanar gizo bayan canje-canje yana nuna amincewa da sabbin sharuɗɗan."] },
+    { "title": "Sashe na Ƙarshe", "content": ["Gidan yanar gizo na iya dakatar ko dakatar da samun damar mai amfani ba tare da sanarwa ba idan an karya waɗannan sharuɗɗan ko don kowane dalili da gudanarwa ta dace da shi."] },
+    { "title": "Dokar Da Take Jagoranci", "content": ["Waɗannan sharuɗɗan suna ƙarƙashin dokokin yankin da gidan yanar gizo ke aiki a ciki, ba tare da la’akari da ka’idojin rikicin doka ba."] }
+
+  ],
   tools: {
     textToSpeech: "Rubutu zuwa Magana",
     translate: "Fassara",
@@ -2825,6 +3183,8 @@ const ha: Dictionary = {
     printPage: "Buga wannan shafin",
     pageInfo: "Bayanan shafi",
   },
+  termsAndConditions: 'Sharuɗɗa da Yanayi',
+  close: 'Rufe',
   language: {
     selectLanguage: "Zaɓi Harshe",
     description: "Zaɓi harshe da kake so don ganin wannan labarin.",
@@ -2864,15 +3224,16 @@ const ha: Dictionary = {
     help: 'Taimako',
   },
   footer: {
+    pleaseLogin: 'Da fatan za a shiga don amfani da wannan fasalin.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Rubutu yana samuwa ƙarƙashin",
+      "part2": "Lasisin Creative Commons Attribution-ShareAlike 4.0 International",
+      "part3": "; wasu ƙarin sharuɗɗa na iya aiki. Ta amfani da wannan shafin, kuna yarda da",
+      "part4": "Sharuɗɗa da Yanayi",
+      "part5": "da",
+      "part6": "Manufar Sirri.",
+      "part7": "Alternipedia aikin tushen bude ne na rashin riba."
+    },
     license: 'Lasisi',
     terms: 'Sharuɗɗa',
     privacy: 'Sirri',
@@ -2931,6 +3292,16 @@ const ha: Dictionary = {
 
 // Egyptian Arabic dictionary
 const arz: Dictionary = {
+
+  termsOfService: [
+    { "title": "قبول الشروط", "content": ["من خلال الوصول إلى هذه الموقع واستخدامه، يوافق المستخدمون على الامتثال لهذه الشروط والأحكام. يجب على المستخدمين الذين لا يوافقون على هذه الشروط التوقف عن استخدام الموقع على الفور."] },
+    { "title": "مسؤوليات حساب المستخدم", "content": ["المستخدمون مسؤولون عن الحفاظ على سرية بيانات اعتماد حساباتهم. أي أنشطة تحدث تحت حساب المستخدم هي مسؤولية صاحب الحساب فقط. يجب على المستخدمين إخطار مسؤولي الموقع على الفور بأي وصول غير مصرح به إلى الحساب."] },
+    { "title": "تحديد المسؤولية", "content": ["يقدم الموقع المحتوى 'كما هو' دون أي ضمانات. لا يتحمل مالكو الموقع أي مسؤولية عن الأضرار المباشرة أو غير المباشرة أو العرضية أو التبعية أو العقابية الناشئة عن تفاعلات المستخدمين مع المنصة."] },
+    { "title": "إرشادات سلوك المستخدم", "content": ["عدم تحميل محتوى ضار أو خبيث قد يضر بالموقع أو مستخدميه.", "احترام حقوق المستخدمين الآخرين.", "تجنب الأنشطة التي قد تعطل وظائف الموقع.", "الامتثال للقوانين المحلية والدولية المعمول بها."] },
+    { "title": "تعديلات على الشروط", "content": ["يحتفظ الموقع بالحق في تعديل هذه الشروط في أي وقت. يشكل الاستمرار في استخدام الموقع بعد التغييرات قبولًا للشروط الجديدة."] },
+    { "title": "بند الإنهاء", "content": ["قد يقوم الموقع بإنهاء أو تعليق وصول المستخدم دون إشعار مسبق بسبب انتهاك هذه الشروط أو لأي سبب آخر يعتبره مناسبًا من قبل الإدارة."] },
+    { "title": "القانون الحاكم", "content": ["تخضع هذه الشروط لقوانين الولاية القضائية التي يتم تشغيل الموقع فيها بشكل رئيسي، دون النظر إلى مبادئ تعارض القوانين."] }
+  ],
   tools: {
     textToSpeech: "النص إلى كلام",
     translate: "ترجمة",
@@ -2947,6 +3318,8 @@ const arz: Dictionary = {
     printPage: "طباعة هذه الصفحة",
     pageInfo: "معلومات الصفحة",
   },
+  termsAndConditions: 'الشروط والأحكام',
+  close: 'إغلاق',
   language: {
     selectLanguage: "اختر اللغة",
     description: "اختر لغتك المفضلة لعرض هذه المقالة.",
@@ -2986,15 +3359,16 @@ const arz: Dictionary = {
     help: 'مساعدة',
   },
   footer: {
+    pleaseLogin: 'يرجى تسجيل الدخول لاستخدام هذه الميزة.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "النص متاح تحت",
+      "part2": "رخصة المشاع الإبداعي النسبة-نفس المشاركة 4.0 الدولية",
+      "part3": "; ممكن تطبق شروط إضافية. باستخدامك للموقع ده، انت موافق على",
+      "part4": "الشروط والأحكام",
+      "part5": "و",
+      "part6": "سياسة الخصوصية.",
+      "part7": "Alternipedia مشروع مفتوح المصدر غير ربحي."
+    },
     license: 'ترخيص',
     terms: 'الشروط',
     privacy: 'الخصوصية',
@@ -3053,6 +3427,16 @@ const arz: Dictionary = {
 
 // Javanese dictionary
 const jv: Dictionary = {
+  termsOfService: [
+    { "title": "Panrimo Syarat", "content": ["Kanthi ngakses lan nggunakake situs web iki, pangguna setuju kanggo tundhuk lan terikat dening Syarat Layanan iki. Pangguna sing ora setuju karo syarat iki kudu langsung mandheg nggunakake situs web."] },
+    { "title": "Tanggung Jawab Akun Pangguna", "content": ["Pangguna tanggung jawab kanggo njaga kerahasiaan kredensial akuné. Kabeh aktivitas ing akun pangguna dadi tanggung jawab pemilik akun. Pangguna kudu langsung ngandhani administrator situs babagan akses akun sing ora sah."] },
+    { "title": "Watesan Tanggung Jawab", "content": ["Situs web nyedhiyakake konten 'kaya sing ana' tanpa jaminan apa wae. Pemilik situs web ora tanggung jawab kanggo karusakan langsung, ora langsung, kedadeyan, akibat, utawa hukuman sing muncul saka interaksi pangguna karo platform."] },
+    { "title": "Pandhuan Tumindak Pangguna", "content": ["Aja ngunggah konten mbebayani utawa ala sing bisa ngrusak situs web utawa pangguna.", "Hormati hak pangguna liyane.", "Aja nindakake aktivitas sing bisa ngalangi fungsi situs web.", "Tundhuk marang hukum lokal lan internasional sing berlaku."] },
+    { "title": "Modifikasi Syarat", "content": ["Situs web duwe hak kanggo ngowahi syarat iki kapan wae. Panggunaan situs web sing terus-terusan sawise owah-owahan dianggep minangka panrimo syarat anyar."] },
+    { "title": "Klausula Terminasi", "content": ["Situs web bisa mungkasi utawa nundha akses pangguna tanpa kabar sadurunge yen ana pelanggaran syarat iki utawa alasan liya sing dianggep pantes dening administrasi."] },
+    { "title": "Hukum sing Mengatur", "content": ["Syarat iki diatur dening hukum yurisdiksi ing ngendi situs web paling utama dioperasikake, tanpa nganggep prinsip konflik hukum."] }
+
+  ],
   tools: {
     textToSpeech: "Teks menyang Pidato",
     translate: "Terjemah",
@@ -3102,6 +3486,8 @@ const jv: Dictionary = {
     stayTuned: 'Tetep ngawasi.',
     exampleArticle: 'Artikel conto:',
   },
+  termsAndConditions: 'Syarat lan Ketentuan',
+  close: 'Tutup',
   navigation: {
     aboutUs: 'Babagan kita',
     currentEvents: 'Kedadeyan saiki',
@@ -3109,15 +3495,16 @@ const jv: Dictionary = {
     help: 'Pitulung',
   },
   footer: {
+    pleaseLogin: 'Mangga mlebu kanggo nggunakake fitur iki.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tèks kasedhiya ing ngisor",
+      "part2": "Lisensi Creative Commons Attribution-ShareAlike 4.0 Internasional",
+      "part3": "; bisa uga ana syarat tambahan. Kanthi nggunakake situs iki, sampeyan setuju karo",
+      "part4": "Syarat & Ketentuan",
+      "part5": "lan",
+      "part6": "Kabijakan Privasi.",
+      "part7": "Alternipedia iku proyek sumber terbuka non-profit."
+    },
     license: 'Lisènsi',
     terms: 'Katentuan',
     privacy: 'Privasi',
@@ -3177,6 +3564,15 @@ const jv: Dictionary = {
 
 // Dutch dictionary
 const nl: Dictionary = {
+  termsOfService: [
+    { "title": "Aanvaarding van de Voorwaarden", "content": ["Door toegang te krijgen tot en gebruik te maken van deze website, stemmen gebruikers ermee in deze Servicevoorwaarden na te leven en eraan gebonden te zijn. Gebruikers die niet akkoord gaan met deze voorwaarden dienen het gebruik van de website onmiddellijk te staken."] },
+    { "title": "Verantwoordelijkheden van de Gebruikersaccount", "content": ["Gebruikers zijn verantwoordelijk voor het vertrouwelijk houden van hun accountgegevens. Alle activiteiten die plaatsvinden onder het account van een gebruiker zijn uitsluitend de verantwoordelijkheid van de accounthouder. Gebruikers moeten de websitebeheerders onmiddellijk op de hoogte stellen van ongeoorloofde accounttoegang."] },
+    { "title": "Beperking van Aansprakelijkheid", "content": ["De website biedt inhoud 'zoals het is' zonder enige garanties. De eigenaren van de website zijn niet aansprakelijk voor directe, indirecte, incidentele, gevolg- of bestraffende schade die voortvloeit uit interacties van gebruikers met het platform."] },
+    { "title": "Richtlijnen voor Gebruikersgedrag", "content": ["Upload geen schadelijke of kwaadaardige inhoud die de website of zijn gebruikers kan schaden.", "Respecteer de rechten van andere gebruikers.", "Vermijd activiteiten die de functionaliteit van de website kunnen verstoren.", "Houd u aan de toepasselijke lokale en internationale wetten."] },
+    { "title": "Wijzigingen in de Voorwaarden", "content": ["De website behoudt zich het recht voor deze voorwaarden op elk moment te wijzigen. Voortgezet gebruik van de website na wijzigingen geldt als aanvaarding van de nieuwe voorwaarden."] },
+    { "title": "Beëindigingsclausule", "content": ["De website kan de toegang van gebruikers zonder voorafgaande kennisgeving beëindigen of opschorten bij schending van deze voorwaarden of om andere redenen die door het beheer als passend worden beschouwd."] },
+    { "title": "Toepasselijk Recht", "content": ["Deze voorwaarden worden beheerst door de wetten van de jurisdictie waarin de website voornamelijk wordt geëxploiteerd, ongeacht beginselen van conflicterend recht."] }
+  ],
   tools: {
     textToSpeech: "Tekst naar spraak",
     translate: "Vertalen",
@@ -3208,6 +3604,8 @@ const nl: Dictionary = {
     nationalist: "Nationalistisch",
     title: "Leesbias",
   },
+  termsAndConditions: 'Algemene Voorwaarden',
+  close: 'Sluiten',
   common: {
     home: 'Home',
     about: 'Over',
@@ -3232,15 +3630,16 @@ const nl: Dictionary = {
     help: 'Hulp',
   },
   footer: {
+    pleaseLogin: 'Log in om deze functie te gebruiken.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tekst is beschikbaar onder de",
+      "part2": "Creative Commons Naamsvermelding-GelijkDelen 4.0 Internationale Licentie",
+      "part3": "; aanvullende voorwaarden kunnen van toepassing zijn. Door deze site te gebruiken, gaat u akkoord met de",
+      "part4": "Algemene Voorwaarden",
+      "part5": "en",
+      "part6": "Privacybeleid.",
+      "part7": "Alternipedia is een open-source non-profit project."
+    },
     license: 'Licentie',
     terms: 'Voorwaarden',
     privacy: 'Privacy',
@@ -3299,6 +3698,15 @@ const nl: Dictionary = {
 
 // Greek dictionary
 const el: Dictionary = {
+  termsOfService: [
+    { "title": "Αποδοχή Όρων", "content": ["Με την πρόσβαση και χρήση αυτού του ιστότοπου, οι χρήστες συμφωνούν να συμμορφώνονται με αυτούς τους Όρους Παροχής Υπηρεσιών και να δεσμεύονται από αυτούς. Οι χρήστες που δεν συμφωνούν με αυτούς τους όρους πρέπει να σταματήσουν αμέσως τη χρήση του ιστότοπου."] },
+    { "title": "Υποχρεώσεις Λογαριασμού Χρήστη", "content": ["Οι χρήστες είναι υπεύθυνοι για τη διατήρηση της εμπιστευτικότητας των στοιχείων του λογαριασμού τους. Οποιαδήποτε δραστηριότητα υπό τον λογαριασμό χρήστη βαρύνει αποκλειστικά τον κάτοχο του λογαριασμού. Οι χρήστες πρέπει να ειδοποιούν άμεσα τους διαχειριστές του ιστότοπου για οποιαδήποτε μη εξουσιοδοτημένη πρόσβαση στον λογαριασμό."] },
+    { "title": "Περιορισμός Ευθύνης", "content": ["Ο ιστότοπος παρέχει περιεχόμενο 'ως έχει' χωρίς καμία εγγύηση. Οι ιδιοκτήτες του ιστότοπου δεν φέρουν καμία ευθύνη για άμεσες, έμμεσες, τυχαίες, επακόλουθες ή ποινικές ζημίες που προκύπτουν από τις αλληλεπιδράσεις των χρηστών με την πλατφόρμα."] },
+    { "title": "Οδηγίες Συμπεριφοράς Χρηστών", "content": ["Μην ανεβάζετε επιβλαβές ή κακόβουλο περιεχόμενο που μπορεί να βλάψει τον ιστότοπο ή τους χρήστες του.", "Σεβαστείτε τα δικαιώματα άλλων χρηστών.", "Αποφύγετε δραστηριότητες που μπορεί να διαταράξουν τη λειτουργικότητα του ιστότοπου.", "Συμμορφωθείτε με τους ισχύοντες τοπικούς και διεθνείς νόμους."] },
+    { "title": "Τροποποιήσεις Όρων", "content": ["Ο ιστότοπος διατηρεί το δικαίωμα να τροποποιεί αυτούς τους όρους οποιαδήποτε στιγμή. Η συνεχής χρήση του ιστότοπου μετά από αλλαγές συνιστά αποδοχή των νέων όρων."] },
+    { "title": "Ρήτρα Τερματισμού", "content": ["Ο ιστότοπος μπορεί να τερματίσει ή να αναστείλει την πρόσβαση του χρήστη χωρίς προειδοποίηση σε περίπτωση παραβίασης αυτών των όρων ή για οποιονδήποτε άλλο λόγο που θεωρείται κατάλληλος από τη διαχείριση."] },
+    { "title": "Εφαρμοστέο Δίκαιο", "content": ["Αυτοί οι όροι διέπονται από τους νόμους της δικαιοδοσίας στην οποία λειτουργεί κυρίως ο ιστότοπος, ανεξαρτήτως αρχών σύγκρουσης νόμων."] }
+  ],
   tools: {
     textToSpeech: "Κείμενο σε ομιλία",
     translate: "Μετάφραση",
@@ -3315,6 +3723,8 @@ const el: Dictionary = {
     printPage: "Εκτύπωση σελίδας",
     pageInfo: "Πληροφορίες σελίδας",
   },
+  termsAndConditions: 'Όροι και Προϋποθέσεις',
+  close: 'Κλείσιμο',
   language: {
     selectLanguage: "Επιλογή γλώσσας",
     description: "Επιλέξτε την προτιμώμενη γλώσσα σας για την προβολή αυτού του άρθρου.",
@@ -3354,15 +3764,16 @@ const el: Dictionary = {
     help: 'Βοήθεια',
   },
   footer: {
+    pleaseLogin: 'Παρακαλώ συνδεθείτε για να χρησιμοποιήσετε αυτή τη λειτουργία.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Το κείμενο είναι διαθέσιμο υπό την",
+      "part2": "Άδεια Creative Commons Αναφορά-Ιδιοκτησία-Παρόμοια 4.0 Διεθνής",
+      "part3": "; μπορεί να ισχύουν πρόσθετοι όροι. Χρησιμοποιώντας αυτόν τον ιστότοπο, συμφωνείτε με τους",
+      "part4": "Όρους & Προϋποθέσεις",
+      "part5": "και",
+      "part6": "Πολιτική Απορρήτου.",
+      "part7": "Το Alternipedia είναι ένα μη κερδοσκοπικό έργο ανοιχτού κώδικα."
+    },
     license: 'Άδεια',
     terms: 'Όροι',
     privacy: 'Απόρρητο',
@@ -3421,6 +3832,14 @@ const el: Dictionary = {
 
 // Swedish dictionary
 const sv: Dictionary = {
+  termsOfService: [{ "title": "Accepterande av Villkor", "content": ["Genom att få tillgång till och använda denna webbplats samtycker användare till att följa och vara bundna av dessa Användarvillkor. Användare som inte accepterar dessa villkor bör omedelbart sluta använda webbplatsen."] },
+  { "title": "Användarkontos Ansvar", "content": ["Användare är ansvariga för att upprätthålla sekretessen för sina kontouppgifter. Alla aktiviteter som sker under en användares konto är helt användarens ansvar. Användare måste omedelbart meddela webbplatsens administratörer om obehörig kontotillgång."] },
+  { "title": "Ansvarsbegränsning", "content": ["Webbplatsen tillhandahåller innehåll 'i befintligt skick' utan några garantier. Webbplatsens ägare ansvarar inte för direkta, indirekta, tillfälliga, följd- eller straffrättsliga skador som uppstår från användares interaktion med plattformen."] },
+  { "title": "Riktlinjer för Användarbeteende", "content": ["Ladda inte upp skadligt eller illvilligt innehåll som kan skada webbplatsen eller dess användare.", "Respektera andra användares rättigheter.", "Undvik aktiviteter som kan störa webbplatsens funktionalitet.", "Följ tillämpliga lokala och internationella lagar."] },
+  { "title": "Ändringar av Villkor", "content": ["Webbplatsen förbehåller sig rätten att ändra dessa villkor när som helst. Fortsatt användning av webbplatsen efter ändringar utgör acceptans av de nya villkoren."] },
+  { "title": "Uppsägning Klausul", "content": ["Webbplatsen kan avsluta eller avbryta användarens åtkomst utan föregående meddelande vid överträdelse av dessa villkor eller av annan anledning som administratören anser lämplig."] },
+  { "title": "Tillämplig Lag", "content": ["Dessa villkor styrs av lagarna i den jurisdiktion där webbplatsen huvudsakligen drivs, utan hänsyn till principer om lagkonflikter."] }
+  ],
   tools: {
     textToSpeech: "Text till tal",
     translate: "Översätt",
@@ -3437,6 +3856,8 @@ const sv: Dictionary = {
     printPage: "Skriv ut denna sida",
     pageInfo: "Sidinformation",
   },
+  termsAndConditions: 'Villkor och bestämmelser',
+  close: 'Stäng',
   language: {
     selectLanguage: "Välj språk",
     description: "Välj ditt föredragna språk för att visa denna artikel.",
@@ -3476,15 +3897,16 @@ const sv: Dictionary = {
     help: 'Hjälp',
   },
   footer: {
+    pleaseLogin: 'Logga in för att använda denna funktion.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Texten är tillgänglig under",
+      "part2": "Creative Commons Erkännande-DelaLika 4.0 Internationell Licens",
+      "part3": "; ytterligare villkor kan gälla. Genom att använda denna webbplats godkänner du",
+      "part4": "Villkor",
+      "part5": "och",
+      "part6": "Integritetspolicy.",
+      "part7": "Alternipedia är ett öppen källkod, ideellt projekt."
+    },
     license: 'Licens',
     terms: 'Villkor',
     privacy: 'Integritet',
@@ -3543,6 +3965,16 @@ const sv: Dictionary = {
 
 // Norwegian dictionary
 const no: Dictionary = {
+  termsOfService: [
+    { "title": "Aksept av Vilkår", "content": ["Ved å få tilgang til og bruke denne nettsiden, samtykker brukere til å overholde og være bundet av disse tjenestevilkårene. Brukere som ikke godtar disse vilkårene bør umiddelbart slutte å bruke nettstedet."] },
+    { "title": "Brukerkontots Ansvar", "content": ["Brukere er ansvarlige for å opprettholde konfidensialiteten til kontoinformasjonen sin. All aktivitet som skjer under en brukers konto er fullt ansvar for kontoinnehaveren. Brukere må umiddelbart varsle nettstedets administratorer om uautorisert kontotilgang."] },
+    { "title": "Ansvarsbegrensning", "content": ["Nettstedet tilbyr innhold 'som det er' uten noen garantier. Nettstedets eiere er ikke ansvarlige for direkte, indirekte, tilfeldige, følgeskader eller straffeskader som oppstår fra brukeres interaksjoner med plattformen."] },
+    { "title": "Retningslinjer for Brukeratferd", "content": ["Ikke last opp skadelig eller ondsinnet innhold som kan skade nettstedet eller dets brukere.", "Respekter andre brukeres rettigheter.", "Unngå aktiviteter som kan forstyrre nettstedets funksjonalitet.", "Følg gjeldende lokale og internasjonale lover."] },
+    { "title": "Endringer i Vilkår", "content": ["Nettstedet forbeholder seg retten til å endre disse vilkårene når som helst. Fortsatt bruk av nettstedet etter endringer utgjør aksept av de nye vilkårene."] },
+    { "title": "Oppsigelsesklausul", "content": ["Nettstedet kan avslutte eller suspendere brukerens tilgang uten forhåndsvarsel ved brudd på disse vilkårene eller av annen grunn som administrasjonen finner passende."] },
+    { "title": "Governing Law", "content": ["Disse vilkårene styres av lovene i jurisdiksjonen der nettstedet hovedsakelig opererer, uavhengig av prinsipper om lovkonflikt."] }
+
+  ],
   tools: {
     textToSpeech: "Tekst til tale",
     translate: "Oversett",
@@ -3574,6 +4006,8 @@ const no: Dictionary = {
     nationalist: "Nasjonalistisk",
     title: "Lesebias",
   },
+  termsAndConditions: 'Vilkår og betingelser',
+  close: 'Lukk',
   common: {
     home: 'Hjem',
     about: 'Om',
@@ -3598,15 +4032,16 @@ const no: Dictionary = {
     help: 'Hjelp',
   },
   footer: {
+    pleaseLogin: 'Logg inn for å bruke denne funksjonen.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Teksten er tilgjengelig under",
+      "part2": "Creative Commons Navngivelse-DelPåSammeVilkår 4.0 Internasjonal Lisens",
+      "part3": "; tilleggsvilkår kan gjelde. Ved å bruke dette nettstedet godtar du",
+      "part4": "Vilkår og betingelser",
+      "part5": "og",
+      "part6": "Personvernregler.",
+      "part7": "Alternipedia er et åpen kildekode non-profit prosjekt."
+    },
     license: 'Lisens',
     terms: 'Vilkår',
     privacy: 'Personvern',
@@ -3665,6 +4100,14 @@ const no: Dictionary = {
 
 // Polish dictionary
 const pl: Dictionary = {
+  termsOfService: [{ "title": "Akceptacja Warunków", "content": ["Korzystając z tej witryny i ją odwiedzając, użytkownicy zgadzają się przestrzegać niniejszych Warunków Usługi i być nimi związani. Użytkownicy, którzy nie zgadzają się z tymi warunkami, powinni natychmiast zaprzestać korzystania z witryny."] },
+  { "title": "Obowiązki Konta Użytkownika", "content": ["Użytkownicy są odpowiedzialni za zachowanie poufności danych swojego konta. Wszelkie działania prowadzone na koncie użytkownika są wyłączną odpowiedzialnością właściciela konta. Użytkownicy powinni niezwłocznie powiadomić administratorów witryny o wszelkim nieautoryzowanym dostępie do konta."] },
+  { "title": "Ograniczenie Odpowiedzialności", "content": ["Witryna udostępnia treści 'takie, jakie są', bez żadnych gwarancji. Właściciele witryny nie ponoszą odpowiedzialności za jakiekolwiek bezpośrednie, pośrednie, przypadkowe, następcze lub karne szkody wynikające z interakcji użytkowników z platformą."] },
+  { "title": "Wytyczne dotyczące Zachowania Użytkowników", "content": ["Nie przesyłaj treści szkodliwych ani złośliwych, które mogą zaszkodzić witrynie lub jej użytkownikom.", "Szanuj prawa innych użytkowników.", "Unikaj działań, które mogą zakłócić funkcjonowanie witryny.", "Przestrzegaj obowiązujących przepisów prawa lokalnego i międzynarodowego."] },
+  { "title": "Zmiany Warunków", "content": ["Witryna zastrzega sobie prawo do zmiany niniejszych warunków w dowolnym momencie. Kontynuacja korzystania z witryny po wprowadzeniu zmian oznacza akceptację nowych warunków."] },
+  { "title": "Klauzula Rozwiązania", "content": ["Witryna może zakończyć lub zawiesić dostęp użytkownika bez wcześniejszego powiadomienia w przypadku naruszenia tych warunków lub z innego powodu uznanego za stosowny przez administrację."] },
+  { "title": "Prawo Właściwe", "content": ["Niniejsze warunki podlegają prawu jurysdykcji, w której witryna jest głównie prowadzona, bez względu na zasady kolizji praw."] }
+  ],
   tools: {
     textToSpeech: "Tekst na mowę",
     translate: "Tłumacz",
@@ -3681,6 +4124,8 @@ const pl: Dictionary = {
     printPage: "Wydrukuj tę stronę",
     pageInfo: "Informacje o stronie",
   },
+  termsAndConditions: 'Warunki i zasady',
+  close: 'Zamknij',
   language: {
     selectLanguage: "Wybierz język",
     description: "Wybierz preferowany język, aby wyświetlić ten artykuł.",
@@ -3720,15 +4165,16 @@ const pl: Dictionary = {
     help: 'Pomoc',
   },
   footer: {
+    pleaseLogin: 'Zaloguj się, aby skorzystać z tej funkcji.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tekst dostępny jest na",
+      "part2": "Licencji Creative Commons Uznanie Autorstwa-NaTychSamychWarunkach 4.0 Międzynarodowej",
+      "part3": "; mogą obowiązywać dodatkowe warunki. Korzystając z tej strony, zgadzasz się na",
+      "part4": "Warunki użytkowania",
+      "part5": "i",
+      "part6": "Politykę prywatności.",
+      "part7": "Alternipedia to projekt open-source non-profit."
+    },
     license: 'Licencja',
     terms: 'Warunki',
     privacy: 'Prywatność',
@@ -3787,6 +4233,16 @@ const pl: Dictionary = {
 
 // Thai dictionary
 const th: Dictionary = {
+  termsOfService: [
+    { "title": "การยอมรับข้อกำหนด", "content": ["การเข้าถึงและใช้เว็บไซต์นี้ ผู้ใช้ตกลงที่จะปฏิบัติตามและผูกพันตามข้อกำหนดในการให้บริการนี้ ผู้ใช้ที่ไม่เห็นด้วยกับข้อกำหนดนี้ควรหยุดใช้เว็บไซต์ทันที"] },
+    { "title": "ความรับผิดชอบบัญชีผู้ใช้", "content": ["ผู้ใช้มีหน้าที่ในการรักษาความลับของข้อมูลประจำตัวบัญชี กิจกรรมใด ๆ ที่เกิดขึ้นภายใต้บัญชีของผู้ใช้เป็นความรับผิดชอบของเจ้าของบัญชีเพียงผู้เดียว ผู้ใช้ต้องแจ้งผู้ดูแลเว็บไซต์ทันทีหากมีการเข้าถึงบัญชีโดยไม่ได้รับอนุญาต"] },
+    { "title": "ข้อจำกัดความรับผิด", "content": ["เว็บไซต์ให้เนื้อหา 'ตามสภาพ' โดยไม่มีการรับประกันใด ๆ เจ้าของเว็บไซต์ไม่รับผิดชอบต่อความเสียหายโดยตรง ทางอ้อม บังเอิญ ตามผลลัพธ์ หรือค่าปรับใด ๆ ที่เกิดจากการโต้ตอบของผู้ใช้กับแพลตฟอร์ม"] },
+    { "title": "แนวทางการประพฤติของผู้ใช้", "content": ["ห้ามอัปโหลดเนื้อหาที่เป็นอันตรายหรือมีเจตนาร้ายซึ่งอาจทำร้ายเว็บไซต์หรือผู้ใช้", "เคารพสิทธิของผู้ใช้อื่น", "หลีกเลี่ยงกิจกรรมที่อาจรบกวนการทำงานของเว็บไซต์", "ปฏิบัติตามกฎหมายท้องถิ่นและระหว่างประเทศที่เกี่ยวข้อง"] },
+    { "title": "การแก้ไขข้อกำหนด", "content": ["เว็บไซต์สงวนสิทธิ์ในการแก้ไขข้อกำหนดเหล่านี้ได้ตลอดเวลา การใช้งานเว็บไซต์ต่อหลังจากมีการเปลี่ยนแปลงถือเป็นการยอมรับข้อกำหนดใหม่"] },
+    { "title": "ข้อกำหนดการสิ้นสุด", "content": ["เว็บไซต์อาจยุติหรือระงับการเข้าถึงของผู้ใช้โดยไม่ต้องแจ้งล่วงหน้า หากมีการละเมิดข้อกำหนดเหล่านี้ หรือด้วยเหตุผลอื่นใดที่ผู้ดูแลเห็นว่าเหมาะสม"] },
+    { "title": "กฎหมายที่ใช้บังคับ", "content": ["ข้อกำหนดเหล่านี้อยู่ภายใต้กฎหมายของเขตอำนาจที่เว็บไซต์ดำเนินงานเป็นหลัก โดยไม่คำนึงถึงหลักการข้อพิพาททางกฎหมาย"] }
+
+  ],
   tools: {
     textToSpeech: "ข้อความเป็นเสียงพูด",
     translate: "แปล",
@@ -3835,6 +4291,8 @@ const th: Dictionary = {
     stayTuned: 'โปรดติดตาม',
     exampleArticle: 'ตัวอย่างบทความ:',
   },
+  termsAndConditions: 'ข้อกำหนดและเงื่อนไข',
+  close: 'ปิด',
   navigation: {
     aboutUs: 'เกี่ยวกับเรา',
     currentEvents: 'เหตุการณ์ปัจจุบัน',
@@ -3842,15 +4300,16 @@ const th: Dictionary = {
     help: 'ช่วยเหลือ',
   },
   footer: {
+    pleaseLogin: 'โปรดเข้าสู่ระบบเพื่อใช้ฟีเจอร์นี้',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "ข้อความสามารถใช้งานได้ภายใต้",
+      "part2": "สัญญาอนุญาตครีเอทีฟคอมมอนส์ อ้างอิง-สืบทอด 4.0 ระหว่างประเทศ",
+      "part3": "; อาจมีข้อกำหนดเพิ่มเติม การใช้เว็บไซต์นี้ถือว่าคุณยอมรับ",
+      "part4": "ข้อกำหนดและเงื่อนไข",
+      "part5": "และ",
+      "part6": "นโยบายความเป็นส่วนตัว",
+      "part7": "Alternipedia เป็นโครงการโอเพนซอร์สแบบไม่แสวงหากำไร"
+    },
     license: 'ใบอนุญาต',
     terms: 'เงื่อนไข',
     privacy: 'ความเป็นส่วนตัว',
@@ -3909,6 +4368,16 @@ const th: Dictionary = {
 
 // Ukrainian dictionary
 const uk: Dictionary = {
+  termsOfService: [
+    { "title": "Прийняття умов", "content": ["Отримуючи доступ до цього вебсайту та використовуючи його, користувачі погоджуються дотримуватися цих Умов обслуговування та бути зобов’язаними ними. Користувачі, які не погоджуються з цими умовами, повинні негайно припинити використання вебсайту."] },
+    { "title": "Обов’язки користувацького облікового запису", "content": ["Користувачі несуть відповідальність за збереження конфіденційності своїх облікових даних. Усі дії, що відбуваються під обліковим записом користувача, є виключною відповідальністю власника облікового запису. Користувачі повинні негайно повідомляти адміністраторів вебсайту про будь-який несанкціонований доступ до облікового запису."] },
+    { "title": "Обмеження відповідальності", "content": ["Вебсайт надає контент 'як є' без жодних гарантій. Власники вебсайту не несуть відповідальності за прямі, непрямі, випадкові, наслідкові або штрафні збитки, що виникають із взаємодії користувачів з платформою."] },
+    { "title": "Керівні принципи поведінки користувачів", "content": ["Не завантажуйте шкідливий або зловмисний контент, який може зашкодити вебсайту або його користувачам.", "Поважайте права інших користувачів.", "Уникайте дій, які можуть порушити функціональність вебсайту.", "Дотримуйтесь чинного місцевого та міжнародного законодавства."] },
+    { "title": "Зміни умов", "content": ["Вебсайт залишає за собою право змінювати ці умови в будь-який час. Продовження використання вебсайту після змін означає прийняття нових умов."] },
+    { "title": "Положення про припинення", "content": ["Вебсайт може припинити або призупинити доступ користувача без попереднього повідомлення у випадку порушення цих умов або з будь-якої іншої причини, яку адміністрація вважає доречною."] },
+    { "title": "Застосовне право", "content": ["Ці умови регулюються законами юрисдикції, де вебсайт переважно функціонує, без урахування принципів конфлікту законів."] }
+
+  ],
   tools: {
     textToSpeech: "Текст у мовлення",
     translate: "Перекласти",
@@ -3930,6 +4399,8 @@ const uk: Dictionary = {
     description: "Виберіть бажану мову для перегляду цієї статті.",
     notFound: "Не знайдено мов, що відповідають"
   },
+  termsAndConditions: 'Умови та положення',
+  close: 'Закрити',
   bias: {
     heading: "Що таке упередження?",
     explanation: "Упередження - це тенденція підтримувати або віддавати перевагу певній політичній точці зору, партії чи ідеї. Воно може впливати на те, як людина інтерпретує події, вибирає інформацію та представляє ідеї. Коли автор має політичне упередження, це може вплинути на їхню перспективу, впливаючи на те, які факти вони підкреслюють, як вони описують людей чи питання, і які висновки вони роблять. В результаті їхнє письмо може відображати їхні особисті переконання, а не повністю нейтральну або збалансовану точку зору.",
@@ -3964,15 +4435,16 @@ const uk: Dictionary = {
     help: 'Довідка',
   },
   footer: {
+    pleaseLogin: 'Увійдіть, щоб скористатися цією функцією.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Текст доступний за",
+      "part2": "Ліцензією Creative Commons Attribution-ShareAlike 4.0 International",
+      "part3": "; можуть застосовуватися додаткові умови. Використовуючи цей сайт, ви погоджуєтеся з",
+      "part4": "Умовами",
+      "part5": "та",
+      "part6": "Політикою конфіденційності.",
+      "part7": "Alternipedia – це відкритий проект без комерційної мети."
+    },
     license: 'Ліцензія',
     terms: 'Умови',
     privacy: 'Конфіденційність',
@@ -4031,6 +4503,14 @@ const uk: Dictionary = {
 
 // Romanian dictionary
 const ro: Dictionary = {
+  termsOfService: [{ "title": "Acceptarea Termenilor", "content": ["Accesând și utilizând acest site web, utilizatorii sunt de acord să respecte și să fie obligați de acești Termeni de Serviciu. Utilizatorii care nu sunt de acord cu acești termeni ar trebui să înceteze imediat utilizarea site-ului web."] },
+  { "title": "Responsabilitățile Contului Utilizatorului", "content": ["Utilizatorii sunt responsabili pentru menținerea confidențialității datelor contului lor. Orice activitate care are loc în cadrul contului unui utilizator este responsabilitatea exclusivă a deținătorului contului. Utilizatorii trebuie să informeze imediat administratorii site-ului web despre orice acces neautorizat la cont."] },
+  { "title": "Limitarea Răspunderii", "content": ["Site-ul web oferă conținut 'ca atare', fără niciun fel de garanție. Proprietarii site-ului nu sunt responsabili pentru daune directe, indirecte, accidentale, consecințe sau punitive care apar din interacțiunile utilizatorilor cu platforma."] },
+  { "title": "Ghiduri de Conduită a Utilizatorului", "content": ["Nu încărcați conținut dăunător sau rău intenționat care ar putea dăuna site-ului sau utilizatorilor săi.", "Respectați drepturile celorlalți utilizatori.", "Evitați activitățile care ar putea perturba funcționalitatea site-ului.", "Respectați legile locale și internaționale aplicabile."] },
+  { "title": "Modificări ale Termenilor", "content": ["Site-ul își rezervă dreptul de a modifica acești termeni în orice moment. Continuarea utilizării site-ului după modificări constituie acceptarea noilor termeni."] },
+  { "title": "Clauza de Încheiere", "content": ["Site-ul poate întrerupe sau suspenda accesul utilizatorului fără notificare prealabilă în cazul încălcării acestor termeni sau pentru orice alt motiv considerat adecvat de către administrație."] },
+  { "title": "Legea Aplicabilă", "content": ["Acești termeni sunt guvernați de legile jurisdicției în care site-ul este operat în principal, fără a ține cont de principiile conflictului de legi."] }
+  ],
   tools: {
     textToSpeech: "Text către vorbire",
     translate: "Traduce",
@@ -4047,6 +4527,8 @@ const ro: Dictionary = {
     printPage: "Imprimă această pagină",
     pageInfo: "Informații despre pagină",
   },
+  termsAndConditions: 'Termeni și condiții',
+  close: 'Închide',
   language: {
     selectLanguage: "Alegeți limba",
     description: "Selectați limba preferată pentru vizualizarea acestui articol.",
@@ -4086,15 +4568,16 @@ const ro: Dictionary = {
     help: 'Ajutor',
   },
   footer: {
+    pleaseLogin: 'Vă rugăm să vă conectați pentru a utiliza această funcție.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Textul este disponibil sub",
+      "part2": "Licența Creative Commons Atribuire-Distribuire în condiții identice 4.0 Internațional",
+      "part3": "; se pot aplica termeni suplimentari. Prin utilizarea acestui site, sunteți de acord cu",
+      "part4": "Termenii și Condițiile",
+      "part5": "și",
+      "part6": "Politica de Confidențialitate.",
+      "part7": "Alternipedia este un proiect open-source non-profit."
+    },
     license: 'Licență',
     terms: 'Termeni',
     privacy: 'Confidențialitate',
@@ -4153,6 +4636,14 @@ const ro: Dictionary = {
 
 // Czech dictionary
 const cs: Dictionary = {
+  termsOfService: [{ "title": "Přijetí Podmínek", "content": ["Přístupem a používáním tohoto webu uživatelé souhlasí s dodržováním a zavázáním se těmito Podmínkami služby. Uživatelé, kteří s těmito podmínkami nesouhlasí, by měli okamžitě přestat web používat."] },
+  { "title": "Odpovědnost Uživatelského Účtu", "content": ["Uživatelé jsou odpovědní za zachování důvěrnosti údajů svého účtu. Veškeré aktivity prováděné pod účtem uživatele jsou výhradní odpovědností vlastníka účtu. Uživatelé musí okamžitě informovat správce webu o jakémkoli neoprávněném přístupu k účtu."] },
+  { "title": "Omezení Odpovědnosti", "content": ["Web poskytuje obsah 'jak je', bez jakýchkoli záruk. Majitelé webu nenesou odpovědnost za přímé, nepřímé, náhodné, následné nebo trestní škody vzniklé z interakcí uživatelů s platformou."] },
+  { "title": "Pokyny pro Chování Uživatele", "content": ["Neposílejte škodlivý nebo škodící obsah, který by mohl poškodit web nebo jeho uživatele.", "Respektujte práva ostatních uživatelů.", "Vyvarujte se aktivit, které by mohly narušit funkčnost webu.", "Dodržujte platné místní a mezinárodní zákony."] },
+  { "title": "Změny Podmínek", "content": ["Web si vyhrazuje právo tyto podmínky kdykoli změnit. Pokračující používání webu po změnách znamená přijetí nových podmínek."] },
+  { "title": "Ukončovací Klauzule", "content": ["Web může ukončit nebo pozastavit přístup uživatele bez předchozího upozornění v případě porušení těchto podmínek nebo z jiného důvodu, který správa považuje za vhodný."] },
+  { "title": "Rozhodné Právo", "content": ["Tyto podmínky se řídí zákony jurisdikce, ve které je web primárně provozován, bez ohledu na principy kolize zákonů."] }
+  ],
   tools: {
     textToSpeech: "Text na řeč",
     translate: "Přeložit",
@@ -4169,6 +4660,8 @@ const cs: Dictionary = {
     printPage: "Vytisknout tuto stránku",
     pageInfo: "Informace o stránce",
   },
+  termsAndConditions: 'Podmínky služby',
+  close: 'Zavřít',
   language: {
     selectLanguage: "Vyberte jazyk",
     description: "Vyberte si preferovaný jazyk pro zobrazení tohoto článku.",
@@ -4208,20 +4701,21 @@ const cs: Dictionary = {
     help: 'Nápověda',
   },
   footer: {
+    pleaseLogin: 'Přihlaste se, abyste mohli tuto funkci používat.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Text je dostupný pod",
+      "part2": "Licencí Creative Commons Uveďte autora-Zachovejte licenci 4.0 Mezinárodní",
+      "part3": "; mohou platit další podmínky. Používáním tohoto webu souhlasíte s",
+      "part4": "Podmínkami",
+      "part5": "a",
+      "part6": "Zásadami ochrany osobních údajů.",
+      "part7": "Alternipedia je open-source neziskový projekt."
+    },
     license: 'Licence',
     terms: 'Podmínky',
     privacy: 'Soukromí',
     contact: 'Kontakt',
-    disclaimers: 'Prohlášení',  
+    disclaimers: 'Prohlášení',
     codeOfConduct: 'Kodex chování',
     statistics: 'Statistiky',
     cookieStatement: 'Prohlášení o cookies',
@@ -4275,6 +4769,14 @@ const cs: Dictionary = {
 
 // Hungarian dictionary
 const hu: Dictionary = {
+  termsOfService: [{ "title": "A Feltételek Elfogadása", "content": ["A weboldal elérésével és használatával a felhasználók elfogadják, hogy betartják és kötelezőnek tartják ezeket a Szolgáltatási Feltételeket. Azoknak a felhasználóknak, akik nem értenek egyet ezekkel a feltételekkel, azonnal fel kell hagyniuk a weboldal használatával."] },
+  { "title": "Felhasználói Fiók Felelőssége", "content": ["A felhasználók felelősek fiókjuk hitelesítő adatainak titokban tartásáért. A felhasználói fiók alatt végzett tevékenységek kizárólag a fiók tulajdonosának felelőssége. A felhasználóknak azonnal értesíteniük kell a weboldal adminisztrátorait minden jogosulatlan fiókhozzáférésről."] },
+  { "title": "Felelősség Korlátozása", "content": ["A weboldal az „ahogy van” tartalmat nyújt bármilyen garancia nélkül. A weboldal tulajdonosai nem vállalnak felelősséget közvetlen, közvetett, véletlenszerű, következményes vagy büntető jellegű károkért, amelyek a felhasználók interakcióiból erednek a platformmal."] },
+  { "title": "Felhasználói Magatartási Irányelvek", "content": ["Ne töltsön fel káros vagy rosszindulatú tartalmat, amely ártana a weboldalnak vagy felhasználóinak.", "Tisztelje más felhasználók jogait.", "Kerülje azokat a tevékenységeket, amelyek megzavarhatják a weboldal működését.", "Tartsa be az alkalmazandó helyi és nemzetközi törvényeket."] },
+  { "title": "A Feltételek Módosítása", "content": ["A weboldal fenntartja a jogot ezeknek a feltételeknek a bármikor történő módosítására. A weboldal használatának folytatása a módosítások után az új feltételek elfogadását jelenti."] },
+  { "title": "Felmondási Záradék", "content": ["A weboldal megszüntetheti vagy felfüggesztheti a felhasználói hozzáférést előzetes értesítés nélkül, amennyiben a feltételeket megsértik, vagy az adminisztráció más alkalmasnak tartott okból."] },
+  { "title": "Irányadó Jog", "content": ["Ezeket a feltételeket annak az illetékességi területnek a törvényei szabályozzák, ahol a weboldal elsősorban működik, a jogi ütközési elvektől függetlenül."] }
+  ],
   tools: {
     textToSpeech: "Szövegfelolvasás",
     translate: "Fordítás",
@@ -4291,6 +4793,8 @@ const hu: Dictionary = {
     printPage: "Oldal nyomtatása",
     pageInfo: "Oldal információ",
   },
+  termsAndConditions: 'Felhasználási feltételek',
+  close: 'Bezárás',
   language: {
     selectLanguage: "Válasszon nyelvet",
     description: "Válassza ki a kívánt nyelvet a cikk megtekintéséhez.",
@@ -4330,15 +4834,16 @@ const hu: Dictionary = {
     help: 'Súgó',
   },
   footer: {
+    pleaseLogin: 'Kérjük, jelentkezzen be a funkció használatához.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "A szöveg elérhető a",
+      "part2": "Creative Commons Nevezd meg!-Így add tovább 4.0 Nemzetközi Licenc alatt",
+      "part3": "; további feltételek is alkalmazhatók. A webhely használatával Ön elfogadja a",
+      "part4": "Felhasználási feltételeket",
+      "part5": "és",
+      "part6": "Adatvédelmi irányelveket.",
+      "part7": "Az Alternipedia egy nyílt forráskódú, nonprofit projekt."
+    },
     license: 'Licenc',
     terms: 'Feltételek',
     privacy: 'Adatvédelem',
@@ -4397,6 +4902,14 @@ const hu: Dictionary = {
 
 // Finnish dictionary
 const fi: Dictionary = {
+  termsOfService: [{ "title": "Ehtojen Hyväksyminen", "content": ["Käyttämällä tätä verkkosivustoa käyttäjät hyväksyvät noudattavansa näitä Palveluehtoja ja sitoutuvat niihin. Käyttäjien, jotka eivät hyväksy näitä ehtoja, tulee lopettaa sivuston käyttö välittömästi."] },
+  { "title": "Käyttäjätilin Vastuut", "content": ["Käyttäjät ovat vastuussa tilinsä tunnistetietojen salassapidosta. Kaikki tilin alla tapahtuvat toiminnot ovat tilin haltijan yksinomaista vastuuta. Käyttäjien tulee välittömästi ilmoittaa verkkosivuston ylläpitäjille kaikista luvattomista tilin käyttöyrityksistä."] },
+  { "title": "Vastuun Rajoitus", "content": ["Verkkosivusto tarjoaa sisällön 'sellaisena kuin se on' ilman takuita. Verkkosivuston omistajat eivät ole vastuussa suorista, epäsuorista, satunnaisista, välillisistä tai rangaistuksellisista vahingoista, jotka johtuvat käyttäjien vuorovaikutuksesta alustan kanssa."] },
+  { "title": "Käyttäjän Käyttäytymisohjeet", "content": ["Älä lataa haitallista tai vahingollista sisältöä, joka voi vahingoittaa verkkosivustoa tai sen käyttäjiä.", "Kunnioita muiden käyttäjien oikeuksia.", "Vältä toimintoja, jotka voivat häiritä verkkosivuston toimintaa.", "Noudata sovellettavia paikallisia ja kansainvälisiä lakeja."] },
+  { "title": "Ehtojen Muutokset", "content": ["Verkkosivusto pidättää oikeuden muuttaa näitä ehtoja milloin tahansa. Jatkamalla sivuston käyttöä muutosten jälkeen hyväksyt uudet ehdot."] },
+  { "title": "Päättämislauseke", "content": ["Verkkosivusto voi lopettaa tai keskeyttää käyttäjän pääsyn ilman ennakkoilmoitusta, jos näitä ehtoja rikotaan tai muusta hallinnon sopivaksi katsomasta syystä."] },
+  { "title": "Sovellettava Laki", "content": ["Näitä ehtoja säätelevät sen lainkäyttöalueen lait, jossa verkkosivustoa pääasiassa ylläpidetään, riippumatta lainkonfliktiperiaatteista."] }
+  ],
   tools: {
     textToSpeech: "Teksti puheeksi",
     translate: "Käännä",
@@ -4413,6 +4926,8 @@ const fi: Dictionary = {
     printPage: "Tulosta tämä sivu",
     pageInfo: "Sivun tiedot",
   },
+  termsAndConditions: 'Käyttöehdot',
+  close: 'Sulje',
   language: {
     selectLanguage: "Valitse kieli",
     description: "Valitse haluamasi kieli tämän artikkelin katselemiseen.",
@@ -4452,15 +4967,16 @@ const fi: Dictionary = {
     help: 'Ohje',
   },
   footer: {
+    pleaseLogin: 'Kirjaudu sisään käyttääksesi tätä ominaisuutta.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Teksti on saatavilla seuraavan lisenssin alaisena:",
+      "part2": "Creative Commons Nimeä-JaaSamoin 4.0 Kansainvälinen",
+      "part3": "; mahdollisia lisäehtoja voi olla. Käyttämällä tätä sivustoa hyväksyt",
+      "part4": "Käyttöehdot",
+      "part5": "ja",
+      "part6": "Tietosuojakäytännön.",
+      "part7": "Alternipedia on avoimen lähdekoodin voittoa tavoittelematon projekti."
+    },
     license: 'Lisenssi',
     terms: 'Ehdot',
     privacy: 'Tietosuoja',
@@ -4519,6 +5035,14 @@ const fi: Dictionary = {
 
 // Danish dictionary
 const da: Dictionary = {
+  termsOfService: [{ "title": "Accept af Vilkår", "content": ["Ved at få adgang til og bruge dette websted accepterer brugere at overholde og være bundet af disse Servicevilkår. Brugere, der ikke accepterer disse vilkår, bør straks stoppe med at bruge webstedet."] },
+  { "title": "Brugerkontoansvar", "content": ["Brugere er ansvarlige for at opretholde fortroligheden af deres kontooplysninger. Alle aktiviteter, der finder sted under en brugers konto, er udelukkende kontoindehaverens ansvar. Brugere skal straks underrette webstedets administratorer om uautoriseret kontoadgang."] },
+  { "title": "Ansvarsbegrænsning", "content": ["Webstedet leverer indhold 'som det er' uden nogen garantier. Webstedets ejere er ikke ansvarlige for direkte, indirekte, tilfældige, følge- eller strafbare skader, der opstår som følge af brugernes interaktion med platformen."] },
+  { "title": "Retningslinjer for Brugers Adfærd", "content": ["Upload ikke skadeligt eller ondsindet indhold, der kan skade webstedet eller dets brugere.", "Respekter andre brugeres rettigheder.", "Undgå aktiviteter, der kan forstyrre webstedets funktionalitet.", "Overhold gældende lokale og internationale love."] },
+  { "title": "Ændringer af Vilkår", "content": ["Webstedet forbeholder sig retten til at ændre disse vilkår til enhver tid. Fortsat brug af webstedet efter ændringer udgør accept af de nye vilkår."] },
+  { "title": "Opsigelsesklausul", "content": ["Webstedet kan afslutte eller suspendere brugerens adgang uden forudgående varsel, hvis disse vilkår overtrædes, eller af anden grund, som administrationen finder passende."] },
+  { "title": "Gældende Lov", "content": ["Disse vilkår er underlagt lovgivningen i den jurisdiktion, hvor webstedet primært drives, uden hensyntagen til principper om lovkonflikt."] }
+  ],
   tools: {
     textToSpeech: "Tekst til tale",
     translate: "Oversæt",
@@ -4540,6 +5064,8 @@ const da: Dictionary = {
     description: "Vælg dit foretrukne sprog til at se denne artikel.",
     notFound: "Ingen sprog fundet, der matcher"
   },
+  termsAndConditions: 'Servicevilkår',
+  close: 'Luk',
   bias: {
     heading: "Hvad er en bias?",
     explanation: "En bias er en tendens til at støtte eller favorisere et bestemt politisk synspunkt, parti eller idé. Det kan påvirke, hvordan en person fortolker begivenheder, vælger information og præsenterer ideer. Når en forfatter har en politisk bias, kan det påvirke deres perspektiv ved at påvirke, hvilke fakta de fremhæver, hvordan de beskriver mennesker eller emner, og hvilke konklusioner de drager. Som et resultat kan deres skrivning afspejle deres personlige overbevisninger snarere end et helt neutralt eller balanceret synspunkt.",
@@ -4574,15 +5100,16 @@ const da: Dictionary = {
     help: 'Hjælp',
   },
   footer: {
+    pleaseLogin: 'Log ind for at bruge denne funktion.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Teksten er tilgængelig under",
+      "part2": "Creative Commons Navngivelse-DelPåSammeVilkår 4.0 International Licens",
+      "part3": "; yderligere betingelser kan gælde. Ved at bruge dette websted accepterer du",
+      "part4": "Vilkår og betingelser",
+      "part5": "og",
+      "part6": "Privatlivspolitik.",
+      "part7": "Alternipedia er et open source non-profit projekt."
+    },
     license: 'Licens',
     terms: 'Vilkår',
     privacy: 'Privatliv',
@@ -4641,6 +5168,16 @@ const da: Dictionary = {
 
 // Bulgarian dictionary
 const bg: Dictionary = {
+  termsOfService: [
+    { "title": "Приемане на условията", "content": ["Достъпът и използването на този уебсайт означава, че потребителите се съгласяват да спазват тези Условия за ползване. Потребителите, които не са съгласни с тези условия, трябва незабавно да спрат да използват сайта."] },
+    { "title": "Отговорности на потребителския акаунт", "content": ["Потребителите са отговорни за поддържането на поверителността на данните на своя акаунт. Всички дейности, извършени под акаунта на потребителя, са изключителна отговорност на собственика на акаунта. Потребителите трябва незабавно да уведомят администраторите на сайта за всякакъв неоторизиран достъп."] },
+    { "title": "Ограничение на отговорността", "content": ["Уебсайтът предоставя съдържание 'както е' без каквито и да е гаранции. Собствениците на сайта не носят отговорност за директни, непреки, случайни, последващи или наказателни щети, произтичащи от взаимодействията на потребителите с платформата."] },
+    { "title": "Насоки за поведение на потребителите", "content": ["Не качвайте вредно или злонамерено съдържание, което може да навреди на сайта или потребителите.", "Уважавайте правата на другите потребители.", "Избягвайте дейности, които могат да нарушат функционалността на сайта.", "Спазвайте приложимите местни и международни закони."] },
+    { "title": "Промени в условията", "content": ["Сайтът си запазва правото да променя тези условия по всяко време. Продължаването на използването на сайта след промени се счита за приемане на новите условия."] },
+    { "title": "Клауза за прекратяване", "content": ["Сайтът може да прекрати или спре достъпа на потребителя без предизвестие при нарушаване на тези условия или по друга причина, която администрацията счита за подходяща."] },
+    { "title": "Приложимо право", "content": ["Тези условия се уреждат от законите на юрисдикцията, в която сайтът се управлява основно, независимо от принципите на конфликт на закони."] }
+
+  ],
   tools: {
     textToSpeech: "Текст на реч",
     translate: "Превод",
@@ -4657,6 +5194,8 @@ const bg: Dictionary = {
     printPage: "Отпечатай тази страница",
     pageInfo: "Информация за страницата",
   },
+  termsAndConditions: 'Условия за ползване',
+  close: 'Затвори',
   language: {
     selectLanguage: "Изберете език",
     description: "Изберете предпочитания език за преглед на тази статия.",
@@ -4696,15 +5235,16 @@ const bg: Dictionary = {
     help: 'Помощ',
   },
   footer: {
+    pleaseLogin: 'Моля, влезте, за да използвате тази функция.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Текстът е наличен под",
+      "part2": "Лиценз Creative Commons Признание-Споделяне на равни условия 4.0 Международен",
+      "part3": "; могат да се прилагат допълнителни условия. Като използвате този сайт, вие се съгласявате с",
+      "part4": "Общи условия",
+      "part5": "и",
+      "part6": "Политика за поверителност.",
+      "part7": "Alternipedia е проект с отворен код и с нестопанска цел."
+    },
     license: 'Лиценз',
     terms: 'Условия',
     privacy: 'Поверителност',
@@ -4763,6 +5303,16 @@ const bg: Dictionary = {
 
 // Slovak dictionary
 const sk: Dictionary = {
+  termsOfService: [
+    { "title": "Prijatie podmienok", "content": ["Prístupom a používaním tejto webovej stránky používatelia súhlasia s dodržiavaním týchto Podmienok služby a ich záväznosťou. Používatelia, ktorí s týmito podmienkami nesúhlasia, by mali okamžite prestať používať stránku."] },
+    { "title": "Zodpovednosti používateľského účtu", "content": ["Používatelia sú zodpovední za udržiavanie dôvernosti svojich prihlasovacích údajov. Všetky aktivity vykonané pod účtom používateľa sú výhradnou zodpovednosťou majiteľa účtu. Používatelia musia okamžite informovať administrátorov webu o neautorizovanom prístupe k účtu."] },
+    { "title": "Obmedzenie zodpovednosti", "content": ["Webová stránka poskytuje obsah 'taký, aký je', bez akýchkoľvek záruk. Majitelia webu nenesú zodpovednosť za priame, nepriame, náhodné, následné alebo trestné škody vyplývajúce z interakcií používateľov s platformou."] },
+    { "title": "Pokyny pre správanie používateľov", "content": ["Nezverejňujte škodlivý alebo zlomyseľný obsah, ktorý by mohol poškodiť web alebo jeho používateľov.", "Rešpektujte práva ostatných používateľov.", "Vyhnite sa aktivitám, ktoré by mohli narušiť funkčnosť webu.", "Dodržiavajte platné miestne a medzinárodné zákony."] },
+    { "title": "Zmeny podmienok", "content": ["Web si vyhradzuje právo kedykoľvek tieto podmienky zmeniť. Pokračovanie v používaní webu po zmenách znamená prijatie nových podmienok."] },
+    { "title": "Ukončovacia klauzula", "content": ["Web môže ukončiť alebo pozastaviť prístup používateľa bez predchádzajúceho upozornenia pri porušení týchto podmienok alebo z iného dôvodu, ktorý správa považuje za vhodný."] },
+    { "title": "Rozhodné právo", "content": ["Tieto podmienky sa riadia zákonmi jurisdikcie, v ktorej je web primárne prevádzkovaný, bez ohľadu na princípy kolízie zákonov."] }
+
+  ],
   tools: {
     textToSpeech: "Text na reč",
     translate: "Preložiť",
@@ -4779,6 +5329,8 @@ const sk: Dictionary = {
     printPage: "Vytlačiť túto stránku",
     pageInfo: "Informácie o stránke",
   },
+  termsAndConditions: 'Podmienky služby',
+  close: 'Zavrieť',
   language: {
     selectLanguage: "Vyberte jazyk",
     description: "Vyberte si preferovaný jazyk na zobrazenie tohto článku.",
@@ -4818,15 +5370,16 @@ const sk: Dictionary = {
     help: 'Pomoc',
   },
   footer: {
+    pleaseLogin: 'Prihláste sa, aby ste mohli používať túto funkciu.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Text je k dispozícii podľa",
+      "part2": "Licencie Creative Commons Uveďte autora-Zdieľajte rovnakým spôsobom 4.0 Medzinárodná",
+      "part3": "; môžu platiť ďalšie podmienky. Používaním tejto stránky súhlasíte s",
+      "part4": "Podmienkami",
+      "part5": "a",
+      "part6": "Zásadami ochrany osobných údajov.",
+      "part7": "Alternipedia je open-source neziskový projekt."
+    },
     license: 'Licencia',
     terms: 'Podmienky',
     privacy: 'Súkromie',
@@ -4885,6 +5438,16 @@ const sk: Dictionary = {
 
 // Croatian dictionary 
 const hr: Dictionary = {
+  termsOfService: [
+    { "title": "Prihvaćanje uvjeta", "content": ["Pristupom i korištenjem ove web stranice, korisnici se slažu pridržavati ovih Uvjeta pružanja usluge. Korisnici koji se ne slažu s ovim uvjetima trebali bi odmah prestati koristiti web stranicu."] },
+    { "title": "Odgovornosti korisničkog računa", "content": ["Korisnici su odgovorni za održavanje povjerljivosti svojih podataka za prijavu. Sve aktivnosti pod korisničkim računom su isključiva odgovornost vlasnika računa. Korisnici moraju odmah obavijestiti administratore web stranice o bilo kojem neovlaštenom pristupu računu."] },
+    { "title": "Ograničenje odgovornosti", "content": ["Web stranica pruža sadržaj 'kakav jest' bez ikakvih jamstava. Vlasnici web stranice nisu odgovorni za izravne, neizravne, slučajne, posljedice ili kaznene štete koje proizlaze iz interakcija korisnika s platformom."] },
+    { "title": "Smjernice za ponašanje korisnika", "content": ["Ne postavljajte štetan ili zlonamjeran sadržaj koji bi mogao naštetiti web stranici ili njezinim korisnicima.", "Poštujte prava drugih korisnika.", "Izbjegavajte aktivnosti koje bi mogle ometati funkcionalnost web stranice.", "Poštujte važeće lokalne i međunarodne zakone."] },
+    { "title": "Izmjene uvjeta", "content": ["Web stranica zadržava pravo mijenjati ove uvjete u bilo kojem trenutku. Nastavak korištenja web stranice nakon izmjena smatra se prihvaćanjem novih uvjeta."] },
+    { "title": "Klauzula o prekidu", "content": ["Web stranica može prekinuti ili suspendirati pristup korisnika bez prethodne obavijesti u slučaju kršenja ovih uvjeta ili iz drugog razloga koji administracija smatra prikladnim."] },
+    { "title": "Mjerodavno pravo", "content": ["Ovi uvjeti podliježu zakonima jurisdikcije u kojoj se web stranica primarno upravlja, bez obzira na načela sukoba zakona."] }
+
+  ],
   tools: {
     textToSpeech: "Tekst u govor",
     translate: "Prevedi",
@@ -4901,6 +5464,8 @@ const hr: Dictionary = {
     printPage: "Ispiši ovu stranicu",
     pageInfo: "Informacije o stranici",
   },
+  termsAndConditions: 'Uvjeti pružanja usluge',
+  close: 'Zatvori',
   language: {
     selectLanguage: "Odaberite jezik",
     description: "Odaberite željeni jezik za prikaz ovog članka.",
@@ -4940,15 +5505,16 @@ const hr: Dictionary = {
     help: 'Pomoć',
   },
   footer: {
+    pleaseLogin: 'Prijavite se da biste koristili ovu značajku.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tekst je dostupan pod",
+      "part2": "Creative Commons Licencom Priznanje autorstva-Dijeli pod istim uvjetima 4.0 Internacionalna",
+      "part3": "; mogu se primijeniti dodatni uvjeti. Korištenjem ove stranice prihvaćate",
+      "part4": "Uvjeti korištenja",
+      "part5": "i",
+      "part6": "Politiku privatnosti.",
+      "part7": "Alternipedia je open-source neprofitni projekt."
+    },
     license: 'Licenca',
     terms: 'Uvjeti',
     privacy: 'Privatnost',
@@ -5007,6 +5573,21 @@ const hr: Dictionary = {
 
 // Lithuanian dictionary
 const lt: Dictionary = {
+  termsOfService: [{ title: 'Sąlygų priėmimas', content: ["Naudodamiesi šia svetaine, vartotojai sutinka laikytis šių paslaugų teikimo sąlygų. Nesutinkantys su šiomis sąlygomis turėtų nedelsdami nutraukti svetainės naudojimą."] },
+  { title: 'Vartotojo paskyros atsakomybė', content: ["Vartotojai yra atsakingi už savo paskyros duomenų konfidencialumą. Bet kokia veikla, vykdoma per vartotojo paskyrą, yra vien vartotojo atsakomybė. Apie bet kokį neteisėtą prisijungimą turi būti nedelsiant pranešta svetainės administracijai."] },
+  { title: 'Atsakomybės apribojimas', content: ['Svetainės turinys pateikiamas „kaip yra“ be jokių garantijų. Svetainės savininkai neatsako už tiesioginius, netiesioginius, atsitiktinius, pasekminius ar baudžiamuosius nuostolius, kylančius dėl vartotojų sąveikos su platforma.'] },
+  {
+    title: 'Vartotojo elgesio gairės', content: [
+      'Nepateikti kenksmingo ar kenkėjiško turinio, kuris galėtų pakenkti svetainei ar jos vartotojams.',
+      'Gerbti kitų vartotojų teises.',
+      'Vengti veiksmų, galinčių sutrikdyti svetainės veikimą.',
+      'Laikytis galiojančių vietos ir tarptautinių įstatymų.',
+    ]
+  },
+  { title: 'Sąlygų keitimai', content: ['Svetainė pasilieka teisę bet kada keisti šias sąlygas. Toliau naudojantis svetaine po pakeitimų laikoma, kad vartotojas sutinka su naujomis sąlygomis.'] },
+  { title: 'Nutraukimo nuostata', content: ['Svetainė gali be įspėjimo sustabdyti arba nutraukti vartotojo prieigą, jei pažeidžiamos šios sąlygos ar dėl kitų priežasčių, kurias administracija laiko tinkamomis.'] },
+  { title: 'Taikytina teisė', content: ['Šioms sąlygoms taikomi tos jurisdikcijos įstatymai, kurioje svetainė daugiausia veikia, neatsižvelgiant į įstatymų kolizijos principus.'] },
+  ],
   tools: {
     textToSpeech: "Teksto skaitymas balsu",
     translate: "Versti",
@@ -5023,6 +5604,8 @@ const lt: Dictionary = {
     printPage: "Spausdinti puslapį",
     pageInfo: "Puslapio informacija",
   },
+  termsAndConditions: 'Paslaugų teikimo sąlygos',
+  close: 'Uždaryti',
   language: {
     selectLanguage: "Pasirinkite kalbą",
     description: "Pasirinkite pageidaujamą kalbą šiam straipsniui peržiūrėti.",
@@ -5063,15 +5646,16 @@ const lt: Dictionary = {
     help: 'Pagalba',
   },
   footer: {
+    pleaseLogin: 'Prisijunkite, kad galėtumėte naudotis šia funkcija.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tekstas prieinamas pagal",
+      "part2": "Creative Commons Pripažinimas-Apibendrinimas 4.0 Tarptautinė licencija",
+      "part3": "; gali būti taikomos papildomos sąlygos. Naudodamiesi šia svetaine, jūs sutinkate su",
+      "part4": "Sąlygomis",
+      "part5": "ir",
+      "part6": "Privatumo politika.",
+      "part7": "Alternipedia yra atviro kodo ne pelno projektas."
+    },
     license: 'Licencija',
     terms: 'Taisyklės',
     privacy: 'Privatumas',
@@ -5131,6 +5715,21 @@ const lt: Dictionary = {
 
 // Slovenian dictionary
 const sl: Dictionary = {
+  termsOfService: [{ title: 'Sprejem pogojev', content: ["Z dostopom do te spletne strani in njeno uporabo se uporabniki strinjajo, da bodo spoštovali te pogoje uporabe. Uporabniki, ki se s pogoji ne strinjajo, morajo takoj prenehati z uporabo strani."] },
+  { title: 'Odgovornost uporabniškega računa', content: ["Uporabniki so odgovorni za varovanje zaupnosti svojih prijavnih podatkov. Vsaka dejavnost, ki se izvaja pod uporabniškim računom, je izključna odgovornost imetnika računa. O kakršnem koli nepooblaščenem dostopu je treba takoj obvestiti administratorje spletne strani."] },
+  { title: 'Omejitev odgovornosti', content: ['Spletna stran zagotavlja vsebino »takšno, kot je«, brez kakršnih koli jamstev. Lastniki spletne strani ne odgovarjajo za neposredno, posredno, naključno, posledično ali kaznovalno škodo, ki izhaja iz interakcije uporabnikov s platformo.'] },
+  {
+    title: 'Smernice vedenja uporabnikov', content: [
+      'Ne nalagajte škodljive ali zlonamerne vsebine, ki bi lahko škodovala spletni strani ali njenim uporabnikom.',
+      'Spoštujte pravice drugih uporabnikov.',
+      'Izogibajte se dejavnostim, ki bi lahko motile delovanje spletne strani.',
+      'Spoštujte veljavne lokalne in mednarodne zakone.',
+    ]
+  },
+  { title: 'Spremembe pogojev', content: ['Spletna stran si pridržuje pravico, da kadarkoli spremeni te pogoje. Nadaljnja uporaba spletne strani po spremembah pomeni sprejem novih pogojev.'] },
+  { title: 'Klavzula o prenehanju', content: ['Spletna stran lahko brez predhodnega obvestila prekine ali suspendira dostop uporabnika zaradi kršitev teh pogojev ali iz drugih razlogov, ki jih uprava šteje za primerne.'] },
+  { title: 'Pravo, ki se uporablja', content: ['Ti pogoji se urejajo po zakonih jurisdikcije, v kateri spletna stran večinoma deluje, ne glede na kolizijska načela.'] },
+  ],
   tools: {
     textToSpeech: "Pretvorba besedila v govor",
     translate: "Prevedi",
@@ -5147,6 +5746,8 @@ const sl: Dictionary = {
     printPage: "Natisni stran",
     pageInfo: "Informacije o strani",
   },
+  termsAndConditions: 'Pogoji storitve',
+  close: 'Zapri',
   language: {
     selectLanguage: "Izberite jezik",
     description: "Izberite želeni jezik za ogled tega članka.",
@@ -5187,15 +5788,16 @@ const sl: Dictionary = {
     help: 'Pomoč',
   },
   footer: {
+    pleaseLogin: 'Prijavite se, da boste lahko uporabljali to funkcijo.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Besedilo je na voljo pod",
+      "part2": "Creative Commons Licenco Priznanje avtorstva-Deljenje pod enakimi pogoji 4.0 Mednarodna",
+      "part3": "; lahko veljajo dodatni pogoji. Z uporabo tega spletnega mesta se strinjate z",
+      "part4": "Pogoji in določili",
+      "part5": "in",
+      "part6": "Politiko zasebnosti.",
+      "part7": "Alternipedia je odprtokodni neprofitni projekt."
+    },
     license: 'Licenca',
     terms: 'Pogoji uporabe',
     privacy: 'Zasebnost',
@@ -5203,7 +5805,7 @@ const sl: Dictionary = {
     disclaimers: 'Omejitev odgovornosti',
     codeOfConduct: 'Kodeks ravnanja',
     statistics: 'Statistika',
-    cookieStatement: 'Izjava o piškotkih',   
+    cookieStatement: 'Izjava o piškotkih',
     developers: 'Razvijalci',
   },
   notFound: {
@@ -5255,6 +5857,24 @@ const sl: Dictionary = {
 
 // Latvian dictionary
 const lv: Dictionary = {
+  termsOfService: [
+    { title: 'Noteikumu pieņemšana', content: ["Izmantojot šo vietni, lietotāji piekrīt ievērot šos pakalpojumu noteikumus. Lietotāji, kuri nepiekrīt šiem noteikumiem, nekavējoties jāpārtrauc vietnes izmantošana."] },
+    { title: 'Lietotāja konta atbildība', content: ["Lietotāji ir atbildīgi par sava konta datu konfidencialitātes saglabāšanu. Visa darbība, kas notiek zem lietotāja konta, ir tikai konta īpašnieka atbildība. Par jebkuru neatļautu piekļuvi nekavējoties jāinformē vietnes administratori."] },
+    { title: 'Atbildības ierobežojums', content: ['Vietnes saturs tiek nodrošināts “tāds, kāds tas ir”, bez jebkādām garantijām. Vietnes īpašnieki nav atbildīgi par tiešiem, netiešiem, nejaušiem, izrietošiem vai soda zaudējumiem, kas radušies lietotāja mijiedarbības rezultātā ar platformu.'] },
+    {
+      title: 'Lietotāja uzvedības vadlīnijas', content: [
+        'Neaugšupielādēt kaitīgu vai ļaunprātīgu saturu, kas var kaitēt vietnei vai tās lietotājiem.',
+        'Ievērot citu lietotāju tiesības.',
+        'Izvairīties no darbībām, kas varētu traucēt vietnes darbību.',
+        'Ievērot piemērojamos vietējos un starptautiskos likumus.',
+      ]
+    },
+    { title: 'Noteikumu grozījumi', content: ['Vietne patur tiesības jebkurā laikā mainīt šos noteikumus. Vietnes turpmāka izmantošana pēc izmaiņām nozīmē jauno noteikumu pieņemšanu.'] },
+    { title: 'Izbeigšanas nosacījumi', content: ['Vietne var pārtraukt vai apturēt lietotāja piekļuvi bez iepriekšēja brīdinājuma par šo noteikumu pārkāpumiem vai citu iemeslu dēļ, ko administrācija uzskata par piemērotiem.'] },
+    { title: 'Piemērojamie likumi', content: ['Šos noteikumus reglamentē tās jurisdikcijas likumi, kur vietne galvenokārt darbojas, neņemot vērā kolīziju tiesību principus.'] },
+  ],
+  termsAndConditions: 'Pakalpojumu sniegšanas noteikumi',
+  close: 'Aizvērt',
   tools: {
     textToSpeech: "Teksta pārvēršana runā",
     translate: "Tulkot",
@@ -5311,15 +5931,16 @@ const lv: Dictionary = {
     help: 'Palīdzība',
   },
   footer: {
+    pleaseLogin: 'Lai izmantotu šo funkciju, lūdzu, piesakieties.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Teksts pieejams saskaņā ar",
+      "part2": "Creative Commons Atzīmes-ShareAlike 4.0 Starptautiskā licence",
+      "part3": "; var tikt piemēroti papildu noteikumi. Izmantojot šo vietni, jūs piekrītat",
+      "part4": "Noteikumiem un nosacījumiem",
+      "part5": "un",
+      "part6": "Privātuma politikai.",
+      "part7": "Alternipedia ir atvērtā koda bezpeļņas projekts."
+    },
     license: 'Licence',
     terms: 'Noteikumi',
     privacy: 'Privātums',
@@ -5379,6 +6000,22 @@ const lv: Dictionary = {
 
 // Estonian dictionary
 const et: Dictionary = {
+  termsOfService: [
+    { title: 'Tingimuste aktsepteerimine', content: ["Selle veebisaidi kasutamisega nõustuvad kasutajad järgima neid teenusetingimusi. Kui kasutaja nendega ei nõustu, peab ta viivitamatult lõpetama veebisaidi kasutamise."] },
+    { title: 'Kasutajakonto vastutus', content: ["Kasutajad vastutavad oma kontoandmete konfidentsiaalsuse eest. Kõik tegevused, mis toimuvad kasutaja konto all, on täielikult konto omaniku vastutusel. Igasugusest volitamata juurdepääsust tuleb viivitamatult teavitada veebisaidi administraatoreid."] },
+    { title: 'Vastutuse piiramine', content: ['Veebisait pakub sisu põhimõttel „nagu on“ ilma garantiideta. Veebisaidi omanikud ei vastuta otseste, kaudsete, juhuslike, tagajärgede või karistuslike kahjude eest, mis tulenevad kasutajate suhtlusest platvormiga.'] },
+    {
+      title: 'Kasutaja käitumise juhised', content: [
+        'Ära laadi üles kahjulikku või pahatahtlikku sisu, mis võib kahjustada veebisaiti või teisi kasutajaid.',
+        'Austa teiste kasutajate õigusi.',
+        'Väldi tegevusi, mis võivad häirida veebisaidi funktsionaalsust.',
+        'Järgi kohalikke ja rahvusvahelisi seadusi.',
+      ]
+    },
+    { title: 'Tingimuste muudatused', content: ['Veebisait jätab endale õiguse neid tingimusi igal ajal muuta. Veebisaidi edasine kasutamine pärast muudatusi tähendab uute tingimuste aktsepteerimist.'] },
+    { title: 'Lõpetamise klausel', content: ['Veebisait võib lõpetada või peatada kasutaja juurdepääsu ilma eelneva hoiatuseta, kui rikutakse neid tingimusi või muudel põhjustel, mida administratsioon peab sobivaks.'] },
+    { title: 'Kohaldatav seadus', content: ['Neid tingimusi reguleerivad jurisdiktsiooni seadused, kus veebisait peamiselt tegutseb, sõltumata õiguse kollisiooni põhimõtetest.'] },
+  ],
   tools: {
     textToSpeech: "Teksti ettelugemine",
     translate: "Tõlgi",
@@ -5395,6 +6032,8 @@ const et: Dictionary = {
     printPage: "Prindi leht",
     pageInfo: "Lehe teave",
   },
+  termsAndConditions: 'Kasutustingimused',
+  close: 'Sule',
   language: {
     selectLanguage: "Vali keel",
     description: "Vali eelistatud keel selle artikli vaatamiseks.",
@@ -5435,15 +6074,16 @@ const et: Dictionary = {
     help: 'Abi',
   },
   footer: {
+    pleaseLogin: 'Palun logi sisse, et seda funktsiooni kasutada.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tekst on saadaval alljärgneva litsentsi alusel:",
+      "part2": "Creative Commons Nimetamine-JagaÜheselt 4.0 Rahvusvaheline",
+      "part3": "; võivad kehtida täiendavad tingimused. Selle saidi kasutamisega nõustute",
+      "part4": "Tingimustega",
+      "part5": "ja",
+      "part6": "Privaatsuspoliitikaga.",
+      "part7": "Alternipedia on avatud lähtekoodiga mittetulundusprojekt."
+    },
     license: 'Litsents',
     terms: 'Kasutustingimused',
     privacy: 'Privaatsus',
@@ -5503,6 +6143,24 @@ const et: Dictionary = {
 
 // Icelandic dictionary
 const is: Dictionary = {
+  termsOfService: [
+    { title: 'Samþykki skilmála', content: ["Með því að nota þessa vefsíðu samþykkja notendur að fylgja þessum þjónustuskilmálum. Notendur sem ekki samþykkja þessa skilmála ættu að hætta að nota vefsíðuna strax."] },
+    { title: 'Ábyrgð notandareiknings', content: ["Notendur bera ábyrgð á að viðhalda trúnaði um aðgangsupplýsingar sínar. Allar aðgerðir sem eiga sér stað undir reikningi notanda eru á ábyrgð eiganda reikningsins. Notendur verða að tilkynna stjórnendum vefsins tafarlaust ef óheimil aðgangur verður vart."] },
+    { title: 'Takmörkun ábyrgðar', content: ['Vefsíðan veitir efni „eins og það er“ án ábyrgðar. Eigendur vefsins bera enga ábyrgð á beinu, óbeinu, tilviljunarkenndu, afleiddu eða refsiverðu tjóni sem stafar af samskiptum notenda við vettvanginn.'] },
+    {
+      title: 'Leiðbeiningar um hegðun notenda', content: [
+        'Ekki hlaða upp skaðlegu eða illgjörnu efni sem gæti skaðað vefsíðuna eða notendur hennar.',
+        'Virða réttindi annarra notenda.',
+        'Forðast aðgerðir sem gætu truflað virkni vefsins.',
+        'Fylgja gildandi lögum innanlands og alþjóðlega.',
+      ]
+    },
+    { title: 'Breytingar á skilmálum', content: ['Vefsíðan áskilur sér rétt til að breyta þessum skilmálum hvenær sem er. Notkun vefsins eftir breytingar jafngildir samþykki nýrra skilmála.'] },
+    { title: 'Uppsagnarákvæði', content: ['Vefsíðan getur lokað eða stöðvað aðgang notanda án fyrirvara vegna brota á þessum skilmálum eða annarra ástæðna sem stjórnendur telja viðeigandi.'] },
+    { title: 'Lögsaga', content: ['Þessir skilmálar lúta lögum þess ríkis þar sem vefsíðan starfar aðallega, án tillits til árekstrar laga.'] },
+  ],
+  termsAndConditions: 'Þjónustuskilmálar',
+  close: 'Loka',
   tools: {
     textToSpeech: "Texti í tal",
     translate: "Þýða",
@@ -5559,15 +6217,16 @@ const is: Dictionary = {
     help: "Hjálp",
   },
   footer: {
+    pleaseLogin: 'Vinsamlegast skráðu þig inn til að nota þessa aðgerð.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Texti er aðgengilegur undir",
+      "part2": "Creative Commons Nafngjöf-DeilaUndirSömumSkilmálum 4.0 Alþjóðlegum leyfi",
+      "part3": "; viðbótar skilyrði kunna að gilda. Með því að nota þessa síðu samþykkir þú",
+      "part4": "Skilmála og skilyrði",
+      "part5": "og",
+      "part6": "Persónuverndarstefnu.",
+      "part7": "Alternipedia er opinn kóðaverkefni án hagnaðarskyni."
+    },
     license: "Leyfi",
     terms: "Skilmálar",
     privacy: "Persónuvernd",
@@ -5627,6 +6286,24 @@ const is: Dictionary = {
 
 // Albanian dictionary
 const sq: Dictionary = {
+  termsOfService: [
+    { title: 'Pranimi i Kushteve', content: ["Duke hyrë dhe përdorur këtë faqe interneti, përdoruesit bien dakord të respektojnë këto Kushte Shërbimi. Përdoruesit që nuk pajtohen me këto kushte duhet të ndalojnë menjëherë përdorimin e faqes."] },
+    { title: 'Përgjegjësia e Llogarisë së Përdoruesit', content: ["Përdoruesit janë përgjegjës për ruajtjen e konfidencialitetit të kredencialeve të tyre të llogarisë. Çdo aktivitet që ndodh nën llogarinë e përdoruesit është përgjegjësi e vetme e mbajtësit të llogarisë. Përdoruesit duhet të njoftojnë menjëherë administratorët e faqes për çdo hyrje të paautorizuar."] },
+    { title: 'Kufizimi i Përgjegjësisë', content: ['Faqja ofron përmbajtje “siç është” pa asnjë garanci. Pronarët e faqes nuk janë përgjegjës për dëme direkte, indirekte, të rastësishme, pasuese ose ndëshkuese që rrjedhin nga ndërveprimet e përdoruesve me platformën.'] },
+    {
+      title: 'Udhëzime për Sjelljen e Përdoruesit', content: [
+        'Mos ngarkoni përmbajtje të dëmshme ose keqdashëse që mund të dëmtojë faqen ose përdoruesit e saj.',
+        'Respektoni të drejtat e përdoruesve të tjerë.',
+        'Shmangni veprime që mund të ndërhyjnë në funksionimin e faqes.',
+        'Zbatoni ligjet vendore dhe ndërkombëtare në fuqi.',
+      ]
+    },
+    { title: 'Ndryshimet e Kushteve', content: ['Faqja ruan të drejtën të ndryshojë këto kushte në çdo kohë. Përdorimi i vazhdueshëm i faqes pas ndryshimeve nënkupton pranimin e kushteve të reja.'] },
+    { title: 'Klauzola e Përfundimit', content: ['Faqja mund të ndërpresë ose pezullojë qasjen e përdoruesit pa njoftim paraprak për shkelje të kushteve ose për arsye të tjera që administrata i konsideron të përshtatshme.'] },
+    { title: 'Ligji në Fuqi', content: ['Këto kushte rregullohen nga ligjet e juridiksionit ku faqja operon kryesisht, pa marrë parasysh parimet e konfliktit të ligjeve.'] },
+  ],
+  termsAndConditions: 'Kushtet e Shërbimit',
+  close: 'Mbyll',
   tools: {
     textToSpeech: "Tekst në të folur",
     translate: "Përkthe",
@@ -5683,15 +6360,16 @@ const sq: Dictionary = {
     help: "Ndihmë",
   },
   footer: {
+    pleaseLogin: 'Ju lutemi hyni për të përdorur këtë funksion.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Teksti është në dispozicion nën",
+      "part2": "Licencën Creative Commons Shënim-ShareAlike 4.0 Ndërkombëtare",
+      "part3": "; mund të zbatohen kushte shtesë. Duke përdorur këtë faqe, ju pranoni",
+      "part4": "Termat & Kushtet",
+      "part5": "dhe",
+      "part6": "Politikën e Privatësisë.",
+      "part7": "Alternipedia është një projekt me burim të hapur jo fitimprurës."
+    },
     license: "Licenca",
     terms: "Kushtet",
     privacy: "Privatësia",
@@ -5751,6 +6429,24 @@ const sq: Dictionary = {
 
 // Serbian dictionary
 const sr: Dictionary = {
+  termsOfService: [
+    { title: 'Prihvatanje uslova', content: ["Korišćenjem ovog sajta korisnici se slažu da poštuju ove Uslove korišćenja. Korisnici koji se ne slažu sa ovim uslovima treba odmah da prestanu sa korišćenjem sajta."] },
+    { title: 'Odgovornost korisničkog naloga', content: ["Korisnici su odgovorni za čuvanje poverljivosti svojih podataka za prijavu. Sve aktivnosti koje se odvijaju pod korisničkim nalogom su isključiva odgovornost vlasnika naloga. Korisnici moraju odmah obavestiti administratore sajta o bilo kom neovlašćenom pristupu."] },
+    { title: 'Ograničenje odgovornosti', content: ['Sajt pruža sadržaj „takav kakav jeste“ bez ikakvih garancija. Vlasnici sajta ne snose odgovornost za direktne, indirektne, slučajne, posledične ili kaznene štete koje nastanu korišćenjem platforme.'] },
+    {
+      title: 'Smernice za ponašanje korisnika', content: [
+        'Ne otpremati štetan ili zlonameran sadržaj koji može naštetiti sajtu ili njegovim korisnicima.',
+        'Poštovati prava drugih korisnika.',
+        'Izbegavati aktivnosti koje bi mogle ometati funkcionalnost sajta.',
+        'Poštovati važeće lokalne i međunarodne zakone.',
+      ]
+    },
+    { title: 'Izmene uslova', content: ['Sajt zadržava pravo da u bilo kom trenutku izmeni ove uslove. Nastavak korišćenja sajta nakon promena podrazumeva prihvatanje novih uslova.'] },
+    { title: 'Klauzula o ukidanju', content: ['Sajt može ukinuti ili suspendovati pristup korisnika bez prethodnog obaveštenja zbog kršenja ovih uslova ili iz drugih razloga koje administracija smatra prikladnim.'] },
+    { title: 'Merodavno pravo', content: ['Ovi uslovi podležu zakonima jurisdikcije u kojoj sajt primarno posluje, bez obzira na kolizione principe.'] },
+  ],
+  termsAndConditions: 'Uslovi korišćenja',
+  close: 'Zatvori',
   tools: {
     textToSpeech: "Tekst u govor",
     translate: "Prevedi",
@@ -5807,15 +6503,16 @@ const sr: Dictionary = {
     help: "Pomoć",
   },
   footer: {
+    pleaseLogin: 'Molimo prijavite se da biste koristili ovu funkciju.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tekst je dostupan pod",
+      "part2": "Creative Commons Licencom Pripisivanje-Deljenje pod istim uslovima 4.0 Internacionalna",
+      "part3": "; mogu važiti dodatni uslovi. Korišćenjem ovog sajta prihvatate",
+      "part4": "Uslove korišćenja",
+      "part5": "i",
+      "part6": "Politiku privatnosti.",
+      "part7": "Alternipedia je open-source neprofitni projekat."
+    },
     license: "Licenca",
     terms: "Uslovi korišćenja",
     privacy: "Privatnost",
@@ -5875,6 +6572,24 @@ const sr: Dictionary = {
 
 // Macedonian dictionary
 const mk: Dictionary = {
+  termsOfService: [
+    { title: 'Прифаќање на условите', content: ["Со пристапување и користење на оваа веб-страница, корисниците се согласуваат да ги почитуваат овие Услови на користење. Корисниците кои не се согласуваат со овие услови треба веднаш да престанат со користење на веб-страницата."] },
+    { title: 'Одговорност на корисничката сметка', content: ["Корисниците се одговорни за одржување на доверливоста на нивните податоци за најава. Сите активности што се одвиваат под корисничка сметка се единствена одговорност на сопственикот на сметката. Корисниците мора веднаш да ја известат администрацијата за неовластен пристап."] },
+    { title: 'Ограничување на одговорноста', content: ['Веб-страницата обезбедува содржина „каква што е“ без никакви гаранции. Сопствениците не се одговорни за директни, индиректни, случајни, последични или казнени штети кои произлегуваат од користење на платформата.'] },
+    {
+      title: 'Насоки за однесување на корисниците', content: [
+        'Да не се поставува штетна или злонамерна содржина која може да му наштети на веб-сајтот или на другите корисници.',
+        'Да се почитуваат правата на другите корисници.',
+        'Да се избегнуваат активности кои можат да ја нарушат функционалноста на веб-страницата.',
+        'Да се почитуваат применливите локални и меѓународни закони.',
+      ]
+    },
+    { title: 'Измени на условите', content: ['Веб-страницата го задржува правото да ги измени овие услови во секое време. Продолжената употреба по измените значи прифаќање на новите услови.'] },
+    { title: 'Клаузула за прекин', content: ['Веб-страницата може да го прекине или суспендира пристапот на корисникот без претходна најава поради прекршување на условите или од други причини кои администрацијата ги смета за соодветни.'] },
+    { title: 'Меродавен закон', content: ['Овие услови се регулирани според законите на јурисдикцијата каде што веб-страницата главно работи, без оглед на принципите на судир на закони.'] },
+  ],
+  termsAndConditions: 'Услови на користење',
+  close: 'Затвори',
   tools: {
     textToSpeech: "Текст во говор",
     translate: "Преведи",
@@ -5931,15 +6646,16 @@ const mk: Dictionary = {
     help: "Помош",
   },
   footer: {
+    pleaseLogin: 'Ве молиме најавете се за да ја користите оваа функција.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Текстот е достапен под",
+      "part2": "Creative Commons Лиценца Препознавање-Сподели под иста лиценца 4.0 Интернационална",
+      "part3": "; можат да се применат дополнителни услови. Со користење на овој сајт, се согласувате со",
+      "part4": "Условите",
+      "part5": "и",
+      "part6": "Политиката за приватност.",
+      "part7": "Alternipedia е отворен проект без профит."
+    },
     license: "Лиценца",
     terms: "Услови",
     privacy: "Приватност",
@@ -5999,6 +6715,24 @@ const mk: Dictionary = {
 
 // Bosnian dictionary
 const bs: Dictionary = {
+  termsOfService: [
+    { title: 'Prihvatanje uslova', content: ["Korištenjem ove web stranice korisnici se slažu da poštuju ove Uslove korištenja. Korisnici koji se ne slažu sa ovim uslovima trebaju odmah prestati koristiti web stranicu."] },
+    { title: 'Odgovornost korisničkog računa', content: ["Korisnici su odgovorni za čuvanje povjerljivosti svojih podataka za prijavu. Sve aktivnosti koje se odvijaju pod korisničkim računom isključiva su odgovornost vlasnika računa. Korisnici moraju odmah obavijestiti administratore o bilo kakvom neovlaštenom pristupu."] },
+    { title: 'Ograničenje odgovornosti', content: ['Web stranica pruža sadržaj „takav kakav jeste“ bez ikakvih garancija. Vlasnici web stranice ne snose odgovornost za direktne, indirektne, slučajne, posljedice ili kaznene štete koje proizlaze iz interakcije korisnika s platformom.'] },
+    {
+      title: 'Smjernice ponašanja korisnika', content: [
+        'Ne postavljati štetan ili zlonamjeran sadržaj koji može naštetiti web stranici ili korisnicima.',
+        'Poštovati prava drugih korisnika.',
+        'Izbjegavati aktivnosti koje mogu ometati funkcionalnost stranice.',
+        'Poštovati važeće lokalne i međunarodne zakone.',
+      ]
+    },
+    { title: 'Izmjene uslova', content: ['Web stranica zadržava pravo da u bilo kojem trenutku izmijeni ove uslove. Nastavak korištenja nakon promjena znači prihvatanje novih uslova.'] },
+    { title: 'Klauzula o prekidu', content: ['Web stranica može obustaviti ili ukinuti pristup korisniku bez prethodne najave zbog kršenja ovih uslova ili drugih razloga koje administracija smatra prikladnim.'] },
+    { title: 'Mjerodavno pravo', content: ['Ovi uslovi podliježu zakonima jurisdikcije u kojoj web stranica prvenstveno posluje, bez obzira na principe sukoba zakona.'] },
+  ],
+  termsAndConditions: 'Uslovi korištenja',
+  close: 'Zatvori',
   tools: {
     textToSpeech: "Tekst u govor",
     translate: "Prevedi",
@@ -6055,15 +6789,16 @@ const bs: Dictionary = {
     help: "Pomoć",
   },
   footer: {
+    pleaseLogin: 'Molimo prijavite se da biste koristili ovu funkciju.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tekst je dostupan pod",
+      "part2": "Creative Commons Licencom Pripisivanje-Dijeli pod istim uslovima 4.0 Internacionalna",
+      "part3": "; mogu se primijeniti dodatni uvjeti. Korištenjem ove stranice prihvaćate",
+      "part4": "Uvjeti korištenja",
+      "part5": "i",
+      "part6": "Politiku privatnosti.",
+      "part7": "Alternipedia je open-source neprofitni projekat."
+    },
     license: "Licenca",
     terms: "Uslovi korištenja",
     privacy: "Privatnost",
@@ -6123,6 +6858,22 @@ const bs: Dictionary = {
 
 // Montenegrin dictionary
 const cnr: Dictionary = {
+  termsOfService: [
+    { title: 'Prihvatanje uslova', content: ["Korišćenjem ovog sajta korisnici se slažu da poštuju ove Uslove korišćenja. Korisnici koji se ne slažu sa ovim uslovima treba odmah da prestanu sa korišćenjem sajta."] },
+    { title: 'Odgovornost korisničkog naloga', content: ["Korisnici su odgovorni za čuvanje poverljivosti svojih podataka za prijavu. Sve aktivnosti koje se odvijaju pod korisničkim nalogom isključiva su odgovornost vlasnika naloga. Korisnici moraju odmah obavijestiti administratore o svakom neovlašćenom pristupu."] },
+    { title: 'Ograničenje odgovornosti', content: ['Sajt pruža sadržaj „takav kakav jeste“ bez ikakvih garancija. Vlasnici sajta ne snose odgovornost za direktne, indirektne, slučajne, posledične ili kaznene štete nastale korišćenjem platforme.'] },
+    {
+      title: 'Smjernice ponašanja korisnika', content: [
+        'Ne postavljati štetan ili zlonamjeran sadržaj koji može oštetiti sajt ili druge korisnike.',
+        'Poštovati prava drugih korisnika.',
+        'Izbjegavati aktivnosti koje mogu ometati funkcionalnost sajta.',
+        'Poštovati važeće lokalne i međunarodne zakone.',
+      ]
+    },
+    { title: 'Izmjene uslova', content: ['Sajt zadržava pravo da u bilo kojem trenutku izmijeni ove uslove. Nastavak korišćenja sajta nakon promjena znači prihvatanje novih uslova.'] },
+    { title: 'Klauzula o prekidu', content: ['Sajt može ukinuti ili suspendovati pristup korisnika bez prethodne najave zbog kršenja ovih uslova ili drugih razloga koje administracija smatra prikladnim.'] },
+    { title: 'Mjerodavno pravo', content: ['Ovi uslovi podležu zakonima jurisdikcije u kojoj sajt primarno posluje, bez obzira na principe sukoba zakona.'] },
+  ],
   tools: {
     textToSpeech: "Tekst u govor",
     translate: "Prevedi",
@@ -6139,6 +6890,8 @@ const cnr: Dictionary = {
     printPage: "Ispiši stranicu",
     pageInfo: "Informacije o stranici",
   },
+  termsAndConditions: 'Uslovi korišćenja',
+  close: 'Zatvori',
   language: {
     selectLanguage: "Izaberi jezik",
     description: "Izaberi jezik na kojem želiš da pregledaš ovaj članak.",
@@ -6179,15 +6932,16 @@ const cnr: Dictionary = {
     help: "Pomoć",
   },
   footer: {
+    pleaseLogin: 'Molimo prijavite se da biste koristili ovu funkciju.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "Tekst je dostupan pod",
+      "part2": "Creative Commons Licencom Priznanje autorstva-Dijeli pod istim uvjetima 4.0 Internacionalna",
+      "part3": "; mogu važiti dodatni uslovi. Korišćenjem ovog sajta prihvatate",
+      "part4": "Uslove korišćenja",
+      "part5": "i",
+      "part6": "Politiku privatnosti.",
+      "part7": "Alternipedia je open-source neprofitni projekat."
+    },
     license: "Licenca",
     terms: "Uslovi korišćenja",
     privacy: "Privatnost",
@@ -6247,6 +7001,24 @@ const cnr: Dictionary = {
 
 // Maltese dictionary
 const mt: Dictionary = {
+  termsOfService: [
+    { title: 'Aċċettazzjoni tat-Termini', content: ["Billi taċċessa u tuża dan is-sit, l-utenti jaqblu li jikkonformaw ma’ dawn it-Termini tas-Servizz. Utenti li ma jaqblux ma’ dawn it-termini għandhom jieqfu jużaw is-sit immedjatament."] },
+    { title: 'Responsabbiltà tal-Kont tal-Utent', content: ["L-utenti huma responsabbli biex iżommu l-kunfidenzjalità tad-dettalji tal-login tagħhom. Kull attività li sseħħ taħt il-kont ta’ utent hija biss ir-responsabbiltà tas-sid tal-kont. L-utenti għandhom jinnotifikaw immedjatament lill-amministraturi tas-sit dwar kwalunkwe aċċess mhux awtorizzat."] },
+    { title: 'Limitazzjoni tar-Responsabbiltà', content: ['Is-sit jipprovdi kontenut “kif inhu” mingħajr garanziji ta’ ebda tip. Is-sidien tas-sit mhumiex responsabbli għal ħsarat diretti, indiretti, inċidentali, konsegwenzjali jew punittivi li jirriżultaw mill-interazzjonijiet tal-utent mal-pjattaforma.'] },
+    {
+      title: 'Linji Gwida għall-Imġiba tal-Utent', content: [
+        'Tittellax kontenut ħażin jew malizzjuż li jista’ jagħmel ħsara lis-sit jew lill-utenti tiegħu.',
+        'Irrespettaw id-drittijiet ta’ utenti oħra.',
+        'Evita attività li tista’ tfixkel il-funzjonalità tas-sit.',
+        'Ikkonforma mal-liġijiet lokali u internazzjonali applikabbli.',
+      ]
+    },
+    { title: 'Modifiki għat-Termini', content: ['Is-sit jirriserva d-dritt li jemenda dawn it-termini fi kwalunkwe ħin. L-użu kontinwu tas-sit wara tibdil jimplika aċċettazzjoni tat-termini l-ġodda.'] },
+    { title: 'Klawsula ta’ Terminazzjoni', content: ['Is-sit jista’ jtemm jew jissospendi l-aċċess tal-utent mingħajr avviż minn qabel minħabba ksur ta’ dawn it-termini jew għal kwalunkwe raġuni oħra li l-amministrazzjoni tqis xierqa.'] },
+    { title: 'Liġi li Tapplika', content: ['Dawn it-termini huma rregolati mil-liġijiet tal-ġurisdizzjoni fejn is-sit jopera prinċipalment, mingħajr konsiderazzjoni għall-prinċipji tal-kunflitt tal-liġijiet.'] },
+  ],
+  termsAndConditions: 'Termini u Kundizzjonijiet',
+  close: 'Agħlaq',
   tools: {
     textToSpeech: "Test għal diskors",
     translate: "Ittraduċi",
@@ -6303,15 +7075,16 @@ const mt: Dictionary = {
     help: "Għajnuna",
   },
   footer: {
+    pleaseLogin: 'Jekk jogħġbok idħol biex tuża din il-karatteristika.',
     text: {
-      part1: '',
-      part2: '',
-      part3: '',
-      part4: '',
-      part5: '',
-      part6: '',
-      part7: '',
-    },  
+      "part1": "It-test huwa disponibbli taħt",
+      "part2": "Liċenzja Creative Commons Attribuzzjoni-ShareAlike 4.0 Internazzjonali",
+      "part3": "; jista' japplikaw termini addizzjonali. Billi tuża dan is-sit, inti taqbel mal",
+      "part4": "Termini u Kundizzjonijiet",
+      "part5": "u",
+      "part6": "Politika tal-Privatezza.",
+      "part7": "Alternipedia huwa proġett open-source mhux għall-profitt."
+    },
     license: "Liċenzja",
     terms: "Termini",
     privacy: "Privatezza",
