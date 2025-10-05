@@ -1,4 +1,4 @@
-import BottomArrow from "@/app/bottom-arrow";
+import BottomArrow from "@/app/[lang]/bottom-arrow";
 
 export default function LicensePage() {
  return (

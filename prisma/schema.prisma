@@ -12,7 +12,6 @@ datasource db {
 // =======================
 enum UserRole {
   USER
-  MODERATOR
   ADMIN
 }
 
@@ -31,11 +30,12 @@ model User {
   sessions        Session[]
   role            UserRole          @default(USER)
 
+  
   revisions       Revision[]
   addedCategories ArticleCategory[] // categories this user added
   watching        ArticleWatcher[]  // articles this user watches
-  savedArticles   SavedArticle[]
-
+  savedArticles   SavedArticle[] // articles this user saved
+  moderatedBiases ModeratorBias[] // Biases this user moderates
   biasBans        BiasBan[]         // 🚫 bans received
   issuedBans      BiasBan[]         @relation("BiasBanModerator") // 🧑‍⚖️ bans given (mods)
 
@@ -43,6 +43,20 @@ model User {
   subscriptionStartedAt DateTime?
   subscriptionExpiresAt DateTime?
   stripeCustomerId      String?
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model ModeratorBias {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  bias      Bias     @relation(fields: [biasId], references: [id])
+  biasId    Int
+  assignedAt DateTime @default(now())
+
+  @@unique([userId, biasId]) // prevent duplicates
 }
 
 // TODO: Stripe integration for subscriptions
@@ -91,12 +105,12 @@ model Session {
 // =======================
 // Core Wiki Models
 // =======================
-
 model Bias {
   id        Int        @id @default(autoincrement())
   name      String     @unique
   revisions Revision[]
   bans      BiasBan[]
+  moderators ModeratorBias[]
 }
 
 // TODO: Temporary bans?
@@ -124,6 +138,7 @@ model Article {
   categories ArticleCategory[] // explicit join model with metadata
   watchers    ArticleWatcher[]   // who’s watching this article
   savedBy     SavedArticle[] // who's saved this article
+  language   Language
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @updatedAt
 }
@@ -168,6 +183,60 @@ enum BlockType {
   TABLE
   INFOBOX
   QUOTE
+}
+
+enum Language {
+  ENGLISH
+  CHINESE
+  HINDI
+  SPANISH
+  FRENCH
+  ARABIC
+  BENGALI
+  PORTUGUESE
+  RUSSIAN
+  URDU
+  INDONESIAN
+  MARATHI
+  GERMAN
+  JAPANESE
+  TELUGU
+  TURKISH
+  SRI_LANKAN_TAMIL
+  CANTONESE
+  VIETNAMESE
+  FILIPINO
+  KOREAN
+  HAUSA
+  EGYPTIAN_ARABIC
+  JAVANESE
+  ITALIAN
+  DUTCH
+  GREEK
+  SWEDISH
+  NORWEGIAN
+  POLISH
+  THAI
+  UKRANIAN
+  ROMANIAN
+  CZECH
+  HUNGARIAN
+  FINNISH
+  DANISH
+  BULGARIAN
+  SLOVAK
+  CROATIAN
+  LITHUANIAN
+  SLOVENIAN
+  LATVIAN
+  ESTONIAN
+  ICELANDIC
+  ALBANIAN
+  SERBIAN
+  MACEDONIAN
+  BOSNIAN
+  MONTENEGRIN
+  MALTESE
 }
 
 model Category {

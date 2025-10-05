@@ -1,38 +1,58 @@
 # Alternipedia
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A neutral and comprehensive collection of resources.
 
-## Getting Started
+## Features
+Alternipedia now supports **51 languages** across the globe! 🌍
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. 🇬🇧 **English** (en) - Base language
+2. 🇨🇳 **Chinese** (zh) - 中文
+3. 🇮🇳 **Hindi** (hi) - हिन्दी
+4. 🇪🇸 **Spanish** (es) - Español
+5. 🇫🇷 **French** (fr) - Français
+6. 🇸🇦 **Arabic** (ar) - العربية
+7. 🇧🇩 **Bengali** (bn) - বাংলা
+8. 🇵🇹 **Portuguese** (pt) - Português
+9. 🇷🇺 **Russian** (ru) - Русский
+10. 🇩🇪 **German** (de) - Deutsch
+11. 🇯🇵 **Japanese** (ja) - 日本語
+12. 🇰🇷 **Korean** (ko) - 한국어
+13. 🇮🇹 **Italian** (it) - Italiano
+14. 🇵🇰 **Urdu** (ur) - اردو
+15. 🇮🇩 **Indonesian** (id) - Bahasa Indonesia
+16. 🇮🇳 **Marathi** (mr) - मराठी
+17. 🇮🇳 **Telugu** (te) - తెలుగు
+18. 🇹🇷 **Turkish** (tr) - Türkçe
+19. 🇱🇰 **Tamil** (ta) - தமிழ்
+20. 🇭🇰 **Cantonese** (yue) - 粵語
+21. 🇻🇳 **Vietnamese** (vi) - Tiếng Việt
+22. 🇵🇭 **Filipino** (fil) - Filipino
+23. 🇳🇬 **Hausa** (ha) - Hausa
+24. 🇪🇬 **Egyptian Arabic** (arz) - مصرى
+25. 🇮🇩 **Javanese** (jv) - Basa Jawa
+26. 🇳🇱 **Dutch** (nl) - Nederlands
+27. 🇬🇷 **Greek** (el) - Ελληνικά
+28. 🇸🇪 **Swedish** (sv) - Svenska
+29. 🇳🇴 **Norwegian** (no) - Norsk
+30. 🇵🇱 **Polish** (pl) - Polski
+31. 🇹🇭 **Thai** (th) - ไทย
+32. 🇺🇦 **Ukrainian** (uk) - Українська
+33. 🇷🇴 **Romanian** (ro) - Română
+34. 🇨🇿 **Czech** (cs) - Čeština
+35. 🇭🇺 **Hungarian** (hu) - Magyar
+36. 🇫🇮 **Finnish** (fi) - Suomi
+37. 🇩🇰 **Danish** (da) - Dansk
+38. 🇧🇬 **Bulgarian** (bg) - Български
+39. 🇸🇰 **Slovak** (sk) - Slovenčina
+40. 🇭🇷 **Croatian** (hr) - Hrvatski
+41. 🇱🇹 **Lithuanian** (lt) - Lietuvių
+42. 🇸🇮 **Slovenian** (sl) - Slovenščina
+43. 🇱🇻 **Latvian** (lv) - Latviešu
+44. 🇪🇪 **Estonian** (et) - Eesti
+45. 🇮🇸 **Icelandic** (is) - Íslenska
+46. 🇦🇱 **Albanian** (sq) - Shqip
+47. 🇷🇸 **Serbian** (sr) - Српски
+48. 🇲🇰 **Macedonian** (mk) - Македонски
+49. 🇧🇦 **Bosnian** (bs) - Bosanski
+50. 🇲🇪 **Montenegrin** (cnr) - Crnogorski
+51. 🇲🇹 **Maltese** (mt) - Malti

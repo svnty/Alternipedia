@@ -10,29 +10,39 @@ const languages = [
   'Langue',        // French
   'لغة',           // Arabic
   'ভাষা',          // Bengali
-  'Língua',       // Portuguese
+  'Língua (Português)',       // Portuguese
   'Язык',          // Russian
   'زبان',          // Persian
   'Language',      // English
   'Bahasa',        // Indonesian/Malay
   'Sprache',       // German
   '言語',          // Japanese
-  'Langwidge / Tok', // Esperanto'
   'भाषा',          // Marathi
   'భాష',          // Telugu
-  'Dil',           // Kurdish
-  'மொழி',         // Tamil
+  'Dil',           // Turkish
+  'மொழி',         // Tamil (Sri Lankan)
   'Ngôn ngữ',     // Vietnamese
-  'Lingua',        // Italian/Portuguese
+  'Lingua (Italia)',        // Italian
   'Language',      // English
   'Taal',          // Dutch
   '언어',           // Korean
   'Γλώσσα',        // Greek
   'Språk',         // Swedish/Norwegian
   'Wika',          // Filipino/Tagalog
-  'Lugha',         // Swahili
   'Zabava',        // Croatian/Serbian
   'Język',         // Polish
+  'ภาษา',         // Thai
+  'Мова',         // Ukrainian
+  'Language',      // English
+  'Jezik',         // Slovenian/Slovak
+  'Lietuvių kalba', // Lithuanian
+  'Latviešu valoda', // Latvian
+  'Eesti keel', // Estonian
+  'Íslenska', // Icelandic
+  'Shqip', // Albanian
+  'Bosanski jezik', // Bosnian
+  'Malti', // Maltese
+  'اردو', // Urdu
 ];
 
 export function SlidingLanguage() {
@@ -54,7 +64,7 @@ export function SlidingLanguage() {
 
   return (
     <span
-      className={`inline-block transition-transform duration-300 ease-in-out hover:underline cursor-pointer ${
+      className={`inline-block transition-transform duration-300 ease-in-out ${
         isAnimating ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
       }`}
     >

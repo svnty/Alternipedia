@@ -32,7 +32,7 @@ import {
   RiGoogleFill,
   RiTwitterXFill,
 } from "@remixicon/react";
-import Terms from "@/app/terms";
+import Terms from "@/app/[lang]/terms";
 
 export default function UserMenu() {
   const id = useId()

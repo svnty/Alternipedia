@@ -1,14 +1,24 @@
 "use client";
 
 import { useEffect, useId, useState } from "react"
+import { useParams } from "next/navigation"
 import { LoaderCircleIcon, MicIcon, SearchIcon } from "lucide-react"
+
+import { isValidLocale, type Locale } from '@/lib/i18n/config';
+import { getDictionary } from '@/lib/i18n/dictionaries';
 
 import { Input } from "@/components/ui/input"
 
+
 export default function Search() {
-  const id = useId()
-  const [inputValue, setInputValue] = useState("")
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const id = useId();
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const params = useParams();
+  const lang = params?.lang as string;
+  
+  // Get dictionary for the current language (fallback to 'en' if invalid)
+  const dict = getDictionary(isValidLocale(lang) ? lang : 'en');
 
   useEffect(() => {
     if (inputValue) {
@@ -27,7 +37,7 @@ export default function Search() {
         <Input
           id={id}
           className="peer ps-9 pe-9 bg-gray-100 text-gray-400"
-          placeholder="Search..."
+          placeholder={dict.common.searchPlaceholder}
           type="search"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
