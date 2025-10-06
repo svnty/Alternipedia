@@ -35,12 +35,12 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
     if (requestedNormalized.toLowerCase() === canonicalNormalized.toLowerCase()) {
       // Preserve the user's separator preference where possible
       if (rawRequested.includes('-')) {
-        canonicalSlug = canonicalTitle.replace(/\s+/g, '-');
+        canonicalSlug = canonicalTitle.replace(/\s+/g, '_');
       } else if (rawRequested.includes('%20') || rawRequested.includes(' ')) {
-        canonicalSlug = canonicalTitle.replace(/\s+/g, ' ');
+        canonicalSlug = canonicalTitle.replace(/\s+/g, '_');
       } else {
         // default to dashes when in doubt
-        canonicalSlug = canonicalTitle.replace(/\s+/g, '-');
+        canonicalSlug = canonicalTitle.replace(/\s+/g, '_');
       }
     } else {
       // Titles differ beyond minor differences; avoid surprising URL changes

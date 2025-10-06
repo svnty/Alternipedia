@@ -38,7 +38,7 @@ export default async function Page({
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
-                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace(/-/g, ' '))}</div>
+                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace('_', ' '))}</div>
 
                 {/* Article and Talk tabs floated to the right */}
                 <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -131,7 +131,7 @@ export default async function Page({
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
-                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace(/-/g, ' '))}</div>
+                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace('_', ' '))}</div>
 
                 {/* Article and Talk tabs floated to the right */}
                 <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -228,7 +228,7 @@ export default async function Page({
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
                 <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2 truncate" style={{ opacity: 0 }}>
-                  {decodeURIComponent(slug.replace(/-/g, ' ').replace('_', ' '))}
+                  {decodeURIComponent(slug.replace('_', ' '))}
                 </div>
                 {/* Article and Talk tabs floated to the right */}
                 <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -318,7 +318,7 @@ export default async function Page({
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
                 <div className="text-neutral-800 text-3xl font-normal pb-2">
-                  {decodeURIComponent(slug.replace(/-/g, ' '))}
+                  {decodeURIComponent(slug.replace('_', ' '))}
                 </div>
 
                 {/* Article and Talk tabs floated to the right */}
@@ -412,7 +412,7 @@ export default async function Page({
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
-                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace(/-/g, ' '))}</div>
+                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace('_', ' '))}</div>
 
                 {/* Article and Talk tabs floated to the right */}
                 <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">

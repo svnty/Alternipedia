@@ -66,6 +66,7 @@ export default function Article({
   // loading spinner
   const [activeBias, setBias] = useState<string>(searchParams?.get('bias') || '');
   const prevPathname = useRef<string | null>(pathname || null);
+  const initialBiasAppliedRef = useRef(false);
 
   if (!isValidLocale(currentLang)) {
     notFound();
@@ -332,18 +333,19 @@ export default function Article({
 
   /* ================== BIAS AND PATHNAME HANDLING ================== */
   useEffect(() => {
-    if ((window as any).__page_loaded__) {
+    if (
+      (window as any).__page_loaded__  && (!prevPathname.current || (prevPathname.current !== pathname))) {
       setIsLoadingBias(false);
     } else if (!(window as any).__page_loading__ && document.querySelector('.wikipedia-article')) {
-      setIsLoadingBias(true);
+      setIsLoadingBias(false);
     }
 
     const onLoaded = () => setIsLoadingBias(false);
     window.addEventListener("load-signal", onLoaded);
     return () => window.removeEventListener("load-signal", onLoaded);
-  }, []);
+  }, [pathname, activeBias]);
 
-  const handleApplyBias = (value: string) => {
+  const handleApplyBias = (value: string, opts?: { replace?: boolean }) => {
     setIsLoadingBias(true);
 
     if (!["socialist", "liberal", "wikipedia", "conservative", "nationalist"].includes(value)) {
@@ -355,12 +357,19 @@ export default function Article({
     const newPath = `${pathname}?${params.toString()}`;
     setBias(value);
 
-    router.push(newPath);
+    if (opts?.replace) {
+      router.replace(newPath);
+    } else {
+      router.push(newPath);
+    }
   };
 
   useEffect(() => {
-    if (!activeBias) {
-      handleApplyBias('wikipedia');
+    // Guard against React Strict Mode or double mounts calling this twice in dev.
+    if (!activeBias && !initialBiasAppliedRef.current) {
+      initialBiasAppliedRef.current = true;
+      // Use replace for the automatic default so we don't create a duplicate history entry.
+      handleApplyBias('wikipedia', { replace: true });
     }
   }, [activeBias]);
 

@@ -1,6 +1,7 @@
 // use require to avoid TS typing issues in this file
 
 import Link from "next/link";
+import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/load-signal';
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');
@@ -37,7 +38,7 @@ function jsonToLinkedParagraph(data: any, language: string, bias: string) {
             let normalized = p.replace(/^\/wiki\//i, '').replace(/^\//, '');
             // Replace underscores with spaces and decode
             const title = decodeURIComponent(normalized.replace(/_/g, ' ')).replace(/\s+/g, ' ').trim();
-            const slug = encodeURIComponent(title.replace(/\s+/g, '-'));
+            const slug = encodeURIComponent(title.replace(/\s+/g, '_'));
             hrefValue = `/${language}/wiki/${slug}`;
           }
         } catch (e) {
@@ -177,20 +178,40 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
       </div>
       <main className="max-w-4xl mx-auto">
         <div className="space-y-6">
-
           {jsonData['sections'].map((section: any, index: number) => (
             <section key={index} className="wikipedia-section">
-              {section.title && <h2 id={section.title.replace(' ', '-')} className="text-2xl font-bold mt-8 mb-4">{section.title}</h2>}
+              {section.title && <h2 id={section.title} className="text-2xl font-bold mt-8 mb-4">{section.title}</h2>}
 
-              {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => (
-                <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: jsonToLinkedParagraph(para, language, bias) }}></p>
-              ))}
+              {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
+                const raw = jsonToLinkedParagraph(para, language, bias);
+                // sanitize the output to allow only safe links and text
+                const safe = sanitizeHtml(raw, {
+                  allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
+                  allowedAttributes: {
+                    '*': ['class'],
+                    a: ['href', 'class', 'target', 'rel']
+                  },
+                  // only allow http(s) and mailto links
+                  allowedSchemes: ['http', 'https', 'mailto'],
+                  transformTags: {
+                    'a': (tagName: string, attribs: Record<string, string>) => {
+                      // preserve class if present, and ensure safe target/rel
+                      // attribs.target = attribs.target || '_blank';
+                      attribs.rel = attribs.rel || 'noopener noreferrer';
+                      return { tagName, attribs };
+                    }
+                  }
+                });
+                return (
+                  <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: safe }}></p>
+                );
+              })}
 
               {/* REFERENCES */}
               {(section.title === 'References') && (
-                <div className="mx-4">
+                <div className="mx-4 sm:mb-8">
                   {wiki.references() && (
-                    <ol className="list-decimal">
+                    <ol className="list-decimal ml-2">
                       {wiki.references().map((ref: any, index: number) => {
                         const raw = toWikipediaReference(ref.json());
                         // sanitize the output to allow only safe links and text
