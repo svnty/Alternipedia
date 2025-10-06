@@ -189,46 +189,40 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
 
               {/* REFERENCES */}
               {(section.title === 'References') && (
-                <div>
+                <div className="mx-4">
                   {wiki.references() && (
-                    <div>
-                      <ol className="list-decimal">
-                        {wiki.references().map((ref: any, index: number) => {
-                          const raw = toWikipediaReference(ref.json());
-                          // sanitize the output to allow only safe links and text
-                          const safe = sanitizeHtml(raw, {
-                            allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
-                            allowedAttributes: {
-                              '*': ['class'],
-                              a: ['href', 'class', 'target', 'rel']
-                            },
-                            // only allow http(s) and mailto links
-                            allowedSchemes: ['http', 'https', 'mailto'],
-                            transformTags: {
-                              'a': (tagName: string, attribs: Record<string, string>) => {
-                                // preserve class if present, and ensure safe target/rel
-                                attribs.target = attribs.target || '_blank';
-                                attribs.rel = attribs.rel || 'noopener noreferrer';
-                                
-                                return { tagName, attribs };
-                              }
+                    <ol className="list-decimal">
+                      {wiki.references().map((ref: any, index: number) => {
+                        const raw = toWikipediaReference(ref.json());
+                        // sanitize the output to allow only safe links and text
+                        const safe = sanitizeHtml(raw, {
+                          allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
+                          allowedAttributes: {
+                            '*': ['class'],
+                            a: ['href', 'class', 'target', 'rel']
+                          },
+                          // only allow http(s) and mailto links
+                          allowedSchemes: ['http', 'https', 'mailto'],
+                          transformTags: {
+                            'a': (tagName: string, attribs: Record<string, string>) => {
+                              // preserve class if present, and ensure safe target/rel
+                              attribs.target = attribs.target || '_blank';
+                              attribs.rel = attribs.rel || 'noopener noreferrer';
+                              return { tagName, attribs };
                             }
-                          });
-                          return (
-                            <li key={index}>
-                              <div className="reference mb-2" dangerouslySetInnerHTML={{ __html: safe }} />
-                              {/* {ref.wikitext()} */}
-                            </li>
-                          );
-                        })}
-                      </ol>
-                    </div>
+                          }
+                        });
+                        return (
+                          <li key={index}>
+                            <div className="reference mb-2" dangerouslySetInnerHTML={{ __html: safe }} />
+                            {/* {ref.wikitext()} */}
+                          </li>
+                        );
+                      })}
+                    </ol>
                   )}
                 </div>
               )}
-
-
-
             </section>
           ))}
 

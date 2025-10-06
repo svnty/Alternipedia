@@ -22,6 +22,7 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
   // Be conservative about changing the URL client-side. Only adjust when the
   // difference is capitalization or minor separator differences (dashes vs spaces).
   let canonicalSlug: string | null = null;
+  
   if (jsonData) {
     const canonicalTitle = String(jsonData.title).trim();
     const rawRequested = String(slug || '').trim();

@@ -3,12 +3,13 @@
  * @param slug - The page title/slug to fetch
  * @returns Promise<WikipediaPage | null>
  */
-// Simple cache for Wikipedia data during server rendering
-
+// Simple cache for Wikipedia data during server rendering. Only enable in
+// development to avoid unbounded RAM use in production.
 // Use require for CommonJS compatibility if needed
 // @ts-ignore
 const wtf = require('wtf_wikipedia');
-const cache = new Map<string, any | null>();
+const ENABLE_CACHE = process.env.NODE_ENV === 'development';
+const cache = ENABLE_CACHE ? new Map<string, any | null>() : null;
 
 /**
  * Fetches Wikipedia page content using wtf_wikipedia
@@ -18,7 +19,7 @@ const cache = new Map<string, any | null>();
  */
 export async function fetchWikipediaPageWithWtf(slug: string, language: string = 'en') {
   const cacheKey = `${language}:${slug}`;
-  if (cache.has(cacheKey)) {
+  if (ENABLE_CACHE && cache && cache.has(cacheKey)) {
     return cache.get(cacheKey) || null;
   }
   try {
@@ -28,7 +29,7 @@ export async function fetchWikipediaPageWithWtf(slug: string, language: string =
       follow_redirects: true,
       lang: language,
     });
-    cache.set(cacheKey, doc || null);
+  if (ENABLE_CACHE && cache) cache.set(cacheKey, doc || null);
     if (!doc) return null;
     return doc;
   } catch (e) {

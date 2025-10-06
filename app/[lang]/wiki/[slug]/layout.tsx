@@ -792,7 +792,7 @@ export default function Article({
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
           isVisible={isLoadingBias}
-          message={"Loading new perspective..."}
+          message={"Loading perspective..."}
         />
         {children}
       </div>
