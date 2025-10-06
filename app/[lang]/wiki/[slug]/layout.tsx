@@ -339,9 +339,16 @@ export default function Article({
 
     const newPath = `${pathname}?${params.toString()}`;
 
+    setBias(value);
     setIsLoadingBias(true);
     router.push(newPath);
   };
+
+  useEffect(() => { 
+    if (!activeBias) {
+      handleApplyBias('wikipedia');
+    }
+  }, []);
 
   useEffect(() => {
     const prev = prevPathname.current;
@@ -356,6 +363,54 @@ export default function Article({
     }
 
   }, [pathname, searchParams?.toString()]);
+
+  // Observe the DOM for the server-rendered or client-inserted article node.
+  // When the `.wikipedia-article` element appears we can hide the "loading
+  // bias" overlay. This covers both refresh and client navigations where the
+  // server or renderer injects the article content asynchronously.
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+
+    const tryClear = () => {
+      try {
+        const existing = document.querySelector('.wikipedia-article');
+        if (existing) {
+          setIsLoadingBias(false);
+          return true;
+        }
+      } catch (e) {
+        // ignore
+      }
+      return false;
+    };
+
+    if (tryClear()) return;
+
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        for (const node of Array.from(m.addedNodes)) {
+          try {
+            const el = node as Element;
+            if (!el) continue;
+            const article = el.matches?.('.wikipedia-article') ? el : el.querySelector?.('.wikipedia-article');
+            if (article) {
+              setIsLoadingBias(false);
+              observer.disconnect();
+              return;
+            }
+          } catch (e) {
+            // ignore
+          }
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      try { observer.disconnect(); } catch (e) {}
+    };
+  }, []);
 
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
