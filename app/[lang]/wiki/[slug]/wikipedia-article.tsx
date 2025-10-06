@@ -180,7 +180,8 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
         <div className="space-y-6">
           {jsonData['sections'].map((section: any, index: number) => (
             <section key={index} className="wikipedia-section">
-              {section.title && <h2 id={section.title} className="text-2xl font-bold mt-8 mb-4">{section.title}</h2>}
+              {section.title && section.depth == 0 && <><div data-index={index} id={section.title} className="text-2xl font-bold mt-8 mb-2 heading-anchor">{section.title}</div><hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"></hr></>}
+              {section.title && section.depth == 1 && <div data-index={index} id={section.title} className="text-xl font-bold mt-8 mb-4 heading-anchor">{section.title}</div>}
 
               {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
                 const raw = jsonToLinkedParagraph(para, language, bias);

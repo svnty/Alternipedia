@@ -27,7 +27,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { MenuIcon, Palette } from "lucide-react";
+import { Earth, MenuIcon, Palette } from "lucide-react";
 
 import Terms from "@/app/[lang]/terms";
 import Privacy from "@/app/[lang]/privacy";
@@ -59,7 +59,7 @@ export default async function Layout({
     <div>
       <Analytics />
       {/* <nav> */}
-      <div  className="cursor-default text-center block md:hidden lg:hidden xl:hidden pt-3.5">
+      <div className="cursor-default text-center block md:hidden lg:hidden xl:hidden pt-3.5">
         <div className="text-xl font-medium text-black dark:text-white font-serif">Alternipedia</div>
       </div>
 
@@ -72,7 +72,7 @@ export default async function Layout({
                   aria-label="Open navigation"
                   variant="ghost"
                   className="shadow-none cursor-pointer">
-                  <MenuIcon size={16} aria-hidden="true" />
+                  <MenuIcon size={16} aria-hidden="true" className="scale-120" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent collisionPadding={8}>
@@ -82,7 +82,7 @@ export default async function Layout({
                 <DropdownMenuItem className="cursor-pointer" asChild><Link href={`/${lang}/help`}>{dict.navigation.help}</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <div className="px-2.5 py-1.5 rounded-md items-center flex-shrink-0 cursor-default hidden lg:block md:block">
+            <div className="px-2.5 py-1.5 rounded-md items-center flex-shrink-0 cursor-default hidden md:block">
               <div className="text-xl font-medium text-black dark:text-white font-serif">Alternipedia</div>
             </div>
           </div>
@@ -94,13 +94,13 @@ export default async function Layout({
                 <UserMenu lang={lang as Locale} />
               </div>
             </div>
-            <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5 hidden lg:block md:block">
+            <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5 hidden md:block">
               <div className="size- flex justify-center items-center gap-1.5">
                 <Button size="icon"
                   aria-label="Open account menu"
                   variant="ghost"
                   className="shadow-none cursor-pointer">
-                  <Palette size={16} aria-hidden="true" />
+                  <Palette size={16} aria-hidden="true" className="scale-120" />
                 </Button>
               </div>
             </div>
@@ -116,8 +116,11 @@ export default async function Layout({
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-16 py-8">
           {/* Footer Content Container - 70/30 split on large screens */}
           <div className="flex flex-col md:flex-row gap-8 md:gap-12">
+            <div className="w-full md:w-[5%] hidden md:block content-center -mt-2">
+              <Earth size={52} className="transform transition-transform duration-200 hover:scale-105 hover:cursor-pointer" />
+            </div>
             {/* Legal Text - 70% width on medium+ screens */}
-            <div className="w-full md:w-[70%]">
+            <div className="w-full md:w-[65%]">
               <p className="text-neutral-800 text-sm font-normal leading-normal">
                 <span>{dict.footer.text.part1}</span>
                 <span className="text-blue-400"><Link href={`/${lang}/license`} className="hover:underline">{dict.footer.text.part2}</Link></span>

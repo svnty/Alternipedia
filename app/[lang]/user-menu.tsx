@@ -51,7 +51,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
           aria-label="Open account menu"
           variant="ghost"
           className="shadow-none cursor-pointer">
-          <CircleUserRoundIcon size={16} aria-hidden="true" />
+          <CircleUserRoundIcon size={16} aria-hidden="true" className="scale-120" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-w-64" collisionPadding={8}>
