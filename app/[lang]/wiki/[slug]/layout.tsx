@@ -340,10 +340,28 @@ export default function Article({
       setIsLoadingBias(false);
     }
 
-    const onLoaded = () => setTimeout(() => setIsLoadingBias(false), 1);
+    const onLoaded = () => {
+      (window as any).__page_loaded_handled__ = true;
+      setTimeout(() => setIsLoadingBias(false), 1);
+    };
+
+    // Register a global fallback so the client-side loader can call this
+    // directly if the CustomEvent was missed due to timing/hydration differences
+    // after deployment.
+    (window as any).__alternipedia_on_load = () => {
+      (window as any).__page_loaded_handled__ = true;
+      onLoaded();
+    };
 
     window.addEventListener("load-signal", onLoaded);
-    return () => window.removeEventListener("load-signal", onLoaded);
+    return () => {
+      try {
+        delete (window as any).__alternipedia_on_load;
+      } catch (e) {
+        // ignore
+      }
+      window.removeEventListener("load-signal", onLoaded);
+    };
   }, [pathname, activeBias]);
 
   const handleApplyBias = (value: string, opts?: { replace?: boolean }) => {
