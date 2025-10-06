@@ -65,6 +65,9 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
         // @ts-ignore
         <CanonicalTitleSync canonicalTitle={String(canonicalTitle)} />
       )}
+      {/* Intercept clicks on wiki links inserted via innerHTML and route client-side */}
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
       <WikipediaArticle slug={slug} language={language} wiki={wikipediaData} />
     </WikipediaDataProvider>
   );

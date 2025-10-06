@@ -11,19 +11,42 @@ interface WikipediaArticleProps {
   wiki?: any; // Accept wiki data as a prop
 }
 
-function jsonToLinkedParagraph(data: any) {
+function jsonToLinkedParagraph(data: any, language: string) {
   return data.sentences.map((sentence: any) => {
     let text = sentence.text;
 
     // Sort links by length descending to avoid partial replacements
     const links = (sentence.links || []).sort((a: any, b: any) => (b.text?.length || 0) - (a.text?.length || 0));
 
-    // Replace each link text with an anchor tag
+    // Replace each link text with an anchor tag. For internal wiki page links
+    // (not starting with http[s]://) convert to our app route so Next can
+    // handle client navigation. External links are left as-is.
     links.forEach((link: any) => {
       if (!link.text) return; // skip if no text (some entries just have page)
-      const href = link.page ? `href="${link.page}"` : '';
+
+      let hrefValue = '';
+      if (link.page) {
+        try {
+          const p = String(link.page || '');
+          // Treat absolute URLs as external
+          if (/^https?:\/\//i.test(p)) {
+            hrefValue = p;
+          } else {
+            // Normalize internal wiki targets: strip leading '/wiki/' or leading '/'
+            let normalized = p.replace(/^\/wiki\//i, '').replace(/^\//, '');
+            // Replace underscores with spaces and decode
+            const title = decodeURIComponent(normalized.replace(/_/g, ' ')).replace(/\s+/g, ' ').trim();
+            const slug = encodeURIComponent(title.replace(/\s+/g, '-'));
+            hrefValue = `/${language}/wiki/${slug}`;
+          }
+        } catch (e) {
+          hrefValue = String(link.page);
+        }
+      }
+
+      const hrefAttr = hrefValue ? `href=\"${hrefValue}\"` : '';
       const regex = new RegExp(`\\b${escapeRegExp(link.text)}\\b`, 'g');
-      text = text.replace(regex, `<a class="cursor-pointer hover:underline text-blue-500" ${href}>${link.text}</a>`);
+      text = text.replace(regex, `<a class="cursor-pointer hover:underline text-blue-500" ${hrefAttr}>${link.text}</a>`);
     });
 
     // Handle formatting
@@ -125,7 +148,7 @@ export default async function WikipediaArticle({ slug, language, wiki }: Wikiped
 
   if (!wiki) {
     return (
-      <div className="w-full flex flex-col justify-start items-center gap-8 p-8">
+      <div className="wikipedia-article w-full flex flex-col justify-start items-center gap-8 p-8">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-neutral-800 mb-2">
             Wikipedia Article Not Found
@@ -162,7 +185,7 @@ export default async function WikipediaArticle({ slug, language, wiki }: Wikiped
               {section.title && <h2 id={section.title.replace(' ', '-')} className="text-2xl font-bold mt-8 mb-4">{section.title}</h2>}
 
               {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => (
-                <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: jsonToLinkedParagraph(para) }}></p>
+                <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: jsonToLinkedParagraph(para, language) }}></p>
               ))}
 
               {/* REFERENCES */}

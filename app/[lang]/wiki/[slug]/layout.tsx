@@ -14,7 +14,7 @@ import {
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from "@/components/ui/toggle-group"
+} from "@/components/ui/toggle-group";
 import { Bookmark, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check } from "lucide-react";
 import { SlidingLanguage } from "@/app/[lang]/sliding-language";
 import {
@@ -22,7 +22,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 import { LoadingOverlay } from "@/app/[lang]/loading-overlay";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +37,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { notFound } from 'next/navigation';
 import { getDictionary } from "@/lib/i18n/dictionaries";
 
@@ -51,6 +51,7 @@ export default function Article({
   const pathname = usePathname();
   const currentLang = params?.lang as Locale || 'en';
   const searchParams = useSearchParams();
+  const dict = getDictionary(currentLang);
 
   const [toolsOpen, setToolsOpen] = useState<boolean>(false);
   const [contentsOpen, setContentsOpen] = useState<boolean>(false);
@@ -58,34 +59,17 @@ export default function Article({
   const [langDialogOpen, setLangDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLang, setSelectedLang] = useState<Locale>(currentLang);
-  const [isLoadingBias, startTransition] = useTransition();
+  const [isLoadingBias, setIsLoadingBias] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isFetchingWiki, setIsFetchingWiki] = useState(false);
-  const initialMount = useRef(true);
   const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
+  const prevPathname = useRef<string | null>(null);
   const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
-
-  const handleApplyBias = (value: string) => {
-    if (!value) return;
-
-    const params = new URLSearchParams(searchParams?.toString());
-    params.set('bias', value);
-
-    const newPath = `${pathname}?${params.toString()}`;
-
-    // Use transition to track loading state
-    startTransition(() => {
-      router.push(newPath);
-    });
-  }
 
   if (!isValidLocale(currentLang)) {
     notFound();
   }
 
-  const dict = getDictionary(currentLang);
-
-  // Filter languages based on search query
+  /* ================== LANGUAGE CHANGING ================== */
   const filteredLocales = useMemo(() => {
     if (!searchQuery) return locales;
 
@@ -105,7 +89,7 @@ export default function Article({
     const newPath = segments.join('/');
 
     setLangDialogOpen(false);
-    window.location.href = newPath;
+    router.push(newPath);
   };
 
   const handleApplyLanguage = () => {
@@ -116,32 +100,14 @@ export default function Article({
     }
   };
 
+  /* ================== RESPONSIVE SIDEBAR ================== */
   useEffect(() => {
-    // Keep the local activeBias in sync with the URL param when available.
-    const paramBias = searchParams?.get('bias');
-    if (paramBias && paramBias !== activeBias) {
-      setBias(paramBias);
-    }
-
-    // If there is no bias param at all, default to 'wikipedia' without
-    // overwriting valid user-selected biases. Use replace to avoid
-    // polluting the history stack.
-    if (!paramBias) {
-      const params = new URLSearchParams(searchParams?.toString());
-      params.set('bias', 'wikipedia');
-      const newPath = `${pathname}?${params.toString()}`;
-      router.replace(newPath);
-      setBias('wikipedia');
-    }
-
-    // Check if screen is large on mount and window resize
     let resizeTimer: NodeJS.Timeout;
     let previousWidth = window.innerWidth;
 
     const checkScreenSize = (isInitial = false) => {
       const currentWidth = window.innerWidth;
 
-      // On initial load, always set the state. On resize, only update if width actually changed
       if (isInitial || currentWidth !== previousWidth) {
         const isLargeScreen = currentWidth >= 1024; // lg breakpoint
         setToolsOpen(isLargeScreen);
@@ -151,7 +117,6 @@ export default function Article({
     };
 
     const handleResize = () => {
-      // Debounce resize events to avoid excessive updates
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => checkScreenSize(false), 150);
     };
@@ -165,40 +130,7 @@ export default function Article({
     };
   }, []);
 
-  // Show overlay when navigating to a different wiki slug until the provider mounts
-  useEffect(() => {
-    // Don't treat the initial mount as a navigation
-    if (initialMount.current) {
-      initialMount.current = false;
-      return;
-    }
-    // Only show the Wikipedia loading overlay when the requested bias is
-    // actually 'wikipedia'. For other biases we don't expect the wiki
-    // provider to mount or dispatch headings, so avoid showing the overlay.
-    const requestedBias = searchParams?.get('bias');
-    if (requestedBias !== 'wikipedia') {
-      setIsFetchingWiki(false);
-      return;
-    }
-
-    // When slug changes and bias is wikipedia, show the overlay until the
-    // provider dispatches 'wikipediaHeadingsUpdated'.
-    setIsFetchingWiki(true);
-
-    const handler = () => setIsFetchingWiki(false);
-    window.addEventListener('wikipediaHeadingsUpdated', handler as EventListener);
-
-    // Fallback: clear after 10s to avoid stuck overlay
-    const timeout = setTimeout(() => setIsFetchingWiki(false), 10000);
-
-    return () => {
-      window.removeEventListener('wikipediaHeadingsUpdated', handler as EventListener);
-      clearTimeout(timeout);
-    };
-  }, [params?.slug, searchParams?.toString()]);
-
-
-  // Track mobile/desktop for sidebar positioning
+  // Check if screen has resized
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
@@ -211,7 +143,8 @@ export default function Article({
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
+  
+  // Smooth sidebar animation toggling based on scroll and element overlap
   useEffect(() => {
     if (isMobile) return;
 
@@ -394,6 +327,35 @@ export default function Article({
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isMobile]);
+
+  /* ================== BIAS AND PATHNAME HANDLING ================== */
+  const handleApplyBias = (value: string) => {
+    if (!["socialist", "liberal", "wikipedia", "conservative", "nationalist"].includes(value)) {
+      value = 'wikipedia';
+    }
+
+    const params = new URLSearchParams(searchParams?.toString());
+    params.set('bias', value);
+
+    const newPath = `${pathname}?${params.toString()}`;
+
+    setIsLoadingBias(true);
+    router.push(newPath);
+  };
+
+  useEffect(() => {
+    const prev = prevPathname.current;
+    if (!prev) {
+      prevPathname.current = pathname || null;
+      return;
+    }
+
+    if (prev !== pathname) {
+      prevPathname.current = pathname || null;
+      handleApplyBias(pathname || '');
+    }
+
+  }, [pathname, searchParams?.toString()]);
 
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
@@ -812,8 +774,8 @@ export default function Article({
       <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden relative pb-20">
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
-          isVisible={isLoadingBias || isFetchingWiki}
-          message={isFetchingWiki ? "Loading wikipedia..." : "Loading new perspective..."}
+          isVisible={isLoadingBias}
+          message={"Loading new perspective..."}
         />
         {children}
       </div>

@@ -9,11 +9,36 @@ interface Props {
 export default function CanonicalTitleSync({ canonicalTitle }: Props) {
   useEffect(() => {
     try {
-      // Update any title elements that show the article title
-      // There are several header divs in page.tsx; target by a data attribute or classname
-      const elems = document.querySelectorAll('[data-article-title]');
+      // Hide titles until we update them to avoid visible flicker. We add a
+      // lightweight inline class and then remove it after the update so the
+      // new title fades in.
+      const elems = Array.from(document.querySelectorAll<HTMLElement>('[data-article-title]'));
       elems.forEach(el => {
-        el.textContent = canonicalTitle;
+        // apply hidden state
+        el.dataset['waiting'] = '1';
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 220ms ease-out';
+      });
+
+      // Batch update text content in a microtask so layout thrashing is minimized
+      Promise.resolve().then(() => {
+        elems.forEach(el => {
+          el.textContent = canonicalTitle;
+        });
+
+        // Reveal after a short tick so the transition applies
+        setTimeout(() => {
+          elems.forEach(el => {
+            try {
+              delete el.dataset['waiting'];
+              el.style.opacity = '';
+              // remove transition after reveal
+              setTimeout(() => {
+                el.style.transition = '';
+              }, 300);
+            } catch (e) {}
+          });
+        }, 20);
       });
     } catch (e) {
       // ignore
