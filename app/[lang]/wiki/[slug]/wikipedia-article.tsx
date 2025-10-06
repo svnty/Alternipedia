@@ -153,10 +153,10 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
             Wikipedia Article Not Found
           </h3>
           <p className="text-neutral-600 mb-4">
-            We couldn't find a Wikipedia article for "{decodeURIComponent(slug.replace(/-/g, ' '))}".
+            We couldn't find a Wikipedia article for "{decodeURIComponent(slug.replace('_', ' '))}".
           </p>
           <a
-            href={`https://${language}.wikipedia.org/wiki/Special:Search/${encodeURIComponent(slug.replace(/-/g, ' '))}`}
+            href={`https://${language}.wikipedia.org/wiki/Special:Search/${encodeURIComponent(slug)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -272,7 +272,7 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
                 <div className="flex flex-wrap items-center gap-1">
                   {wiki.categories().map((cat: string, index: number) => (
                     <div key={index} className="inline-flex items-center gap-2 px-2 rounded">
-                      <Link href={`/${language}/wiki/Category:${cat.replace(" ", "_")}`} className="hover:underline inline-flex items-center gap-2 whitespace-nowrap">
+                      <Link href={`/${language}/wiki/Category:${encodeURIComponent(cat)}`} className="hover:underline inline-flex items-center gap-2 whitespace-nowrap">
                         <svg width="3" height="4" viewBox="0 0 3 4" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="1.5" cy="2" r="1.5" fill="#D8753C"></circle></svg>
                         <div className="text-orange-400 text-sm font-normal leading-normal">{cat}</div>
                       </Link>
