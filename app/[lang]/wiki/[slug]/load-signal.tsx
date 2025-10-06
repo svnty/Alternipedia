@@ -36,17 +36,8 @@ export default function ClientLoadedSignal() {
     // the listener is registered.
     const id = window.setTimeout(dispatchNow, 0);
 
-    // Fallback: if nothing handles the signal (for example due to timing
-    // differences in production), try again after a short delay.
-    const retryId = window.setTimeout(() => {
-      if (!(window as any).__page_loaded_handled__) {
-        dispatchNow();
-      }
-    }, 1500);
-
     return () => {
       window.clearTimeout(id);
-      window.clearTimeout(retryId);
     };
   }, []);
   return null;

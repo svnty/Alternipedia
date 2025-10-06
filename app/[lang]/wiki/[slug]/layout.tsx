@@ -58,12 +58,12 @@ export default function Article({
   const [langDialogOpen, setLangDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLang, setSelectedLang] = useState<Locale>(currentLang);
-  const [isLoadingBias, setIsLoadingBias] = useState<boolean>(true);
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
   const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
-
+  
   // loading spinner
+  const [isLoadingBias, setIsLoadingBias] = useState<boolean>(true);
   const [activeBias, setBias] = useState<string>(searchParams?.get('bias') || '');
   const prevPathname = useRef<string | null>(pathname || null);
   const initialBiasAppliedRef = useRef(false);
