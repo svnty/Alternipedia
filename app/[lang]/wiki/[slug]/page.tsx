@@ -237,7 +237,7 @@ export default async function Page({
                   <TabsTrigger
                     value="tab-2"
                     disabled={true}
-                    className="overflow-hidden rounded-b-none data-[state=active]:border-x data-[state=active]:border-t py-2 data-[state=active]:z-10 data-[state=active]:shadow-none data-[state=active]:border-b data-[state=active]:border-b-background data-[state=active]:-mb-px data-[state=inactive]:cursor-not-allowed"
+                    className="overflow-hidden rounded-b-none data-[state=active]:border-x data-[state=active]:border-t py-2 data-[state=active]:z-10 data-[state=active]:shadow-none data-[state=active]:border-b data-[state=active]:border-b-background data-[state=active]:-mb-px cursor-not-allowed pointer-events-auto!"
                   >
                     <DiscussionText />
                   </TabsTrigger>
@@ -261,7 +261,7 @@ export default async function Page({
                     <TabsTrigger
                       disabled={true}
                       value="tab-2"
-                      className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none data-[state=inactive]:cursor-pointer transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out"
+                      className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out cursor-not-allowed pointer-events-auto!"
                     >
                       <PanelsTopLeftIcon
                         className="-ms-0.5 me-1.5 opacity-60"
@@ -273,7 +273,7 @@ export default async function Page({
                     <TabsTrigger
                       disabled={true}
                       value="tab-3"
-                      className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none data-[state=inactive]:cursor-pointer transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out"
+                      className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out cursor-not-allowed pointer-events-auto!"
                     >
                       <BoxIcon
                         className="-ms-0.5 me-1.5 opacity-60"
