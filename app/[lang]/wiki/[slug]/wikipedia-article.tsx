@@ -50,14 +50,14 @@ export default function WikipediaArticle({ slug, language, wikipediaData }: Wiki
     <div className="w-full flex flex-col justify-start items-start">
       <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r">
         <p className="text-sm text-blue-800">
-          This content is sourced from Wikipedia and represents their community-edited perspective.
+          The following selected content bias is sourced from Wikipedia and represents their community-edited perspective. To edit or discuss this version, please 
           <a
             href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(slug.replace(/-/g, ' '))}`}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-1 text-blue-600 hover:underline"
           >
-            View on Wikipedia →
+            view on Wikipedia →
           </a>
         </p>
       </div>
