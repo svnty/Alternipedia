@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, useTransition } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales, localeNames, type Locale, isValidLocale } from '@/lib/i18n/config';
 
@@ -22,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { LoadingOverlay } from "@/app/[lang]/loading-overlay";
 import Contents from "@/app/[lang]/wiki/[slug]/contents";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -57,6 +58,7 @@ export default function Article({
   const [langDialogOpen, setLangDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLang, setSelectedLang] = useState<Locale>(currentLang);
+  const [isLoadingBias, startTransition] = useTransition();
 
   const handleApplyBias = (value: string) => {
     if (!value) return;
@@ -65,7 +67,11 @@ export default function Article({
     params.set('bias', value);
 
     const newPath = `${pathname}?${params.toString()}`;
-    router.push(newPath);
+    
+    // Use transition to track loading state
+    startTransition(() => {
+      router.push(newPath);
+    });
   }
 
   if (!isValidLocale(currentLang)) {
@@ -541,7 +547,12 @@ export default function Article({
       </div>
       {/* END RIGHT SIDEBAR */}
 
-      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden">
+      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden relative">
+        {/* Loading overlay when bias is changing */}
+        <LoadingOverlay 
+          isVisible={isLoadingBias} 
+          message="Loading new perspective..." 
+        />
         {children}
       </div>
     </div>
