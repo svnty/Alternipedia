@@ -48,7 +48,6 @@ function jsonToLinkedParagraph(data: any, language: string, bias: string) {
       const hrefAttr = hrefValue ? `href=\"${hrefValue}\?bias=${bias}"` : '';
       const regex = new RegExp(`\\b${escapeRegExp(link.text)}\\b`, 'g');
       text = text.replace(regex, `<a class="cursor-pointer hover:underline text-blue-500" ${hrefAttr}>${link.text}</a>`);
-      console.log(text);
     });
 
     // Handle formatting

@@ -11,12 +11,13 @@ import {
 } from "lucide-react"
 import BottomArrow from "@/app/[lang]/bottom-arrow";
 
-import ArticleText from "@/app/[lang]/wiki/[slug]/article-text";
-import DiscussionText from "@/app/[lang]/wiki/[slug]/discussion-text";
-import ReadText from "@/app/[lang]/wiki/[slug]/read-text";
-import EditText from "@/app/[lang]/wiki/[slug]/edit-text";
-import HistoryText from "@/app/[lang]/wiki/[slug]/history-text";
+import ArticleText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/article-text";
+import DiscussionText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/discussion-text";
+import ReadText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/read-text";
+import EditText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/edit-text";
+import HistoryText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/history-text";
 import WikipediaWrapper from "@/app/[lang]/wiki/[slug]/wikipedia-wrapper";
+import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/load-signal';
 
 export default async function Page({
   params,
@@ -33,6 +34,7 @@ export default async function Page({
       <span>
         {bias === 'socialist' && (
           <div className="relative w-full mb-6 wikipedia-article">
+            <ClientLoadedSignal />
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
@@ -125,6 +127,7 @@ export default async function Page({
 
         {bias === 'liberal' && (
           <div className="relative w-full mb-6 wikipedia-article">
+            <ClientLoadedSignal />
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
@@ -217,6 +220,7 @@ export default async function Page({
 
         {bias === 'wikipedia' && (
           <div className="relative w-full mb-6 ">
+            <ClientLoadedSignal />
             {/* Server-side overlay: shown immediately on page load for wikipedia bias
             Removed by client JS when the article is ready. This guarantees a
             spinner is visible on refresh/navigation before client hydration. */}
@@ -309,6 +313,7 @@ export default async function Page({
 
         {bias === 'conservative' && (
           <div className="relative w-full mb-6 wikipedia-article">
+            <ClientLoadedSignal />
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
@@ -403,6 +408,7 @@ export default async function Page({
 
         {bias === 'nationalist' && (
           <div className="relative w-full mb-6 wikipedia-article">
+            <ClientLoadedSignal />
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}

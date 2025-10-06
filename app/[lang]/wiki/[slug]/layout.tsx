@@ -62,7 +62,7 @@ export default function Article({
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
   const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
-  
+
   // loading spinner
   const [activeBias, setBias] = useState<string>(searchParams?.get('bias') || '');
   const prevPathname = useRef<string | null>(pathname || null);
@@ -145,7 +145,7 @@ export default function Article({
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  
+
   // Smooth sidebar animation toggling based on element overlap or rapid scroll
   useEffect(() => {
     if (isMobile) return;
@@ -156,7 +156,7 @@ export default function Article({
 
     const elementsOverlap = (el1: any, el2: any) => {
       if (!el1 || !el2) return false;
-      
+
       const rect1 = el1.getBoundingClientRect();
       const rect2 = el2.getBoundingClientRect();
 
@@ -179,13 +179,13 @@ export default function Article({
       if (
         (e.metaKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) || // Cmd + Up/Down (macOS)
         (e.ctrlKey && (e.key === 'Home' || e.key === 'End')) || // Ctrl + Home/End
-        e.key === 'Home' || 
-        e.key === 'End' || 
-        e.key === 'PageUp' || 
+        e.key === 'Home' ||
+        e.key === 'End' ||
+        e.key === 'PageUp' ||
         e.key === 'PageDown'
       ) {
         pageJumpCooldown = true;
-        
+
         // Remove all transitions immediately when page jump is detected
         [leftSidebar, rightSidebar].forEach(sidebar => {
           if (sidebar) {
@@ -203,23 +203,23 @@ export default function Article({
 
     const updateAnimation = (el1: any, el2: any) => {
       if (!el1 || !el2) return;
-      
+
       const currentScrollY = window.scrollY;
       const currentTime = Date.now();
       const scrollDelta = Math.abs(currentScrollY - lastScrollY);
       const timeDelta = currentTime - lastScrollTime;
-      
+
       // Detect page jumps by looking for large instantaneous scroll changes
       const isPageJump = scrollDelta > 500 && timeDelta < 100; // More than 500px in less than 100ms
       const isRapidScroll = scrollDelta > 100 && timeDelta < 50;
-      
+
       const areOverlapping = elementsOverlap(el1, el2);
       const hasTransition = el1.classList.contains('transition-all');
-      
+
       if (areOverlapping || isRapidScroll || isPageJump || pageJumpCooldown) {
         // Remove transitions for overlapping, rapid scroll, page jumps, or during cooldown
         el1.classList.remove('transition-all', 'duration-100', 'ease-linear');
-        
+
         // Force immediate repositioning
         if ((areOverlapping || isPageJump) && hasTransition) {
           el1.offsetHeight; // Force reflow
@@ -230,7 +230,7 @@ export default function Article({
           el1.classList.add('transition-all', 'duration-100', 'ease-linear');
         }
       }
-      
+
       lastScrollY = currentScrollY;
       lastScrollTime = currentTime;
     }
@@ -247,7 +247,7 @@ export default function Article({
 
     // Add keyboard event listener for page jump detection
     window.addEventListener('keydown', handleKeyDown);
-    
+
     window.addEventListener('scroll', handleScrollLeftFooter);
     window.addEventListener('resize', handleResizeLeftFooter);
     window.addEventListener('scroll', handleScrollLeftNav);
@@ -331,13 +331,24 @@ export default function Article({
   }, [isMobile]);
 
   /* ================== BIAS AND PATHNAME HANDLING ================== */
+  useEffect(() => {
+    if ((window as any).__page_loaded__) {
+      setIsLoadingBias(false);
+    } else if (!(window as any).__page_loading__ && document.querySelector('.wikipedia-article')) {
+      setIsLoadingBias(true);
+    }
+
+    const onLoaded = () => setIsLoadingBias(false);
+    window.addEventListener("load-signal", onLoaded);
+    return () => window.removeEventListener("load-signal", onLoaded);
+  }, []);
+
   const handleApplyBias = (value: string) => {
     setIsLoadingBias(true);
 
     if (!["socialist", "liberal", "wikipedia", "conservative", "nationalist"].includes(value)) {
       value = 'wikipedia';
     }
-
 
     const params = new URLSearchParams(searchParams?.toString());
     params.set('bias', value);
@@ -347,7 +358,7 @@ export default function Article({
     router.push(newPath);
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     if (!activeBias) {
       handleApplyBias('wikipedia');
     }
@@ -367,13 +378,6 @@ export default function Article({
     }
 
   }, [prevPathname.current, pathname]);
-
-  useEffect(() => {
-    let article = document.querySelector('.wikipedia-article');
-    if (article) {
-      setIsLoadingBias(false);
-    }
-  });
 
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
@@ -411,19 +415,19 @@ export default function Article({
           }}
           className="flex-col sm:flex-row md:mx-2"
         >
-          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="socialist">
+          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="socialist" disabled={isLoadingBias}>
             {dict.bias.socialist}
           </ToggleGroupItem>
-          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="liberal">
+          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="liberal" disabled={isLoadingBias}>
             {dict.bias.liberal}
           </ToggleGroupItem>
-          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="wikipedia">
+          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="wikipedia" disabled={isLoadingBias}>
             {dict.bias.wikipedia}
           </ToggleGroupItem>
-          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="conservative">
+          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="conservative" disabled={isLoadingBias}>
             {dict.bias.conservative}
           </ToggleGroupItem>
-          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="nationalist">
+          <ToggleGroupItem className="w-full sm:flex-1 data-[state=off]:cursor-pointer" value="nationalist" disabled={isLoadingBias}>
             {dict.bias.nationalist}
           </ToggleGroupItem>
         </ToggleGroup>

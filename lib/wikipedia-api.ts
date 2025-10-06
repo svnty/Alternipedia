@@ -24,7 +24,7 @@ export async function fetchWikipediaPageWithWtf(slug: string, language: string =
   }
   try {
     // wtf_wikipedia expects spaces, not dashes
-    const title = decodeURIComponent(slug.replace(/-/g, ' '));
+    const title = decodeURIComponent(slug);
     const doc = await wtf.fetch(title, {
       follow_redirects: true,
       lang: language,
