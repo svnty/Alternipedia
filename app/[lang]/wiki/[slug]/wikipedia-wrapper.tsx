@@ -68,7 +68,7 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
       {/* Intercept clicks on wiki links inserted via innerHTML and route client-side */}
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore */}
-      <WikipediaArticle slug={slug} language={language} wiki={wikipediaData} />
+      <WikipediaArticle slug={slug} language={language} wiki={wikipediaData} bias={bias} />
     </WikipediaDataProvider>
   );
 }

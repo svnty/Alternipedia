@@ -55,15 +55,17 @@ export default function Article({
 
   const [toolsOpen, setToolsOpen] = useState<boolean>(false);
   const [contentsOpen, setContentsOpen] = useState<boolean>(false);
-  const [activeBias, setBias] = useState<string>(searchParams?.get('bias') || '');
   const [langDialogOpen, setLangDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLang, setSelectedLang] = useState<Locale>(currentLang);
-  const [isLoadingBias, setIsLoadingBias] = useState<boolean>(false);
+  const [isLoadingBias, setIsLoadingBias] = useState<boolean>(true);
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
-  const prevPathname = useRef<string | null>(null);
   const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
+  
+  // loading spinner
+  const [activeBias, setBias] = useState<string>(searchParams?.get('bias') || '');
+  const prevPathname = useRef<string | null>(pathname || null);
 
   if (!isValidLocale(currentLang)) {
     notFound();
@@ -144,7 +146,7 @@ export default function Article({
     };
   }, []);
   
-  // Smooth sidebar animation toggling based on scroll and element overlap
+  // Smooth sidebar animation toggling based on element overlap or rapid scroll
   useEffect(() => {
     if (isMobile) return;
 
@@ -330,17 +332,18 @@ export default function Article({
 
   /* ================== BIAS AND PATHNAME HANDLING ================== */
   const handleApplyBias = (value: string) => {
+    setIsLoadingBias(true);
+
     if (!["socialist", "liberal", "wikipedia", "conservative", "nationalist"].includes(value)) {
       value = 'wikipedia';
     }
 
+
     const params = new URLSearchParams(searchParams?.toString());
     params.set('bias', value);
-
     const newPath = `${pathname}?${params.toString()}`;
-
     setBias(value);
-    setIsLoadingBias(true);
+
     router.push(newPath);
   };
 
@@ -348,10 +351,11 @@ export default function Article({
     if (!activeBias) {
       handleApplyBias('wikipedia');
     }
-  }, []);
+  }, [activeBias]);
 
   useEffect(() => {
     const prev = prevPathname.current;
+
     if (!prev) {
       prevPathname.current = pathname || null;
       return;
@@ -359,58 +363,17 @@ export default function Article({
 
     if (prev !== pathname) {
       prevPathname.current = pathname || null;
-      handleApplyBias(pathname || '');
+      setIsLoadingBias(true);
     }
 
-  }, [pathname, searchParams?.toString()]);
+  }, [prevPathname.current, pathname]);
 
-  // Observe the DOM for the server-rendered or client-inserted article node.
-  // When the `.wikipedia-article` element appears we can hide the "loading
-  // bias" overlay. This covers both refresh and client navigations where the
-  // server or renderer injects the article content asynchronously.
   useEffect(() => {
-    if (typeof document === 'undefined') return;
-
-    const tryClear = () => {
-      try {
-        const existing = document.querySelector('.wikipedia-article');
-        if (existing) {
-          setIsLoadingBias(false);
-          return true;
-        }
-      } catch (e) {
-        // ignore
-      }
-      return false;
-    };
-
-    if (tryClear()) return;
-
-    const observer = new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        for (const node of Array.from(m.addedNodes)) {
-          try {
-            const el = node as Element;
-            if (!el) continue;
-            const article = el.matches?.('.wikipedia-article') ? el : el.querySelector?.('.wikipedia-article');
-            if (article) {
-              setIsLoadingBias(false);
-              observer.disconnect();
-              return;
-            }
-          } catch (e) {
-            // ignore
-          }
-        }
-      }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      try { observer.disconnect(); } catch (e) {}
-    };
-  }, []);
+    let article = document.querySelector('.wikipedia-article');
+    if (article) {
+      setIsLoadingBias(false);
+    }
+  });
 
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
@@ -444,7 +407,6 @@ export default function Article({
           value={activeBias}
           onValueChange={(value) => {
             if (!value) return;
-            setBias(value);
             handleApplyBias(value);
           }}
           className="flex-col sm:flex-row md:mx-2"
@@ -826,7 +788,7 @@ export default function Article({
       {/* END RIGHT SIDEBAR */}
 
       {/* MAIN CONTENT */}
-      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden relative pb-20">
+      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden relative pb-20 min-h-screen">
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
           isVisible={isLoadingBias}

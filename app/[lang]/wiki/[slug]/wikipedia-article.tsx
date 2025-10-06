@@ -8,10 +8,11 @@ const sanitizeHtml = require('sanitize-html');
 interface WikipediaArticleProps {
   slug: string;
   language: string;
+  bias: string;
   wiki?: any; // Accept wiki data as a prop
 }
 
-function jsonToLinkedParagraph(data: any, language: string) {
+function jsonToLinkedParagraph(data: any, language: string, bias: string) {
   return data.sentences.map((sentence: any) => {
     let text = sentence.text;
 
@@ -44,9 +45,10 @@ function jsonToLinkedParagraph(data: any, language: string) {
         }
       }
 
-      const hrefAttr = hrefValue ? `href=\"${hrefValue}\"` : '';
+      const hrefAttr = hrefValue ? `href=\"${hrefValue}\?bias=${bias}"` : '';
       const regex = new RegExp(`\\b${escapeRegExp(link.text)}\\b`, 'g');
       text = text.replace(regex, `<a class="cursor-pointer hover:underline text-blue-500" ${hrefAttr}>${link.text}</a>`);
+      console.log(text);
     });
 
     // Handle formatting
@@ -140,11 +142,8 @@ function toWikipediaReference(citation: Record<string, any>): string {
   return parts.filter(Boolean).join(". ") + ".";
 }
 
-export default async function WikipediaArticle({ slug, language, wiki }: WikipediaArticleProps) {
+export default async function WikipediaArticle({ slug, language, wiki, bias }: WikipediaArticleProps) {
   const jsonData = wiki ? wiki.json() : null;
-
-  // Redirects are now handled in the wrapper so the TOC/headings are extracted from
-  // the canonical page before a redirect occurs. Keep this file focused on rendering.
 
   if (!wiki) {
     return (
@@ -177,7 +176,7 @@ export default async function WikipediaArticle({ slug, language, wiki }: Wikiped
           <a href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(jsonData.title)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline">view on Wikipedia →</a>
         </p>
       </div>
-      <main className="max-w-4xl mx-auto px-4">
+      <main className="max-w-4xl mx-auto">
         <div className="space-y-6">
 
           {jsonData['sections'].map((section: any, index: number) => (
@@ -185,7 +184,7 @@ export default async function WikipediaArticle({ slug, language, wiki }: Wikiped
               {section.title && <h2 id={section.title.replace(' ', '-')} className="text-2xl font-bold mt-8 mb-4">{section.title}</h2>}
 
               {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => (
-                <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: jsonToLinkedParagraph(para, language) }}></p>
+                <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: jsonToLinkedParagraph(para, language, bias) }}></p>
               ))}
 
               {/* REFERENCES */}
@@ -210,6 +209,7 @@ export default async function WikipediaArticle({ slug, language, wiki }: Wikiped
                                 // preserve class if present, and ensure safe target/rel
                                 attribs.target = attribs.target || '_blank';
                                 attribs.rel = attribs.rel || 'noopener noreferrer';
+                                
                                 return { tagName, attribs };
                               }
                             }
