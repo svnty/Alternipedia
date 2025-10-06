@@ -340,7 +340,8 @@ export default function Article({
       setIsLoadingBias(false);
     }
 
-    const onLoaded = () => setIsLoadingBias(false);
+    const onLoaded = () => setTimeout(() => setIsLoadingBias(false), 1);
+
     window.addEventListener("load-signal", onLoaded);
     return () => window.removeEventListener("load-signal", onLoaded);
   }, [pathname, activeBias]);
