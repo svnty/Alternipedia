@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect, useMemo } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -211,7 +211,7 @@ export default function Article({
               <div className="w-full lg:w-64 relative inline-flex flex-col justify-start items-start overflow-x-hidden">
                 <div className="relative w-full">
                   <CollapsibleTrigger className="h-10 px-1.5 py-[5px] inline-flex justify-between items-center gap-2.5 w-full transition-colors cursor-pointer">
-                    <div className="justify-start text-neutral-800 text-sm font-bold ">Contents</div>
+                    <div className="justify-start text-neutral-800 text-sm font-bold ">{dict.article.content}</div>
                     <div data-svg-wrapper className="relative">
                       {contentsOpen ? (
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -245,7 +245,7 @@ export default function Article({
               <div className="w-full lg:w-64 relative inline-flex flex-col justify-start items-start overflow-x-hidden">
                 <div className="relative w-full">
                   <CollapsibleTrigger className="h-10 px-1.5 py-[5px] inline-flex justify-between items-center gap-2.5 w-full transition-colors cursor-pointer">
-                    <div className="justify-start text-neutral-800 text-sm font-bold ">Tools</div>
+                    <div className="justify-start text-neutral-800 text-sm font-bold ">{dict.article.tools}</div>
                     <div data-svg-wrapper className="relative">
                       {toolsOpen ? (
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -382,7 +382,7 @@ export default function Article({
                         </div>
                       </a>
                       <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                        <div className="justify-center text-white text-xs font-bold ">PRO</div>
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
 
@@ -398,7 +398,7 @@ export default function Article({
                         </div>
                       </a>
                       <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                        <div className="justify-center text-white text-xs font-bold ">PRO</div>
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
@@ -413,7 +413,7 @@ export default function Article({
                         </div>
                       </a>
                       <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                        <div className="justify-center text-white text-xs font-bold ">PRO</div>
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
@@ -428,7 +428,7 @@ export default function Article({
                         </div>
                       </a>
                       <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                        <div className="justify-center text-white text-xs font-bold ">PRO</div>
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
@@ -443,7 +443,7 @@ export default function Article({
                         </div>
                       </a>
                       <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                        <div className="justify-center text-white text-xs font-bold ">PRO</div>
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
 

@@ -1,8 +1,35 @@
-import { string } from 'prop-types';
 import type { Locale } from './config';
+
+const PrivacyPolicyUpdateDate = new Date("2025-10-01T00:00:00Z");
+const TermsofServiceUpdateDate = new Date("2025-10-01T00:00:00Z");
 
 // Dictionary type definition
 export type Dictionary = {
+  login: {
+    title: string;
+    google: string;
+    facebook: string;
+    x: string;
+    microsoft: string;
+    policy: string;
+  }
+  privacyPolicy: {
+    lastUpdated: string;
+    lastUpdatedText: string;
+    title: string;
+    intro: Array<{
+      type: string;
+      text: string;
+    }>;
+    sections: Array<{
+      title: string;
+      content: Array<{
+        type: string;
+        text?: string;
+        items?: string[] | Array<{ label: string; url: string; }>;
+      }>;
+    }>;
+  };
   common: {
     home: string;
     about: string;
@@ -26,6 +53,13 @@ export type Dictionary = {
     randomArticle: string;
     help: string;
   };
+  userMenu: {
+    login: string;
+    contributions: string;
+    savedArticles: string;
+    preferences: string;
+    logout: string;
+  };
   footer: {
     pleaseLogin: string;
     text: {
@@ -47,6 +81,7 @@ export type Dictionary = {
     cookieStatement: string;
     developers: string;
   };
+  termsOfServiceUpdateDate: string;
   termsOfService: [
     ...{ title: string; content: string[] }[]
   ];
@@ -59,6 +94,7 @@ export type Dictionary = {
     goHome: string;
   };
   upgrade: {
+    pro: string;
     goPro: string;
     upgradePrompt: string;
     title: string;
@@ -121,6 +157,8 @@ export type Dictionary = {
     pageInfo: string;
   };
   article: {
+    content: string;
+    tools: string;
     article: string;
     discussion: string;
     read: string;
@@ -131,6 +169,190 @@ export type Dictionary = {
 
 // English dictionary
 const en: Dictionary = {
+  login: {
+    title: 'Log in to',
+    google: 'Continue with Google',
+    facebook: 'Continue with Facebook',
+    x: 'Continue with X',
+    microsoft: 'Continue with Microsoft',
+    policy: 'By signing in you agree to our Terms of Service and Privacy Policy.',
+  },
+  userMenu: {
+    login: "Log in",
+    contributions: "Contributions",
+    savedArticles: "Saved articles",
+    preferences: "Preferences",
+    logout: "Log out",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+    "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
+    "lastUpdatedText": "Last updated:",
+    "title": "Privacy Policy",
+    "intro": [
+      {
+        "type": "paragraph",
+        "text": "Welcome to Alternipedia, an educational wiki designed to present diverse perspectives on knowledge and ideas. We value your privacy and are committed to protecting your personal information. This policy explains what we collect, how we use it, and your rights."
+      }
+    ],
+    "sections": [
+      {
+        "title": "Information We Collect",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We only collect the minimum information needed to provide and improve our services. This may include:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Account information: When you sign in using an OAuth provider (like Google, Meta, or similar), we receive basic details such as your name, email address, and profile image (if available).",
+              "Payment information: If you choose to make a payment or donation, we use Stripe to process transactions. Stripe handles your payment details securely — we never store or see your credit card numbers.",
+              "Analytics data: We use Vercel Analytics to understand general usage patterns, such as which pages are popular and how our site performs. This data is aggregated and does not personally identify you.",
+              "Technical information: When you visit our site, we may automatically receive standard log data such as your browser type, device, and IP address, which helps us maintain security and troubleshoot issues."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "How We Use Your Information",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We use your information only to:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Operate and improve the Alternipedia platform",
+              "Authenticate users and manage accounts",
+              "Process payments securely through Stripe",
+              "Monitor site performance and reliability",
+              "Respond to user inquiries or requests made through the site"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "text": "We do not sell, rent, or trade your personal data."
+          }
+        ]
+      },
+      {
+        "title": "Cookies and Tracking",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Alternipedia does not use advertising or tracking cookies."
+          },
+          {
+            "type": "paragraph",
+            "text": "We only use essential cookies required for login sessions and site functionality."
+          }
+        ]
+      },
+      {
+        "title": "Data Storage and Security",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Your data is stored securely using industry-standard encryption and hosting infrastructure."
+          },
+          {
+            "type": "paragraph",
+            "text": "We take reasonable steps to protect your information from loss, misuse, or unauthorized access."
+          },
+          {
+            "type": "paragraph",
+            "text": "Because our hosting and analytics are global (including services like Vercel and Stripe), your data may be processed in other countries. We only work with providers that comply with strong privacy standards."
+          }
+        ]
+      },
+      {
+        "title": "Third-Party Services",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We rely on trusted third parties to provide parts of our service:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "OAuth providers – for secure login",
+              "Stripe – for payment processing",
+              "Vercel Analytics – for anonymous performance analytics"
+            ]
+          },
+          {
+            "type": "links",
+            "items": [
+              { "label": "Stripe Privacy Policy", "url": "https://stripe.com/privacy" },
+              { "label": "Vercel Privacy Policy", "url": "https://vercel.com/legal/privacy-policy" }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "text": "Each of these services may collect and process your information in accordance with their own privacy policies."
+          }
+        ]
+      },
+      {
+        "title": "Your Rights",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Depending on your location, you may have the right to:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Access or request a copy of your personal information",
+              "Correct or delete information we hold about you",
+              "Withdraw consent or close your account"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "text": "If you’d like to exercise these rights, please contact us through the contact form on our website."
+          }
+        ]
+      },
+      {
+        "title": "Children’s Privacy",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Alternipedia is designed for general audiences and is not intended for children under 13."
+          },
+          {
+            "type": "paragraph",
+            "text": "We do not knowingly collect personal information from minors."
+          }
+        ]
+      },
+      {
+        "title": "Changes to This Policy",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "We may update this Privacy Policy from time to time to reflect improvements or legal requirements."
+          },
+          {
+            "type": "paragraph",
+            "text": "When we do, we’ll post the updated date at the top of this page."
+          }
+        ]
+      },
+      {
+        "title": "Contact Us",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "If you have any privacy questions or requests, please contact us through the Alternipedia website."
+          }
+        ]
+      }
+    ]
+  },
   tools: {
     textToSpeech: "Text to speech",
     translate: "Translate",
@@ -211,8 +433,8 @@ const en: Dictionary = {
       part3: '; additional terms may apply. By using this site, you agree to the ',
       part4: 'Terms & Conditions ',
       part5: 'and ',
-      part6: 'Privacy Policy. ',
-      part7: 'Alternipedia is an open-source non-for-profit project.',
+      part6: 'Privacy Policy',
+      part7: '. Alternipedia is an open-source non-for-profit project.',
     },
     license: 'License',
     terms: 'Terms',
@@ -231,7 +453,8 @@ const en: Dictionary = {
     goHome: 'Go to Homepage',
   },
   upgrade: {
-    goPro: 'Go Pro',
+    pro: 'PRO',
+    goPro: 'Go PRO',
     month: 'month',
     upgradePrompt: 'Upgrade to unlock premium features',
     title: 'Knowledge is Power, Supercharge Yours.',
@@ -262,6 +485,8 @@ const en: Dictionary = {
     },
   },
   article: {
+    tools: 'Tools',
+    content: 'Content',
     article: 'Article',
     discussion: 'Discussion',
     read: 'Read',
@@ -272,6 +497,107 @@ const en: Dictionary = {
 
 // Spanish dictionary
 const es: Dictionary = {
+  login: {
+    title: 'Iniciar sesión en',
+    google: 'Continuar con Google',
+    facebook: 'Continuar con Facebook',
+    x: 'Continuar con X',
+    microsoft: 'Continuar con Microsoft',
+    policy: 'Al iniciar sesión, aceptas nuestros Términos de Servicio y Política de Privacidad.',
+  },
+  userMenu: {
+    login: "Iniciar sesión",
+    contributions: "Contribuciones",
+    savedArticles: "Artículos guardados",
+    preferences: "Preferencias",
+    logout: "Cerrar sesión",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('es-ES', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('es-ES', { year: 'numeric', month: 'long' }),
+  "title": "Política de Privacidad",
+  "lastUpdatedText": "Última actualización:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Bienvenido a Alternipedia, una wiki educativa diseñada para presentar diversas perspectivas sobre el conocimiento y las ideas. Valoramos su privacidad y nos comprometemos a proteger su información personal. Esta política explica qué recopilamos, cómo lo usamos y sus derechos."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Información que recopilamos",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Información de la cuenta: Al iniciar sesión mediante un proveedor OAuth (como Google o Meta), recibimos detalles básicos como su nombre, correo electrónico y foto de perfil (si está disponible).",
+            "Información de pago: Si decide realizar un pago o donación, Stripe procesa las transacciones de forma segura. Nunca almacenamos ni vemos los números de su tarjeta de crédito.",
+            "Datos de análisis: Utilizamos Vercel Analytics para comprender los patrones generales de uso, como qué páginas son populares y cómo funciona nuestro sitio. Estos datos se agregan y no lo identifican personalmente.",
+            "Información técnica: Al visitar nuestro sitio, podemos recibir automáticamente datos de registro estándar, como tipo de navegador, dispositivo y dirección IP, lo que ayuda a mantener la seguridad y solucionar problemas."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cómo usamos su información",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Operar y mejorar la plataforma Alternipedia",
+            "Autenticar usuarios y gestionar cuentas",
+            "Procesar pagos de forma segura mediante Stripe",
+            "Monitorear el rendimiento y la fiabilidad del sitio",
+            "Responder a consultas o solicitudes de los usuarios"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "No vendemos, alquilamos ni comercializamos sus datos personales."
+        }
+      ]
+    },
+    {
+      "title": "Cookies y seguimiento",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia no utiliza cookies de publicidad ni de seguimiento."
+        },
+        {
+          "type": "paragraph",
+          "text": "Solo usamos cookies esenciales necesarias para sesiones de inicio de sesión y la funcionalidad del sitio."
+        }
+      ]
+    },
+    {
+      "title": "Almacenamiento de datos y seguridad",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Sus datos se almacenan de forma segura utilizando cifrado estándar de la industria e infraestructura de alojamiento."
+        },
+        {
+          "type": "paragraph",
+          "text": "Tomamos medidas razonables para proteger su información contra pérdida, uso indebido o acceso no autorizado."
+        }
+      ]
+    },
+    {
+      "title": "Sus derechos",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Acceder o solicitar una copia de su información personal",
+            "Corregir o eliminar información que tengamos sobre usted",
+            "Retirar el consentimiento o cerrar su cuenta"
+          ]
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "Texto a voz",
     translate: "Traducir",
@@ -352,8 +678,8 @@ const es: Dictionary = {
       "part3": "; pueden aplicarse términos adicionales. Al utilizar este sitio, usted acepta",
       "part4": "Términos y condiciones",
       "part5": "y",
-      "part6": "Política de privacidad.",
-      "part7": "Alternipedia es un proyecto de código abierto sin fines de lucro."
+      "part6": "Política de privacidad",
+      "part7": ". Alternipedia es un proyecto de código abierto sin fines de lucro."
     },
     license: 'Licencia',
     terms: 'Términos',
@@ -372,7 +698,8 @@ const es: Dictionary = {
     goHome: 'Ir a la página de inicio',
   },
   upgrade: {
-    goPro: 'Pasar a Pro',
+    pro: 'PRO',
+    goPro: 'Pasar a PRO',
     month: 'mes',
     upgradePrompt: 'Actualiza para desbloquear funciones premium',
     title: 'El conocimiento es poder, potencia el tuyo.',
@@ -403,6 +730,8 @@ const es: Dictionary = {
     },
   },
   article: {
+    tools: 'Herramientas',
+    content: 'Contenido',
     article: 'Artículo',
     discussion: 'Discusión',
     read: 'Leer',
@@ -413,6 +742,107 @@ const es: Dictionary = {
 
 // French dictionary
 const fr: Dictionary = {
+    login: {
+    title: 'Se connecter à',
+    google: 'Continuer avec Google',
+    facebook: 'Continuer avec Facebook',
+    x: 'Continuer avec X',
+    microsoft: 'Continuer avec Microsoft',
+    policy: "En vous connectant, vous acceptez nos Conditions d'Utilisation et notre Politique de Confidentialité.",
+  },
+  userMenu: {
+    login: "Se connecter",
+    contributions: "Contributions",
+    savedArticles: "Articles sauvegardés",
+    preferences: "Préférences",
+    logout: "Se déconnecter",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long' }),
+  "title": "Politique de Confidentialité",
+  "lastUpdatedText": "Dernière mise à jour :",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Bienvenue sur Alternipedia, un wiki éducatif conçu pour présenter diverses perspectives sur les connaissances et les idées. Nous respectons votre vie privée et nous engageons à protéger vos informations personnelles. Cette politique explique ce que nous collectons, comment nous l’utilisons et vos droits."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informations que nous collectons",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informations de compte : Lorsque vous vous connectez via un fournisseur OAuth (comme Google ou Meta), nous recevons des informations de base telles que votre nom, votre adresse e-mail et votre photo de profil (si disponible).",
+            "Informations de paiement : Si vous choisissez de faire un paiement ou un don, Stripe traite les transactions de manière sécurisée. Nous ne stockons ni ne voyons jamais les numéros de votre carte de crédit.",
+            "Données analytiques : Nous utilisons Vercel Analytics pour comprendre les tendances générales d'utilisation, comme les pages populaires et la performance de notre site. Ces données sont agrégées et ne permettent pas de vous identifier personnellement.",
+            "Informations techniques : Lors de votre visite sur notre site, nous pouvons automatiquement recevoir des données de journal standard, telles que le type de navigateur, l’appareil et l’adresse IP, ce qui aide à maintenir la sécurité et résoudre les problèmes."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Comment nous utilisons vos informations",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Exploiter et améliorer la plateforme Alternipedia",
+            "Authentifier les utilisateurs et gérer les comptes",
+            "Traiter les paiements en toute sécurité via Stripe",
+            "Surveiller les performances et la fiabilité du site",
+            "Répondre aux demandes ou requêtes des utilisateurs"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Nous ne vendons, louons ni ne commerçons vos données personnelles."
+        }
+      ]
+    },
+    {
+      "title": "Cookies et suivi",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia n’utilise pas de cookies publicitaires ni de suivi."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nous utilisons uniquement les cookies essentiels nécessaires pour les sessions de connexion et le fonctionnement du site."
+        }
+      ]
+    },
+    {
+      "title": "Stockage des données et sécurité",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vos données sont stockées en toute sécurité en utilisant un chiffrement conforme aux normes de l’industrie et une infrastructure d’hébergement."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nous prenons des mesures raisonnables pour protéger vos informations contre la perte, l’usage abusif ou l’accès non autorisé."
+        }
+      ]
+    },
+    {
+      "title": "Vos droits",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Accéder ou demander une copie de vos informations personnelles",
+            "Corriger ou supprimer les informations que nous détenons à votre sujet",
+            "Retirer votre consentement ou fermer votre compte"
+          ]
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "Texte en parole",
     translate: "Traduire",
@@ -493,8 +923,8 @@ const fr: Dictionary = {
       "part3": "; des conditions supplémentaires peuvent s'appliquer. En utilisant ce site, vous acceptez",
       "part4": "les termes et conditions",
       "part5": "et",
-      "part6": "la politique de confidentialité.",
-      "part7": "Alternipedia est un projet open-source à but non lucratif."
+      "part6": "la politique de confidentialité",
+      "part7": ". Alternipedia est un projet open-source à but non lucratif."
     },
     license: 'Licence',
     terms: 'Conditions',
@@ -513,7 +943,8 @@ const fr: Dictionary = {
     goHome: 'Aller à l\'accueil',
   },
   upgrade: {
-    goPro: 'Passer à Pro',
+    pro: 'PRO',
+    goPro: 'Passer à PRO',
     upgradePrompt: 'Mettez à niveau pour débloquer les fonctionnalités premium',
     title: 'Le savoir, c’est le pouvoir. Boostez le vôtre.',
     month: 'mois',
@@ -544,6 +975,8 @@ const fr: Dictionary = {
     },
   },
   article: {
+    tools: 'Outils',
+    content: 'Contenu',
     article: 'Article',
     discussion: 'Discussion',
     read: 'Leer',
@@ -554,6 +987,107 @@ const fr: Dictionary = {
 
 // German dictionary
 const de: Dictionary = {
+    login: {
+    title: 'Anmelden bei',
+    google: 'Mit Google fortfahren',
+    facebook: 'Mit Facebook fortfahren',
+    x: 'Mit X fortfahren',
+    microsoft: 'Mit Microsoft fortfahren',
+    policy: "Indem Sie sich anmelden, stimmen Sie unseren Nutzungsbedingungen und Datenschutzrichtlinie zu.",
+  },
+  userMenu: {
+    login: "Anmelden",
+    contributions: "Beiträge",
+    savedArticles: "Gespeicherte Artikel",
+    preferences: "Einstellungen",
+    logout: "Abmelden",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('de-DE', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('de-DE', { year: 'numeric', month: 'long' }),
+  "title": "Datenschutzrichtlinie",
+  "lastUpdatedText": "Zuletzt aktualisiert:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Willkommen bei Alternipedia, einem edukativen Wiki, das darauf ausgelegt ist, unterschiedliche Perspektiven zu Wissen und Ideen zu präsentieren. Wir schätzen Ihre Privatsphäre und verpflichten uns, Ihre persönlichen Daten zu schützen. Diese Richtlinie erklärt, welche Informationen wir sammeln, wie wir sie verwenden und welche Rechte Sie haben."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Gesammelte Informationen",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Kontoinformationen: Wenn Sie sich über einen OAuth-Anbieter anmelden (z. B. Google oder Meta), erhalten wir grundlegende Angaben wie Ihren Namen, Ihre E-Mail-Adresse und Ihr Profilbild (falls verfügbar).",
+            "Zahlungsinformationen: Wenn Sie eine Zahlung oder Spende tätigen, verarbeitet Stripe die Transaktionen sicher. Wir speichern oder sehen Ihre Kreditkartennummern niemals.",
+            "Analysedaten: Wir nutzen Vercel Analytics, um allgemeine Nutzungsmuster zu verstehen, z. B. welche Seiten beliebt sind und wie unsere Website funktioniert. Diese Daten sind aggregiert und identifizieren Sie nicht persönlich.",
+            "Technische Informationen: Wenn Sie unsere Website besuchen, erhalten wir möglicherweise automatisch standardmäßige Protokolldaten, z. B. Browsertyp, Gerät und IP-Adresse, um die Sicherheit und Fehlerbehebung zu gewährleisten."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Verwendung Ihrer Informationen",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Betrieb und Verbesserung der Alternipedia-Plattform",
+            "Benutzerauthentifizierung und Kontoverwaltung",
+            "Sichere Zahlungsabwicklung über Stripe",
+            "Überwachung der Leistung und Zuverlässigkeit der Website",
+            "Beantwortung von Benutzeranfragen oder -anliegen"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Wir verkaufen, vermieten oder handeln Ihre persönlichen Daten nicht."
+        }
+      ]
+    },
+    {
+      "title": "Cookies und Tracking",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia verwendet keine Werbe- oder Tracking-Cookies."
+        },
+        {
+          "type": "paragraph",
+          "text": "Wir verwenden nur essentielle Cookies, die für die Anmeldung und Funktionalität der Website erforderlich sind."
+        }
+      ]
+    },
+    {
+      "title": "Datenspeicherung und Sicherheit",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ihre Daten werden sicher gespeichert, unter Verwendung branchenüblicher Verschlüsselung und Hosting-Infrastruktur."
+        },
+        {
+          "type": "paragraph",
+          "text": "Wir ergreifen angemessene Maßnahmen, um Ihre Informationen vor Verlust, Missbrauch oder unbefugtem Zugriff zu schützen."
+        }
+      ]
+    },
+    {
+      "title": "Ihre Rechte",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Zugriff auf Ihre persönlichen Daten oder Anforderung einer Kopie",
+            "Korrektur oder Löschung der Informationen, die wir über Sie speichern",
+            "Widerruf der Einwilligung oder Schließung Ihres Kontos"
+          ]
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "Text zu Sprache",
     translate: "Übersetzen",
@@ -635,7 +1169,7 @@ const de: Dictionary = {
       "part4": "Nutzungsbedingungen",
       "part5": "und",
       "part6": "Datenschutzrichtlinie",
-      "part7": "Alternipedia ist ein Open-Source-Nichtgewinnprojekt."
+      "part7": ". Alternipedia ist ein Open-Source-Nichtgewinnprojekt."
     },
     license: 'Lizenz',
     terms: 'Bedingungen',
@@ -654,6 +1188,7 @@ const de: Dictionary = {
     goHome: 'Zur Startseite',
   },
   upgrade: {
+    pro: 'PRO',
     goPro: 'Pro werden',
     upgradePrompt: 'Upgrade, um Premium-Funktionen freizuschalten',
     title: 'Wissen ist Macht – Verstärken Sie Ihres.',
@@ -685,6 +1220,8 @@ const de: Dictionary = {
     },
   },
   article: {
+    tools: 'Werkzeuge',
+    content: 'Inhalt',
     article: 'Artikel',
     discussion: 'Diskussion',
     read: 'Lesen',
@@ -695,6 +1232,107 @@ const de: Dictionary = {
 
 // Italian dictionary
 const it: Dictionary = {
+    login: {
+    title: 'Accedi a',
+    google: 'Continua con Google',
+    facebook: 'Continua con Facebook',
+    x: 'Continua con X',
+    microsoft: 'Continua con Microsoft',
+    policy: "Accedendo, accetti i nostri Termini di servizio e l'Informativa sulla privacy.",
+  },
+  userMenu: {
+    login: "Accedi",
+    contributions: "Contributi",
+    savedArticles: "Articoli salvati",
+    preferences: "Preferenze",
+    logout: "Esci",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('it-IT', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('it-IT', { year: 'numeric', month: 'long' }),
+  "title": "Politica sulla Privacy",
+  "lastUpdatedText": "Ultimo aggiornamento:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Benvenuti su Alternipedia, un wiki educativo progettato per presentare diverse prospettive sulla conoscenza e le idee. Rispettiamo la tua privacy e ci impegniamo a proteggere le tue informazioni personali. Questa politica spiega quali dati raccogliamo, come li utilizziamo e quali sono i tuoi diritti."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informazioni che raccogliamo",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informazioni sull'account: Quando accedi tramite un provider OAuth (come Google o Meta), riceviamo dettagli di base come il tuo nome, indirizzo email e immagine del profilo (se disponibile).",
+            "Informazioni sul pagamento: Se scegli di effettuare un pagamento o una donazione, Stripe elabora le transazioni in modo sicuro. Non memorizziamo né vediamo mai i numeri della tua carta di credito.",
+            "Dati analitici: Utilizziamo Vercel Analytics per comprendere i modelli generali di utilizzo, come le pagine più visitate e le prestazioni del sito. Questi dati sono aggregati e non ti identificano personalmente.",
+            "Informazioni tecniche: Quando visiti il nostro sito, possiamo ricevere automaticamente dati di registro standard, come tipo di browser, dispositivo e indirizzo IP, per aiutare a mantenere la sicurezza e risolvere eventuali problemi."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Come utilizziamo le tue informazioni",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Gestire e migliorare la piattaforma Alternipedia",
+            "Autenticare gli utenti e gestire gli account",
+            "Elaborare pagamenti in sicurezza tramite Stripe",
+            "Monitorare le prestazioni e l'affidabilità del sito",
+            "Rispondere alle richieste o domande degli utenti"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Non vendiamo, affittiamo né commercializziamo i tuoi dati personali."
+        }
+      ]
+    },
+    {
+      "title": "Cookie e tracciamento",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia non utilizza cookie pubblicitari o di tracciamento."
+        },
+        {
+          "type": "paragraph",
+          "text": "Utilizziamo solo cookie essenziali necessari per le sessioni di accesso e la funzionalità del sito."
+        }
+      ]
+    },
+    {
+      "title": "Archiviazione dei dati e sicurezza",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "I tuoi dati vengono archiviati in sicurezza utilizzando standard di crittografia del settore e infrastruttura di hosting."
+        },
+        {
+          "type": "paragraph",
+          "text": "Prendiamo misure ragionevoli per proteggere le tue informazioni da perdite, uso improprio o accessi non autorizzati."
+        }
+      ]
+    },
+    {
+      "title": "I tuoi diritti",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Accedere o richiedere una copia dei tuoi dati personali",
+            "Correggere o cancellare le informazioni che deteniamo su di te",
+            "Ritirare il consenso o chiudere il tuo account"
+          ]
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "Sintesi vocale",
     translate: "Traduci",
@@ -775,8 +1413,8 @@ const it: Dictionary = {
       "part3": "; possono applicarsi termini aggiuntivi. Utilizzando questo sito, accetti",
       "part4": "Termini e Condizioni",
       "part5": "e",
-      "part6": "Informativa sulla privacy.",
-      "part7": "Alternipedia è un progetto open-source senza scopo di lucro."
+      "part6": "Informativa sulla privacy",
+      "part7": ". Alternipedia è un progetto open-source senza scopo di lucro."
     },
     license: 'Licenza',
     terms: 'Termini',
@@ -795,7 +1433,8 @@ const it: Dictionary = {
     goHome: 'Vai alla home',
   },
   upgrade: {
-    goPro: 'Diventa Pro',
+    pro: 'PRO',
+    goPro: 'Diventa PRO',
     upgradePrompt: 'Aggiorna per sbloccare le funzionalità premium',
     title: 'La conoscenza è potere, potenzia la tua.',
     month: 'mese',
@@ -826,6 +1465,8 @@ const it: Dictionary = {
     },
   },
   article: {
+    tools: 'Strumenti',
+    content: 'Contenuto',
     article: 'Articolo',
     discussion: 'Discussione',
     read: 'Leggi',
@@ -836,6 +1477,107 @@ const it: Dictionary = {
 
 // Portuguese dictionary
 const pt: Dictionary = {
+    login: {
+      title: 'Entrar em',
+      google: 'Continuar com o Google',
+      facebook: 'Continuar com o Facebook',
+      x: 'Continuar com o X',
+      microsoft: 'Continuar com o Microsoft',
+      policy: "Ao fazer login, você concorda com nossos Termos de Serviço e Política de Privacidade.",
+    },
+    userMenu: {
+      login: "Entrar",
+      contributions: "Contribuições",
+      savedArticles: "Artigos salvos",
+      preferences: "Preferências",
+    logout: "Sair",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('pt-PT', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('pt-PT', { year: 'numeric', month: 'long' }),
+  "title": "Política de Privacidade",
+  "lastUpdatedText": "Última atualização:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Bem-vindo ao Alternipedia, uma wiki educativa concebida para apresentar diversas perspetivas sobre o conhecimento e as ideias. Valorizamos a sua privacidade e comprometemo-nos a proteger as suas informações pessoais. Esta política explica quais os dados que recolhemos, como os utilizamos e quais os seus direitos."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informações que Recolhemos",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informações da conta: Ao iniciar sessão através de um fornecedor OAuth (como Google ou Meta), recebemos informações básicas, como o seu nome, endereço de e-mail e imagem de perfil (se disponível).",
+            "Informações de pagamento: Caso opte por efectuar um pagamento ou donativo, a Stripe processa as transações de forma segura. Nunca armazenamos nem vemos os números do seu cartão de crédito.",
+            "Dados analíticos: Utilizamos o Vercel Analytics para compreender padrões gerais de utilização, tais como páginas populares e desempenho do site. Estes dados são agregados e não permitem identificar pessoalmente o utilizador.",
+            "Informações técnicas: Ao visitar o nosso site, podemos receber automaticamente dados de registo padrão, como tipo de navegador, dispositivo e endereço IP, o que ajuda a manter a segurança e a resolver problemas."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Como Utilizamos as Suas Informações",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Operar e melhorar a plataforma Alternipedia",
+            "Autenticar utilizadores e gerir contas",
+            "Processar pagamentos de forma segura através da Stripe",
+            "Monitorizar o desempenho e fiabilidade do site",
+            "Responder a perguntas ou solicitações dos utilizadores"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Não vendemos, alugamos nem comercializamos os seus dados pessoais."
+        }
+      ]
+    },
+    {
+      "title": "Cookies e Rastreio",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "O Alternipedia não utiliza cookies de publicidade ou de rastreio."
+        },
+        {
+          "type": "paragraph",
+          "text": "Usamos apenas os cookies essenciais necessários para sessões de login e funcionalidades do site."
+        }
+      ]
+    },
+    {
+      "title": "Armazenamento e Segurança de Dados",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Os seus dados são armazenados de forma segura, utilizando encriptação padrão do sector e infraestrutura de alojamento."
+        },
+        {
+          "type": "paragraph",
+          "text": "Tomamos medidas razoáveis para proteger as suas informações contra perda, uso indevido ou acesso não autorizado."
+        }
+      ]
+    },
+    {
+      "title": "Os Seus Direitos",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Aceder ou solicitar uma cópia das suas informações pessoais",
+            "Corrigir ou eliminar informações que detemos sobre si",
+            "Retirar consentimento ou encerrar a sua conta"
+          ]
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "Texto para fala",
     translate: "Traduzir",
@@ -916,8 +1658,8 @@ const pt: Dictionary = {
       "part3": "; podem ser aplicados termos adicionais. Ao usar este site, você concorda com",
       "part4": "Termos e Condições",
       "part5": "e",
-      "part6": "Política de Privacidade.",
-      "part7": "Alternipedia é um projeto de código aberto sem fins lucrativos."
+      "part6": "Política de Privacidade",
+      "part7": ". Alternipedia é um projeto de código aberto sem fins lucrativos."
     },
     license: 'Licença',
     terms: 'Termos',
@@ -936,7 +1678,8 @@ const pt: Dictionary = {
     goHome: 'Ir para a página inicial',
   },
   upgrade: {
-    goPro: 'Tornar-se Pro',
+    pro: 'PRO',
+    goPro: 'Tornar-se PRO',
     upgradePrompt: 'Faça upgrade para desbloquear recursos premium',
     title: 'Conhecimento é poder, potencialize o seu.',
     month: 'mês',
@@ -967,6 +1710,8 @@ const pt: Dictionary = {
     },
   },
   article: {
+    tools: 'Ferramentas',
+    content: 'Conteúdo',
     article: 'Artigo',
     discussion: 'Discussão',
     read: 'Ler',
@@ -977,6 +1722,178 @@ const pt: Dictionary = {
 
 // Japanese dictionary
 const ja: Dictionary = {
+  login: {
+    title: 'ログイン',
+    google: 'Googleで続行',
+    facebook: 'Facebookで続行',
+    x: 'Xで続行',
+    microsoft: 'Microsoftで続行',
+    policy: "ログインすることで、利用規約とプライバシーポリシーに同意したことになります。",
+  },
+  userMenu: {
+    login: "ログイン",
+    contributions: "貢献",
+    savedArticles: "保存した記事",
+    preferences: "設定",
+    logout: "ログアウト",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' }),
+  "title": "プライバシーポリシー",
+  "lastUpdatedText": "最終更新日：",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Alternipediaへようこそ — 知識と思想に関する多様な視点を提示する教育的なウィキです。私たちはあなたのプライバシーを尊重し、個人情報を保護することをお約束します。本ポリシーでは、収集する情報、使用方法、そしてあなたの権利について説明します。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "収集する情報",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "私たちはサービスを提供・改善するために必要最低限の情報のみを収集します。これには以下が含まれます："
+        },
+        {
+          "type": "list",
+          "items": [
+            "アカウント情報：GoogleやMetaなどのOAuthプロバイダーを使用してログインする場合、氏名、メールアドレス、プロフィール画像（利用可能な場合）などの基本情報を受け取ります。",
+            "支払い情報：支払いまたは寄付を行う場合、Stripeを使用して安全に処理します。クレジットカード情報を保存または表示することはありません。",
+            "分析データ：どのページが人気か、サイトのパフォーマンスがどのようであるかを理解するためにVercel Analyticsを使用します。このデータは集計されており、個人を特定するものではありません。",
+            "技術情報：サイト訪問時に、ブラウザの種類、デバイス、IPアドレスなどの標準的なログデータを自動的に受け取ることがあります。"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "情報の利用方法",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "私たちはあなたの情報を以下の目的のみに使用します："
+        },
+        {
+          "type": "list",
+          "items": [
+            "Alternipediaプラットフォームの運営と改善",
+            "ユーザー認証およびアカウント管理",
+            "Stripeを通じた安全な支払い処理",
+            "サイトのパフォーマンスと信頼性の監視",
+            "サイト経由でのユーザーからの問い合わせへの対応"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "私たちはあなたの個人データを販売、貸与、または取引することはありません。"
+        }
+      ]
+    },
+    {
+      "title": "クッキーとトラッキング",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipediaは広告やトラッキングクッキーを使用しません。"
+        },
+        {
+          "type": "paragraph",
+          "text": "ログインセッションおよびサイト機能に必要な基本的なクッキーのみを使用します。"
+        }
+      ]
+    },
+    {
+      "title": "データの保存とセキュリティ",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "あなたのデータは業界標準の暗号化と安全なホスティングインフラを使用して保護されています。"
+        },
+        {
+          "type": "paragraph",
+          "text": "情報の紛失、不正利用、または不正アクセスを防ぐために合理的な措置を講じています。"
+        },
+        {
+          "type": "paragraph",
+          "text": "ホスティングおよび分析サービス（例：VercelやStripe）はグローバルに展開しており、データは他国で処理される場合があります。私たちは強力なプライバシー基準を遵守するプロバイダーのみと提携しています。"
+        }
+      ]
+    },
+    {
+      "title": "サードパーティサービス",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "サービスの一部には信頼できる第三者を利用しています："
+        },
+        {
+          "type": "list",
+          "items": [
+            "OAuthプロバイダー — 安全なログインのため",
+            "Stripe — 支払い処理のため",
+            "Vercel Analytics — 匿名のパフォーマンス分析のため"
+          ]
+        },
+        {
+          "type": "links",
+          "items": [
+            { "label": "Stripeプライバシーポリシー", "url": "https://stripe.com/privacy" },
+            { "label": "Vercelプライバシーポリシー", "url": "https://vercel.com/legal/privacy-policy" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "あなたの権利",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "お住まいの地域により、以下の権利を有する場合があります："
+        },
+        {
+          "type": "list",
+          "items": [
+            "個人情報へのアクセスまたはコピーの要求",
+            "保有する情報の修正または削除",
+            "同意の撤回またはアカウントの閉鎖"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "子どものプライバシー",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipediaは一般向けであり、13歳未満の子どもを対象としていません。"
+        },
+        {
+          "type": "paragraph",
+          "text": "未成年者から意図的に個人情報を収集することはありません。"
+        }
+      ]
+    },
+    {
+      "title": "本ポリシーの変更",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "改善または法的要件を反映するため、プライバシーポリシーを随時更新することがあります。"
+        }
+      ]
+    },
+    {
+      "title": "お問い合わせ",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "プライバシーに関する質問やリクエストがある場合は、Alternipediaのウェブサイトを通じてお問い合わせください。"
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "テキスト読み上げ",
     translate: "翻訳",
@@ -1057,8 +1974,8 @@ const ja: Dictionary = {
       "part3": "；追加の条件が適用される場合があります。このサイトを使用することで、あなたは",
       "part4": "利用規約",
       "part5": "および",
-      "part6": "プライバシーポリシーに同意したことになります。",
-      "part7": "Alternipediaはオープンソースの非営利プロジェクトです。"
+      "part6": "プライバシーポリシーに同意したことになります",
+      "part7": "。Alternipediaはオープンソースの非営利プロジェクトです。"
     },
     license: 'ライセンス',
     terms: '利用規約',
@@ -1077,6 +1994,7 @@ const ja: Dictionary = {
     goHome: 'ホームへ',
   },
   upgrade: {
+    pro: 'プロ',
     goPro: 'プロになる',
     upgradePrompt: 'アップグレードしてプレミアム機能をアンロック',
     title: '知識は力、あなたの力を強化しましょう。',
@@ -1108,6 +2026,8 @@ const ja: Dictionary = {
     },
   },
   article: {
+    tools: 'ツール',
+    content: 'コンテンツ',
     article: '記事',
     discussion: '議論',
     read: '読む',
@@ -1118,6 +2038,107 @@ const ja: Dictionary = {
 
 // Chinese dictionary
 const zh: Dictionary = {
+    login: {
+    title: '登录',
+    google: '使用 Google 继续',
+    facebook: '使用 Facebook 继续',
+    x: '使用 X 继续',
+    microsoft: '使用 Microsoft 继续',
+    policy: "登录即表示您同意我们的服务条款和隐私政策。",
+  },
+  userMenu: {
+    login: "登录",
+    contributions: "贡献",
+    savedArticles: "已保存的文章",
+    preferences: "偏好设置",
+    logout: "登出",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' }),
+  "title": "隐私政策",
+  "lastUpdatedText": "最后更新：",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "欢迎来到 Alternipedia，这是一个旨在呈现多样化知识和观点的教育型维基。我们重视您的隐私，并致力于保护您的个人信息。本政策解释了我们收集哪些信息、如何使用这些信息以及您的权利。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "我们收集的信息",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "账户信息：当您通过 OAuth 提供商（如 Google 或 Meta）登录时，我们会收到您的姓名、电子邮件地址及个人资料图片（如果有）。",
+            "支付信息：如果您选择付款或捐赠，Stripe 会安全地处理交易。我们不会存储或查看您的信用卡号码。",
+            "分析数据：我们使用 Vercel Analytics 了解一般使用模式，如哪些页面受欢迎以及网站性能。数据是汇总的，不会识别您的个人身份。",
+            "技术信息：访问我们网站时，我们可能会自动接收标准日志数据，如浏览器类型、设备和 IP 地址，以帮助维护安全性并排查问题。"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "我们如何使用您的信息",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "运营和改进 Alternipedia 平台",
+            "认证用户并管理账户",
+            "通过 Stripe 安全处理支付",
+            "监控网站性能和可靠性",
+            "响应用户通过网站提出的询问或请求"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "我们不会出售、出租或交易您的个人数据。"
+        }
+      ]
+    },
+    {
+      "title": "Cookies 与追踪",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia 不使用广告或追踪 cookies。"
+        },
+        {
+          "type": "paragraph",
+          "text": "我们仅使用登录会话和网站功能所需的基本 cookies。"
+        }
+      ]
+    },
+    {
+      "title": "数据存储与安全",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "您的数据通过行业标准的加密和托管基础设施安全存储。"
+        },
+        {
+          "type": "paragraph",
+          "text": "我们采取合理措施保护您的信息，防止丢失、滥用或未经授权访问。"
+        }
+      ]
+    },
+    {
+      "title": "您的权利",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "访问或请求您的个人信息副本",
+            "更正或删除我们持有的关于您的信息",
+            "撤回同意或关闭账户"
+          ]
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "文本朗读",
     translate: "翻译",
@@ -1198,8 +2219,8 @@ const zh: Dictionary = {
       "part3": "；可能适用附加条款。使用本网站即表示您同意",
       "part4": "服务条款",
       "part5": "和",
-      "part6": "隐私政策。",
-      "part7": "Alternipedia 是一个开源非营利项目。"
+      "part6": "隐私政策",
+      "part7": "。Alternipedia 是一个开源非营利项目。"
     },
     license: '许可证',
     terms: '条款',
@@ -1218,6 +2239,7 @@ const zh: Dictionary = {
     goHome: '返回首页',
   },
   upgrade: {
+    pro: '专业版',
     goPro: '升级到专业版',
     upgradePrompt: '升级以解锁高级功能',
     title: '知识就是力量，强化你的力量。',
@@ -1249,6 +2271,8 @@ const zh: Dictionary = {
     },
   },
   article: {
+    tools: '工具',
+    content: '内容',
     article: '文章',
     discussion: '讨论',
     read: '阅读',
@@ -1259,6 +2283,107 @@ const zh: Dictionary = {
 
 // Korean dictionary
 const ko: Dictionary = {
+    login: {
+    title: '로그인',
+    google: 'Google로 계속하기',
+    facebook: 'Facebook으로 계속하기',
+    x: 'X로 계속하기',
+    microsoft: 'Microsoft로 계속하기',
+    policy: "로그인하면 서비스 약관 및 개인정보 보호정책에 동의하는 것입니다.",
+  },
+  userMenu: {
+    login: "로그인",  
+    contributions: "기여",
+    savedArticles: "저장된 문서",
+    preferences: "환경설정",
+    logout: "로그아웃",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' }),
+  "title": "개인정보 보호정책",
+  "lastUpdatedText": "최종 업데이트:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Alternipedia에 오신 것을 환영합니다. 이는 지식과 아이디어에 대한 다양한 관점을 제공하기 위해 설계된 교육용 위키입니다. 우리는 사용자의 개인정보를 소중히 여기며, 이를 보호하기 위해 최선을 다하고 있습니다. 이 정책은 우리가 수집하는 정보, 사용 방법 및 사용자의 권리를 설명합니다."
+    }
+  ],
+  "sections": [
+    {
+      "title": "수집하는 정보",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "계정 정보: Google, Meta 등 OAuth 제공자를 통해 로그인할 경우, 이름, 이메일 주소 및 프로필 사진(사용 가능 시)과 같은 기본 정보를 수집합니다.",
+            "결제 정보: 결제 또는 기부를 선택하면 Stripe를 통해 안전하게 처리됩니다. 우리는 신용카드 번호를 저장하거나 확인하지 않습니다.",
+            "분석 데이터: Vercel Analytics를 사용하여 일반적인 사용 패턴을 파악합니다. 예를 들어 인기 페이지 및 사이트 성능 등을 분석합니다. 데이터는 집계되어 개인을 식별하지 않습니다.",
+            "기술 정보: 사이트 방문 시 브라우저 유형, 기기, IP 주소 등의 표준 로그 데이터를 자동으로 수신할 수 있으며, 이는 보안 유지와 문제 해결에 도움을 줍니다."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "정보 사용 방법",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia 플랫폼 운영 및 개선",
+            "사용자 인증 및 계정 관리",
+            "Stripe를 통한 안전한 결제 처리",
+            "사이트 성능 및 안정성 모니터링",
+            "사용자의 문의나 요청에 응답"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "우리는 개인 데이터를 판매, 임대 또는 거래하지 않습니다."
+        }
+      ]
+    },
+    {
+      "title": "쿠키 및 추적",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia는 광고용 또는 추적용 쿠키를 사용하지 않습니다."
+        },
+        {
+          "type": "paragraph",
+          "text": "로그인 세션과 사이트 기능에 필요한 필수 쿠키만 사용합니다."
+        }
+      ]
+    },
+    {
+      "title": "데이터 저장 및 보안",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "귀하의 데이터는 업계 표준 암호화 및 호스팅 인프라를 통해 안전하게 저장됩니다."
+        },
+        {
+          "type": "paragraph",
+          "text": "우리는 데이터 손실, 오용 또는 무단 접근으로부터 보호하기 위해 합리적인 조치를 취합니다."
+        }
+      ]
+    },
+    {
+      "title": "사용자의 권리",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "개인정보에 접근하거나 사본 요청",
+            "보유 정보 수정 또는 삭제",
+            "동의 철회 또는 계정 종료"
+          ]
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "텍스트 음성 변환",
     translate: "번역",
@@ -1339,8 +2464,8 @@ const ko: Dictionary = {
       "part3": "; 추가 조건이 적용될 수 있습니다. 이 사이트를 사용함으로써, 귀하는 다음에 동의합니다",
       "part4": "이용약관",
       "part5": "및",
-      "part6": "개인정보처리방침.",
-      "part7": "Alternipedia는 오픈 소스 비영리 프로젝트입니다."
+      "part6": "개인정보처리방침",
+      "part7": ". Alternipedia는 오픈 소스 비영리 프로젝트입니다."
     },
     license: '라이선스',
     terms: '약관',
@@ -1359,6 +2484,7 @@ const ko: Dictionary = {
     goHome: '홈으로 이동',
   },
   upgrade: {
+    pro: '프로',
     goPro: '프로로 전환',
     upgradePrompt: '프리미엄 기능을 사용하려면 업그레이드하세요',
     title: '지식은 힘, 당신의 힘을 강화하세요.',
@@ -1390,6 +2516,8 @@ const ko: Dictionary = {
     },
   },
   article: {
+    tools: '도구',
+    content: '콘텐츠',
     article: '문서',
     discussion: '토론',
     read: '읽기',
@@ -1400,6 +2528,107 @@ const ko: Dictionary = {
 
 // Russian dictionary
 const ru: Dictionary = {
+    login: {
+    title: 'Войти',
+    google: 'Продолжить с Google',
+    facebook: 'Продолжить с Facebook',
+    x: 'Продолжить с X',
+    microsoft: 'Продолжить с Microsoft',
+    policy: "Вход означает ваше согласие с нашими Условиями обслуживания и Политикой конфиденциальности.",
+  },
+  userMenu: {
+    login: "Войти",
+    contributions: "Вклад",
+    savedArticles: "Сохранённые статьи",
+    preferences: "Настройки",
+    logout: "Выйти",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long' }),
+  "title": "Политика конфиденциальности",
+  "lastUpdatedText": "Последнее обновление:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Добро пожаловать в Alternipedia — образовательную вики, созданную для представления различных точек зрения на знания и идеи. Мы ценим вашу конфиденциальность и обязуемся защищать вашу личную информацию. В этой политике объясняется, какие данные мы собираем, как мы их используем и какие у вас есть права."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Собираемая информация",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Информация об аккаунте: при входе через провайдер OAuth (например, Google или Meta) мы получаем базовые данные, такие как имя, адрес электронной почты и изображение профиля (если доступно).",
+            "Платежная информация: если вы совершаете платеж или пожертвование, Stripe безопасно обрабатывает транзакции. Мы никогда не храним и не видим номера вашей кредитной карты.",
+            "Аналитические данные: мы используем Vercel Analytics для понимания общих шаблонов использования, таких как популярные страницы и работа сайта. Данные агрегированы и не идентифицируют вас лично.",
+            "Техническая информация: при посещении сайта мы можем автоматически получать стандартные данные журнала, такие как тип браузера, устройство и IP-адрес, что помогает поддерживать безопасность и устранять неполадки."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Как мы используем вашу информацию",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Операция и улучшение платформы Alternipedia",
+            "Аутентификация пользователей и управление аккаунтами",
+            "Безопасная обработка платежей через Stripe",
+            "Мониторинг производительности и надежности сайта",
+            "Ответы на запросы и обращения пользователей"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Мы не продаем, не сдаем в аренду и не передаем ваши личные данные."
+        }
+      ]
+    },
+    {
+      "title": "Файлы cookie и отслеживание",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia не использует рекламные или отслеживающие файлы cookie."
+        },
+        {
+          "type": "paragraph",
+          "text": "Мы используем только необходимые файлы cookie, необходимые для сеансов входа и работы сайта."
+        }
+      ]
+    },
+    {
+      "title": "Хранение данных и безопасность",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ваши данные надежно хранятся с использованием отраслевых стандартов шифрования и инфраструктуры хостинга."
+        },
+        {
+          "type": "paragraph",
+          "text": "Мы предпринимаем разумные меры для защиты ваших данных от потери, неправильного использования или несанкционированного доступа."
+        }
+      ]
+    },
+    {
+      "title": "Ваши права",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Доступ к личной информации или запрос её копии",
+            "Исправление или удаление информации, которую мы храним о вас",
+            "Отзыв согласия или закрытие аккаунта"
+          ]
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "Текст в речь",
     translate: "Перевести",
@@ -1480,8 +2709,8 @@ const ru: Dictionary = {
       "part3": "; могут применяться дополнительные условия. Используя этот сайт, вы соглашаетесь с",
       "part4": "Условиями",
       "part5": "и",
-      "part6": "Политикой конфиденциальности.",
-      "part7": "Alternipedia — это проект с открытым исходным кодом и некоммерческой организацией."
+      "part6": "Политикой конфиденциальности",
+      "part7": ". Alternipedia — это проект с открытым исходным кодом и некоммерческой организацией."
     },
     license: 'Лицензия',
     terms: 'Условия',
@@ -1500,6 +2729,7 @@ const ru: Dictionary = {
     goHome: 'На главную',
   },
   upgrade: {
+    pro: 'ПРО',
     goPro: 'Перейти на PRO',
     upgradePrompt: 'Обновите, чтобы открыть премиум функции',
     title: 'Знание — сила, увеличьте свою.',
@@ -1531,6 +2761,8 @@ const ru: Dictionary = {
     },
   },
   article: {
+    tools: 'Инструменты',
+    content: 'Содержание',
     article: 'Статья',
     discussion: 'Обсуждение',
     read: 'Читать',
@@ -1541,6 +2773,190 @@ const ru: Dictionary = {
 
 // Arabic
 const ar: Dictionary = {
+    login: {
+    title: 'تسجيل الدخول',
+    google: 'المتابعة مع Google',
+    facebook: 'المتابعة مع Facebook',
+    x: 'المتابعة مع X',
+    microsoft: 'المتابعة مع Microsoft',
+    policy: "بتسجيل الدخول، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا.",
+  },
+  userMenu: {
+    login: "تسجيل الدخول",
+    contributions: "المساهمات",
+    savedArticles: "المقالات المحفوظة",
+    preferences: "التفضيلات",
+    logout: "تسجيل الخروج",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' }),
+  "title": "سياسة الخصوصية",
+  "lastUpdatedText": "آخر تحديث:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "مرحبًا بك في Alternipedia، وهي موسوعة تعليمية تهدف إلى تقديم وجهات نظر متنوعة حول المعرفة والأفكار. نحن نُقدّر خصوصيتك ونلتزم بحماية معلوماتك الشخصية. توضح هذه السياسة ما نجمعه، وكيف نستخدمه، وما هي حقوقك."
+    }
+  ],
+  "sections": [
+    {
+      "title": "المعلومات التي نجمعها",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "نجمع فقط الحد الأدنى من المعلومات اللازمة لتقديم خدماتنا وتحسينها. وقد يشمل ذلك:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "معلومات الحساب: عند تسجيل الدخول باستخدام مزود OAuth (مثل Google أو Meta أو غيرها)، نحصل على تفاصيل أساسية مثل اسمك وعنوان بريدك الإلكتروني وصورة ملفك الشخصي (إن وجدت).",
+            "معلومات الدفع: إذا اخترت إجراء دفعة أو تبرع، فنحن نستخدم Stripe لمعالجة المعاملة بأمان. Stripe تتعامل مع تفاصيل الدفع الخاصة بك — نحن لا نخزن أو نرى أرقام بطاقتك الائتمانية.",
+            "بيانات التحليلات: نستخدم Vercel Analytics لفهم أنماط الاستخدام العامة مثل الصفحات الأكثر زيارة وأداء الموقع. يتم تجميع هذه البيانات ولا تحدد هويتك الشخصية.",
+            "المعلومات التقنية: عند زيارة موقعنا، قد نتلقى تلقائيًا بيانات السجل القياسية مثل نوع المتصفح والجهاز وعنوان IP للمساعدة في الحفاظ على الأمان وحل المشكلات."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "كيف نستخدم معلوماتك",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "نستخدم معلوماتك فقط من أجل:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "تشغيل وتحسين منصة Alternipedia",
+            "توثيق المستخدمين وإدارة الحسابات",
+            "معالجة المدفوعات بأمان عبر Stripe",
+            "مراقبة أداء الموقع وموثوقيته",
+            "الرد على استفسارات المستخدمين وطلباتهم عبر الموقع"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "نحن لا نبيع أو نؤجر أو نتاجر ببياناتك الشخصية."
+        }
+      ]
+    },
+    {
+      "title": "ملفات تعريف الارتباط والتتبع",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "لا تستخدم Alternipedia أي ملفات تعريف ارتباط للإعلانات أو التتبع."
+        },
+        {
+          "type": "paragraph",
+          "text": "نستخدم فقط ملفات تعريف الارتباط الأساسية المطلوبة لجلسات تسجيل الدخول ووظائف الموقع."
+        }
+      ]
+    },
+    {
+      "title": "تخزين البيانات والأمان",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "يتم تخزين بياناتك بشكل آمن باستخدام تشفير وبنية استضافة بمعايير صناعية."
+        },
+        {
+          "type": "paragraph",
+          "text": "نتخذ خطوات معقولة لحماية معلوماتك من الفقدان أو إساءة الاستخدام أو الوصول غير المصرح به."
+        },
+        {
+          "type": "paragraph",
+          "text": "نظرًا لأن الاستضافة والتحليلات لدينا عالمية (بما في ذلك خدمات مثل Vercel وStripe)، فقد تتم معالجة بياناتك في بلدان أخرى. نحن نتعامل فقط مع مزودين يلتزمون بمعايير قوية للخصوصية."
+        }
+      ]
+    },
+    {
+      "title": "الخدمات التابعة لأطراف ثالثة",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "نحن نعتمد على أطراف ثالثة موثوقة لتقديم بعض خدماتنا:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "موفرو OAuth – لتسجيل الدخول الآمن",
+            "Stripe – لمعالجة المدفوعات",
+            "Vercel Analytics – لتحليلات الأداء المجهولة"
+          ]
+        },
+        {
+          "type": "links",
+          "items": [
+            { "label": "سياسة خصوصية Stripe", "url": "https://stripe.com/privacy" },
+            { "label": "سياسة خصوصية Vercel", "url": "https://vercel.com/legal/privacy-policy" }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "قد تقوم كل من هذه الخدمات بجمع ومعالجة معلوماتك وفقًا لسياسات الخصوصية الخاصة بها."
+        }
+      ]
+    },
+    {
+      "title": "حقوقك",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "اعتمادًا على موقعك، قد يكون لديك الحق في:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "الوصول إلى معلوماتك الشخصية أو طلب نسخة منها",
+            "تصحيح أو حذف المعلومات التي نحتفظ بها عنك",
+            "سحب الموافقة أو إغلاق حسابك"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "إذا كنت ترغب في ممارسة هذه الحقوق، يرجى الاتصال بنا من خلال نموذج الاتصال على موقعنا."
+        }
+      ]
+    },
+    {
+      "title": "خصوصية الأطفال",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "تم تصميم Alternipedia لجمهور عام وليس للأطفال دون سن 13 عامًا."
+        },
+        {
+          "type": "paragraph",
+          "text": "نحن لا نجمع عن عمد معلومات شخصية من القاصرين."
+        }
+      ]
+    },
+    {
+      "title": "التغييرات في هذه السياسة",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر لتعكس التحسينات أو المتطلبات القانونية."
+        },
+        {
+          "type": "paragraph",
+          "text": "عندما نقوم بذلك، سننشر تاريخ التحديث في أعلى هذه الصفحة."
+        }
+      ]
+    },
+    {
+      "title": "اتصل بنا",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "إذا كانت لديك أي أسئلة أو طلبات تتعلق بالخصوصية، يرجى الاتصال بنا عبر موقع Alternipedia."
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "قبول الشروط", "content": ["بالوصول إلى هذا الموقع واستخدامه، يوافق المستخدمون على الالتزام بهذه الشروط. يجب على المستخدمين الذين لا يوافقون على هذه الشروط التوقف عن استخدام الموقع فوراً."] },
     { "title": "مسؤوليات حساب المستخدم", "content": ["المستخدمون مسؤولون عن الحفاظ على سرية بيانات حساباتهم. أي نشاط يتم تحت حساب المستخدم يقع على عاتق صاحب الحساب وحده. يجب على المستخدمين إخطار إدارة الموقع فوراً بأي وصول غير مصرح به."] },
@@ -1615,8 +3031,8 @@ const ar: Dictionary = {
       "part3": "; قد تنطبق شروط إضافية. باستخدامك لهذا الموقع، فإنك توافق على",
       "part4": "الشروط والأحكام",
       "part5": "و",
-      "part6": "سياسة الخصوصية.",
-      "part7": "Alternipedia هو مشروع مفتوح المصدر غير ربحي."
+      "part6": "سياسة الخصوصية",
+      "part7": ". Alternipedia هو مشروع مفتوح المصدر غير ربحي."
     },
     license: 'الرخصة',
     terms: 'الشروط',
@@ -1635,6 +3051,7 @@ const ar: Dictionary = {
     goHome: 'الذهاب إلى الصفحة الرئيسية',
   },
   upgrade: {
+    pro: 'برو',
     goPro: 'اشترك في برو',
     upgradePrompt: 'قم بالترقية لفتح الميزات المميزة',
     title: 'المعرفة قوة، عزز معرفتك.',
@@ -1666,6 +3083,8 @@ const ar: Dictionary = {
     },
   },
   article: {
+    tools: 'الأدوات',
+    content: 'المحتوى',
     article: 'مقال',
     discussion: 'مناقشة',
     read: 'قراءة',
@@ -1676,6 +3095,190 @@ const ar: Dictionary = {
 
 // Hindi
 const hi: Dictionary = {
+    login: {
+    title: 'लॉग इन करें',
+    google: 'Google के साथ जारी रखें',
+    facebook: 'Facebook के साथ जारी रखें',
+    x: 'X के साथ जारी रखें',
+    microsoft: 'Microsoft के साथ जारी रखें',
+    policy: "लॉग इन करने का मतलब है कि आप हमारी सेवा की शर्तों और गोपनीयता नीति से सहमत हैं।",
+  },
+  userMenu: {
+    login: "लॉग इन करें",
+    contributions: "योगदान",
+    savedArticles: "सहेजे गए लेख",
+    preferences: "प्राथमिकताएं",
+    logout: "लॉग आउट",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('hi-IN', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('hi-IN', { year: 'numeric', month: 'long' }),
+  "title": "गोपनीयता नीति",
+  "lastUpdatedText": "अंतिम अपडेट:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Alternipedia में आपका स्वागत है — एक शैक्षिक विकी जिसे ज्ञान और विचारों पर विविध दृष्टिकोण प्रस्तुत करने के लिए डिज़ाइन किया गया है। हम आपकी गोपनीयता को महत्व देते हैं और आपकी व्यक्तिगत जानकारी की सुरक्षा के लिए प्रतिबद्ध हैं। यह नीति बताती है कि हम क्या एकत्र करते हैं, इसका उपयोग कैसे करते हैं, और आपके अधिकार क्या हैं।"
+    }
+  ],
+  "sections": [
+    {
+      "title": "हम कौन सी जानकारी एकत्र करते हैं",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "हम केवल उतनी ही जानकारी एकत्र करते हैं जो हमारी सेवाएं प्रदान करने और सुधारने के लिए आवश्यक है। इसमें शामिल हो सकता है:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "खाता जानकारी: जब आप किसी OAuth प्रदाता (जैसे Google, Meta, आदि) से साइन इन करते हैं, तो हमें आपका नाम, ईमेल पता और प्रोफ़ाइल चित्र (यदि उपलब्ध हो) जैसी बुनियादी जानकारी प्राप्त होती है।",
+            "भुगतान जानकारी: यदि आप भुगतान या दान करना चुनते हैं, तो हम Stripe का उपयोग करते हैं। Stripe आपके भुगतान विवरण को सुरक्षित रूप से संसाधित करता है — हम कभी भी आपके कार्ड नंबर नहीं देखते या संग्रहीत करते।",
+            "एनालिटिक्स डेटा: हम Vercel Analytics का उपयोग करते हैं ताकि यह समझा जा सके कि कौन से पृष्ठ लोकप्रिय हैं और साइट कैसे प्रदर्शन कर रही है। ये डेटा एकत्रित रूप में होता है और आपकी व्यक्तिगत पहचान नहीं करता।",
+            "तकनीकी जानकारी: जब आप हमारी साइट पर आते हैं, तो हमें स्वचालित रूप से आपके ब्राउज़र प्रकार, डिवाइस और IP पता जैसी मानक लॉग जानकारी प्राप्त हो सकती है, जिससे सुरक्षा बनाए रखने में मदद मिलती है।"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "हम आपकी जानकारी का उपयोग कैसे करते हैं",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "हम आपकी जानकारी का उपयोग केवल निम्नलिखित उद्देश्यों के लिए करते हैं:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia प्लेटफ़ॉर्म को संचालित और सुधारने के लिए",
+            "उपयोगकर्ताओं को प्रमाणित करने और खातों का प्रबंधन करने के लिए",
+            "Stripe के माध्यम से सुरक्षित भुगतान प्रक्रिया के लिए",
+            "साइट प्रदर्शन और विश्वसनीयता की निगरानी के लिए",
+            "उपयोगकर्ता प्रश्नों या अनुरोधों का उत्तर देने के लिए"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "हम आपकी व्यक्तिगत जानकारी को न बेचते हैं, न किराए पर देते हैं, न साझा करते हैं।"
+        }
+      ]
+    },
+    {
+      "title": "कुकीज़ और ट्रैकिंग",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia विज्ञापन या ट्रैकिंग कुकीज़ का उपयोग नहीं करता।"
+        },
+        {
+          "type": "paragraph",
+          "text": "हम केवल लॉगिन और साइट कार्यक्षमता के लिए आवश्यक कुकीज़ का उपयोग करते हैं।"
+        }
+      ]
+    },
+    {
+      "title": "डेटा भंडारण और सुरक्षा",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "आपका डेटा उद्योग-मानक एन्क्रिप्शन और होस्टिंग ढांचे का उपयोग करके सुरक्षित रूप से संग्रहीत किया जाता है।"
+        },
+        {
+          "type": "paragraph",
+          "text": "हम आपकी जानकारी को हानि, दुरुपयोग या अनधिकृत पहुंच से बचाने के लिए उचित कदम उठाते हैं।"
+        },
+        {
+          "type": "paragraph",
+          "text": "हमारे होस्टिंग और एनालिटिक्स वैश्विक हैं (जैसे Vercel और Stripe), इसलिए आपका डेटा अन्य देशों में संसाधित हो सकता है। हम केवल उन प्रदाताओं के साथ काम करते हैं जो मजबूत गोपनीयता मानकों का पालन करते हैं।"
+        }
+      ]
+    },
+    {
+      "title": "तृतीय-पक्ष सेवाएं",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "हमारी कुछ सेवाओं को विश्वसनीय तृतीय पक्षों के माध्यम से प्रदान किया जाता है:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "OAuth प्रदाता – सुरक्षित लॉगिन के लिए",
+            "Stripe – भुगतान प्रसंस्करण के लिए",
+            "Vercel Analytics – प्रदर्शन विश्लेषण के लिए"
+          ]
+        },
+        {
+          "type": "links",
+          "items": [
+            { "label": "Stripe गोपनीयता नीति", "url": "https://stripe.com/privacy" },
+            { "label": "Vercel गोपनीयता नीति", "url": "https://vercel.com/legal/privacy-policy" }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "इन सेवाओं में से प्रत्येक अपनी स्वयं की गोपनीयता नीतियों के अनुसार आपका डेटा एकत्र और संसाधित कर सकती है।"
+        }
+      ]
+    },
+    {
+      "title": "आपके अधिकार",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "आपके स्थान के आधार पर, आपके पास निम्नलिखित अधिकार हो सकते हैं:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "अपनी व्यक्तिगत जानकारी तक पहुंचना या उसकी प्रति प्राप्त करना",
+            "हमारे पास संग्रहीत जानकारी को सही या हटाना",
+            "सहमति वापस लेना या खाता बंद करना"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "यदि आप इन अधिकारों का उपयोग करना चाहते हैं, तो कृपया हमारी वेबसाइट पर संपर्क फ़ॉर्म के माध्यम से हमसे संपर्क करें।"
+        }
+      ]
+    },
+    {
+      "title": "बच्चों की गोपनीयता",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia सामान्य दर्शकों के लिए डिज़ाइन किया गया है और 13 वर्ष से कम उम्र के बच्चों के लिए नहीं है।"
+        },
+        {
+          "type": "paragraph",
+          "text": "हम जानबूझकर नाबालिगों से व्यक्तिगत जानकारी एकत्र नहीं करते।"
+        }
+      ]
+    },
+    {
+      "title": "इस नीति में परिवर्तन",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "हम समय-समय पर इस गोपनीयता नीति को अपडेट कर सकते हैं ताकि सुधार या कानूनी आवश्यकताओं को दर्शाया जा सके।"
+        },
+        {
+          "type": "paragraph",
+          "text": "जब हम ऐसा करते हैं, तो हम इस पृष्ठ के शीर्ष पर अद्यतन तिथि पोस्ट करेंगे।"
+        }
+      ]
+    },
+    {
+      "title": "हमसे संपर्क करें",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "यदि आपके पास गोपनीयता से संबंधित कोई प्रश्न या अनुरोध हैं, तो कृपया Alternipedia वेबसाइट के माध्यम से हमसे संपर्क करें।"
+        }
+      ]
+    }
+  ]
+},
   tools: {
     textToSpeech: "टेक्स्ट टू स्पीच",
     translate: "अनुवाद करें",
@@ -1727,6 +3330,7 @@ const hi: Dictionary = {
   termsAndConditions: 'नियम और शर्तें',
   close: 'बंद करें',
   upgrade: {
+    pro: 'प्रो',
     goPro: 'प्रो बनें',
     upgradePrompt: 'प्रीमियम सुविधाओं को अनलॉक करने के लिए अपग्रेड करें',
     title: 'ज्ञान शक्ति है, अपनी शक्ति बढ़ाएँ।',
@@ -1771,8 +3375,8 @@ const hi: Dictionary = {
       "part3": "। अतिरिक्त शर्तें लागू हो सकती हैं। इस साइट का उपयोग करके, आप सहमत होते हैं",
       "part4": "नियम और शर्तें",
       "part5": "और",
-      "part6": "गोपनीयता नीति।",
-      "part7": "Alternipedia एक ओपन-सोर्स गैर-लाभकारी परियोजना है।"
+      "part6": "गोपनीयता नीति",
+      "part7": "। Alternipedia एक ओपन-सोर्स गैर-लाभकारी परियोजना है।"
     },
     license: 'लाइसेंस',
     terms: 'शर्तें',
@@ -1800,6 +3404,8 @@ const hi: Dictionary = {
     notFound: "कोई मेल खाने वाली भाषा नहीं मिली"
   },
   article: {
+    tools: 'उपकरण',
+    content: 'सामग्री',
     article: 'लेख',
     discussion: 'चर्चा',
     read: 'पढ़ें',
@@ -1810,6 +3416,190 @@ const hi: Dictionary = {
 
 // Bengali
 const bn: Dictionary = {
+    login: {
+    title: 'লগইন করুন',
+    google: 'Google দিয়ে চালিয়ে যান',
+    facebook: 'Facebook দিয়ে চালিয়ে যান',
+    x: 'X দিয়ে চালিয়ে যান',
+    microsoft: 'Microsoft দিয়ে চালিয়ে যান',
+    policy: "লগইন করার মানে আপনি আমাদের পরিষেবার শর্তাবলী এবং গোপনীয়তা নীতির সাথে সম্মত হচ্ছেন।",
+  },
+  userMenu: {
+    login: "লগইন",
+    contributions: "অবদান",
+    savedArticles: "সংরক্ষিত নিবন্ধ",
+    preferences: "পছন্দসমূহ",
+    logout: "লগআউট",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('bn-BD', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('bn-BD', { year: 'numeric', month: 'long' }),
+  "title": "গোপনীয়তা নীতি",
+  "lastUpdatedText": "সর্বশেষ আপডেট:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Alternipedia-তে স্বাগতম — এটি একটি শিক্ষামূলক উইকি যা জ্ঞান ও ধারণা সম্পর্কে বিভিন্ন দৃষ্টিভঙ্গি উপস্থাপন করার জন্য তৈরি করা হয়েছে। আমরা আপনার গোপনীয়তাকে গুরুত্ব দিই এবং আপনার ব্যক্তিগত তথ্য রক্ষা করতে প্রতিশ্রুতিবদ্ধ। এই নীতিতে আমরা কী তথ্য সংগ্রহ করি, কীভাবে এটি ব্যবহার করি এবং আপনার অধিকারগুলি ব্যাখ্যা করা হয়েছে।"
+    }
+  ],
+  "sections": [
+    {
+      "title": "আমরা যে তথ্য সংগ্রহ করি",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "আমরা শুধুমাত্র পরিষেবা প্রদান ও উন্নত করার জন্য প্রয়োজনীয় সর্বনিম্ন তথ্য সংগ্রহ করি। এতে অন্তর্ভুক্ত থাকতে পারে:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "অ্যাকাউন্ট তথ্য: আপনি যখন কোনো OAuth প্রদানকারী (যেমন Google, Meta, ইত্যাদি) ব্যবহার করে সাইন ইন করেন, আমরা আপনার নাম, ইমেল ঠিকানা এবং প্রোফাইল ছবি (যদি থাকে) এর মতো মৌলিক তথ্য পাই।",
+            "পেমেন্ট তথ্য: আপনি যদি পেমেন্ট বা অনুদান করতে চান, আমরা Stripe ব্যবহার করি। Stripe নিরাপদে আপনার পেমেন্ট প্রক্রিয়া করে — আমরা কখনও আপনার কার্ড নম্বর সংরক্ষণ বা দেখতে পাই না।",
+            "বিশ্লেষণ ডেটা: আমরা Vercel Analytics ব্যবহার করি যাতে বুঝতে পারি কোন পৃষ্ঠা জনপ্রিয় এবং আমাদের সাইটের পারফরম্যান্স কেমন। এই ডেটা সামগ্রিকভাবে সংগ্রহ করা হয় এবং আপনাকে ব্যক্তিগতভাবে শনাক্ত করে না।",
+            "প্রযুক্তিগত তথ্য: আপনি যখন আমাদের সাইটে যান, তখন আমরা আপনার ব্রাউজারের ধরন, ডিভাইস এবং IP ঠিকানার মতো মানক লগ ডেটা পেতে পারি, যা নিরাপত্তা বজায় রাখতে সাহায্য করে।"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "আমরা আপনার তথ্য কীভাবে ব্যবহার করি",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "আমরা আপনার তথ্য শুধুমাত্র নিম্নলিখিত উদ্দেশ্যে ব্যবহার করি:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia প্ল্যাটফর্ম পরিচালনা ও উন্নত করা",
+            "ব্যবহারকারী যাচাই করা এবং অ্যাকাউন্ট পরিচালনা করা",
+            "Stripe-এর মাধ্যমে নিরাপদভাবে পেমেন্ট প্রক্রিয়া করা",
+            "সাইটের পারফরম্যান্স এবং নির্ভরযোগ্যতা পর্যবেক্ষণ করা",
+            "সাইটের মাধ্যমে ব্যবহারকারীর অনুরোধের উত্তর দেওয়া"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "আমরা আপনার ব্যক্তিগত তথ্য বিক্রি, ভাড়া বা বাণিজ্য করি না।"
+        }
+      ]
+    },
+    {
+      "title": "কুকিজ এবং ট্র্যাকিং",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia বিজ্ঞাপন বা ট্র্যাকিং কুকি ব্যবহার করে না।"
+        },
+        {
+          "type": "paragraph",
+          "text": "আমরা শুধুমাত্র লগইন সেশন এবং সাইটের কার্যকারিতার জন্য প্রয়োজনীয় কুকিজ ব্যবহার করি।"
+        }
+      ]
+    },
+    {
+      "title": "ডেটা সংরক্ষণ এবং নিরাপত্তা",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "আপনার তথ্য শিল্প-মানের এনক্রিপশন এবং হোস্টিং পরিকাঠামো ব্যবহার করে নিরাপদে সংরক্ষণ করা হয়।"
+        },
+        {
+          "type": "paragraph",
+          "text": "আমরা আপনার তথ্য হারানো, অপব্যবহার বা অননুমোদিত অ্যাক্সেস থেকে রক্ষা করতে যুক্তিসঙ্গত পদক্ষেপ গ্রহণ করি।"
+        },
+        {
+          "type": "paragraph",
+          "text": "আমাদের হোস্টিং এবং বিশ্লেষণ পরিষেবা (যেমন Vercel এবং Stripe) বৈশ্বিক হওয়ায়, আপনার তথ্য অন্যান্য দেশে প্রক্রিয়া করা হতে পারে। আমরা শুধুমাত্র সেই পরিষেবা প্রদানকারীদের সাথে কাজ করি যারা শক্তিশালী গোপনীয়তার মান বজায় রাখে।"
+        }
+      ]
+    },
+    {
+      "title": "তৃতীয় পক্ষের পরিষেবা",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "আমরা আমাদের কিছু পরিষেবা বিশ্বস্ত তৃতীয় পক্ষের মাধ্যমে প্রদান করি:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "OAuth প্রদানকারী – নিরাপদ লগইনের জন্য",
+            "Stripe – পেমেন্ট প্রসেসিংয়ের জন্য",
+            "Vercel Analytics – বেনামী পারফরম্যান্স বিশ্লেষণের জন্য"
+          ]
+        },
+        {
+          "type": "links",
+          "items": [
+            { "label": "Stripe গোপনীয়তা নীতি", "url": "https://stripe.com/privacy" },
+            { "label": "Vercel গোপনীয়তা নীতি", "url": "https://vercel.com/legal/privacy-policy" }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "এই পরিষেবাগুলির প্রত্যেকটি তাদের নিজস্ব গোপনীয়তা নীতির অধীনে আপনার তথ্য সংগ্রহ ও প্রক্রিয়া করতে পারে।"
+        }
+      ]
+    },
+    {
+      "title": "আপনার অধিকার",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "আপনার অবস্থানের উপর নির্ভর করে, আপনার নিম্নলিখিত অধিকার থাকতে পারে:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "আপনার ব্যক্তিগত তথ্য অ্যাক্সেস বা একটি কপি চাওয়া",
+            "আমাদের কাছে থাকা তথ্য সংশোধন বা মুছে ফেলা",
+            "সম্মতি প্রত্যাহার করা বা আপনার অ্যাকাউন্ট বন্ধ করা"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "যদি আপনি এই অধিকারগুলি ব্যবহার করতে চান, অনুগ্রহ করে আমাদের ওয়েবসাইটের যোগাযোগ ফর্মের মাধ্যমে আমাদের সাথে যোগাযোগ করুন।"
+        }
+      ]
+    },
+    {
+      "title": "শিশুদের গোপনীয়তা",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia সাধারণ শ্রোতাদের জন্য ডিজাইন করা হয়েছে এবং 13 বছরের কম বয়সী শিশুদের জন্য নয়।"
+        },
+        {
+          "type": "paragraph",
+          "text": "আমরা ইচ্ছাকৃতভাবে নাবালকদের কাছ থেকে ব্যক্তিগত তথ্য সংগ্রহ করি না।"
+        }
+      ]
+    },
+    {
+      "title": "এই নীতিতে পরিবর্তন",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "আমরা সময়ে সময়ে এই গোপনীয়তা নীতি আপডেট করতে পারি যাতে উন্নতি বা আইনি প্রয়োজনীয়তা প্রতিফলিত হয়।"
+        },
+        {
+          "type": "paragraph",
+          "text": "যখন আমরা তা করব, আমরা এই পৃষ্ঠার উপরে আপডেটের তারিখটি পোস্ট করব।"
+        }
+      ]
+    },
+    {
+      "title": "আমাদের সাথে যোগাযোগ করুন",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "যদি আপনার গোপনীয়তা সম্পর্কিত কোনো প্রশ্ন বা অনুরোধ থাকে, অনুগ্রহ করে Alternipedia ওয়েবসাইটের মাধ্যমে আমাদের সাথে যোগাযোগ করুন।"
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "শর্তাবলী মেনে চলা", "content": ["এই ওয়েবসাইটে প্রবেশ এবং এটি ব্যবহার করে, ব্যবহারকারীরা এই সেবা শর্তাবলী মেনে চলতে এবং এগুলির দ্বারা আবদ্ধ হতে সম্মত হন। যারা এই শর্তাবলী মেনে চলতে সম্মত নন, তাদের উচিত অবিলম্বে ওয়েবসাইট ব্যবহার বন্ধ করা।"] },
     { "title": "ব্যবহারকারী অ্যাকাউন্ট দায়িত্ব", "content": ["ব্যবহারকারীরা তাদের অ্যাকাউন্টের পরিচয়পত্রের গোপনীয়তা বজায় রাখার জন্য দায়ী। ব্যবহারকারীর অ্যাকাউন্টের অধীনে ঘটে যাওয়া কোনো কার্যক্রম শুধুমাত্র অ্যাকাউন্ট ধারকের দায়িত্ব। ব্যবহারকারীদের উচিত অবিলম্বে ওয়েবসাইট প্রশাসকদের অবৈধ অ্যাকাউন্ট অ্যাক্সেস সম্পর্কে জানানো।"] },
@@ -1859,6 +3649,7 @@ const bn: Dictionary = {
     goHome: 'মুখ পৃষ্ঠায় যান',
   },
   upgrade: {
+    pro: 'প্রো',
     goPro: 'প্রো ব্যবহার করুন',
     upgradePrompt: 'প্রিমিয়াম ফিচার আনলক করতে আপগ্রেড করুন',
     title: 'জ্ঞানই শক্তি, আপনার শক্তি বাড়ান।',
@@ -1905,8 +3696,8 @@ const bn: Dictionary = {
       "part3": "; অতিরিক্ত শর্ত প্রযোজ্য হতে পারে। এই সাইটটি ব্যবহার করে, আপনি সম্মত হন",
       "part4": "শর্তাবলী",
       "part5": "এবং",
-      "part6": "গোপনীয়তা নীতি।",
-      "part7": "Alternipedia একটি ওপেন-সোর্স অলাভজনক প্রকল্প।"
+      "part6": "গোপনীয়তা নীতি",
+      "part7": "। Alternipedia একটি ওপেন-সোর্স অলাভজনক প্রকল্প।"
     },
     license: 'লাইসেন্স',
     terms: 'শর্তাবলী',
@@ -1934,6 +3725,8 @@ const bn: Dictionary = {
     notFound: "কোন মিল খুঁজে পাওয়া যায়নি"
   },
   article: {
+    tools: 'সরঞ্জাম',
+    content: 'বিষয়বস্তু',
     article: 'প্রবন্ধ',
     discussion: 'আলোচনা',
     read: 'পড়ুন',
@@ -1944,6 +3737,178 @@ const bn: Dictionary = {
 
 // Urdu
 const ur: Dictionary = {
+    login: {
+    title: 'لاگ ان کریں',
+    google: 'Google کے ساتھ جاری رکھیں',
+    facebook: 'Facebook کے ساتھ جاری رکھیں',
+    x: 'X کے ساتھ جاری رکھیں',
+    microsoft: 'Microsoft کے ساتھ جاری رکھیں',  
+    policy: "لاگ ان کرنے کا مطلب ہے کہ آپ ہماری سروس کی شرائط اور پرائیویسی پالیسی سے اتفاق کرتے ہیں۔",
+  },
+  userMenu: {
+    login: "لاگ ان کریں",
+    contributions: "حصہ جات",
+    savedArticles: "محفوظ شدہ مضامین",
+    preferences: "ترجیحات",
+    logout: "لاگ آؤٹ کریں",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ur-PK', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ur-PK', { year: 'numeric', month: 'long' }),
+  "title": "رازداری کی پالیسی",
+  "lastUpdatedText": "آخری بار اپ ڈیٹ کیا گیا:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Alternipedia میں خوش آمدید — ایک تعلیمی وِکی جو علم اور نظریات پر مختلف نقطہ نظر پیش کرتا ہے۔ ہم آپ کی رازداری کا احترام کرتے ہیں اور آپ کی ذاتی معلومات کے تحفظ کے لیے پُرعزم ہیں۔ اس پالیسی میں وضاحت کی گئی ہے کہ ہم کون سا ڈیٹا جمع کرتے ہیں، اسے کیسے استعمال کرتے ہیں، اور آپ کے کیا حقوق ہیں۔"
+    }
+  ],
+  "sections": [
+    {
+      "title": "ہم کون سی معلومات جمع کرتے ہیں",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "ہم صرف وہی معلومات جمع کرتے ہیں جو ہماری خدمات فراہم کرنے اور بہتر بنانے کے لیے ضروری ہوں۔ اس میں شامل ہو سکتا ہے:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "اکاؤنٹ کی معلومات: جب آپ OAuth فراہم کنندہ (جیسے Google یا Meta) کے ذریعے لاگ ان کرتے ہیں، تو ہمیں آپ کا نام، ای میل پتہ اور پروفائل تصویر (اگر دستیاب ہو) جیسی بنیادی معلومات حاصل ہوتی ہیں۔",
+            "ادائیگی کی معلومات: اگر آپ ادائیگی یا عطیہ کرتے ہیں، تو ہم Stripe استعمال کرتے ہیں تاکہ لین دین کو محفوظ طریقے سے انجام دیا جا سکے۔ ہم آپ کے کارڈ کی تفصیلات کو کبھی ذخیرہ یا دیکھتے نہیں۔",
+            "تجزیاتی ڈیٹا: ہم Vercel Analytics استعمال کرتے ہیں تاکہ یہ سمجھ سکیں کہ کون سے صفحات زیادہ دیکھے جاتے ہیں اور سائٹ کی کارکردگی کیسی ہے۔ یہ ڈیٹا مجموعی طور پر جمع کیا جاتا ہے اور آپ کی شناخت نہیں کرتا۔",
+            "تکنیکی معلومات: جب آپ ہماری سائٹ پر جاتے ہیں، تو ہمیں خودکار طور پر براؤزر، ڈیوائس اور IP ایڈریس جیسی معیاری لاگ معلومات مل سکتی ہیں۔"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ہم آپ کا ڈیٹا کیسے استعمال کرتے ہیں",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "ہم آپ کا ڈیٹا صرف درج ذیل مقاصد کے لیے استعمال کرتے ہیں:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia پلیٹ فارم کو چلانے اور بہتر بنانے کے لیے",
+            "صارفین کی توثیق اور اکاؤنٹس کا انتظام کرنے کے لیے",
+            "Stripe کے ذریعے محفوظ ادائیگیوں کی پروسیسنگ کے لیے",
+            "سائٹ کی کارکردگی اور استحکام کی نگرانی کے لیے",
+            "صارفین کے سوالات یا درخواستوں کا جواب دینے کے لیے"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "ہم آپ کا ذاتی ڈیٹا کسی تیسرے فریق کو فروخت، کرایہ یا شیئر نہیں کرتے۔"
+        }
+      ]
+    },
+    {
+      "title": "کوکیز اور ٹریکنگ",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia اشتہارات یا ٹریکنگ کوکیز استعمال نہیں کرتا۔"
+        },
+        {
+          "type": "paragraph",
+          "text": "ہم صرف وہ کوکیز استعمال کرتے ہیں جو لاگ ان سیشنز اور سائٹ کی بنیادی فعالیت کے لیے ضروری ہوں۔"
+        }
+      ]
+    },
+    {
+      "title": "ڈیٹا اسٹوریج اور سیکیورٹی",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "آپ کا ڈیٹا جدید انکرپشن اور محفوظ ہوسٹنگ انفراسٹرکچر کے ذریعے محفوظ رکھا جاتا ہے۔"
+        },
+        {
+          "type": "paragraph",
+          "text": "ہم نقصان، غلط استعمال یا غیر مجاز رسائی سے بچاؤ کے لیے مناسب اقدامات کرتے ہیں۔"
+        },
+        {
+          "type": "paragraph",
+          "text": "ہماری ہوسٹنگ اور تجزیاتی خدمات (جیسے Vercel اور Stripe) عالمی ہیں، لہٰذا آپ کا ڈیٹا مختلف ممالک میں پروسیس ہو سکتا ہے۔ ہم صرف ان فراہم کنندگان کے ساتھ کام کرتے ہیں جو مضبوط رازداری کے معیارات پر عمل کرتے ہیں۔"
+        }
+      ]
+    },
+    {
+      "title": "تیسرے فریق کی خدمات",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "ہم چند معتبر تیسرے فریقوں پر انحصار کرتے ہیں جو ہماری خدمات کو چلانے میں مدد دیتے ہیں:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "OAuth فراہم کنندگان – محفوظ لاگ ان کے لیے",
+            "Stripe – ادائیگیوں کی پروسیسنگ کے لیے",
+            "Vercel Analytics – کارکردگی کے تجزیے کے لیے"
+          ]
+        },
+        {
+          "type": "links",
+          "items": [
+            { "label": "Stripe رازداری کی پالیسی", "url": "https://stripe.com/privacy" },
+            { "label": "Vercel رازداری کی پالیسی", "url": "https://vercel.com/legal/privacy-policy" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "آپ کے حقوق",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "آپ کے مقام کے لحاظ سے، آپ کے درج ذیل حقوق ہو سکتے ہیں:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "اپنی ذاتی معلومات تک رسائی یا اس کی کاپی حاصل کرنا",
+            "معلومات کو درست یا حذف کروانا",
+            "رضامندی واپس لینا یا اکاؤنٹ بند کرنا"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "بچوں کی رازداری",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia عام سامعین کے لیے ہے اور 13 سال سے کم عمر بچوں کے لیے نہیں۔"
+        },
+        {
+          "type": "paragraph",
+          "text": "ہم شعوری طور پر بچوں سے ذاتی معلومات جمع نہیں کرتے۔"
+        }
+      ]
+    },
+    {
+      "title": "پالیسی میں تبدیلیاں",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "ہم وقتاً فوقتاً اس پالیسی کو اپ ڈیٹ کر سکتے ہیں تاکہ تبدیلیاں یا قانونی تقاضے ظاہر ہوں۔"
+        }
+      ]
+    },
+    {
+      "title": "ہم سے رابطہ کریں",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "اگر آپ کو رازداری سے متعلق کوئی سوال ہو، تو براہ کرم Alternipedia ویب سائٹ کے ذریعے ہم سے رابطہ کریں۔"
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "شرائط کی منظوری", "content": ["اس ویب سائٹ تک رسائی حاصل کر کے اور اسے استعمال کر کے، صارفین ان سروس کی شرائط پر عمل کرنے اور ان سے پابند ہونے پر راضی ہیں۔ جو صارفین ان شرائط سے متفق نہیں ہیں، انہیں فوری طور پر ویب سائٹ کا استعمال بند کر دینا چاہیے۔"] },
     { "title": "صارف اکاؤنٹ کی ذمہ داریاں", "content": ["صارفین اپنے اکاؤنٹ کی اسناد کی رازداری برقرار رکھنے کے ذمہ دار ہیں۔ صارف کے اکاؤنٹ کے تحت ہونے والی کسی بھی سرگرمی کی مکمل ذمہ داری اکاؤنٹ ہولڈر کی ہے۔ صارفین کو کسی بھی غیر مجاز اکاؤنٹ تک رسائی کے بارے میں فوری طور پر ویب سائٹ کے منتظمین کو مطلع کرنا چاہیے۔"] },
@@ -2018,8 +3983,8 @@ const ur: Dictionary = {
       "part3": "; اضافی شرائط لاگو ہو سکتی ہیں۔ اس سائٹ کو استعمال کرتے ہوئے، آپ متفق ہیں",
       "part4": "شرائط و ضوابط",
       "part5": "اور",
-      "part6": "پرائیویسی پالیسی۔",
-      "part7": "Alternipedia ایک اوپن سورس غیر منافع بخش منصوبہ ہے۔"
+      "part6": "پرائیویسی پالیسی",
+      "part7": "۔Alternipedia ایک اوپن سورس غیر منافع بخش منصوبہ ہے۔"
     },
     license: 'لائسنس',
     terms: 'شرائط',
@@ -2038,6 +4003,7 @@ const ur: Dictionary = {
     goHome: 'ہوم پیج پر جائیں',
   },
   upgrade: {
+    pro: 'پرو',
     goPro: 'پرو بنیں',
     upgradePrompt: 'پریمیم خصوصیات حاصل کرنے کے لیے اپ گریڈ کریں',
     title: 'علم طاقت ہے، اپنی طاقت بڑھائیں۔',
@@ -2069,6 +4035,8 @@ const ur: Dictionary = {
     },
   },
   article: {
+    tools: 'اوزار',
+    content: 'مواد',
     article: 'مضمون',
     discussion: 'بحث',
     read: 'پڑھیں',
@@ -2079,6 +4047,178 @@ const ur: Dictionary = {
 
 // indonesia
 const id: Dictionary = {
+    login: {
+    title: 'Masuk',
+    google: 'Lanjutkan dengan Google',
+    facebook: 'Lanjutkan dengan Facebook',
+    x: 'Lanjutkan dengan X',
+    microsoft: 'Lanjutkan dengan Microsoft',  
+    policy: "Dengan masuk, Anda menyetujui Syarat Layanan dan Kebijakan Privasi kami.",
+  },
+  userMenu: {
+    login: "Masuk",
+    contributions: "Kontribusi",    
+    savedArticles: "Artikel Tersimpan",
+    preferences: "Preferensi",
+    logout: "Keluar",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'long' }),
+  "title": "Kebijakan Privasi",
+  "lastUpdatedText": "Terakhir diperbarui:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Selamat datang di Alternipedia — sebuah wiki pendidikan yang bertujuan untuk menyajikan berbagai perspektif tentang pengetahuan dan ide. Kami menghargai privasi Anda dan berkomitmen untuk melindungi informasi pribadi Anda. Kebijakan ini menjelaskan data apa yang kami kumpulkan, bagaimana kami menggunakannya, dan hak-hak Anda."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informasi yang Kami Kumpulkan",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Kami hanya mengumpulkan informasi minimum yang diperlukan untuk menyediakan dan meningkatkan layanan kami. Ini dapat mencakup:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Informasi akun: Saat Anda masuk menggunakan penyedia OAuth (seperti Google atau Meta), kami menerima informasi dasar seperti nama, alamat email, dan foto profil Anda (jika tersedia).",
+            "Informasi pembayaran: Jika Anda melakukan pembayaran atau donasi, kami menggunakan Stripe untuk memprosesnya dengan aman. Kami tidak pernah menyimpan atau melihat detail kartu Anda.",
+            "Data analitik: Kami menggunakan Vercel Analytics untuk memahami pola penggunaan dan kinerja situs. Data ini bersifat agregat dan tidak mengidentifikasi Anda secara pribadi.",
+            "Informasi teknis: Saat Anda mengunjungi situs kami, kami dapat menerima data log standar seperti jenis browser, perangkat, dan alamat IP."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Bagaimana Kami Menggunakan Informasi Anda",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Kami menggunakan informasi Anda hanya untuk tujuan berikut:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mengoperasikan dan meningkatkan platform Alternipedia",
+            "Memverifikasi pengguna dan mengelola akun",
+            "Memproses pembayaran dengan aman melalui Stripe",
+            "Memantau kinerja dan keandalan situs",
+            "Menanggapi permintaan pengguna melalui situs"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Kami tidak menjual, menyewakan, atau menukar data pribadi Anda."
+        }
+      ]
+    },
+    {
+      "title": "Cookie dan Pelacakan",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia tidak menggunakan cookie iklan atau pelacak."
+        },
+        {
+          "type": "paragraph",
+          "text": "Kami hanya menggunakan cookie yang diperlukan untuk sesi login dan fungsi dasar situs."
+        }
+      ]
+    },
+    {
+      "title": "Penyimpanan dan Keamanan Data",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Data Anda disimpan dengan aman menggunakan enkripsi dan infrastruktur hosting standar industri."
+        },
+        {
+          "type": "paragraph",
+          "text": "Kami mengambil langkah-langkah yang wajar untuk melindungi informasi Anda dari kehilangan, penyalahgunaan, atau akses tidak sah."
+        },
+        {
+          "type": "paragraph",
+          "text": "Karena layanan hosting dan analitik kami bersifat global (termasuk Vercel dan Stripe), data Anda dapat diproses di negara lain. Kami hanya bekerja dengan penyedia yang memiliki standar privasi tinggi."
+        }
+      ]
+    },
+    {
+      "title": "Layanan Pihak Ketiga",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Kami mengandalkan layanan pihak ketiga tepercaya untuk beberapa fungsi penting:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Penyedia OAuth – untuk login aman",
+            "Stripe – untuk pemrosesan pembayaran",
+            "Vercel Analytics – untuk analisis performa anonim"
+          ]
+        },
+        {
+          "type": "links",
+          "items": [
+            { "label": "Kebijakan Privasi Stripe", "url": "https://stripe.com/privacy" },
+            { "label": "Kebijakan Privasi Vercel", "url": "https://vercel.com/legal/privacy-policy" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hak Anda",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Bergantung pada lokasi Anda, Anda mungkin memiliki hak untuk:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mengakses atau meminta salinan data pribadi Anda",
+            "Memperbaiki atau menghapus informasi yang kami miliki tentang Anda",
+            "Menarik persetujuan atau menutup akun Anda"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Privasi Anak-Anak",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ditujukan untuk audiens umum dan tidak ditujukan untuk anak di bawah usia 13 tahun."
+        },
+        {
+          "type": "paragraph",
+          "text": "Kami tidak sengaja mengumpulkan data pribadi dari anak di bawah umur."
+        }
+      ]
+    },
+    {
+      "title": "Perubahan pada Kebijakan Ini",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Kami dapat memperbarui kebijakan ini dari waktu ke waktu untuk mencerminkan perbaikan atau persyaratan hukum."
+        }
+      ]
+    },
+    {
+      "title": "Hubungi Kami",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Jika Anda memiliki pertanyaan atau permintaan terkait privasi, silakan hubungi kami melalui situs Alternipedia."
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Penerimaan Syarat", "content": ["Dengan mengakses dan menggunakan situs web ini, pengguna setuju untuk mematuhi dan terikat oleh Syarat Layanan ini. Pengguna yang tidak setuju dengan syarat ini harus segera menghentikan penggunaan situs web."] },
     { "title": "Tanggung Jawab Akun Pengguna", "content": ["Pengguna bertanggung jawab untuk menjaga kerahasiaan kredensial akun mereka. Setiap aktivitas yang terjadi di bawah akun pengguna adalah tanggung jawab pemilik akun sepenuhnya. Pengguna harus segera memberitahu administrator situs tentang akses akun yang tidak sah."] },
@@ -2153,8 +4293,8 @@ const id: Dictionary = {
       "part3": "; syarat tambahan dapat berlaku. Dengan menggunakan situs ini, Anda setuju dengan",
       "part4": "Syarat dan Ketentuan",
       "part5": "dan",
-      "part6": "Kebijakan Privasi.",
-      "part7": "Alternipedia adalah proyek sumber terbuka nirlaba."
+      "part6": "Kebijakan Privasi",
+      "part7": ". Alternipedia adalah proyek sumber terbuka nirlaba."
     },
     license: 'Lisensi',
     terms: 'Syarat dan Ketentuan',
@@ -2173,7 +4313,8 @@ const id: Dictionary = {
     goHome: 'Kembali ke Beranda',
   },
   upgrade: {
-    goPro: 'Jadi Pro',
+    pro: 'PRO',
+    goPro: 'Jadi PRO',
     upgradePrompt: 'Tingkatkan untuk membuka fitur premium',
     title: 'Pengetahuan adalah Kekuatan, Tingkatkan Milikmu.',
     month: 'bulan',
@@ -2204,6 +4345,8 @@ const id: Dictionary = {
     },
   },
   article: {
+    tools: 'Alat',
+    content: 'Konten',
     article: 'Artikel',
     discussion: 'Diskusi',
     read: 'Baca',
@@ -2214,6 +4357,119 @@ const id: Dictionary = {
 
 // Marathi
 const mr: Dictionary = {
+    login: {
+    title: 'लॉग इन करा',
+    google: 'Google सह सुरू ठेवा',
+    facebook: 'Facebook सह सुरू ठेवा',
+    x: 'X सह सुरू ठेवा',
+    microsoft: 'Microsoft सह सुरू ठेवा',  
+    policy: "लॉग इन केल्याने, आपण आमच्या सेवा अटी आणि गोपनीयता धोरणास सहमत आहात.",
+  },
+  userMenu: {
+    login: "लॉग इन",
+    contributions: "योगदान",    
+    savedArticles: "जतन केलेले लेख",
+    preferences: "प्राधान्ये",
+    logout: "लॉग आउट",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('mr-IN', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('mr-IN', { year: 'numeric', month: 'long' }),
+  "title": "गोपनीयता धोरण",
+  "lastUpdatedText": "शेवटचे अद्यतन:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Alternipedia मध्ये आपले स्वागत आहे — ज्ञान आणि विचारांवरील विविध दृष्टीकोन सादर करण्यासाठी डिझाइन केलेले एक शैक्षणिक विकी. आम्ही तुमच्या गोपनीयतेचा आदर करतो आणि तुमची वैयक्तिक माहिती सुरक्षित ठेवण्यासाठी वचनबद्ध आहोत. हे धोरण आम्ही कोणती माहिती गोळा करतो, ती कशी वापरतो आणि तुमचे अधिकार काय आहेत हे स्पष्ट करते."
+    }
+  ],
+  "sections": [
+    {
+      "title": "आम्ही कोणती माहिती गोळा करतो",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "आम्ही फक्त आमच्या सेवा चालवण्यासाठी आणि सुधारण्यासाठी आवश्यक असलेली किमान माहिती गोळा करतो. यामध्ये समाविष्ट असू शकते:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "खाते माहिती: आपण Google किंवा Meta सारख्या OAuth प्रदात्यामार्फत लॉग इन केल्यास, आम्हाला तुमचे नाव, ईमेल आणि प्रोफाइल फोटो (असल्यास) प्राप्त होतात.",
+            "देयक माहिती: आपण पेमेंट किंवा देणगी करण्याचे निवडल्यास, आम्ही Stripe द्वारे सुरक्षित प्रक्रिया करतो. आम्ही तुमची कार्ड माहिती कधीही जतन किंवा पाहत नाही.",
+            "विश्लेषण डेटा: कोणते पृष्ठ लोकप्रिय आहे आणि साइट कशी कार्य करते हे समजण्यासाठी आम्ही Vercel Analytics वापरतो. हे डेटा अनामिक आहे आणि तुमची वैयक्तिक ओळख दर्शवत नाही.",
+            "तांत्रिक माहिती: आपण साइटला भेट दिल्यास, आम्हाला ब्राउझर प्रकार, उपकरण आणि IP पत्ता यासारखी मूलभूत लॉग माहिती आपोआप मिळू शकते."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "माहितीचा वापर कसा केला जातो",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "आम्ही तुमची माहिती खालील हेतूसाठी वापरतो:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia प्लॅटफॉर्म चालवणे आणि सुधारणे",
+            "वापरकर्ता प्रमाणीकरण आणि खाते व्यवस्थापन",
+            "Stripe द्वारे सुरक्षित देयके हाताळणे",
+            "साइटची कामगिरी आणि विश्वासार्हता निरीक्षण करणे",
+            "वापरकर्त्यांच्या विनंत्यांना प्रतिसाद देणे"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "आम्ही तुमची वैयक्तिक माहिती विकत नाही, भाड्याने देत नाही किंवा व्यापार करत नाही."
+        }
+      ]
+    },
+    {
+      "title": "कुकीज आणि ट्रॅकिंग",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia जाहिरात किंवा ट्रॅकिंग कुकीज वापरत नाही."
+        },
+        {
+          "type": "paragraph",
+          "text": "आम्ही फक्त लॉगिन सत्र आणि साइट कार्यक्षमतेसाठी आवश्यक असलेल्या मूलभूत कुकीज वापरतो."
+        }
+      ]
+    },
+    {
+      "title": "डेटा संचयन आणि सुरक्षा",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "तुमचा डेटा उद्योग-मानक एन्क्रिप्शन आणि सुरक्षित होस्टिंगसह संरक्षित आहे."
+        },
+        {
+          "type": "paragraph",
+          "text": "आम्ही तुमची माहिती हरवणे, गैरवापर होणे किंवा अनधिकृत प्रवेश होऊ नये म्हणून वाजवी उपाययोजना करतो."
+        },
+        {
+          "type": "paragraph",
+          "text": "होस्टिंग आणि विश्लेषण सेवा (उदा. Vercel, Stripe) जागतिक पातळीवर असू शकतात, त्यामुळे तुमचा डेटा इतर देशांमध्ये प्रक्रिया केला जाऊ शकतो. आम्ही फक्त मजबूत गोपनीयता मानके पाळणाऱ्या भागीदारांसोबत काम करतो."
+        }
+      ]
+    },
+    {
+      "title": "तुमचे अधिकार",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "तुमच्या डेटाला प्रवेश मागणे किंवा त्याची प्रत मिळवणे",
+            "डेटा सुधारणा किंवा विलोपनाची विनंती करणे",
+            "संमती मागे घेणे किंवा खाते हटवणे"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "अटींचे स्वीकार", "content": ["या वेबसाइटचा प्रवेश आणि वापर करून, वापरकर्ते या सेवा अटींचे पालन करण्यास आणि त्यांचे बांधील राहण्यास सहमत असतात. जे वापरकर्ते या अटींशी सहमत नाहीत, त्यांनी त्वरित वेबसाइटचा वापर थांबवावा."] },
     { "title": "वापरकर्ता खाते जबाबदाऱ्या", "content": ["वापरकर्ते त्यांच्या खात्याच्या प्रमाणपत्रांची गोपनीयता राखण्यासाठी जबाबदार आहेत. वापरकर्त्याच्या खात्यातील कोणतीही क्रियाकलाप केवळ खाते धारकाची जबाबदारी आहे. वापरकर्त्यांनी कोणत्याही अनधिकृत खाते प्रवेशाबद्दल त्वरित वेबसाइट प्रशासकांना सूचित करणे आवश्यक आहे."] },
@@ -2288,8 +4544,8 @@ const mr: Dictionary = {
       "part3": "; अतिरिक्त अटी लागू होऊ शकतात. या साइटचा वापर करून, आपण सहमत आहात",
       "part4": "नियम आणि अटी",
       "part5": "आणि",
-      "part6": "गोपनीयता धोरण.",
-      "part7": "Alternipedia हे एक मुक्त स्रोत, नफा न कमवणारे प्रकल्प आहे."
+      "part6": "गोपनीयता धोरण",
+      "part7": ". Alternipedia हे एक मुक्त स्रोत, नफा न कमवणारे प्रकल्प आहे."
     },
     license: 'लायसन्स',
     terms: 'अटी',
@@ -2308,6 +4564,7 @@ const mr: Dictionary = {
     goHome: 'मुखपृष्ठावर जा',
   },
   upgrade: {
+    pro: 'प्रो',
     goPro: 'प्रो व्हा',
     upgradePrompt: 'प्रीमियम फीचर्स अनलॉक करण्यासाठी अपग्रेड करा',
     title: 'ज्ञान म्हणजे शक्ति, आपली शक्ति वाढवा.',
@@ -2339,6 +4596,8 @@ const mr: Dictionary = {
     },
   },
   article: {
+    tools: 'साधने',
+    content: 'सामग्री',
     article: 'लेख',
     discussion: 'चर्चा',
     read: 'वाचा',
@@ -2349,6 +4608,86 @@ const mr: Dictionary = {
 
 // Telugu
 const te: Dictionary = {
+    login: {
+    title: 'లాగిన్',
+    google: 'Google తో కొనసాగించండి',
+    facebook: 'Facebook తో కొనసాగించండి',
+    x: 'X తో కొనసాగించండి',
+    microsoft: 'Microsoft తో కొనసాగించండి',  
+    policy: "లాగిన్ చేయడం ద్వారా, మీరు మా సేవా నిబంధనలు మరియు గోప్యతా విధానానికి అంగీకరిస్తున్నారు.",
+  },
+  userMenu: {
+    login: "లాగిన్",
+    contributions: "కాంట్రిబ్యూషన్స్",    
+    savedArticles: "సేవ్ చేసిన ఆర్టికల్స్", 
+    preferences: "ప్రిఫరెన్సెస్",
+    logout: "లాగ్ అవుట్",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('te-IN', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('te-IN', { year: 'numeric', month: 'long' }),
+  "title": "గోప్యతా విధానం",
+  "lastUpdatedText": "చివరిసారిగా నవీకరించబడింది:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Alternipediaకి స్వాగతం — జ్ఞానం మరియు అభిప్రాయాలపై విభిన్న దృక్కోణాలను అందించడానికి రూపొందించబడిన విద్యా వికీ. మేము మీ గోప్యతను గౌరవిస్తాము మరియు మీ వ్యక్తిగత సమాచారాన్ని రక్షించడానికి కట్టుబడి ఉన్నాము. ఈ విధానం మేము ఏ సమాచారం సేకరిస్తాము, దాన్ని ఎలా ఉపయోగిస్తాము మరియు మీ హక్కులు ఏమిటో వివరిస్తుంది."
+    }
+  ],
+  "sections": [
+    {
+      "title": "మేము సేకరించే సమాచారం",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "ఖాతా సమాచారం: మీరు Google లేదా Meta వంటి OAuth ప్రొవైడర్‌తో లాగిన్ అయితే, మీ పేరు, ఇమెయిల్ మరియు ప్రొఫైల్ చిత్రాన్ని పొందుతాము.",
+            "చెల్లింపు సమాచారం: మీరు చెల్లింపు లేదా విరాళం ఇవ్వాలని ఎంచుకుంటే, మేము Stripe ద్వారా సురక్షితంగా ప్రాసెస్ చేస్తాము. మేము మీ కార్డ్ వివరాలను ఎప్పుడూ నిల్వ చేయము లేదా వీక్షించము.",
+            "విశ్లేషణ డేటా: ఏ పేజీలు ప్రాచుర్యం పొందుతున్నాయి మరియు సైట్ ఎలా పనిచేస్తుంది అనే దానిని అర్థం చేసుకోవడానికి మేము Vercel Analyticsని ఉపయోగిస్తాము.",
+            "సాంకేతిక సమాచారం: మీరు సైట్ సందర్శించినప్పుడు, బ్రౌజర్ రకం, పరికరం మరియు IP చిరునామా వంటి ప్రామాణిక లాగ్ డేటాను స్వయంచాలకంగా స్వీకరిస్తాము."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "సమాచారాన్ని ఎలా ఉపయోగిస్తాము",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia ప్లాట్‌ఫారమ్‌ను నడపడం మరియు మెరుగుపరచడం",
+            "వినియోగదారుల గుర్తింపు మరియు ఖాతా నిర్వహణ",
+            "Stripe ద్వారా సురక్షిత చెల్లింపులు నిర్వహించడం",
+            "సైట్ పనితీరును మరియు స్థిరత్వాన్ని పర్యవేక్షించడం",
+            "వినియోగదారుల అభ్యర్థనలకు స్పందించడం"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "కుకీలు మరియు ట్రాకింగ్",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ప్రకటన లేదా ట్రాకింగ్ కుకీలను ఉపయోగించదు."
+        },
+        {
+          "type": "paragraph",
+          "text": "లాగిన్ సెషన్ మరియు సైట్ ఫంక్షన్ కోసం అవసరమైన ప్రాథమిక కుకీలను మాత్రమే మేము ఉపయోగిస్తాము."
+        }
+      ]
+    },
+    {
+      "title": "డేటా నిల్వ మరియు భద్రత",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "మీ డేటా పరిశ్రమ ప్రామాణిక గూఢీకరణ మరియు సురక్షిత హోస్టింగ్ మౌలిక సదుపాయాలతో రక్షించబడుతుంది."
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "నియమాల స్వీకారం", "content": ["ఈ వెబ్‌సైట్‌ని యాక్సెస్ చేసి ఉపయోగించడం ద్వారా, వినియోగదారులు ఈ సేవా నిబంధనలను పాటించడానికి మరియు వాటికి బంధించబడటానికి అంగీకరిస్తారు. ఈ నిబంధనలకు అంగీకరించని వినియోగదారులు వెంటనే వెబ్‌సైట్ వాడకాన్ని నిలిపివేయాలి."] },
     { "title": "వినియోగదారు ఖాతా బాధ్యతలు", "content": ["వినియోగదారులు తమ ఖాతా గుర్తింపు సమాచార గోప్యతను కాపాడడానికి బాధ్యత వహిస్తారు. వినియోగదారుని ఖాతా క్రింద జరిగే ఏదైనా కార్యకలాపం ఖాతా యజమాని యొక్క ప్రత్యేక బాధ్యత. అనధికారిక ఖాతా యాక్సెస్ ఏమైనా ఉంటే, వినియోగదారులు వెంటనే వెబ్‌సైట్ నిర్వాహకులను తెలియజేయాలి."] },
@@ -2422,8 +4761,8 @@ const te: Dictionary = {
       "part3": "; అదనపు నిబంధనలు వర్తించవచ్చు. ఈ సైట్‌ను ఉపయోగించడం ద్వారా, మీరు అంగీకరిస్తున్నారు",
       "part4": "నిబంధనలు మరియు షరతులు",
       "part5": "మరియు",
-      "part6": "గోప్యతా విధానం.",
-      "part7": "Alternipedia అనేది ఓపెన్ సోర్స్ లాభాపేక్ష లేని ప్రాజెక్ట్."
+      "part6": "గోప్యతా విధానం",
+      "part7": ". Alternipedia అనేది ఓపెన్ సోర్స్ లాభాపేక్ష లేని ప్రాజెక్ట్."
     },
     license: 'లైసెన్స్',
     terms: 'నిబంధనలు',
@@ -2442,6 +4781,7 @@ const te: Dictionary = {
     goHome: 'హోమ్ కి వెళ్ళండి',
   },
   upgrade: {
+    pro: 'ప్రో',
     goPro: 'ప్రో అయ్యి',
     upgradePrompt: 'ప్రీమియం ఫీచర్లను అన్లాక్ చేయడానికి అప్‌గ్రేడ్ చేయండి',
     title: 'జ్ఞానం శక్తి, మీ శక్తిని పెంచండి.',
@@ -2473,6 +4813,8 @@ const te: Dictionary = {
     },
   },
   article: {
+    tools: 'పరికరాలు',
+    content: 'విషయం',
     article: 'వ్యాసం',
     discussion: 'చర్చ',
     read: 'చదవండి',
@@ -2483,6 +4825,178 @@ const te: Dictionary = {
 
 // Turkish dictionary
 const tr: Dictionary = {
+    login: {
+    title: 'Giriş yap',
+    google: 'Google ile devam et',
+    facebook: 'Facebook ile devam et',
+    x: 'X ile devam et',
+    microsoft: 'Microsoft ile devam et',  
+    policy: "Giriş yaparak Hizmet Şartlarımızı ve Gizlilik Politikamızı kabul etmiş olursunuz.",
+  },
+  userMenu: {
+    login: "Giriş yap",
+    contributions: "Katkılar",    
+    savedArticles: "Kaydedilen makaleler", 
+    preferences: "Tercihler",
+    logout: "Çıkış yap",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long' }),
+  "title": "Gizlilik Politikası",
+  "lastUpdatedText": "Son güncelleme:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Alternipedia’ya hoş geldiniz — bilgi ve fikirler üzerine farklı bakış açılarını sunmak için tasarlanmış bir eğitim vikisidir. Gizliliğinize değer veriyoruz ve kişisel bilgilerinizi korumaya kararlıyız. Bu politika, hangi bilgileri topladığımızı, nasıl kullandığımızı ve haklarınızı açıklar."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Topladığımız Bilgiler",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Yalnızca hizmetlerimizi sağlamak ve geliştirmek için gerekli olan minimum bilgileri toplarız. Bu şunları içerebilir:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Hesap bilgileri: Google veya Meta gibi bir OAuth sağlayıcısı ile giriş yaptığınızda, adınız, e-posta adresiniz ve profil resminiz (varsa) gibi temel bilgileri alırız.",
+            "Ödeme bilgileri: Ödeme veya bağış yapmayı seçerseniz, işlemleri güvenli bir şekilde gerçekleştirmek için Stripe kullanırız. Kart bilgilerinizi asla saklamayız veya görüntülemeyiz.",
+            "Analitik veriler: Hangi sayfaların popüler olduğunu ve sitemizin nasıl çalıştığını anlamak için Vercel Analytics kullanırız. Bu veriler anonimdir ve sizi kişisel olarak tanımlamaz.",
+            "Teknik bilgiler: Sitemizi ziyaret ettiğinizde, tarayıcı türü, cihaz ve IP adresi gibi standart günlük verilerini otomatik olarak alabiliriz."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Bilgilerinizi Nasıl Kullanıyoruz",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Bilgilerinizi yalnızca aşağıdaki amaçlarla kullanırız:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia platformunu işletmek ve geliştirmek",
+            "Kullanıcıları doğrulamak ve hesapları yönetmek",
+            "Stripe aracılığıyla güvenli ödeme işlemlerini yürütmek",
+            "Site performansını ve güvenilirliğini izlemek",
+            "Kullanıcı taleplerine yanıt vermek"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Kişisel verilerinizi satmayız, kiralamayız veya ticaretini yapmayız."
+        }
+      ]
+    },
+    {
+      "title": "Çerezler ve Takip",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia reklam veya takip çerezleri kullanmaz."
+        },
+        {
+          "type": "paragraph",
+          "text": "Yalnızca oturum açma ve site işlevselliği için gerekli temel çerezleri kullanıyoruz."
+        }
+      ]
+    },
+    {
+      "title": "Veri Depolama ve Güvenlik",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Verileriniz endüstri standardı şifreleme ve güvenli barındırma altyapısı ile korunmaktadır."
+        },
+        {
+          "type": "paragraph",
+          "text": "Bilgilerinizi kayıp, kötüye kullanım veya yetkisiz erişime karşı korumak için makul önlemler alıyoruz."
+        },
+        {
+          "type": "paragraph",
+          "text": "Barındırma ve analitik hizmetlerimiz küresel olduğundan (örneğin Vercel ve Stripe), verileriniz başka ülkelerde işlenebilir. Sadece güçlü gizlilik standartlarına uyan sağlayıcılarla çalışıyoruz."
+        }
+      ]
+    },
+    {
+      "title": "Üçüncü Taraf Hizmetleri",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Hizmetimizin bazı kısımları için güvenilir üçüncü taraflara güveniyoruz:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "OAuth sağlayıcıları – güvenli giriş için",
+            "Stripe – ödeme işlemleri için",
+            "Vercel Analytics – anonim performans analizi için"
+          ]
+        },
+        {
+          "type": "links",
+          "items": [
+            { "label": "Stripe Gizlilik Politikası", "url": "https://stripe.com/privacy" },
+            { "label": "Vercel Gizlilik Politikası", "url": "https://vercel.com/legal/privacy-policy" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Haklarınız",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Bulunduğunuz yere bağlı olarak aşağıdaki haklara sahip olabilirsiniz:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Kişisel bilgilerinize erişmek veya bir kopyasını istemek",
+            "Hakkınızdaki bilgileri düzeltmek veya silmek",
+            "Onayı geri çekmek veya hesabınızı kapatmak"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Çocukların Gizliliği",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia genel kitleye yöneliktir ve 13 yaşın altındaki çocuklar için tasarlanmamıştır."
+        },
+        {
+          "type": "paragraph",
+          "text": "Reşit olmayanlardan bilerek kişisel bilgi toplamıyoruz."
+        }
+      ]
+    },
+    {
+      "title": "Bu Politikadaki Değişiklikler",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Bu gizlilik politikasını zaman zaman iyileştirmeler veya yasal gereklilikleri yansıtmak için güncelleyebiliriz."
+        }
+      ]
+    },
+    {
+      "title": "Bizimle İletişime Geçin",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Gizlilikle ilgili herhangi bir sorunuz varsa, lütfen Alternipedia web sitesi aracılığıyla bizimle iletişime geçin."
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Hükümlerin Kabulü", "content": ["Bu web sitesine erişerek ve kullanarak, kullanıcılar bu Hizmet Şartlarına uymayı ve bunlara bağlı kalmayı kabul eder. Bu şartları kabul etmeyen kullanıcılar web sitesini derhal kullanmayı bırakmalıdır."] },
     { "title": "Kullanıcı Hesabı Sorumlulukları", "content": ["Kullanıcılar, hesap bilgilerinin gizliliğini korumaktan sorumludur. Kullanıcının hesabı altında gerçekleşen tüm faaliyetler hesap sahibinin sorumluluğundadır. Kullanıcılar, yetkisiz hesap erişimlerini derhal web site yöneticilerine bildirmelidir."] },
@@ -2556,8 +5070,8 @@ const tr: Dictionary = {
       "part3": "; ek şartlar uygulanabilir. Bu siteyi kullanarak, aşağıdaki şartları kabul etmiş olursunuz",
       "part4": "Şartlar ve Koşullar",
       "part5": "ve",
-      "part6": "Gizlilik Politikası.",
-      "part7": "Alternipedia, açık kaynaklı kar amacı gütmeyen bir projedir."
+      "part6": "Gizlilik Politikası",
+      "part7": ". Alternipedia, açık kaynaklı kar amacı gütmeyen bir projedir."
     },
     license: 'Lisans',
     terms: 'Şartlar',
@@ -2576,6 +5090,7 @@ const tr: Dictionary = {
     goHome: 'Ana Sayfaya Git',
   },
   upgrade: {
+    pro: 'PRO',
     goPro: 'Pro Ol',
     upgradePrompt: 'Premium özelliklerin kilidini açmak için yükseltin',
     title: 'Bilgi Güçtür, Gücünüzü Artırın.',
@@ -2607,6 +5122,8 @@ const tr: Dictionary = {
     },
   },
   article: {
+    tools: 'Araçlar',
+    content: 'İçerik',
     article: 'Makale',
     discussion: 'Tartışma',
     read: 'Oku',
@@ -2615,8 +5132,105 @@ const tr: Dictionary = {
   }
 };
 
-// Tamil dictionary (placeholder - needs translation)
+// Tamil dictionary
 const ta: Dictionary = {
+    login: {
+    title: 'உள்நுழைய',
+    google: 'Google மூலம் தொடரவும்',
+    facebook: 'Facebook மூலம் தொடரவும்',
+    x: 'X மூலம் தொடரவும்',
+    microsoft: 'Microsoft மூலம் தொடரவும்',  
+    policy: "உள்நுழையும்போது, நீங்கள் எங்கள் சேவை நிபந்தங்களை மற்றும் தனியுரிமைக் கொள்கையை ஏற்றுக்கொள்கிறீர்கள்.",
+  },
+  userMenu: {
+    login: "உள்நுழைய",
+    contributions: "பங்களிப்புகள்",    
+    savedArticles: "சேமிக்கப்பட்ட கட்டுரைகள்", 
+    preferences: "விருப்பங்கள்",
+    logout: "வெளியேறு",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ta-LK', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ta-LK', { year: 'numeric', month: 'long' }),
+  "title": "தனியுரிமைக் கொள்கை",
+  "lastUpdatedText": "கடைசியாக புதுப்பிக்கப்பட்டது:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "அல்டர்நிபீடியாவிற்கு வரவேற்கிறோம் — அறிவு மற்றும் எண்ணங்கள் குறித்த பல்வேறு பார்வைகளை வழங்க உருவாக்கப்பட்ட கல்வி விக்கி. நாங்கள் உங்கள் தனியுரிமையை மதிக்கிறோம் மற்றும் உங்கள் தனிப்பட்ட தகவலை பாதுகாப்பதில் உறுதியாக இருக்கிறோம். இந்தக் கொள்கை எங்களைப் பற்றி, எதைச் சேகரிக்கிறோம், அதை எவ்வாறு பயன்படுத்துகிறோம் மற்றும் உங்கள் உரிமைகள் என்ன என்பதைக் விளக்குகிறது."
+    }
+  ],
+  "sections": [
+    {
+      "title": "நாங்கள் சேகரிக்கும் தகவல்",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "கணக்கு தகவல்: நீங்கள் Google அல்லது Meta போன்ற OAuth வழங்குநருடன் உள்நுழைந்தால், உங்கள் பெயர், மின்னஞ்சல் மற்றும் சுயவிவரப் படம் (இருந்தால்) எங்களுக்கு கிடைக்கும்.",
+            "கட்டணத் தகவல்: நீங்கள் கட்டணம் செலுத்தவோ அல்லது நன்கொடை வழங்கவோ விரும்பினால், Stripe மூலம் பாதுகாப்பாக செயலாக்கப்படுகிறது. நாங்கள் உங்கள் கார்டு விவரங்களை சேமிக்கவோ அல்லது பார்ப்பதற்கோ இல்லை.",
+            "பகுப்பாய்வு தரவு: எந்த பக்கங்கள் பிரபலமானவை மற்றும் எங்கள் தளம் எப்படி செயல்படுகிறது என்பதைப் புரிந்துகொள்வதற்கு நாங்கள் Vercel Analytics ஐப் பயன்படுத்துகிறோம்.",
+            "தொழில்நுட்ப தகவல்: நீங்கள் தளத்தைப் பார்வையிடும் போது, உலாவி வகை, சாதனம் மற்றும் IP முகவரி போன்ற அடிப்படை பதிவுத் தரவை தானாகப் பெறலாம்."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "தகவலை எவ்வாறு பயன்படுத்துகிறோம்",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia தளத்தை இயக்கவும் மேம்படுத்தவும்",
+            "பயனர்களை அங்கீகரித்து கணக்குகளை நிர்வகிக்கவும்",
+            "Stripe மூலம் பாதுகாப்பான கட்டணங்களை செயலாக்கவும்",
+            "தளத்தின் செயல்திறனை கண்காணிக்கவும்",
+            "பயனர் கோரிக்கைகளுக்கு பதிலளிக்கவும்"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "நாங்கள் உங்கள் தனிப்பட்ட தகவலை விற்கவோ, வாடகைக்கு விடவோ அல்லது வர்த்தகம் செய்யவோ மாட்டோம்."
+        }
+      ]
+    },
+    {
+      "title": "குக்கிகள் மற்றும் கண்காணிப்பு",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia விளம்பர அல்லது கண்காணிப்பு குக்கிகளைப் பயன்படுத்தாது."
+        },
+        {
+          "type": "paragraph",
+          "text": "நாங்கள் உள்நுழைவு மற்றும் தள செயல்பாட்டுக்குத் தேவையான முக்கிய குக்கிகளை மட்டுமே பயன்படுத்துகிறோம்."
+        }
+      ]
+    },
+    {
+      "title": "தரவு சேமிப்பு மற்றும் பாதுகாப்பு",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "உங்கள் தரவு தொழில் தரநிலைகள் கொண்ட குறியாக்கம் மற்றும் பாதுகாப்பான ஹோஸ்டிங் மூலம் பாதுகாக்கப்படுகிறது."
+        }
+      ]
+    },
+    {
+      "title": "உங்கள் உரிமைகள்",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "தனிப்பட்ட தகவலுக்கான அணுகல் அல்லது நகல் கோருதல்",
+            "தகவலை திருத்தவோ நீக்கவோ கோருதல்",
+            "ஒப்புதலை வாபஸ் பெறவோ கணக்கை மூடவோ கோருதல்"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "கொள்கைகளின் ஏற்றுக்கொள்கை", "content": ["இந்த வலைத்தளத்தை அணுகி பயன்படுத்துவதன் மூலம், பயனர்கள் இந்த சேவை விதிமுறைகளை பின்பற்றவும், அதற்கே உட்பட்டவராக இருக்கவும் சம்மதிக்கிறார்கள். இந்த விதிமுறைகளை ஒப்புக்கொள்ளாத பயனர்கள் உடனடியாக வலைத்தள பயன்பாட்டை நிறுத்த வேண்டும்."] },
     { "title": "பயனர் கணக்கு பொறுப்புகள்", "content": ["பயனர்கள் தங்கள் கணக்கு நற்சான்றுகளை ரகசியமாக வைத்திருப்பதில் பொறுப்பாக இருக்க வேண்டும். பயனர் கணக்கின் கீழ் நடக்கும் அனைத்து செயல்பாடுகளும் கணக்கு உரிமையாளரின் தனிப்பட்ட பொறுப்பாகும். பயனர்கள் எந்தவொரு அனுமதி இல்லாத கணக்கு அணுகலையும் உடனடியாக வலைத்தள நிர்வாகிகளுக்கு தெரிவிக்க வேண்டும்."] },
@@ -2691,7 +5305,7 @@ const ta: Dictionary = {
       "part3": "; கூடுதல் நிபந்தனைகள் பொருந்தலாம். இந்த தளத்தை பயன்படுத்துவதன் மூலம், நீங்கள்",
       "part4": "விபரங்கள் மற்றும் நிபந்தனைகள்",
       "part5": "மற்றும்",
-      "part6": "தனியுரிமை கொள்கை",
+      "part6": "தனியுரிமை கொள்கை", // TODO: verify translation
       "part7": "Alternipedia என்பது திறந்த மூல, இலாப நோக்கமற்ற திட்டமாகும்."
     },
     license: 'லிசென்ஸ்',
@@ -2711,6 +5325,7 @@ const ta: Dictionary = {
     goHome: 'முகப்புக்கு செல்லவும்',
   },
   upgrade: {
+    pro: 'புரோ',
     goPro: 'புரோ ஆகவும்',
     upgradePrompt: 'பிரீமியம் அம்சங்களை திறக்க மேம்படுத்தவும்',
     title: 'அறிவு சக்தி, உங்கள் சக்தியை அதிகரிக்கவும்.',
@@ -2742,6 +5357,8 @@ const ta: Dictionary = {
     },
   },
   article: {
+    tools: 'கருவிகள்',
+    content: 'உள்ளடக்கம்',
     article: 'கட்டுரை',
     discussion: 'பேச்சு',
     read: 'படிக்க',
@@ -2750,8 +5367,113 @@ const ta: Dictionary = {
   }
 };
 
-// Cantonese dictionary (placeholder - needs translation)
+// Cantonese dictionary
 const yue: Dictionary = {
+    login: {
+    title: '登入',    
+    google: '用 Google 繼續',
+    facebook: '用 Facebook 繼續',
+    x: '用 X 繼續',
+    microsoft: '用 Microsoft 繼續',  
+    policy: "登入即表示您同意我們的服務條款和隱私政策。",
+  },  
+  userMenu: {
+    login: "登入",
+    contributions: "貢獻",    
+    savedArticles: "已儲存文章", 
+    preferences: "偏好",
+    logout: "登出",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('zh-HK', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('zh-HK', { year: 'numeric', month: 'long' }),
+  "title": "私隱政策",
+  "lastUpdatedText": "最後更新：",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "歡迎嚟到 Alternipedia —— 一個為咗呈現多角度知識同思想嘅教育百科網站。我哋重視你嘅私隱，並致力保障你嘅個人資料。呢份政策會解釋我哋收集乜嘢資料、點樣使用佢，以及你擁有嘅權利。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "我哋收集嘅資料",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "我哋只會收集提供同改善服務所需嘅最少資料，包括："
+        },
+        {
+          "type": "list",
+          "items": [
+            "帳戶資料：當你用 OAuth 供應商（例如 Google、Meta）登入時，我哋會收到你嘅姓名、電郵地址同頭像（如有）。",
+            "付款資料：如果你選擇付款或捐款，我哋會透過 Stripe 安全處理交易。我哋唔會儲存或睇到你嘅信用卡資料。",
+            "分析數據：我哋會用 Vercel Analytics 去了解邊啲頁面最受歡迎同網站表現。呢啲資料係匯總嘅，唔會識別你個人身份。",
+            "技術資料：當你瀏覽網站時，我哋可能自動收到瀏覽器類型、裝置、IP 地址等標準記錄資料，用嚟維持安全同解決問題。"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "我哋點樣使用你嘅資料",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "運作同改善 Alternipedia 平台",
+            "驗證用戶同管理帳戶",
+            "透過 Stripe 安全處理付款",
+            "監察網站效能同穩定性",
+            "回應用戶查詢或要求"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "我哋唔會出售、出租或者交易你嘅個人資料。"
+        }
+      ]
+    },
+    {
+      "title": "Cookies 同追蹤",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia 唔使用廣告或追蹤 Cookies。"
+        },
+        {
+          "type": "paragraph",
+          "text": "我哋只使用登入同網站功能所需嘅必要 Cookies。"
+        }
+      ]
+    },
+    {
+      "title": "資料儲存同安全",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "你嘅資料會用業界標準嘅加密技術同安全伺服器儲存。"
+        },
+        {
+          "type": "paragraph",
+          "text": "我哋會採取合理措施防止資料遺失、濫用或者未經授權嘅存取。"
+        }
+      ]
+    },
+    {
+      "title": "你嘅權利",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "要求查閱或索取你嘅個人資料副本",
+            "要求更正或刪除你嘅資料",
+            "撤回同意或刪除帳戶"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "接受條款", "content": ["透過訪問及使用本網站，用戶同意遵守並受這些服務條款約束。不接受條款的用戶應立即停止使用本網站。"] },
     { "title": "用戶帳戶責任", "content": ["用戶需負責保密其帳戶資料。帳戶下的任何活動均由帳戶持有人全權負責。若發現未經授權的帳戶訪問，用戶須立即通知網站管理員。"] },
@@ -2826,8 +5548,8 @@ const yue: Dictionary = {
       "part3": "；可能適用額外條款。使用本網站即表示您同意",
       "part4": "條款與細則",
       "part5": "及",
-      "part6": "私隱政策。",
-      "part7": "Alternipedia 是一個開源非牟利項目。"
+      "part6": "私隱政策",
+      "part7": "。Alternipedia 是一個開源非牟利項目。"
     },
     license: '許可證',
     terms: '條款',
@@ -2846,6 +5568,7 @@ const yue: Dictionary = {
     goHome: '返回首頁',
   },
   upgrade: {
+    pro: '專業版',
     goPro: '升級專業版',
     upgradePrompt: '升級以解鎖高級功能',
     title: '知識就是力量，提升你的力量。',
@@ -2877,6 +5600,8 @@ const yue: Dictionary = {
     },
   },
   article: {
+    tools: '工具',
+    content: '內容',
     article: '文章',
     discussion: '討論',
     read: '閱讀',
@@ -2887,6 +5612,107 @@ const yue: Dictionary = {
 
 // Vietnamese dictionary
 const vi: Dictionary = {
+    login: {
+    title: 'Đăng nhập',
+    google: 'Tiếp tục với Google',
+    facebook: 'Tiếp tục với Facebook',
+    x: 'Tiếp tục với X',
+    microsoft: 'Tiếp tục với Microsoft',  
+    policy: "Bằng việc đăng nhập, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Quyền riêng tư của chúng tôi.",
+  },
+  userMenu: {
+    login: "Đăng nhập",
+    contributions: "Đóng góp",    
+    savedArticles: "Bài viết đã lưu", 
+    preferences: "Tùy chọn",
+    logout: "Đăng xuất",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long' }),
+  "title": "Chính Sách Quyền Riêng Tư",
+  "lastUpdatedText": "Cập nhật lần cuối:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Chào mừng bạn đến với Alternipedia — một wiki giáo dục được tạo ra để trình bày nhiều góc nhìn khác nhau về tri thức và ý tưởng. Chúng tôi coi trọng quyền riêng tư của bạn và cam kết bảo vệ thông tin cá nhân của bạn. Chính sách này giải thích những gì chúng tôi thu thập, cách chúng tôi sử dụng và quyền lợi của bạn."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Thông Tin Chúng Tôi Thu Thập",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Thông tin tài khoản: Khi bạn đăng nhập bằng nhà cung cấp OAuth (như Google hoặc Meta), chúng tôi nhận được tên, email và ảnh hồ sơ của bạn (nếu có).",
+            "Thông tin thanh toán: Nếu bạn chọn thanh toán hoặc quyên góp, Stripe sẽ xử lý giao dịch của bạn một cách an toàn. Chúng tôi không bao giờ lưu trữ hoặc nhìn thấy thông tin thẻ tín dụng của bạn.",
+            "Dữ liệu phân tích: Chúng tôi sử dụng Vercel Analytics để hiểu hành vi sử dụng tổng quát như trang nào phổ biến nhất và hiệu suất của trang web. Dữ liệu này được ẩn danh và không định danh cá nhân.",
+            "Thông tin kỹ thuật: Khi bạn truy cập trang web, chúng tôi có thể tự động nhận được dữ liệu nhật ký tiêu chuẩn như loại trình duyệt, thiết bị và địa chỉ IP."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cách Chúng Tôi Sử Dụng Thông Tin",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Vận hành và cải thiện nền tảng Alternipedia",
+            "Xác thực người dùng và quản lý tài khoản",
+            "Xử lý thanh toán an toàn thông qua Stripe",
+            "Giám sát hiệu suất và độ tin cậy của trang web",
+            "Phản hồi các yêu cầu hoặc câu hỏi từ người dùng"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Chúng tôi không bán, cho thuê hoặc trao đổi dữ liệu cá nhân của bạn."
+        }
+      ]
+    },
+    {
+      "title": "Cookie và Theo Dõi",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia không sử dụng cookie quảng cáo hoặc cookie theo dõi."
+        },
+        {
+          "type": "paragraph",
+          "text": "Chúng tôi chỉ sử dụng cookie cần thiết để duy trì phiên đăng nhập và chức năng trang web."
+        }
+      ]
+    },
+    {
+      "title": "Lưu Trữ và Bảo Mật Dữ Liệu",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Dữ liệu của bạn được lưu trữ an toàn với công nghệ mã hóa và cơ sở hạ tầng bảo mật tiêu chuẩn ngành."
+        },
+        {
+          "type": "paragraph",
+          "text": "Chúng tôi thực hiện các biện pháp hợp lý để bảo vệ thông tin của bạn khỏi mất mát, lạm dụng hoặc truy cập trái phép."
+        }
+      ]
+    },
+    {
+      "title": "Quyền Của Bạn",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Truy cập hoặc yêu cầu bản sao thông tin cá nhân của bạn",
+            "Sửa đổi hoặc xóa thông tin của bạn",
+            "Rút lại sự đồng ý hoặc đóng tài khoản"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Chấp nhận Điều khoản", "content": ["Bằng việc truy cập và sử dụng trang web này, người dùng đồng ý tuân thủ và bị ràng buộc bởi Điều khoản Dịch vụ này. Người dùng không đồng ý với các điều khoản này nên ngừng sử dụng trang web ngay lập tức."] },
     { "title": "Trách nhiệm Tài khoản Người dùng", "content": ["Người dùng có trách nhiệm duy trì tính bảo mật của thông tin đăng nhập tài khoản của họ. Mọi hoạt động diễn ra dưới tài khoản của người dùng là trách nhiệm duy nhất của chủ tài khoản. Người dùng phải thông báo ngay cho quản trị viên trang web về bất kỳ truy cập trái phép nào."] },
@@ -2961,8 +5787,8 @@ const vi: Dictionary = {
       "part3": "; có thể áp dụng các điều khoản bổ sung. Bằng cách sử dụng trang web này, bạn đồng ý với",
       "part4": "Điều khoản & Điều kiện",
       "part5": "và",
-      "part6": "Chính sách Quyền riêng tư.",
-      "part7": "Alternipedia là một dự án mã nguồn mở phi lợi nhuận."
+      "part6": "Chính sách Quyền riêng tư",
+      "part7": ". Alternipedia là một dự án mã nguồn mở phi lợi nhuận."
     },
     license: 'Giấy phép',
     terms: 'Điều khoản',
@@ -2981,7 +5807,8 @@ const vi: Dictionary = {
     goHome: 'Trở về trang chủ',
   },
   upgrade: {
-    goPro: 'Nâng cấp Pro',
+    pro: 'Chuyên nghiệp',
+    goPro: 'Nâng cấp PRO',
     upgradePrompt: 'Nâng cấp để mở khóa các tính năng cao cấp',
     title: 'Kiến thức là sức mạnh, Tăng cường sức mạnh của bạn.',
     month: 'tháng',
@@ -3012,6 +5839,8 @@ const vi: Dictionary = {
     },
   },
   article: {
+    tools: 'Công cụ',
+    content: 'Nội dung',
     article: 'Bài viết',
     discussion: 'Thảo luận',
     read: 'Đọc',
@@ -3022,6 +5851,107 @@ const vi: Dictionary = {
 
 // Filipino dictionary
 const fil: Dictionary = {
+    login: {
+    title: 'Mag-login',    
+    google: 'Magpatuloy gamit ang Google',
+    facebook: 'Magpatuloy gamit ang Facebook',
+    x: 'Magpatuloy gamit ang X',
+    microsoft: 'Magpatuloy gamit ang Microsoft',  
+    policy: "Sa pamamagitan ng pag-login, sumasang-ayon ka sa aming Mga Tuntunin sa Serbisyo at Patakaran sa Privacy.",
+  },
+  userMenu: {
+    login: "Mag-login",
+    contributions: "Mga Kontribusyon",    
+    savedArticles: "Mga Nai-save na Artikulo", 
+    preferences: "Mga Kagustuhan",
+    logout: "Mag-log out",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('fil-PH', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('fil-PH', { year: 'numeric', month: 'long' }),
+  "title": "Patakaran sa Pagkapribado",
+  "lastUpdatedText": "Huling na-update:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Maligayang pagdating sa Alternipedia — isang edukasyonal na wiki na nilikha upang ipakita ang iba’t ibang pananaw sa kaalaman at mga ideya. Pinahahalagahan namin ang iyong privacy at kami ay nakatuon sa pagprotekta ng iyong personal na impormasyon. Ipinaliliwanag ng patakarang ito kung anong impormasyon ang aming kinokolekta, paano ito ginagamit, at kung anu-anong mga karapatan mo."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Anong Impormasyon ang Aming Kinokolekta",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Impormasyon ng account: Kapag nag-login ka gamit ang OAuth provider (gaya ng Google o Meta), nakakatanggap kami ng iyong pangalan, email address, at larawan sa profile (kung mayroon).",
+            "Impormasyon sa pagbabayad: Kung pipiliin mong magbayad o mag-donate, ligtas na pinoproseso ng Stripe ang iyong transaksyon. Hindi namin nakikita o iniimbak ang iyong impormasyon sa credit card.",
+            "Data ng analytics: Ginagamit namin ang Vercel Analytics upang maunawaan kung aling mga pahina ang pinakapopular at kung paano gumaganap ang aming site. Ang mga data na ito ay pinagsama-sama at hindi tumutukoy sa personal na pagkakakilanlan.",
+            "Teknikal na impormasyon: Kapag binisita mo ang site, maaaring awtomatikong makuha namin ang impormasyon tulad ng uri ng browser, device, at IP address upang mapanatili ang seguridad at pagganap."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Paano Namin Ginagamit ang Iyong Impormasyon",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Paganahin at pahusayin ang Alternipedia platform",
+            "Beripikahin ang mga user at pamahalaan ang mga account",
+            "Proseso ng ligtas na pagbabayad gamit ang Stripe",
+            "Subaybayan ang pagganap at katatagan ng site",
+            "Tumugon sa mga katanungan o kahilingan ng user"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Hindi namin ibinebenta, inuupa, o ipinagpapalit ang iyong personal na impormasyon."
+        }
+      ]
+    },
+    {
+      "title": "Cookies at Pagsubaybay",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Hindi gumagamit ang Alternipedia ng mga cookies para sa ads o pagsubaybay."
+        },
+        {
+          "type": "paragraph",
+          "text": "Gumagamit lamang kami ng mga kinakailangang cookies para sa pag-login at functionality ng site."
+        }
+      ]
+    },
+    {
+      "title": "Imbakan at Seguridad ng Data",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ang iyong data ay ligtas na nakaimbak gamit ang mga industry-standard na encryption at secure na server."
+        },
+        {
+          "type": "paragraph",
+          "text": "Isinasagawa namin ang mga makatuwirang hakbang upang protektahan ang iyong impormasyon laban sa pagkawala, maling paggamit, o hindi awtorisadong pag-access."
+        }
+      ]
+    },
+    {
+      "title": "Ang Iyong mga Karapatan",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Humiling ng kopya ng iyong personal na impormasyon",
+            "Itama o burahin ang iyong impormasyon",
+            "Bawiin ang pahintulot o tanggalin ang account"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Pagtanggap sa Mga Tuntunin", "content": ["Sa pamamagitan ng pag-access at paggamit ng website na ito, sumasang-ayon ang mga gumagamit na sumunod at maging sakop ng Mga Tuntunin ng Serbisyo na ito. Ang mga gumagamit na hindi sumasang-ayon sa mga tuntuning ito ay dapat itigil ang paggamit ng website kaagad."] },
     { "title": "Mga Responsibilidad ng Account ng Gumagamit", "content": ["Ang mga gumagamit ay responsable sa pagpapanatili ng pagiging pribado ng kanilang kredensyal ng account. Ang anumang aktibidad na nagaganap sa ilalim ng account ng isang gumagamit ay tanging responsibilidad ng may-ari ng account. Dapat agad ipaalam ng mga gumagamit sa mga administrador ng website ang anumang hindi awtorisadong pag-access sa account."] },
@@ -3096,8 +6026,8 @@ const fil: Dictionary = {
       "part3": "; maaaring may karagdagang mga tuntunin. Sa paggamit ng site na ito, sumasang-ayon ka sa",
       "part4": "Mga Tuntunin at Kondisyon",
       "part5": "at",
-      "part6": "Patakaran sa Privacy.",
-      "part7": "Ang Alternipedia ay isang open-source na non-profit na proyekto."
+      "part6": "Patakaran sa Privacy",
+      "part7": ". Ang Alternipedia ay isang open-source na non-profit na proyekto."
     },
     license: 'Lisensya',
     terms: 'Mga Tuntunin',
@@ -3116,7 +6046,8 @@ const fil: Dictionary = {
     goHome: 'Bumalik sa Tahanan',
   },
   upgrade: {
-    goPro: 'Maging Pro',
+    pro: 'PRO',
+    goPro: 'Maging PRO',
     upgradePrompt: 'Mag-upgrade para ma-unlock ang mga premium na feature',
     title: 'Ang Kaalaman ay Kapangyarihan, Palakasin ang Iyo.',
     month: 'buwan',
@@ -3147,6 +6078,8 @@ const fil: Dictionary = {
     },
   },
   article: {
+    tools: 'Mga Tool',
+    content: 'Nilalaman',
     article: 'Artikulo',
     discussion: 'Talakayan',
     read: 'Basahin',
@@ -3157,6 +6090,107 @@ const fil: Dictionary = {
 
 // Hausa dictionary
 const ha: Dictionary = {
+    login: {
+    title: 'Shiga',    
+    google: 'Ci gaba da Google',
+    facebook: 'Ci gaba da Facebook',
+    x: 'Ci gaba da X',
+    microsoft: 'Ci gaba da Microsoft',  
+    policy: "Ta hanyar shiga, kun yarda da Sharuɗɗan Sabis ɗinmu da Manufofin Sirri.",
+  },
+  userMenu: {
+    login: "Shiga",
+    contributions: "Gudummawa",    
+    savedArticles: "An adana labarai", 
+    preferences: "Zaɓuɓɓuka",
+    logout: "Fita",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ha', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ha', { year: 'numeric', month: 'long' }),
+  "title": "Manufar Sirri",
+  "lastUpdatedText": "An sabunta shi a ƙarshe:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Barka da zuwa Alternipedia — wani dandalin ilimi da aka ƙirƙira don gabatar da fannoni daban-daban na sani da ra’ayoyi. Muna daraja sirrinka kuma mun kuduri niyyar kare bayananka na sirri. Wannan manufar ta bayyana abin da muke tattarawa, yadda muke amfani da shi, da hakkinka a kai."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Abin da Muke Tattara",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Bayanin asusu: Idan ka shiga ta hanyar mai ba da OAuth (kamar Google ko Meta), muna karɓar sunanka, adireshin imel, da hoton bayananka (idan akwai).",
+            "Bayanin biyan kuɗi: Idan ka zaɓi biyan kuɗi ko bayar da gudummawa, Stripe yana sarrafa ma’amalarka cikin tsaro. Ba ma adanawa ko ganin bayanan katin kuɗinka.",
+            "Bayanan nazari: Muna amfani da Vercel Analytics don fahimtar shafukan da aka fi ziyarta da yadda rukunin yanar gizo yake aiki. Wadannan bayanai ba su bayyana kai tsaye ba.",
+            "Bayanan fasaha: Lokacin da ka shiga shafin, muna iya karɓar bayanai na log kamar irin burauzar da kake amfani da ita, na’ura, da adireshin IP don kiyaye tsaro da aikin shafin."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Yadda Muke Amfani da Bayananka",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Gudanar da kuma inganta dandalin Alternipedia",
+            "Tabbatar da masu amfani da kuma kula da asusun su",
+            "Sarrafawa biyan kuɗi ta hanyar Stripe cikin tsaro",
+            "Bibiyar aikin da kwanciyar hankali na shafin",
+            "Amsa tambayoyi ko buƙatun masu amfani"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ba mu sayar, ba mu haya, ko musayar bayanan sirrinka da wani ba."
+        }
+      ]
+    },
+    {
+      "title": "Kuki da Bin Diddi",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ba ta amfani da kuki don talla ko bin diddigi."
+        },
+        {
+          "type": "paragraph",
+          "text": "Muna amfani ne kawai da kuki masu mahimmanci don gudanar da zaman shiga da aikin shafin."
+        }
+      ]
+    },
+    {
+      "title": "Adanawa da Tsaron Bayanai",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ana adana bayananka cikin aminci ta amfani da na’urorin tsaro na zamani da ɓoyayyun bayanai."
+        },
+        {
+          "type": "paragraph",
+          "text": "Muna ɗaukar matakai masu ma’ana don kare bayananka daga rasa, amfani da ba daidai ba, ko shiga ba bisa ƙa’ida ba."
+        }
+      ]
+    },
+    {
+      "title": "Hakkinka",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Neman samun kwafin bayananka na sirri",
+            "Gyara ko share bayananka",
+            "Janye yardarka ko rufe asusun ka"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Karɓar Sharuɗɗa", "content": ["Ta hanyar samun damar wannan gidan yanar gizo da amfani da shi, masu amfani sun yarda da bin waɗannan Sharuɗɗan Sabis. Masu amfani waɗanda ba su yarda da waɗannan sharuɗɗan ba ya kamata su dakatar da amfani da gidan yanar gizon nan da nan."] },
     { "title": "Hakkokin Asusun Mai Amfani", "content": ["Masu amfani suna da alhakin kiyaye sirrin bayanan asusun su. Duk wani aiki da ya faru a ƙarƙashin asusun mai amfani ya kasance nauyin mai asusun kaɗai. Masu amfani dole ne su sanar da masu gudanar da gidan yanar gizo nan da nan idan wani ya sami damar shiga asusun ba tare da izini ba."] },
@@ -3231,8 +6265,8 @@ const ha: Dictionary = {
       "part3": "; wasu ƙarin sharuɗɗa na iya aiki. Ta amfani da wannan shafin, kuna yarda da",
       "part4": "Sharuɗɗa da Yanayi",
       "part5": "da",
-      "part6": "Manufar Sirri.",
-      "part7": "Alternipedia aikin tushen bude ne na rashin riba."
+      "part6": "Manufar Sirri",
+      "part7": ". Alternipedia aikin tushen bude ne na rashin riba."
     },
     license: 'Lasisi',
     terms: 'Sharuɗɗa',
@@ -3251,7 +6285,8 @@ const ha: Dictionary = {
     goHome: 'Bari mu koma shafin gida',
   },
   upgrade: {
-    goPro: 'Zama Pro',
+    pro: 'PRO',
+    goPro: 'Zama PRO',
     upgradePrompt: 'Haɓaka don buɗe fasalolin premium',
     title: 'Ilimi Shi ne Ƙarfi, Kara Ƙarfinka.',
     month: 'wata',
@@ -3282,6 +6317,8 @@ const ha: Dictionary = {
     },
   },
   article: {
+    tools: 'Kayan aiki',
+    content: 'Abun ciki',
     article: 'Labari',
     discussion: 'Tattaunawa',
     read: 'Karanta',
@@ -3292,7 +6329,107 @@ const ha: Dictionary = {
 
 // Egyptian Arabic dictionary
 const arz: Dictionary = {
-
+    login: {
+    title: 'تسجيل الدخول',    
+    google: 'المتابعة باستخدام جوجل',
+    facebook: 'المتابعة باستخدام فيسبوك',
+    x: 'المتابعة باستخدام إكس',
+    microsoft: 'المتابعة باستخدام مايكروسوفت',  
+    policy: "بالتسجيل، أنت توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا.",
+  },
+  userMenu: {
+    login: "تسجيل الدخول",
+    contributions: "المساهمات",    
+    savedArticles: "المقالات المحفوظة", 
+    preferences: "التفضيلات",
+    logout: "تسجيل الخروج",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' }),
+  "title": "سياسة الخصوصية",
+  "lastUpdatedText": "آخر تحديث:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "أهلاً بيك في Alternipedia — موسوعة تعليمية مصممة لتقديم وجهات نظر متنوعة عن المعرفة والأفكار. إحنا بنقدّر خصوصيتك ومُلزمين بحماية معلوماتك الشخصية. السياسة دي بتوضح إيه اللي بنجمعه، إزاي بنستخدمه، وحقوقك."
+    }
+  ],
+  "sections": [
+    {
+      "title": "المعلومات اللي بنجمعها",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "معلومات الحساب: لما تسجل دخولك عن طريق مزود OAuth زي Google أو Meta، بنستلم اسمك، بريدك الإلكتروني، وصورة الملف الشخصي (لو موجودة).",
+            "معلومات الدفع: لو اخترت تدفع أو تتبرع، Stripe بتعالج المدفوعات بأمان. إحنا عمرنا ما بنخزن أو نشوف بيانات بطاقة الائتمان بتاعتك.",
+            "بيانات التحليلات: بنستخدم Vercel Analytics لفهم الصفحات الشائعة وأداء الموقع. البيانات دي ملخصة ومش بتعرفك شخصياً.",
+            "معلومات فنية: لما تزور الموقع، ممكن نستلم تلقائياً بيانات تسجيل قياسية زي نوع المتصفح، الجهاز، وعنوان IP عشان نحافظ على الأمان وحل المشاكل."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "إزاي بنستخدم معلوماتك",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "تشغيل وتحسين منصة Alternipedia",
+            "توثيق المستخدمين وإدارة الحسابات",
+            "معالجة المدفوعات بأمان عن طريق Stripe",
+            "مراقبة أداء الموقع وموثوقيته",
+            "الرد على استفسارات أو طلبات المستخدمين"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "إحنا ما بنبيعش، ما بنأجرش، وما بنتاجرش بمعلوماتك الشخصية."
+        }
+      ]
+    },
+    {
+      "title": "كوكيز والتتبع",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia مش بتستخدم كوكيز للإعلانات أو التتبع."
+        },
+        {
+          "type": "paragraph",
+          "text": "بنستخدم بس الكوكيز الأساسية اللازمة لتسجيل الدخول ووظائف الموقع."
+        }
+      ]
+    },
+    {
+      "title": "تخزين البيانات والأمان",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "بياناتك مخزنة بأمان باستخدام تشفير ومعايير استضافة صناعية."
+        },
+        {
+          "type": "paragraph",
+          "text": "بنأخذ خطوات معقولة لحماية معلوماتك من الفقد، الاستخدام غير السليم، أو الوصول غير المصرح به."
+        }
+      ]
+    },
+    {
+      "title": "حقوقك",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "الوصول أو طلب نسخة من معلوماتك الشخصية",
+            "تصحيح أو حذف المعلومات التي نحتفظ بها عنك",
+            "سحب الموافقة أو إغلاق حسابك"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "قبول الشروط", "content": ["من خلال الوصول إلى هذه الموقع واستخدامه، يوافق المستخدمون على الامتثال لهذه الشروط والأحكام. يجب على المستخدمين الذين لا يوافقون على هذه الشروط التوقف عن استخدام الموقع على الفور."] },
     { "title": "مسؤوليات حساب المستخدم", "content": ["المستخدمون مسؤولون عن الحفاظ على سرية بيانات اعتماد حساباتهم. أي أنشطة تحدث تحت حساب المستخدم هي مسؤولية صاحب الحساب فقط. يجب على المستخدمين إخطار مسؤولي الموقع على الفور بأي وصول غير مصرح به إلى الحساب."] },
@@ -3366,8 +6503,8 @@ const arz: Dictionary = {
       "part3": "; ممكن تطبق شروط إضافية. باستخدامك للموقع ده، انت موافق على",
       "part4": "الشروط والأحكام",
       "part5": "و",
-      "part6": "سياسة الخصوصية.",
-      "part7": "Alternipedia مشروع مفتوح المصدر غير ربحي."
+      "part6": "سياسة الخصوصية",
+      "part7": ". Alternipedia مشروع مفتوح المصدر غير ربحي."
     },
     license: 'ترخيص',
     terms: 'الشروط',
@@ -3386,6 +6523,7 @@ const arz: Dictionary = {
     goHome: 'اذهب إلى الصفحة الرئيسية',
   },
   upgrade: {
+    pro: 'المحترفين',
     goPro: 'اشترك في برو',
     upgradePrompt: 'طور حسابك عشان تفتح المميزات المميزة',
     title: 'المعرفة قوة، زود قوتك.',
@@ -3417,6 +6555,8 @@ const arz: Dictionary = {
     },
   },
   article: {
+    tools: 'الأدوات',
+    content: 'المحتوى',
     article: 'مقال',
     discussion: 'نقاش',
     read: 'اقرأ',
@@ -3427,6 +6567,107 @@ const arz: Dictionary = {
 
 // Javanese dictionary
 const jv: Dictionary = {
+    login: {
+    title: 'Mlebu',    
+    google: 'Terus nganggo Google',
+    facebook: 'Terus nganggo Facebook',
+    x: 'Terus nganggo X',
+    microsoft: 'Terus nganggo Microsoft',  
+    policy: "Kanthi mlebu, sampeyan setuju karo Syarat Layanan lan Kabijakan Privasi kita.",
+  },  
+  userMenu: {
+    login: "Mlebu",
+    contributions: "Kontribusi",    
+    savedArticles: "Artikel Disimpen", 
+    preferences: "Preferensi",  
+    logout: "Metu",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('jv-ID', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('jv-ID', { year: 'numeric', month: 'long' }),
+  "title": "Kabijakan Privasi",
+  "lastUpdatedText": "Pungkasan dianyari:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Sugeng rawuh ing Alternipedia — wiki edukatif sing dirancang kanggo nyedhiyakake perspektif sing beda-beda babagan ilmu lan gagasan. Kita ngajeni privasimu lan setya nglindhungi informasi pribadimu. Kabijakan iki nerangake apa sing diklumpukake, carane digunakake, lan hakmu."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informasi sing Dikumpulake",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informasi akun: Nalika mlebu nggunakake panyedhiya OAuth (kaya Google utawa Meta), kita nampa jenengmu, alamat email, lan gambar profil (yen ana).",
+            "Informasi pembayaran: Yen sampeyan milih mbayar utawa nyumbang, Stripe bakal ngolah transaksi kanthi aman. Kita ora nyimpen utawa ndeleng nomer kertu kreditmu.",
+            "Data analitik: Kita nggunakake Vercel Analytics kanggo ngerti pola panggunaan umum, kayata kaca sing populer lan kinerja situs. Data iki digabung lan ora ngenali identitas pribadhi.",
+            "Informasi teknis: Nalika sampeyan ngunjungi situs, kita bisa kanthi otomatis nampa data log standar kaya jinis browser, piranti, lan alamat IP kanggo njaga keamanan lan ngatasi masalah."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cara Nggunakake Informasimu",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Ngoperasikake lan nambah platform Alternipedia",
+            "Mastikake pangguna lan ngatur akun",
+            "Nglakokake pembayaran kanthi aman liwat Stripe",
+            "Mriksa kinerja lan reliabilitas situs",
+            "Nanggepi pitakon utawa panjalukan saka pangguna"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Kita ora adol, nyewa, utawa dagang informasi pribadimu."
+        }
+      ]
+    },
+    {
+      "title": "Cookies lan Pelacakan",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ora nggunakake cookie iklan utawa pelacakan."
+        },
+        {
+          "type": "paragraph",
+          "text": "Kita mung nggunakake cookie penting kanggo sesi login lan fungsi situs."
+        }
+      ]
+    },
+    {
+      "title": "Panyimpenan Data lan Keamanan",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Data sampeyan disimpen kanthi aman nggunakake enkripsi standar industri lan infrastruktur hosting sing aman."
+        },
+        {
+          "type": "paragraph",
+          "text": "Kita njupuk langkah-langkah wajar kanggo nglindhungi informasi saka ilang, panyalahgunaan, utawa akses tanpa idin."
+        }
+      ]
+    },
+    {
+      "title": "Hakmu",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Akses utawa njaluk salinan informasi pribadimu",
+            "Ngganti utawa mbusak informasi sing kita simpen",
+            "Mbatalake ijin utawa nutup akunmu"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Panrimo Syarat", "content": ["Kanthi ngakses lan nggunakake situs web iki, pangguna setuju kanggo tundhuk lan terikat dening Syarat Layanan iki. Pangguna sing ora setuju karo syarat iki kudu langsung mandheg nggunakake situs web."] },
     { "title": "Tanggung Jawab Akun Pangguna", "content": ["Pangguna tanggung jawab kanggo njaga kerahasiaan kredensial akuné. Kabeh aktivitas ing akun pangguna dadi tanggung jawab pemilik akun. Pangguna kudu langsung ngandhani administrator situs babagan akses akun sing ora sah."] },
@@ -3502,8 +6743,8 @@ const jv: Dictionary = {
       "part3": "; bisa uga ana syarat tambahan. Kanthi nggunakake situs iki, sampeyan setuju karo",
       "part4": "Syarat & Ketentuan",
       "part5": "lan",
-      "part6": "Kabijakan Privasi.",
-      "part7": "Alternipedia iku proyek sumber terbuka non-profit."
+      "part6": "Kabijakan Privasi",
+      "part7": ". Alternipedia iku proyek sumber terbuka non-profit."
     },
     license: 'Lisènsi',
     terms: 'Katentuan',
@@ -3523,7 +6764,8 @@ const jv: Dictionary = {
     goHome: 'Bali menyang Kaca Ngarep',
   },
   upgrade: {
-    goPro: 'Melu Pro',
+    pro: 'PRO',
+    goPro: 'Melu PRO',
     upgradePrompt: 'Upgrade kanggo mbukak fitur premium',
     title: 'Ilmu iku Kekuatan, Tambah Kekuwatanmu.',
     month: 'sasi',
@@ -3554,6 +6796,8 @@ const jv: Dictionary = {
     },
   },
   article: {
+    tools: 'Piranti',
+    content: 'Isi',
     article: 'Artikel',
     discussion: 'Diskusi',
     read: 'Waca',
@@ -3564,6 +6808,107 @@ const jv: Dictionary = {
 
 // Dutch dictionary
 const nl: Dictionary = {
+    login: {
+    title: 'Inloggen',    
+    google: 'Doorgaan met Google',
+    facebook: 'Doorgaan met Facebook',
+    x: 'Doorgaan met X',
+    microsoft: 'Doorgaan met Microsoft',  
+    policy: "Door in te loggen, ga je akkoord met onze Servicevoorwaarden en Privacybeleid.",
+  },
+  userMenu: {
+    login: "Inloggen",
+    contributions: "Bijdragen",    
+    savedArticles: "Opgeslagen artikelen", 
+    preferences: "Voorkeuren",  
+    logout: "Uitloggen",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('nl-NL', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('nl-NL', { year: 'numeric', month: 'long' }),
+  "title": "Privacybeleid",
+  "lastUpdatedText": "Laatst bijgewerkt:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Welkom bij Alternipedia — een educatieve wiki die is ontworpen om verschillende perspectieven op kennis en ideeën te presenteren. Wij hechten waarde aan uw privacy en zijn toegewijd aan het beschermen van uw persoonlijke gegevens. Dit beleid legt uit welke informatie wij verzamelen, hoe wij deze gebruiken en welke rechten u heeft."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informatie die wij verzamelen",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Accountinformatie: Wanneer u inlogt via een OAuth-provider (zoals Google of Meta), ontvangen wij uw naam, e-mailadres en profielfoto (indien beschikbaar).",
+            "Betalingsinformatie: Als u ervoor kiest om te betalen of een donatie te doen, verwerkt Stripe de transacties veilig. Wij slaan uw creditcardgegevens nooit op of zien deze niet.",
+            "Analysetgegevens: Wij gebruiken Vercel Analytics om algemene gebruikspatronen te begrijpen, zoals welke pagina's populair zijn en hoe onze site presteert. Deze gegevens zijn geaggregeerd en identificeren u niet persoonlijk.",
+            "Technische informatie: Wanneer u onze site bezoekt, kunnen we automatisch standaard loggegevens ontvangen zoals uw browsertype, apparaat en IP-adres, om veiligheid en functionaliteit te waarborgen."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hoe wij uw informatie gebruiken",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Het Alternipedia-platform beheren en verbeteren",
+            "Gebruikers verifiëren en accounts beheren",
+            "Veilig betalingen verwerken via Stripe",
+            "De prestaties en betrouwbaarheid van de site monitoren",
+            "Reageren op vragen of verzoeken van gebruikers"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Wij verkopen, verhuren of verhandelen uw persoonlijke gegevens niet."
+        }
+      ]
+    },
+    {
+      "title": "Cookies en tracking",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia gebruikt geen advertentie- of trackingcookies."
+        },
+        {
+          "type": "paragraph",
+          "text": "We gebruiken alleen essentiële cookies die nodig zijn voor inloggen en sitefunctionaliteit."
+        }
+      ]
+    },
+    {
+      "title": "Gegevensopslag en beveiliging",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Uw gegevens worden veilig opgeslagen met behulp van industriestandaard encryptie en hostinginfrastructuur."
+        },
+        {
+          "type": "paragraph",
+          "text": "We nemen redelijke maatregelen om uw informatie te beschermen tegen verlies, misbruik of ongeautoriseerde toegang."
+        }
+      ]
+    },
+    {
+      "title": "Uw rechten",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Toegang krijgen tot of een kopie van uw persoonlijke gegevens opvragen",
+            "Informatie corrigeren of verwijderen die we over u hebben",
+            "Toestemming intrekken of uw account sluiten"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Aanvaarding van de Voorwaarden", "content": ["Door toegang te krijgen tot en gebruik te maken van deze website, stemmen gebruikers ermee in deze Servicevoorwaarden na te leven en eraan gebonden te zijn. Gebruikers die niet akkoord gaan met deze voorwaarden dienen het gebruik van de website onmiddellijk te staken."] },
     { "title": "Verantwoordelijkheden van de Gebruikersaccount", "content": ["Gebruikers zijn verantwoordelijk voor het vertrouwelijk houden van hun accountgegevens. Alle activiteiten die plaatsvinden onder het account van een gebruiker zijn uitsluitend de verantwoordelijkheid van de accounthouder. Gebruikers moeten de websitebeheerders onmiddellijk op de hoogte stellen van ongeoorloofde accounttoegang."] },
@@ -3637,8 +6982,8 @@ const nl: Dictionary = {
       "part3": "; aanvullende voorwaarden kunnen van toepassing zijn. Door deze site te gebruiken, gaat u akkoord met de",
       "part4": "Algemene Voorwaarden",
       "part5": "en",
-      "part6": "Privacybeleid.",
-      "part7": "Alternipedia is een open-source non-profit project."
+      "part6": "Privacybeleid",
+      "part7": ". Alternipedia is een open-source non-profit project."
     },
     license: 'Licentie',
     terms: 'Voorwaarden',
@@ -3657,7 +7002,8 @@ const nl: Dictionary = {
     goHome: 'Ga naar startpagina',
   },
   upgrade: {
-    goPro: 'Word Pro',
+    pro: 'PRO',
+    goPro: 'Word PRO',
     upgradePrompt: 'Upgrade om premium functies te ontgrendelen',
     title: 'Kennis is Macht, Vergroot die van jou.',
     month: 'maand',
@@ -3688,6 +7034,8 @@ const nl: Dictionary = {
     },
   },
   article: {
+    tools: 'Hulpmiddelen',
+    content: 'Inhoud',
     article: 'Artikel',
     discussion: 'Discussie',
     read: 'Lezen',
@@ -3698,6 +7046,107 @@ const nl: Dictionary = {
 
 // Greek dictionary
 const el: Dictionary = {
+    login: {
+    title: 'Σύνδεση',    
+    google: 'Συνέχεια με το Google',
+    facebook: 'Συνέχεια με το Facebook',
+    x: 'Συνέχεια με το X',
+    microsoft: 'Συνέχεια με το Microsoft',  
+    policy: "Με τη σύνδεση, συμφωνείτε με τους Όρους Παροχής Υπηρεσιών και την Πολιτική Απορρήτου μας.",
+  },
+  userMenu: {
+    login: "Σύνδεση", 
+    contributions: "Συνεισφορές",    
+    savedArticles: "Αποθηκευμένα Άρθρα", 
+    preferences: "Προτιμήσεις",  
+    logout: "Αποσύνδεση",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('el-GR', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('el-GR', { year: 'numeric', month: 'long' }),
+  "title": "Πολιτική Απορρήτου",
+  "lastUpdatedText": "Τελευταία ενημέρωση:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Καλώς ήρθατε στο Alternipedia — ένα εκπαιδευτικό wiki σχεδιασμένο για να παρουσιάζει διαφορετικές οπτικές γωνίες σχετικά με τη γνώση και τις ιδέες. Εκτιμούμε το απόρρητό σας και δεσμευόμαστε να προστατεύουμε τα προσωπικά σας δεδομένα. Αυτή η πολιτική εξηγεί ποια δεδομένα συλλέγουμε, πώς τα χρησιμοποιούμε και ποια είναι τα δικαιώματά σας."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Πληροφορίες που Συλλέγουμε",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Πληροφορίες λογαριασμού: Όταν συνδέεστε μέσω ενός παρόχου OAuth (π.χ. Google ή Meta), λαμβάνουμε το όνομά σας, τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας και την εικόνα προφίλ σας (αν υπάρχει).",
+            "Πληροφορίες πληρωμής: Εάν επιλέξετε να κάνετε πληρωμή ή δωρεά, η Stripe επεξεργάζεται τις συναλλαγές με ασφάλεια. Δεν αποθηκεύουμε ούτε βλέπουμε ποτέ τα στοιχεία της πιστωτικής σας κάρτας.",
+            "Δεδομένα αναλυτικών στοιχείων: Χρησιμοποιούμε το Vercel Analytics για να κατανοήσουμε γενικά μοτίβα χρήσης, όπως ποιες σελίδες είναι δημοφιλείς και πώς αποδίδει ο ιστότοπός μας. Αυτά τα δεδομένα είναι συγκεντρωτικά και δεν σας αναγνωρίζουν προσωπικά.",
+            "Τεχνικές πληροφορίες: Όταν επισκέπτεστε τον ιστότοπό μας, ενδέχεται να λαμβάνουμε αυτόματα τυπικά δεδομένα καταγραφής όπως τύπο προγράμματος περιήγησης, συσκευή και διεύθυνση IP, για τη διατήρηση της ασφάλειας και την αντιμετώπιση προβλημάτων."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Πώς Χρησιμοποιούμε τις Πληροφορίες σας",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Λειτουργία και βελτίωση της πλατφόρμας Alternipedia",
+            "Επαλήθευση χρηστών και διαχείριση λογαριασμών",
+            "Ασφαλής επεξεργασία πληρωμών μέσω Stripe",
+            "Παρακολούθηση της απόδοσης και αξιοπιστίας του ιστότοπου",
+            "Απάντηση σε αιτήματα ή ερωτήσεις χρηστών"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Δεν πουλάμε, δεν νοικιάζουμε ούτε εμπορευόμαστε τα προσωπικά σας δεδομένα."
+        }
+      ]
+    },
+    {
+      "title": "Cookies και Παρακολούθηση",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Το Alternipedia δεν χρησιμοποιεί cookies για διαφημίσεις ή παρακολούθηση."
+        },
+        {
+          "type": "paragraph",
+          "text": "Χρησιμοποιούμε μόνο τα απαραίτητα cookies για συνεδρίες σύνδεσης και λειτουργία του ιστότοπου."
+        }
+      ]
+    },
+    {
+      "title": "Αποθήκευση Δεδομένων και Ασφάλεια",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Τα δεδομένα σας αποθηκεύονται με ασφάλεια χρησιμοποιώντας κρυπτογράφηση και υποδομές φιλοξενίας σύμφωνα με τα πρότυπα της βιομηχανίας."
+        },
+        {
+          "type": "paragraph",
+          "text": "Λαμβάνουμε εύλογα μέτρα για να προστατεύουμε τις πληροφορίες σας από απώλεια, κακή χρήση ή μη εξουσιοδοτημένη πρόσβαση."
+        }
+      ]
+    },
+    {
+      "title": "Τα Δικαιώματά σας",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Πρόσβαση ή αίτηση για αντίγραφο των προσωπικών σας δεδομένων",
+            "Διόρθωση ή διαγραφή των πληροφοριών που κατέχουμε για εσάς",
+            "Ανάκληση της συγκατάθεσης ή κλείσιμο του λογαριασμού σας"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Αποδοχή Όρων", "content": ["Με την πρόσβαση και χρήση αυτού του ιστότοπου, οι χρήστες συμφωνούν να συμμορφώνονται με αυτούς τους Όρους Παροχής Υπηρεσιών και να δεσμεύονται από αυτούς. Οι χρήστες που δεν συμφωνούν με αυτούς τους όρους πρέπει να σταματήσουν αμέσως τη χρήση του ιστότοπου."] },
     { "title": "Υποχρεώσεις Λογαριασμού Χρήστη", "content": ["Οι χρήστες είναι υπεύθυνοι για τη διατήρηση της εμπιστευτικότητας των στοιχείων του λογαριασμού τους. Οποιαδήποτε δραστηριότητα υπό τον λογαριασμό χρήστη βαρύνει αποκλειστικά τον κάτοχο του λογαριασμού. Οι χρήστες πρέπει να ειδοποιούν άμεσα τους διαχειριστές του ιστότοπου για οποιαδήποτε μη εξουσιοδοτημένη πρόσβαση στον λογαριασμό."] },
@@ -3771,8 +7220,8 @@ const el: Dictionary = {
       "part3": "; μπορεί να ισχύουν πρόσθετοι όροι. Χρησιμοποιώντας αυτόν τον ιστότοπο, συμφωνείτε με τους",
       "part4": "Όρους & Προϋποθέσεις",
       "part5": "και",
-      "part6": "Πολιτική Απορρήτου.",
-      "part7": "Το Alternipedia είναι ένα μη κερδοσκοπικό έργο ανοιχτού κώδικα."
+      "part6": "Πολιτική Απορρήτου",
+      "part7": ". Το Alternipedia είναι ένα μη κερδοσκοπικό έργο ανοιχτού κώδικα."
     },
     license: 'Άδεια',
     terms: 'Όροι',
@@ -3791,7 +7240,8 @@ const el: Dictionary = {
     goHome: 'Μετάβαση στην αρχική σελίδα',
   },
   upgrade: {
-    goPro: 'Γίνε Pro',
+    pro: 'PRO',
+    goPro: 'Γίνε PRO',
     upgradePrompt: 'Αναβάθμισε για να ξεκλειδώσεις premium λειτουργίες',
     title: 'Η γνώση είναι δύναμη, Ενίσχυσε τη δική σου.',
     month: 'μήνας',
@@ -3822,6 +7272,8 @@ const el: Dictionary = {
     },
   },
   article: {
+    tools: 'Εργαλεία',
+    content: 'Περιεχόμενο',
     article: 'Άρθρο',
     discussion: 'Συζήτηση',
     read: 'Διάβασε',
@@ -3832,6 +7284,107 @@ const el: Dictionary = {
 
 // Swedish dictionary
 const sv: Dictionary = {
+    login: {
+    title: 'Logga in',    
+    google: 'Fortsätt med Google',
+    facebook: 'Fortsätt med Facebook',
+    x: 'Fortsätt med X',
+    microsoft: 'Fortsätt med Microsoft',  
+    policy: "Genom att logga in godkänner du våra användarvillkor och integritetspolicy.",
+  },  
+  userMenu: {
+    login: "Logga in",
+    contributions: "Bidrag",    
+    savedArticles: "Sparade artiklar", 
+    preferences: "Inställningar",  
+    logout: "Logga ut",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('sv-SE', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('sv-SE', { year: 'numeric', month: 'long' }),
+  "title": "Integritetspolicy",
+  "lastUpdatedText": "Senast uppdaterad:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Välkommen till Alternipedia — en utbildningswiki skapad för att presentera olika perspektiv på kunskap och idéer. Vi värnar om din integritet och är engagerade i att skydda din personliga information. Denna policy förklarar vilken information vi samlar in, hur vi använder den och dina rättigheter."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Information vi samlar in",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Kontoinformation: När du loggar in med en OAuth-leverantör (som Google eller Meta) får vi ditt namn, e-postadress och profilbild (om tillgänglig).",
+            "Betalningsinformation: Om du väljer att göra en betalning eller donation behandlar Stripe transaktioner säkert. Vi sparar aldrig eller ser dina kreditkortsuppgifter.",
+            "Analysdata: Vi använder Vercel Analytics för att förstå allmänna användarmönster, såsom vilka sidor som är populära och hur vår webbplats presterar. Dessa data är aggregerade och identifierar dig inte personligen.",
+            "Teknisk information: När du besöker webbplatsen kan vi automatiskt ta emot standardloggdata som webbläsartyp, enhet och IP-adress för att upprätthålla säkerhet och funktionalitet."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hur vi använder din information",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Driva och förbättra Alternipedia-plattformen",
+            "Autentisera användare och hantera konton",
+            "Behandla betalningar säkert via Stripe",
+            "Övervaka webbplatsens prestanda och tillförlitlighet",
+            "Svara på användarförfrågningar eller frågor"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi säljer, hyr inte ut eller byter dina personuppgifter."
+        }
+      ]
+    },
+    {
+      "title": "Cookies och spårning",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia använder inga annonserings- eller spårningscookies."
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi använder endast nödvändiga cookies som krävs för inloggningssessioner och webbplatsfunktionalitet."
+        }
+      ]
+    },
+    {
+      "title": "Datalagring och säkerhet",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Din data lagras säkert med hjälp av industristandard kryptering och hostinginfrastruktur."
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi vidtar rimliga åtgärder för att skydda din information från förlust, missbruk eller obehörig åtkomst."
+        }
+      ]
+    },
+    {
+      "title": "Dina rättigheter",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Få tillgång till eller begära en kopia av dina personuppgifter",
+            "Korrigera eller radera information vi har om dig",
+            "Återkalla samtycke eller stänga ditt konto"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [{ "title": "Accepterande av Villkor", "content": ["Genom att få tillgång till och använda denna webbplats samtycker användare till att följa och vara bundna av dessa Användarvillkor. Användare som inte accepterar dessa villkor bör omedelbart sluta använda webbplatsen."] },
   { "title": "Användarkontos Ansvar", "content": ["Användare är ansvariga för att upprätthålla sekretessen för sina kontouppgifter. Alla aktiviteter som sker under en användares konto är helt användarens ansvar. Användare måste omedelbart meddela webbplatsens administratörer om obehörig kontotillgång."] },
   { "title": "Ansvarsbegränsning", "content": ["Webbplatsen tillhandahåller innehåll 'i befintligt skick' utan några garantier. Webbplatsens ägare ansvarar inte för direkta, indirekta, tillfälliga, följd- eller straffrättsliga skador som uppstår från användares interaktion med plattformen."] },
@@ -3904,8 +7457,8 @@ const sv: Dictionary = {
       "part3": "; ytterligare villkor kan gälla. Genom att använda denna webbplats godkänner du",
       "part4": "Villkor",
       "part5": "och",
-      "part6": "Integritetspolicy.",
-      "part7": "Alternipedia är ett öppen källkod, ideellt projekt."
+      "part6": "Integritetspolicy",
+      "part7": ". Alternipedia är ett öppen källkod, ideellt projekt."
     },
     license: 'Licens',
     terms: 'Villkor',
@@ -3924,7 +7477,8 @@ const sv: Dictionary = {
     goHome: 'Gå till startsidan',
   },
   upgrade: {
-    goPro: 'Bli Pro',
+    pro: 'PRO',
+    goPro: 'Bli PRO',
     upgradePrompt: 'Uppgradera för att låsa upp premiumfunktioner',
     title: 'Kunskap är makt, Förstärk din.',
     month: 'månad',
@@ -3955,6 +7509,8 @@ const sv: Dictionary = {
     },
   },
   article: {
+    tools: 'Verktyg',
+    content: 'Innehåll',
     article: 'Artikel',
     discussion: 'Diskussion',
     read: 'Läs',
@@ -3965,6 +7521,107 @@ const sv: Dictionary = {
 
 // Norwegian dictionary
 const no: Dictionary = {
+    login: {
+    title: 'Logg inn',    
+    google: 'Fortsett med Google',
+    facebook: 'Fortsett med Facebook',
+    x: 'Fortsett med X',
+    microsoft: 'Fortsett med Microsoft',  
+    policy: "Ved å logge inn godtar du våre vilkår for bruk og personvernregler.",
+  },
+  userMenu: {
+    login: "Logg inn",
+    contributions: "Bidrag",    
+    savedArticles: "Lagrede artikler", 
+    preferences: "Innstillinger",  
+    logout: "Logg ut",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('nb-NO', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('nb-NO', { year: 'numeric', month: 'long' }),
+  "title": "Personvernregler",
+  "lastUpdatedText": "Sist oppdatert:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Velkommen til Alternipedia — et utdanningswiki designet for å presentere ulike perspektiver på kunnskap og ideer. Vi verdsetter ditt personvern og er forpliktet til å beskytte din personlige informasjon. Denne policyen forklarer hva vi samler inn, hvordan vi bruker det, og dine rettigheter."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informasjon vi samler inn",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Kontoinformasjon: Når du logger inn via en OAuth-leverandør (som Google eller Meta), mottar vi navn, e-postadresse og profilbilde (hvis tilgjengelig).",
+            "Betalingsinformasjon: Hvis du velger å betale eller donere, behandler Stripe transaksjoner sikkert. Vi lagrer aldri eller ser dine kredittkortopplysninger.",
+            "Analyser: Vi bruker Vercel Analytics for å forstå generelle bruksmønstre, for eksempel hvilke sider som er populære og hvordan nettstedet presterer. Disse dataene er aggregerte og identifiserer deg ikke personlig.",
+            "Teknisk informasjon: Når du besøker nettstedet, kan vi automatisk motta standard loggdata som nettlesertype, enhet og IP-adresse for å opprettholde sikkerhet og funksjonalitet."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hvordan vi bruker informasjonen din",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Drive og forbedre Alternipedia-plattformen",
+            "Autentisere brukere og administrere kontoer",
+            "Behandle betalinger sikkert via Stripe",
+            "Overvåke nettstedets ytelse og pålitelighet",
+            "Svare på brukerspørsmål eller forespørsler"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi selger, leier ikke ut eller bytter dine personlige data."
+        }
+      ]
+    },
+    {
+      "title": "Cookies og sporing",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia bruker ikke annonserings- eller sporingscookies."
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi bruker kun nødvendige cookies som kreves for innlogging og nettstedets funksjonalitet."
+        }
+      ]
+    },
+    {
+      "title": "Datalagring og sikkerhet",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Dine data lagres sikkert med industristandard kryptering og hostinginfrastruktur."
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi tar rimelige skritt for å beskytte informasjonen din mot tap, misbruk eller uautorisert tilgang."
+        }
+      ]
+    },
+    {
+      "title": "Dine rettigheter",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Få tilgang til eller be om en kopi av dine personlige data",
+            "Rette eller slette informasjon vi har om deg",
+            "Tilbakekalle samtykke eller lukke kontoen din"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Aksept av Vilkår", "content": ["Ved å få tilgang til og bruke denne nettsiden, samtykker brukere til å overholde og være bundet av disse tjenestevilkårene. Brukere som ikke godtar disse vilkårene bør umiddelbart slutte å bruke nettstedet."] },
     { "title": "Brukerkontots Ansvar", "content": ["Brukere er ansvarlige for å opprettholde konfidensialiteten til kontoinformasjonen sin. All aktivitet som skjer under en brukers konto er fullt ansvar for kontoinnehaveren. Brukere må umiddelbart varsle nettstedets administratorer om uautorisert kontotilgang."] },
@@ -4039,8 +7696,8 @@ const no: Dictionary = {
       "part3": "; tilleggsvilkår kan gjelde. Ved å bruke dette nettstedet godtar du",
       "part4": "Vilkår og betingelser",
       "part5": "og",
-      "part6": "Personvernregler.",
-      "part7": "Alternipedia er et åpen kildekode non-profit prosjekt."
+      "part6": "Personvernregler",
+      "part7": ". Alternipedia er et åpen kildekode non-profit prosjekt."
     },
     license: 'Lisens',
     terms: 'Vilkår',
@@ -4059,7 +7716,8 @@ const no: Dictionary = {
     goHome: 'Gå til startsiden',
   },
   upgrade: {
-    goPro: 'Bli Pro',
+    pro: 'PRO',
+    goPro: 'Bli PRO',
     upgradePrompt: 'Oppgrader for å låse opp premiumfunksjoner',
     title: 'Kunnskap er makt, Forsterk din.',
     month: 'måned',
@@ -4090,6 +7748,8 @@ const no: Dictionary = {
     },
   },
   article: {
+    tools: 'Verktøy',
+    content: 'Innhold',
     article: 'Artikkel',
     discussion: 'Diskusjon',
     read: 'Les',
@@ -4100,6 +7760,107 @@ const no: Dictionary = {
 
 // Polish dictionary
 const pl: Dictionary = {
+    login: {
+    title: 'Zaloguj się',    
+    google: 'Kontynuuj z Google',
+    facebook: 'Kontynuuj z Facebook',
+    x: 'Kontynuuj z X',
+    microsoft: 'Kontynuuj z Microsoft',  
+    policy: "Logując się, zgadzasz się na nasze Warunki usługi i Politykę prywatności.",
+  },
+  userMenu: {
+    login: "Zaloguj się",
+    contributions: "Wkład",    
+    savedArticles: "Zapisane artykuły", 
+    preferences: "Ustawienia",  
+    logout: "Wyloguj się",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('pl-PL', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('pl-PL', { year: 'numeric', month: 'long' }),
+  "title": "Polityka prywatności",
+  "lastUpdatedText": "Ostatnia aktualizacja:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Witamy w Alternipedia — edukacyjnej wiki stworzonej, aby prezentować różne perspektywy na wiedzę i pomysły. Cenimy Twoją prywatność i zobowiązujemy się chronić Twoje dane osobowe. Niniejsza polityka wyjaśnia, jakie informacje zbieramy, jak je wykorzystujemy i jakie masz prawa."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informacje, które zbieramy",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informacje o koncie: Gdy logujesz się za pomocą dostawcy OAuth (np. Google lub Meta), otrzymujemy Twoje imię i nazwisko, adres e-mail oraz zdjęcie profilowe (jeśli dostępne).",
+            "Informacje o płatnościach: Jeśli zdecydujesz się dokonać płatności lub darowizny, Stripe bezpiecznie przetwarza transakcje. Nigdy nie przechowujemy ani nie widzimy numerów Twojej karty kredytowej.",
+            "Dane analityczne: Używamy Vercel Analytics, aby zrozumieć ogólne wzorce korzystania, np. które strony są popularne i jak działa nasza strona. Dane te są zagregowane i nie pozwalają na identyfikację osoby.",
+            "Informacje techniczne: Podczas odwiedzania naszej strony możemy automatycznie odbierać standardowe dane logowania, takie jak typ przeglądarki, urządzenie i adres IP, aby utrzymać bezpieczeństwo i funkcjonalność."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jak wykorzystujemy Twoje informacje",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Obsługa i ulepszanie platformy Alternipedia",
+            "Uwierzytelnianie użytkowników i zarządzanie kontami",
+            "Bezpieczne przetwarzanie płatności przez Stripe",
+            "Monitorowanie wydajności i niezawodności strony",
+            "Odpowiadanie na zapytania lub prośby użytkowników"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Nie sprzedajemy, nie wypożyczamy ani nie handlujemy Twoimi danymi osobowymi."
+        }
+      ]
+    },
+    {
+      "title": "Ciasteczka i śledzenie",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia nie używa ciasteczek reklamowych ani śledzących."
+        },
+        {
+          "type": "paragraph",
+          "text": "Używamy tylko niezbędnych ciasteczek wymaganych do logowania i działania strony."
+        }
+      ]
+    },
+    {
+      "title": "Przechowywanie danych i bezpieczeństwo",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Twoje dane są przechowywane w bezpieczny sposób przy użyciu standardowej w branży metody szyfrowania i infrastruktury hostingowej."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podejmujemy rozsądne kroki w celu ochrony informacji przed utratą, niewłaściwym użyciem lub nieautoryzowanym dostępem."
+        }
+      ]
+    },
+    {
+      "title": "Twoje prawa",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Dostęp do swoich danych osobowych lub żądanie ich kopii",
+            "Korekta lub usunięcie informacji, które posiadamy na Twój temat",
+            "Wycofanie zgody lub zamknięcie konta"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [{ "title": "Akceptacja Warunków", "content": ["Korzystając z tej witryny i ją odwiedzając, użytkownicy zgadzają się przestrzegać niniejszych Warunków Usługi i być nimi związani. Użytkownicy, którzy nie zgadzają się z tymi warunkami, powinni natychmiast zaprzestać korzystania z witryny."] },
   { "title": "Obowiązki Konta Użytkownika", "content": ["Użytkownicy są odpowiedzialni za zachowanie poufności danych swojego konta. Wszelkie działania prowadzone na koncie użytkownika są wyłączną odpowiedzialnością właściciela konta. Użytkownicy powinni niezwłocznie powiadomić administratorów witryny o wszelkim nieautoryzowanym dostępie do konta."] },
   { "title": "Ograniczenie Odpowiedzialności", "content": ["Witryna udostępnia treści 'takie, jakie są', bez żadnych gwarancji. Właściciele witryny nie ponoszą odpowiedzialności za jakiekolwiek bezpośrednie, pośrednie, przypadkowe, następcze lub karne szkody wynikające z interakcji użytkowników z platformą."] },
@@ -4172,8 +7933,8 @@ const pl: Dictionary = {
       "part3": "; mogą obowiązywać dodatkowe warunki. Korzystając z tej strony, zgadzasz się na",
       "part4": "Warunki użytkowania",
       "part5": "i",
-      "part6": "Politykę prywatności.",
-      "part7": "Alternipedia to projekt open-source non-profit."
+      "part6": "Politykę prywatności",
+      "part7": ". Alternipedia to projekt open-source non-profit."
     },
     license: 'Licencja',
     terms: 'Warunki',
@@ -4192,7 +7953,8 @@ const pl: Dictionary = {
     goHome: 'Przejdź do strony głównej',
   },
   upgrade: {
-    goPro: 'Przejdź na Pro',
+    pro: 'PRO',
+    goPro: 'Przejdź na PRO',
     upgradePrompt: 'Ulepsz, aby odblokować funkcje premium',
     title: 'Wiedza to potęga, Wzmocnij swoją.',
     month: 'miesiąc',
@@ -4223,6 +7985,8 @@ const pl: Dictionary = {
     },
   },
   article: {
+    tools: 'Narzędzia',
+    content: 'Zawartość',
     article: 'Artykuł',
     discussion: 'Dyskusja',
     read: 'Czytaj',
@@ -4233,6 +7997,107 @@ const pl: Dictionary = {
 
 // Thai dictionary
 const th: Dictionary = {
+    login: {
+    title: 'เข้าสู่ระบบ',    
+    google: 'ดำเนินการต่อด้วย Google',
+    facebook: 'ดำเนินการต่อด้วย Facebook',
+    x: 'ดำเนินการต่อด้วย X',
+    microsoft: 'ดำเนินการต่อด้วย Microsoft',  
+    policy: "โดยการเข้าสู่ระบบ คุณยอมรับข้อกำหนดในการให้บริการและนโยบายความเป็นส่วนตัวของเรา",
+  },  
+  userMenu: {
+    login: "เข้าสู่ระบบ",
+    contributions: "การมีส่วนร่วม",    
+    savedArticles: "บทความที่บันทึกไว้", 
+    preferences: "การตั้งค่า",  
+    logout: "ออกจากระบบ",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('th-TH', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('th-TH', { year: 'numeric', month: 'long' }),
+  "title": "นโยบายความเป็นส่วนตัว",
+  "lastUpdatedText": "อัปเดตล่าสุด:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "ยินดีต้อนรับสู่ Alternipedia — วิกิการศึกษาออกแบบมาเพื่อแสดงมุมมองที่หลากหลายเกี่ยวกับความรู้และแนวคิด เราให้ความสำคัญกับความเป็นส่วนตัวของคุณและมุ่งมั่นที่จะปกป้องข้อมูลส่วนบุคคลของคุณ นโยบายนี้อธิบายว่าเรารวบรวมอะไร ใช้อย่างไร และสิทธิของคุณ"
+    }
+  ],
+  "sections": [
+    {
+      "title": "ข้อมูลที่เรารวบรวม",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "ข้อมูลบัญชี: เมื่อคุณเข้าสู่ระบบผ่านผู้ให้บริการ OAuth (เช่น Google หรือ Meta) เราจะได้รับชื่อ อีเมล และรูปโปรไฟล์ของคุณ (ถ้ามี)",
+            "ข้อมูลการชำระเงิน: หากคุณเลือกที่จะชำระเงินหรือบริจาค Stripe จะประมวลผลการทำธุรกรรมอย่างปลอดภัย เราไม่เคยเก็บหรือดูหมายเลขบัตรเครดิตของคุณ",
+            "ข้อมูลวิเคราะห์: เราใช้ Vercel Analytics เพื่อทำความเข้าใจรูปแบบการใช้งานทั่วไป เช่น หน้าเว็บที่ได้รับความนิยมและประสิทธิภาพของเว็บไซต์ ข้อมูลเหล่านี้ถูกรวมและไม่ระบุตัวตนของคุณ",
+            "ข้อมูลทางเทคนิค: เมื่อคุณเยี่ยมชมเว็บไซต์ เราอาจได้รับข้อมูลบันทึกมาตรฐานโดยอัตโนมัติ เช่น ประเภทเบราว์เซอร์ อุปกรณ์ และที่อยู่ IP เพื่อรักษาความปลอดภัยและแก้ไขปัญหา"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "วิธีการใช้ข้อมูลของคุณ",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "ดำเนินการและปรับปรุงแพลตฟอร์ม Alternipedia",
+            "ตรวจสอบผู้ใช้และจัดการบัญชี",
+            "ประมวลผลการชำระเงินอย่างปลอดภัยผ่าน Stripe",
+            "ตรวจสอบประสิทธิภาพและความน่าเชื่อถือของเว็บไซต์",
+            "ตอบคำถามหรือคำขอของผู้ใช้"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "เราไม่ขาย ให้เช่า หรือแลกเปลี่ยนข้อมูลส่วนบุคคลของคุณ"
+        }
+      ]
+    },
+    {
+      "title": "คุกกี้และการติดตาม",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ไม่ใช้คุกกี้สำหรับโฆษณาหรือการติดตาม"
+        },
+        {
+          "type": "paragraph",
+          "text": "เราใช้เฉพาะคุกกี้ที่จำเป็นสำหรับการเข้าสู่ระบบและฟังก์ชันของเว็บไซต์เท่านั้น"
+        }
+      ]
+    },
+    {
+      "title": "การจัดเก็บข้อมูลและความปลอดภัย",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "ข้อมูลของคุณถูกเก็บอย่างปลอดภัยด้วยการเข้ารหัสมาตรฐานอุตสาหกรรมและโครงสร้างพื้นฐานโฮสติ้ง"
+        },
+        {
+          "type": "paragraph",
+          "text": "เราดำเนินมาตรการที่เหมาะสมเพื่อปกป้องข้อมูลของคุณจากการสูญหาย การใช้ผิดวัตถุประสงค์ หรือการเข้าถึงโดยไม่ได้รับอนุญาต"
+        }
+      ]
+    },
+    {
+      "title": "สิทธิของคุณ",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "เข้าถึงหรือขอสำเนาข้อมูลส่วนบุคคลของคุณ",
+            "แก้ไขหรือลบข้อมูลที่เรามีเกี่ยวกับคุณ",
+            "ถอนความยินยอมหรือปิดบัญชีของคุณ"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "การยอมรับข้อกำหนด", "content": ["การเข้าถึงและใช้เว็บไซต์นี้ ผู้ใช้ตกลงที่จะปฏิบัติตามและผูกพันตามข้อกำหนดในการให้บริการนี้ ผู้ใช้ที่ไม่เห็นด้วยกับข้อกำหนดนี้ควรหยุดใช้เว็บไซต์ทันที"] },
     { "title": "ความรับผิดชอบบัญชีผู้ใช้", "content": ["ผู้ใช้มีหน้าที่ในการรักษาความลับของข้อมูลประจำตัวบัญชี กิจกรรมใด ๆ ที่เกิดขึ้นภายใต้บัญชีของผู้ใช้เป็นความรับผิดชอบของเจ้าของบัญชีเพียงผู้เดียว ผู้ใช้ต้องแจ้งผู้ดูแลเว็บไซต์ทันทีหากมีการเข้าถึงบัญชีโดยไม่ได้รับอนุญาต"] },
@@ -4307,7 +8172,7 @@ const th: Dictionary = {
       "part3": "; อาจมีข้อกำหนดเพิ่มเติม การใช้เว็บไซต์นี้ถือว่าคุณยอมรับ",
       "part4": "ข้อกำหนดและเงื่อนไข",
       "part5": "และ",
-      "part6": "นโยบายความเป็นส่วนตัว",
+      "part6": "นโยบายความเป็นส่วนตัว", // TOOD: verify translation
       "part7": "Alternipedia เป็นโครงการโอเพนซอร์สแบบไม่แสวงหากำไร"
     },
     license: 'ใบอนุญาต',
@@ -4327,7 +8192,8 @@ const th: Dictionary = {
     goHome: 'ไปที่หน้าแรก',
   },
   upgrade: {
-    goPro: 'อัปเกรดเป็น Pro',
+    pro: 'PRO',
+    goPro: 'อัปเกรดเป็น PRO',
     upgradePrompt: 'อัปเกรดเพื่อปลดล็อกฟีเจอร์พรีเมียม',
     title: 'ความรู้คือพลัง เพิ่มพลังของคุณ',
     month: 'เดือน',
@@ -4358,6 +8224,8 @@ const th: Dictionary = {
     },
   },
   article: {
+    tools: 'เครื่องมือ',
+    content: 'เนื้อหา',
     article: 'บทความ',
     discussion: 'อภิปราย',
     read: 'อ่าน',
@@ -4368,6 +8236,107 @@ const th: Dictionary = {
 
 // Ukrainian dictionary
 const uk: Dictionary = {
+    login: {
+    title: 'Увійти',    
+    google: 'Продовжити з Google',
+    facebook: 'Продовжити з Facebook',
+    x: 'Продовжити з X',
+    microsoft: 'Продовжити з Microsoft',  
+    policy: "Увійшовши, ви погоджуєтесь з нашими Умовами обслуговування та Політикою конфіденційності.",      
+  },
+  userMenu: {
+    login: "Увійти",
+    contributions: "Внесок",    
+    savedArticles: "Збережені статті", 
+    preferences: "Налаштування",  
+    logout: "Вийти",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('uk-UA', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('uk-UA', { year: 'numeric', month: 'long' }),
+  "title": "Політика конфіденційності",
+  "lastUpdatedText": "Останнє оновлення:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Ласкаво просимо до Alternipedia — освітньої вікі, створеної для представлення різних поглядів на знання та ідеї. Ми цінуємо вашу конфіденційність і прагнемо захищати вашу особисту інформацію. Ця політика пояснює, яку інформацію ми збираємо, як ми її використовуємо та які у вас є права."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Інформація, яку ми збираємо",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Інформація про обліковий запис: Коли ви входите через провайдера OAuth (наприклад, Google або Meta), ми отримуємо ваше ім’я, електронну пошту та зображення профілю (якщо доступно).",
+            "Інформація про платежі: Якщо ви вирішите здійснити оплату або пожертвування, Stripe безпечно обробляє транзакції. Ми ніколи не зберігаємо і не бачимо дані вашої кредитної картки.",
+            "Аналітичні дані: Ми використовуємо Vercel Analytics, щоб зрозуміти загальні шаблони використання, наприклад, які сторінки популярні та як працює наш сайт. Дані агреговані та не ідентифікують вас особисто.",
+            "Технічна інформація: Під час відвідування сайту ми можемо автоматично отримувати стандартні дані журналів, такі як тип браузера, пристрій і IP-адреса, щоб підтримувати безпеку та функціональність."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Як ми використовуємо вашу інформацію",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Керування та покращення платформи Alternipedia",
+            "Аутентифікація користувачів та управління обліковими записами",
+            "Безпечна обробка платежів через Stripe",
+            "Моніторинг продуктивності та надійності сайту",
+            "Відповіді на запити або питання користувачів"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ми не продаємо, не здаємо в оренду та не торгуємо вашими персональними даними."
+        }
+      ]
+    },
+    {
+      "title": "Файли cookie та відстеження",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia не використовує рекламні або відстежувальні файли cookie."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ми використовуємо лише необхідні файли cookie для входу та функціональності сайту."
+        }
+      ]
+    },
+    {
+      "title": "Зберігання даних та безпека",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ваші дані зберігаються безпечно з використанням галузевих стандартів шифрування та хостингової інфраструктури."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ми вживаємо розумних заходів для захисту вашої інформації від втрати, неправомірного використання або несанкціонованого доступу."
+        }
+      ]
+    },
+    {
+      "title": "Ваші права",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Доступ або запит копії ваших персональних даних",
+            "Виправлення або видалення інформації, яку ми зберігаємо про вас",
+            "Відкликання згоди або закриття облікового запису"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Прийняття умов", "content": ["Отримуючи доступ до цього вебсайту та використовуючи його, користувачі погоджуються дотримуватися цих Умов обслуговування та бути зобов’язаними ними. Користувачі, які не погоджуються з цими умовами, повинні негайно припинити використання вебсайту."] },
     { "title": "Обов’язки користувацького облікового запису", "content": ["Користувачі несуть відповідальність за збереження конфіденційності своїх облікових даних. Усі дії, що відбуваються під обліковим записом користувача, є виключною відповідальністю власника облікового запису. Користувачі повинні негайно повідомляти адміністраторів вебсайту про будь-який несанкціонований доступ до облікового запису."] },
@@ -4442,8 +8411,8 @@ const uk: Dictionary = {
       "part3": "; можуть застосовуватися додаткові умови. Використовуючи цей сайт, ви погоджуєтеся з",
       "part4": "Умовами",
       "part5": "та",
-      "part6": "Політикою конфіденційності.",
-      "part7": "Alternipedia – це відкритий проект без комерційної мети."
+      "part6": "Політикою конфіденційності",
+      "part7": ". Alternipedia – це відкритий проект без комерційної мети."
     },
     license: 'Ліцензія',
     terms: 'Умови',
@@ -4462,7 +8431,8 @@ const uk: Dictionary = {
     goHome: 'Перейти на головну',
   },
   upgrade: {
-    goPro: 'Перейти на Pro',
+    pro: 'PRO',
+    goPro: 'Перейти на PRO',
     upgradePrompt: 'Оновіть, щоб розблокувати преміум-функції',
     title: 'Знання – це сила, Посиліть свою.',
     month: 'місяць',
@@ -4493,6 +8463,8 @@ const uk: Dictionary = {
     },
   },
   article: {
+    tools: 'Інструменти',
+    content: 'Зміст',
     article: 'Стаття',
     discussion: 'Обговорення',
     read: 'Читати',
@@ -4503,6 +8475,107 @@ const uk: Dictionary = {
 
 // Romanian dictionary
 const ro: Dictionary = {
+    login: {
+    title: 'Conectare',    
+    google: 'Continuă cu Google',
+    facebook: 'Continuă cu Facebook',
+    x: 'Continuă cu X',
+    microsoft: 'Continuă cu Microsoft',  
+    policy: "Prin conectare, sunteți de acord cu Termenii și condițiile noastre și Politica de confidențialitate.",
+  },  
+  userMenu: {
+    login: "Conectare", 
+    contributions: "Contribuții",    
+    savedArticles: "Articole salvate", 
+    preferences: "Preferințe",  
+    logout: "Deconectare",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('ro-RO', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('ro-RO', { year: 'numeric', month: 'long' }),
+  "title": "Politica de confidențialitate",
+  "lastUpdatedText": "Ultima actualizare:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Bine ați venit la Alternipedia — un wiki educațional conceput pentru a prezenta perspective diverse asupra cunoștințelor și ideilor. Apreciem confidențialitatea dvs. și ne angajăm să vă protejăm informațiile personale. Această politică explică ce colectăm, cum utilizăm datele și care sunt drepturile dvs."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informațiile pe care le colectăm",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informații despre cont: Când vă autentificați printr-un furnizor OAuth (cum ar fi Google sau Meta), primim numele dvs., adresa de e-mail și imaginea de profil (dacă este disponibilă).",
+            "Informații de plată: Dacă alegeți să efectuați o plată sau o donație, Stripe procesează tranzacțiile în siguranță. Nu stocăm și nu vedem niciodată numerele cardului dvs. de credit.",
+            "Date analitice: Folosim Vercel Analytics pentru a înțelege tiparele generale de utilizare, de exemplu, care pagini sunt populare și cum performează site-ul. Aceste date sunt agregate și nu vă identifică personal.",
+            "Informații tehnice: Când vizitați site-ul nostru, putem primi automat date de jurnal standard, cum ar fi tipul browserului, dispozitivul și adresa IP, pentru a menține securitatea și funcționalitatea."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cum folosim informațiile dvs.",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Operarea și îmbunătățirea platformei Alternipedia",
+            "Autentificarea utilizatorilor și gestionarea conturilor",
+            "Procesarea sigură a plăților prin Stripe",
+            "Monitorizarea performanței și fiabilității site-ului",
+            "Răspunsul la întrebările sau solicitările utilizatorilor"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Nu vindem, închiriem sau schimbăm datele dvs. personale."
+        }
+      ]
+    },
+    {
+      "title": "Cookie-uri și urmărire",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia nu utilizează cookie-uri de publicitate sau urmărire."
+        },
+        {
+          "type": "paragraph",
+          "text": "Folosim doar cookie-urile esențiale necesare pentru sesiuni de autentificare și funcționalitatea site-ului."
+        }
+      ]
+    },
+    {
+      "title": "Stocarea datelor și securitatea",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Datele dvs. sunt stocate în siguranță folosind criptare standard din industrie și infrastructură de hosting."
+        },
+        {
+          "type": "paragraph",
+          "text": "Luăm măsuri rezonabile pentru a proteja informațiile dvs. împotriva pierderii, utilizării abuzive sau accesului neautorizat."
+        }
+      ]
+    },
+    {
+      "title": "Drepturile dvs.",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Accesul sau solicitarea unei copii a datelor dvs. personale",
+            "Corectarea sau ștergerea informațiilor pe care le deținem despre dvs.",
+            "Retragerea consimțământului sau închiderea contului dvs."
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [{ "title": "Acceptarea Termenilor", "content": ["Accesând și utilizând acest site web, utilizatorii sunt de acord să respecte și să fie obligați de acești Termeni de Serviciu. Utilizatorii care nu sunt de acord cu acești termeni ar trebui să înceteze imediat utilizarea site-ului web."] },
   { "title": "Responsabilitățile Contului Utilizatorului", "content": ["Utilizatorii sunt responsabili pentru menținerea confidențialității datelor contului lor. Orice activitate care are loc în cadrul contului unui utilizator este responsabilitatea exclusivă a deținătorului contului. Utilizatorii trebuie să informeze imediat administratorii site-ului web despre orice acces neautorizat la cont."] },
   { "title": "Limitarea Răspunderii", "content": ["Site-ul web oferă conținut 'ca atare', fără niciun fel de garanție. Proprietarii site-ului nu sunt responsabili pentru daune directe, indirecte, accidentale, consecințe sau punitive care apar din interacțiunile utilizatorilor cu platforma."] },
@@ -4575,8 +8648,8 @@ const ro: Dictionary = {
       "part3": "; se pot aplica termeni suplimentari. Prin utilizarea acestui site, sunteți de acord cu",
       "part4": "Termenii și Condițiile",
       "part5": "și",
-      "part6": "Politica de Confidențialitate.",
-      "part7": "Alternipedia este un proiect open-source non-profit."
+      "part6": "Politica de Confidențialitate",
+      "part7": ". Alternipedia este un proiect open-source non-profit."
     },
     license: 'Licență',
     terms: 'Termeni',
@@ -4595,7 +8668,8 @@ const ro: Dictionary = {
     goHome: 'Mergi la pagina principală',
   },
   upgrade: {
-    goPro: 'Deveniți Pro',
+    pro: 'PRO',
+    goPro: 'Deveniți PRO',
     upgradePrompt: 'Faceți upgrade pentru a debloca funcții premium',
     title: 'Cunoașterea este putere, Amplificați-vă.',
     month: 'lună',
@@ -4626,6 +8700,8 @@ const ro: Dictionary = {
     },
   },
   article: {
+    tools: 'Instrumente',
+    content: 'Conținut',
     article: 'Articol',
     discussion: 'Discuție',
     read: 'Citește',
@@ -4636,6 +8712,107 @@ const ro: Dictionary = {
 
 // Czech dictionary
 const cs: Dictionary = {
+    login: {
+    title: 'Přihlásit se',    
+    google: 'Pokračovat s Googlem',
+    facebook: 'Pokračovat s Facebookem',
+    x: 'Pokračovat s X',
+    microsoft: 'Pokračovat s Microsoftem',  
+    policy: "Přihlášením souhlasíte s našimi Podmínkami služby a Zásadami ochrany osobních údajů.",      
+  },
+  userMenu: {
+    login: "Přihlásit se", 
+    contributions: "Příspěvky",    
+    savedArticles: "Uložené články", 
+    preferences: "Nastavení",  
+    logout: "Odhlásit se",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long' }),
+  "title": "Zásady ochrany osobních údajů",
+  "lastUpdatedText": "Naposledy aktualizováno:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Vítejte na Alternipedia — vzdělávací wiki vytvořené k prezentaci různých pohledů na znalosti a nápady. Vážíme si vašeho soukromí a zavazujeme se chránit vaše osobní údaje. Tyto zásady vysvětlují, jaké informace shromažďujeme, jak je používáme a jaká máte práva."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informace, které shromažďujeme",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informace o účtu: Při přihlášení přes poskytovatele OAuth (např. Google nebo Meta) získáváme vaše jméno, e-mailovou adresu a profilový obrázek (pokud je k dispozici).",
+            "Platební informace: Pokud se rozhodnete provést platbu nebo dar, Stripe bezpečně zpracuje transakce. Nikdy neukládáme ani nevidíme čísla vaší kreditní karty.",
+            "Analytická data: Používáme Vercel Analytics k pochopení obecných vzorců používání, například které stránky jsou populární a jak funguje náš web. Data jsou agregována a neidentifikují vás osobně.",
+            "Technické informace: Při návštěvě našeho webu můžeme automaticky získat standardní logovací data, jako je typ prohlížeče, zařízení a IP adresa, abychom zajistili bezpečnost a funkčnost."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jak používáme vaše informace",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Provozovat a zlepšovat platformu Alternipedia",
+            "Autentizovat uživatele a spravovat účty",
+            "Bezpečně zpracovávat platby přes Stripe",
+            "Monitorovat výkon a spolehlivost webu",
+            "Odpovídat na dotazy a žádosti uživatelů"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Nepředáváme, neprodáváme ani nevyměňujeme vaše osobní údaje."
+        }
+      ]
+    },
+    {
+      "title": "Cookies a sledování",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia nepoužívá reklamní ani sledovací cookies."
+        },
+        {
+          "type": "paragraph",
+          "text": "Používáme pouze nezbytné cookies potřebné pro přihlášení a funkčnost webu."
+        }
+      ]
+    },
+    {
+      "title": "Ukládání dat a bezpečnost",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vaše data jsou bezpečně ukládána pomocí průmyslových standardů šifrování a hostingové infrastruktury."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podnikáme rozumné kroky k ochraně vašich informací před ztrátou, zneužitím nebo neoprávněným přístupem."
+        }
+      ]
+    },
+    {
+      "title": "Vaše práva",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Přístup k osobním údajům nebo požadavek na kopii",
+            "Oprava nebo odstranění informací, které o vás uchováváme",
+            "Odvolání souhlasu nebo uzavření účtu"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [{ "title": "Přijetí Podmínek", "content": ["Přístupem a používáním tohoto webu uživatelé souhlasí s dodržováním a zavázáním se těmito Podmínkami služby. Uživatelé, kteří s těmito podmínkami nesouhlasí, by měli okamžitě přestat web používat."] },
   { "title": "Odpovědnost Uživatelského Účtu", "content": ["Uživatelé jsou odpovědní za zachování důvěrnosti údajů svého účtu. Veškeré aktivity prováděné pod účtem uživatele jsou výhradní odpovědností vlastníka účtu. Uživatelé musí okamžitě informovat správce webu o jakémkoli neoprávněném přístupu k účtu."] },
   { "title": "Omezení Odpovědnosti", "content": ["Web poskytuje obsah 'jak je', bez jakýchkoli záruk. Majitelé webu nenesou odpovědnost za přímé, nepřímé, náhodné, následné nebo trestní škody vzniklé z interakcí uživatelů s platformou."] },
@@ -4708,8 +8885,8 @@ const cs: Dictionary = {
       "part3": "; mohou platit další podmínky. Používáním tohoto webu souhlasíte s",
       "part4": "Podmínkami",
       "part5": "a",
-      "part6": "Zásadami ochrany osobních údajů.",
-      "part7": "Alternipedia je open-source neziskový projekt."
+      "part6": "Zásadami ochrany osobních údajů",
+      "part7": ". Alternipedia je open-source neziskový projekt."
     },
     license: 'Licence',
     terms: 'Podmínky',
@@ -4728,7 +8905,8 @@ const cs: Dictionary = {
     goHome: 'Přejít na domovskou stránku',
   },
   upgrade: {
-    goPro: 'Přejít na Pro',
+    pro: 'PRO',
+    goPro: 'Přejít na PRO',
     upgradePrompt: 'Upgradujte pro odemknutí prémiových funkcí',
     title: 'Vědění je síla, Posilte tu svou.',
     month: 'měsíc',
@@ -4759,6 +8937,8 @@ const cs: Dictionary = {
     },
   },
   article: {
+    tools: 'Nástroje',
+    content: 'Obsah',
     article: 'Článek',
     discussion: 'Diskuse',
     read: 'Číst',
@@ -4769,6 +8949,107 @@ const cs: Dictionary = {
 
 // Hungarian dictionary
 const hu: Dictionary = {
+    login: {
+    title: 'Bejelentkezés',    
+    google: 'Folytatás Google-lal',
+    facebook: 'Folytatás Facebook-kal',
+    x: 'Folytatás X-szel',
+    microsoft: 'Folytatás Microsoft-tal',  
+    policy: "A bejelentkezéssel elfogadja a Szolgáltatási feltételeinket és az Adatvédelmi irányelveinket.",    
+  },  
+  userMenu: {
+    login: "Bejelentkezés", 
+    contributions: "Hozzájárulások",    
+    savedArticles: "Mentett cikkek", 
+    preferences: "Beállítások",  
+    logout: "Kijelentkezés",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('hu-HU', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('hu-HU', { year: 'numeric', month: 'long' }),
+  "title": "Adatvédelmi irányelvek",
+  "lastUpdatedText": "Utolsó frissítés:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Üdvözöljük az Alternipedia-n — egy oktatási wiki, amelyet különböző nézőpontok bemutatására terveztek a tudásról és az ötletekről. Értékeljük a magánéletét, és elkötelezettek vagyunk a személyes adatai védelme mellett. Ez az irányelv elmagyarázza, milyen adatokat gyűjtünk, hogyan használjuk azokat, és milyen jogai vannak."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Az általunk gyűjtött információk",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Fiókinformációk: Amikor OAuth szolgáltatóval jelentkezik be (például Google vagy Meta), megkapjuk a nevét, e-mail címét és profilképét (ha elérhető).",
+            "Fizetési információk: Ha fizetést vagy adományt választ, a Stripe biztonságosan kezeli a tranzakciókat. Soha nem tároljuk vagy látjuk a hitelkártya adatait.",
+            "Analitikai adatok: A Vercel Analytics-et használjuk az általános használati minták megértésére, például mely oldalak népszerűek és hogyan teljesít a weboldal. Ezek az adatok összesítettek, és nem azonosítják személyesen.",
+            "Technikai információk: Amikor meglátogatja weboldalunkat, automatikusan kaphatunk szabványos naplóadatokat, például böngészőtípust, eszközt és IP-címet a biztonság és a működés fenntartása érdekében."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hogyan használjuk fel az információit",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Az Alternipedia platform működtetése és fejlesztése",
+            "A felhasználók hitelesítése és fiókok kezelése",
+            "Biztonságos fizetések feldolgozása a Stripe segítségével",
+            "A weboldal teljesítményének és megbízhatóságának figyelemmel kísérése",
+            "Válaszadás a felhasználói kérdésekre és kérésekre"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Nem adjuk el, nem adjuk bérbe és nem kereskedünk a személyes adataival."
+        }
+      ]
+    },
+    {
+      "title": "Sütik és nyomkövetés",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Az Alternipedia nem használ hirdetési vagy nyomkövető sütiket."
+        },
+        {
+          "type": "paragraph",
+          "text": "Csak az alapvető sütiket használjuk, amelyek szükségesek a bejelentkezéshez és az oldal működéséhez."
+        }
+      ]
+    },
+    {
+      "title": "Adattárolás és biztonság",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Az adatait biztonságosan tároljuk iparági szabvány szerinti titkosítással és hosting infrastruktúrával."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ésszerű lépéseket teszünk az adatok elvesztése, visszaélése vagy jogosulatlan hozzáférés ellen."
+        }
+      ]
+    },
+    {
+      "title": "Az Ön jogai",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Hozzáférés vagy másolat kérés a személyes adatairól",
+            "Az információk javítása vagy törlése, amelyeket rólad tárolunk",
+            "A hozzájárulás visszavonása vagy a fiók lezárása"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [{ "title": "A Feltételek Elfogadása", "content": ["A weboldal elérésével és használatával a felhasználók elfogadják, hogy betartják és kötelezőnek tartják ezeket a Szolgáltatási Feltételeket. Azoknak a felhasználóknak, akik nem értenek egyet ezekkel a feltételekkel, azonnal fel kell hagyniuk a weboldal használatával."] },
   { "title": "Felhasználói Fiók Felelőssége", "content": ["A felhasználók felelősek fiókjuk hitelesítő adatainak titokban tartásáért. A felhasználói fiók alatt végzett tevékenységek kizárólag a fiók tulajdonosának felelőssége. A felhasználóknak azonnal értesíteniük kell a weboldal adminisztrátorait minden jogosulatlan fiókhozzáférésről."] },
   { "title": "Felelősség Korlátozása", "content": ["A weboldal az „ahogy van” tartalmat nyújt bármilyen garancia nélkül. A weboldal tulajdonosai nem vállalnak felelősséget közvetlen, közvetett, véletlenszerű, következményes vagy büntető jellegű károkért, amelyek a felhasználók interakcióiból erednek a platformmal."] },
@@ -4841,8 +9122,8 @@ const hu: Dictionary = {
       "part3": "; további feltételek is alkalmazhatók. A webhely használatával Ön elfogadja a",
       "part4": "Felhasználási feltételeket",
       "part5": "és",
-      "part6": "Adatvédelmi irányelveket.",
-      "part7": "Az Alternipedia egy nyílt forráskódú, nonprofit projekt."
+      "part6": "Adatvédelmi irányelveket",
+      "part7": ". Az Alternipedia egy nyílt forráskódú, nonprofit projekt."
     },
     license: 'Licenc',
     terms: 'Feltételek',
@@ -4861,6 +9142,7 @@ const hu: Dictionary = {
     goHome: 'Ugrás a főoldalra',
   },
   upgrade: {
+    pro: 'PRO',
     goPro: 'Válts Pro-ra',
     upgradePrompt: 'Frissíts a prémium funkciók feloldásához',
     title: 'A tudás hatalom, Turbozd fel a tiedet.',
@@ -4892,6 +9174,8 @@ const hu: Dictionary = {
     },
   },
   article: {
+    tools: 'Eszközök',
+    content: 'Tartalom',
     article: 'Cikk',
     discussion: 'Vita',
     read: 'Olvasás',
@@ -4902,6 +9186,107 @@ const hu: Dictionary = {
 
 // Finnish dictionary
 const fi: Dictionary = {
+    login: {
+    title: 'Kirjaudu sisään',    
+    google: 'Jatka Googlella',
+    facebook: 'Jatka Facebookilla',
+    x: 'Jatka X:llä',
+    microsoft: 'Jatka Microsoftilla',  
+    policy: "Kirjautumalla sisään hyväksyt käyttöehtomme ja tietosuojakäytäntömme.",    
+  },
+  userMenu: {
+    login: "Kirjaudu sisään",
+    contributions: "Panokset",
+    savedArticles: "Tallennetut artikkelit",
+    preferences: "Asetukset",
+    logout: "Kirjaudu ulos"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('fi-FI', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('fi-FI', { year: 'numeric', month: 'long' }),
+  "title": "Tietosuojakäytäntö",
+  "lastUpdatedText": "Viimeksi päivitetty:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Tervetuloa Alternipediaan — opetussivustolle, joka on suunniteltu esittämään erilaisia näkökulmia tietoon ja ideoihin. Arvostamme yksityisyyttäsi ja sitoudumme suojaamaan henkilötietojasi. Tämä käytäntö selittää, mitä tietoja keräämme, miten niitä käytämme ja mitkä ovat oikeutesi."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Keräämämme tiedot",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Tilitiedot: Kun kirjaudut OAuth-palveluntarjoajan kautta (esim. Google tai Meta), saamme nimesi, sähköpostiosoitteesi ja profiilikuvasi (jos saatavilla).",
+            "Maksutiedot: Jos valitset maksun tai lahjoituksen, Stripe käsittelee tapahtumat turvallisesti. Emme koskaan tallenna tai näe luottokorttisi tietoja.",
+            "Analytiikkatiedot: Käytämme Vercel Analyticsia ymmärtääksemme yleisiä käyttötapoja, kuten suosittuja sivuja ja sivuston suorituskykyä. Nämä tiedot ovat koottuja eivätkä tunnista sinua henkilökohtaisesti.",
+            "Tekniset tiedot: Käyttäessäsi sivustoamme voimme automaattisesti vastaanottaa vakiolokitietoja, kuten selaintyyppiä, laitetta ja IP-osoitetta, ylläpitääksemme turvallisuutta ja toimivuutta."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Miten käytämme tietojasi",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia-alustan ylläpito ja kehittäminen",
+            "Käyttäjien todennus ja tilien hallinta",
+            "Maksujen turvallinen käsittely Stripen kautta",
+            "Sivuston suorituskyvyn ja luotettavuuden seuranta",
+            "Vastaaminen käyttäjien kyselyihin ja pyyntöihin"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Emme myy, vuokraa emmekä vaihda henkilökohtaisia tietojasi."
+        }
+      ]
+    },
+    {
+      "title": "Evästeet ja seuranta",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ei käytä mainos- tai seurantakeksejä."
+        },
+        {
+          "type": "paragraph",
+          "text": "Käytämme vain välttämättömiä evästeitä kirjautumiseen ja sivuston toiminnallisuuteen."
+        }
+      ]
+    },
+    {
+      "title": "Tietojen säilytys ja turvallisuus",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Tietosi säilytetään turvallisesti teollisuusstandardin mukaisella salauksella ja hosting-infrastruktuurilla."
+        },
+        {
+          "type": "paragraph",
+          "text": "Teemme kohtuullisia toimenpiteitä suojataksemme tietosi katoamiselta, väärinkäytöltä tai luvattomalta käytöltä."
+        }
+      ]
+    },
+    {
+      "title": "Oikeutesi",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Henkilötietojesi tarkastelu tai kopion pyytäminen",
+            "Tietojen korjaaminen tai poistaminen, joita meillä on sinusta",
+            "Suostumuksen peruminen tai tilin sulkeminen"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [{ "title": "Ehtojen Hyväksyminen", "content": ["Käyttämällä tätä verkkosivustoa käyttäjät hyväksyvät noudattavansa näitä Palveluehtoja ja sitoutuvat niihin. Käyttäjien, jotka eivät hyväksy näitä ehtoja, tulee lopettaa sivuston käyttö välittömästi."] },
   { "title": "Käyttäjätilin Vastuut", "content": ["Käyttäjät ovat vastuussa tilinsä tunnistetietojen salassapidosta. Kaikki tilin alla tapahtuvat toiminnot ovat tilin haltijan yksinomaista vastuuta. Käyttäjien tulee välittömästi ilmoittaa verkkosivuston ylläpitäjille kaikista luvattomista tilin käyttöyrityksistä."] },
   { "title": "Vastuun Rajoitus", "content": ["Verkkosivusto tarjoaa sisällön 'sellaisena kuin se on' ilman takuita. Verkkosivuston omistajat eivät ole vastuussa suorista, epäsuorista, satunnaisista, välillisistä tai rangaistuksellisista vahingoista, jotka johtuvat käyttäjien vuorovaikutuksesta alustan kanssa."] },
@@ -4974,8 +9359,8 @@ const fi: Dictionary = {
       "part3": "; mahdollisia lisäehtoja voi olla. Käyttämällä tätä sivustoa hyväksyt",
       "part4": "Käyttöehdot",
       "part5": "ja",
-      "part6": "Tietosuojakäytännön.",
-      "part7": "Alternipedia on avoimen lähdekoodin voittoa tavoittelematon projekti."
+      "part6": "Tietosuojakäytännön",
+      "part7": ". Alternipedia on avoimen lähdekoodin voittoa tavoittelematon projekti."
     },
     license: 'Lisenssi',
     terms: 'Ehdot',
@@ -4994,6 +9379,7 @@ const fi: Dictionary = {
     goHome: 'Siirry etusivulle',
   },
   upgrade: {
+    pro: 'PRO',
     goPro: 'Siirry Prohon',
     upgradePrompt: 'Päivitä saadaksesi premium-ominaisuudet',
     title: 'Tieto on valtaa, Tehosta omaasi.',
@@ -5025,6 +9411,9 @@ const fi: Dictionary = {
     },
   },
   article: {
+
+    tools: 'Työkalut',
+    content: 'Sisältö',
     article: 'Artikkeli',
     discussion: 'Keskustelu',
     read: 'Lue',
@@ -5035,6 +9424,107 @@ const fi: Dictionary = {
 
 // Danish dictionary
 const da: Dictionary = {
+    login: {
+    title: 'Log ind',    
+    google: 'Fortsæt med Google',
+    facebook: 'Fortsæt med Facebook',
+    x: 'Fortsæt med X',
+    microsoft: 'Fortsæt med Microsoft',  
+    policy: "Ved at logge ind accepterer du vores Servicevilkår og Privatlivspolitik.",    
+  },
+  userMenu: {
+    login: "Log ind",
+    contributions: "Bidrag",
+    savedArticles: "Gemte artikler",
+    preferences: "Indstillinger",
+    logout: "Log ud"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('da-DK', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('da-DK', { year: 'numeric', month: 'long' }),
+  "title": "Fortrolighedspolitik",
+  "lastUpdatedText": "Sidst opdateret:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Velkommen til Alternipedia — en uddannelseswiki designet til at præsentere forskellige perspektiver på viden og idéer. Vi værdsætter dit privatliv og er forpligtet til at beskytte dine personlige oplysninger. Denne politik forklarer, hvilke oplysninger vi indsamler, hvordan vi bruger dem, og hvilke rettigheder du har."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Oplysninger vi indsamler",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Kontooplysninger: Når du logger ind via en OAuth-udbyder (f.eks. Google eller Meta), modtager vi dit navn, e-mailadresse og profilbillede (hvis tilgængeligt).",
+            "Betalingsoplysninger: Hvis du vælger at foretage en betaling eller donation, behandler Stripe transaktionerne sikkert. Vi gemmer aldrig eller ser dine kreditkortoplysninger.",
+            "Analyser: Vi bruger Vercel Analytics til at forstå generelle brugsmønstre, såsom hvilke sider der er populære, og hvordan vores side præsterer. Disse data er aggregerede og identificerer dig ikke personligt.",
+            "Tekniske oplysninger: Når du besøger vores site, kan vi automatisk modtage standardlogdata som browsertype, enhed og IP-adresse for at opretholde sikkerhed og funktionalitet."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hvordan vi bruger dine oplysninger",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Drive og forbedre Alternipedia-platformen",
+            "Godkende brugere og administrere konti",
+            "Behandle betalinger sikkert via Stripe",
+            "Overvåge sidepræstation og pålidelighed",
+            "Besvare brugerhenvendelser eller forespørgsler"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi sælger, udlejer eller handler ikke med dine personlige oplysninger."
+        }
+      ]
+    },
+    {
+      "title": "Cookies og sporing",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia bruger ikke reklame- eller sporingscookies."
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi bruger kun nødvendige cookies til login-sessioner og websitets funktionalitet."
+        }
+      ]
+    },
+    {
+      "title": "Datalagring og sikkerhed",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Dine data opbevares sikkert med industristandard kryptering og hosting-infrastruktur."
+        },
+        {
+          "type": "paragraph",
+          "text": "Vi træffer rimelige foranstaltninger for at beskytte dine oplysninger mod tab, misbrug eller uautoriseret adgang."
+        }
+      ]
+    },
+    {
+      "title": "Dine rettigheder",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Adgang til eller anmodning om kopi af dine personlige oplysninger",
+            "Korrigere eller slette oplysninger, vi har om dig",
+            "Tilbagekalde samtykke eller lukke din konto"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [{ "title": "Accept af Vilkår", "content": ["Ved at få adgang til og bruge dette websted accepterer brugere at overholde og være bundet af disse Servicevilkår. Brugere, der ikke accepterer disse vilkår, bør straks stoppe med at bruge webstedet."] },
   { "title": "Brugerkontoansvar", "content": ["Brugere er ansvarlige for at opretholde fortroligheden af deres kontooplysninger. Alle aktiviteter, der finder sted under en brugers konto, er udelukkende kontoindehaverens ansvar. Brugere skal straks underrette webstedets administratorer om uautoriseret kontoadgang."] },
   { "title": "Ansvarsbegrænsning", "content": ["Webstedet leverer indhold 'som det er' uden nogen garantier. Webstedets ejere er ikke ansvarlige for direkte, indirekte, tilfældige, følge- eller strafbare skader, der opstår som følge af brugernes interaktion med platformen."] },
@@ -5107,8 +9597,8 @@ const da: Dictionary = {
       "part3": "; yderligere betingelser kan gælde. Ved at bruge dette websted accepterer du",
       "part4": "Vilkår og betingelser",
       "part5": "og",
-      "part6": "Privatlivspolitik.",
-      "part7": "Alternipedia er et open source non-profit projekt."
+      "part6": "Privatlivspolitik",
+      "part7": ". Alternipedia er et open source non-profit projekt."
     },
     license: 'Licens',
     terms: 'Vilkår',
@@ -5127,7 +9617,8 @@ const da: Dictionary = {
     goHome: 'Gå til startsiden',
   },
   upgrade: {
-    goPro: 'Bliv Pro',
+    pro: 'PRO',
+    goPro: 'Bliv PRO',
     upgradePrompt: 'Opgrader for at låse premiumfunktioner op',
     title: 'Viden er magt, Forstærk din.',
     month: 'måned',
@@ -5158,6 +9649,8 @@ const da: Dictionary = {
     },
   },
   article: {
+    tools: 'Værktøjer',
+    content: 'Indhold',
     article: 'Artikel',
     discussion: 'Diskussion',
     read: 'Læs',
@@ -5168,6 +9661,107 @@ const da: Dictionary = {
 
 // Bulgarian dictionary
 const bg: Dictionary = {
+    login: {
+    title: 'Вход',    
+    google: 'Продължи с Google',
+    facebook: 'Продължи с Facebook',
+    x: 'Продължи с X',
+    microsoft: 'Продължи с Microsoft',  
+    policy: "Като влизате, приемате нашите Условия за ползване и Политика за поверителност.",    
+  },
+  userMenu: {
+    login: "Вход",
+    contributions: "Приноси",
+    savedArticles: "Запазени статии",
+    preferences: "Настройки",
+    logout: "Изход"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('bg-BG', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('bg-BG', { year: 'numeric', month: 'long' }),
+  "title": "Политика за поверителност",
+  "lastUpdatedText": "Последна актуализация:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Добре дошли в Alternipedia — образователна уики, създадена да представя различни перспективи върху знанията и идеите. Ценим вашата поверителност и се ангажираме да защитаваме личната ви информация. Тази политика обяснява какво събираме, как го използваме и какви права имате."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Информация, която събираме",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Информация за акаунт: Когато влизате чрез OAuth доставчик (например Google или Meta), получаваме вашето име, имейл адрес и профилна снимка (ако е налична).",
+            "Платежна информация: Ако решите да направите плащане или дарение, Stripe обработва транзакциите сигурно. Никога не съхраняваме и не виждаме номера на вашата кредитна карта.",
+            "Аналитични данни: Използваме Vercel Analytics, за да разберем общите модели на използване, например кои страници са популярни и как се представя нашият сайт. Данните са агрегирани и не идентифицират лично вас.",
+            "Техническа информация: При посещение на сайта ни може автоматично да получаваме стандартни лог данни като тип браузър, устройство и IP адрес, за да поддържаме сигурността и функционалността."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Как използваме вашата информация",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Операции и подобряване на платформата Alternipedia",
+            "Удостоверяване на потребители и управление на акаунти",
+            "Сигурна обработка на плащания чрез Stripe",
+            "Мониторинг на производителността и надеждността на сайта",
+            "Отговаряне на запитвания или заявки на потребители"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Не продаваме, отдаване под наем или търгуваме с личните ви данни."
+        }
+      ]
+    },
+    {
+      "title": "Бисквитки и проследяване",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia не използва рекламни или проследяващи бисквитки."
+        },
+        {
+          "type": "paragraph",
+          "text": "Използваме само основни бисквитки, необходими за сесии за вход и функционалност на сайта."
+        }
+      ]
+    },
+    {
+      "title": "Съхранение на данни и сигурност",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Вашите данни се съхраняват сигурно, използвайки индустриални стандарти за криптиране и хостинг инфраструктура."
+        },
+        {
+          "type": "paragraph",
+          "text": "Предприемаме разумни стъпки за защита на вашата информация от загуба, злоупотреба или неоторизиран достъп."
+        }
+      ]
+    },
+    {
+      "title": "Вашите права",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Достъп до личните ви данни или искане на копие",
+            "Коригиране или изтриване на информацията, която държим за вас",
+            "Оттегляне на съгласието или затваряне на акаунта"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Приемане на условията", "content": ["Достъпът и използването на този уебсайт означава, че потребителите се съгласяват да спазват тези Условия за ползване. Потребителите, които не са съгласни с тези условия, трябва незабавно да спрат да използват сайта."] },
     { "title": "Отговорности на потребителския акаунт", "content": ["Потребителите са отговорни за поддържането на поверителността на данните на своя акаунт. Всички дейности, извършени под акаунта на потребителя, са изключителна отговорност на собственика на акаунта. Потребителите трябва незабавно да уведомят администраторите на сайта за всякакъв неоторизиран достъп."] },
@@ -5242,8 +9836,8 @@ const bg: Dictionary = {
       "part3": "; могат да се прилагат допълнителни условия. Като използвате този сайт, вие се съгласявате с",
       "part4": "Общи условия",
       "part5": "и",
-      "part6": "Политика за поверителност.",
-      "part7": "Alternipedia е проект с отворен код и с нестопанска цел."
+      "part6": "Политика за поверителност",
+      "part7": ". Alternipedia е проект с отворен код и с нестопанска цел."
     },
     license: 'Лиценз',
     terms: 'Условия',
@@ -5262,7 +9856,8 @@ const bg: Dictionary = {
     goHome: 'Към началната страница',
   },
   upgrade: {
-    goPro: 'Стани Pro',
+    pro: 'PRO',
+    goPro: 'Стани PRO',
     upgradePrompt: 'Надградете, за да отключите премиум функции',
     title: 'Знанието е сила, Усъвършенствай своето.',
     month: 'месец',
@@ -5293,6 +9888,8 @@ const bg: Dictionary = {
     },
   },
   article: {
+    tools: 'Инструменти',
+    content: 'Съдържание',
     article: 'Статия',
     discussion: 'Дискусия',
     read: 'Прочети',
@@ -5303,6 +9900,107 @@ const bg: Dictionary = {
 
 // Slovak dictionary
 const sk: Dictionary = {
+    login: {
+    title: 'Prihlásiť sa',    
+    google: 'Pokračovať s Google',
+    facebook: 'Pokračovať s Facebook',
+    x: 'Pokračovať s X',
+    microsoft: 'Pokračovať s Microsoft',  
+    policy: "Pri prihlásení súhlasíte s našimi Podmienkami služby a Zásadami ochrany osobných údajov.",    
+  },
+  userMenu: {
+    login: "Prihlásiť sa",
+    contributions: "Príspevky",
+    savedArticles: "Uložené články",
+    preferences: "Nastavenia",
+    logout: "Odhlásiť sa"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('sk-SK', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('sk-SK', { year: 'numeric', month: 'long' }),
+  "title": "Zásady ochrany osobných údajov",
+  "lastUpdatedText": "Naposledy aktualizované:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Vitajte na Alternipedia — vzdelávacej wiki navrhnutej na prezentáciu rôznych pohľadov na vedomosti a nápady. Váži si vaše súkromie a zaväzujeme sa chrániť vaše osobné údaje. Tieto zásady vysvetľujú, aké informácie zhromažďujeme, ako ich používame a aké máte práva."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informácie, ktoré zhromažďujeme",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informácie o účte: Pri prihlásení cez poskytovateľa OAuth (napr. Google alebo Meta) získavame vaše meno, e-mailovú adresu a profilovú fotografiu (ak je k dispozícii).",
+            "Platobné informácie: Ak sa rozhodnete vykonať platbu alebo dar, Stripe bezpečne spracuje transakcie. Nikdy neukladáme ani nevidíme čísla vašej kreditnej karty.",
+            "Analytické údaje: Používame Vercel Analytics na pochopenie všeobecných vzorcov používania, napríklad ktoré stránky sú populárne a ako sa stránka správa. Údaje sú agregované a neidentifikujú vás osobne.",
+            "Technické informácie: Pri návšteve našej stránky môžeme automaticky prijímať štandardné údaje z protokolov, ako je typ prehliadača, zariadenie a IP adresa, aby sme udržali bezpečnosť a funkčnosť."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Ako používame vaše informácie",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Prevádzka a zlepšovanie platformy Alternipedia",
+            "Overovanie používateľov a správa účtov",
+            "Bezpečné spracovanie platieb cez Stripe",
+            "Monitorovanie výkonu a spoľahlivosti stránky",
+            "Odpovedanie na otázky alebo požiadavky používateľov"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Nepredávame, nepožičiavame ani nevymieňame vaše osobné údaje."
+        }
+      ]
+    },
+    {
+      "title": "Cookies a sledovanie",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia nepoužíva reklamné ani sledovacie cookies."
+        },
+        {
+          "type": "paragraph",
+          "text": "Používame len nevyhnutné cookies potrebné na prihlásenie a funkčnosť stránky."
+        }
+      ]
+    },
+    {
+      "title": "Ukladanie údajov a bezpečnosť",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vaše údaje sú bezpečne uložené pomocou štandardného priemyselného šifrovania a hostingovej infraštruktúry."
+        },
+        {
+          "type": "paragraph",
+          "text": "Prijímame primerané opatrenia na ochranu vašich informácií pred stratou, zneužitím alebo neoprávneným prístupom."
+        }
+      ]
+    },
+    {
+      "title": "Vaše práva",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Prístup k osobným údajom alebo žiadosť o kópiu",
+            "Oprava alebo vymazanie informácií, ktoré o vás uchovávame",
+            "Stiahnutie súhlasu alebo zatvorenie účtu"
+          ]
+        }
+      ]
+    }
+  ]
+},  
   termsOfService: [
     { "title": "Prijatie podmienok", "content": ["Prístupom a používaním tejto webovej stránky používatelia súhlasia s dodržiavaním týchto Podmienok služby a ich záväznosťou. Používatelia, ktorí s týmito podmienkami nesúhlasia, by mali okamžite prestať používať stránku."] },
     { "title": "Zodpovednosti používateľského účtu", "content": ["Používatelia sú zodpovední za udržiavanie dôvernosti svojich prihlasovacích údajov. Všetky aktivity vykonané pod účtom používateľa sú výhradnou zodpovednosťou majiteľa účtu. Používatelia musia okamžite informovať administrátorov webu o neautorizovanom prístupe k účtu."] },
@@ -5377,8 +10075,8 @@ const sk: Dictionary = {
       "part3": "; môžu platiť ďalšie podmienky. Používaním tejto stránky súhlasíte s",
       "part4": "Podmienkami",
       "part5": "a",
-      "part6": "Zásadami ochrany osobných údajov.",
-      "part7": "Alternipedia je open-source neziskový projekt."
+      "part6": "Zásadami ochrany osobných údajov",
+      "part7": ". Alternipedia je open-source neziskový projekt."
     },
     license: 'Licencia',
     terms: 'Podmienky',
@@ -5397,7 +10095,8 @@ const sk: Dictionary = {
     goHome: 'Prejsť na domovskú stránku',
   },
   upgrade: {
-    goPro: 'Prejsť na Pro',
+    pro: 'PRO',
+    goPro: 'Prejsť na PRO',
     upgradePrompt: 'Upgradujte pre odomknutie prémiových funkcií',
     title: 'Vedieť je moc, Zosilnite svoju.',
     month: 'mesiac',
@@ -5428,6 +10127,8 @@ const sk: Dictionary = {
     },
   },
   article: {
+    tools: 'Nástroje',
+    content: 'Obsah',
     article: 'Článok',
     discussion: 'Diskusia',
     read: 'Čítať',
@@ -5438,6 +10139,107 @@ const sk: Dictionary = {
 
 // Croatian dictionary 
 const hr: Dictionary = {
+    login: {
+    title: 'Prijava',    
+    google: 'Nastavi s Google',
+    facebook: 'Nastavi s Facebook',
+    x: 'Nastavi s X',
+    microsoft: 'Nastavi s Microsoft',  
+    policy: "Prijavom prihvaćate naše Uvjete pružanja usluga i Pravila o privatnosti.",
+  },
+  userMenu: {
+    login: "Prijava",
+    contributions: "Doprinosi",
+    savedArticles: "Sačuvani članci",
+    preferences: "Postavke",
+    logout: "Odjava"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('hr-HR', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('hr-HR', { year: 'numeric', month: 'long' }),
+  "title": "Pravila privatnosti",
+  "lastUpdatedText": "Zadnje ažuriranje:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Dobrodošli na Alternipedia — obrazovnu wikipediju dizajniranu za predstavljanje različitih perspektiva o znanju i idejama. Cijenimo vašu privatnost i posvećeni smo zaštiti vaših osobnih podataka. Ova politika objašnjava koje informacije prikupljamo, kako ih koristimo i koja su vaša prava."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informacije koje prikupljamo",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Podaci o računu: Kada se prijavite putem OAuth pružatelja (npr. Google ili Meta), primamo vaše ime, e-mail adresu i profilnu sliku (ako je dostupna).",
+            "Podaci o plaćanju: Ako odlučite izvršiti uplatu ili donaciju, Stripe sigurno obrađuje transakcije. Nikada ne pohranjujemo niti vidimo podatke vaše kreditne kartice.",
+            "Analitički podaci: Koristimo Vercel Analytics za razumijevanje općih obrazaca korištenja, poput popularnih stranica i performansi naše stranice. Podaci su agregirani i ne identificiraju vas osobno.",
+            "Tehničke informacije: Prilikom posjeta našoj stranici možemo automatski primati standardne podatke dnevnika, poput tipa preglednika, uređaja i IP adrese, radi održavanja sigurnosti i funkcionalnosti."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kako koristimo vaše informacije",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Upravljanje i poboljšanje platforme Alternipedia",
+            "Autentikacija korisnika i upravljanje računima",
+            "Sigurno procesiranje plaćanja putem Stripea",
+            "Praćenje performansi i pouzdanosti web stranice",
+            "Odgovaranje na upite ili zahtjeve korisnika"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne prodajemo, ne iznajmljujemo niti ne trgujemo vašim osobnim podacima."
+        }
+      ]
+    },
+    {
+      "title": "Kolačići i praćenje",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ne koristi reklamne niti praćenje kolačiće."
+        },
+        {
+          "type": "paragraph",
+          "text": "Koristimo samo nužne kolačiće potrebne za prijavu i funkcionalnost web stranice."
+        }
+      ]
+    },
+    {
+      "title": "Pohrana podataka i sigurnost",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vaši podaci se sigurno pohranjuju koristeći industrijske standarde šifriranja i hosting infrastrukturu."
+        },
+        {
+          "type": "paragraph",
+          "text": "Poduzimamo razmjerne mjere za zaštitu vaših informacija od gubitka, zlouporabe ili neovlaštenog pristupa."
+        }
+      ]
+    },
+    {
+      "title": "Vaša prava",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Pristup ili zahtjev za kopiju vaših osobnih podataka",
+            "Ispravak ili brisanje informacija koje čuvamo o vama",
+            "Povlačenje suglasnosti ili zatvaranje računa"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { "title": "Prihvaćanje uvjeta", "content": ["Pristupom i korištenjem ove web stranice, korisnici se slažu pridržavati ovih Uvjeta pružanja usluge. Korisnici koji se ne slažu s ovim uvjetima trebali bi odmah prestati koristiti web stranicu."] },
     { "title": "Odgovornosti korisničkog računa", "content": ["Korisnici su odgovorni za održavanje povjerljivosti svojih podataka za prijavu. Sve aktivnosti pod korisničkim računom su isključiva odgovornost vlasnika računa. Korisnici moraju odmah obavijestiti administratore web stranice o bilo kojem neovlaštenom pristupu računu."] },
@@ -5512,8 +10314,8 @@ const hr: Dictionary = {
       "part3": "; mogu se primijeniti dodatni uvjeti. Korištenjem ove stranice prihvaćate",
       "part4": "Uvjeti korištenja",
       "part5": "i",
-      "part6": "Politiku privatnosti.",
-      "part7": "Alternipedia je open-source neprofitni projekt."
+      "part6": "Politiku privatnosti",
+      "part7": ". Alternipedia je open-source neprofitni projekt."
     },
     license: 'Licenca',
     terms: 'Uvjeti',
@@ -5532,7 +10334,8 @@ const hr: Dictionary = {
     goHome: 'Idi na početnu stranicu',
   },
   upgrade: {
-    goPro: 'Postani Pro',
+    pro: 'PRO',
+    goPro: 'Postani PRO',
     upgradePrompt: 'Nadogradi za otključavanje premium značajki',
     title: 'Znanje je moć, Pojačaj svoje.',
     month: 'mjesec',
@@ -5563,6 +10366,8 @@ const hr: Dictionary = {
     },
   },
   article: {
+    tools: 'Alati',
+    content: 'Sadržaj',
     article: 'Članak',
     discussion: 'Rasprava',
     read: 'Pročitaj',
@@ -5573,6 +10378,107 @@ const hr: Dictionary = {
 
 // Lithuanian dictionary
 const lt: Dictionary = {
+    login: {
+    title: 'Prisijungti',    
+    google: 'Tęsti su Google',
+    facebook: 'Tęsti su Facebook',
+    x: 'Tęsti su X',
+    microsoft: 'Tęsti su Microsoft',  
+    policy: "Prisijungdami sutinkate su mūsų Paslaugų teikimo sąlygomis ir Privatumo politika.",    
+  },
+  userMenu: {
+    login: "Prisijungti",
+    contributions: "Indėliai",
+    savedArticles: "Išsaugoti straipsniai",
+    preferences: "Nustatymai",
+    logout: "Atsijungti"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('lt-LT', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('lt-LT', { year: 'numeric', month: 'long' }),
+  "title": "Privatumo politika",
+  "lastUpdatedText": "Paskutinį kartą atnaujinta:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Sveiki atvykę į Alternipedia — edukacinę wikipediją, sukurtą pateikti įvairias žinių ir idėjų perspektyvas. Vertiname jūsų privatumą ir esame įsipareigoję saugoti jūsų asmeninę informaciją. Ši politika paaiškina, kokią informaciją renkamės, kaip ją naudojame ir kokias teises turite."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informacija, kurią renkamės",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Paskyros informacija: Prisijungdami per OAuth paslaugų teikėją (pvz., Google arba Meta) gauname jūsų vardą, el. pašto adresą ir profilio nuotrauką (jei yra).",
+            "Mokėjimo informacija: Jei nusprendžiate atlikti mokėjimą ar auką, Stripe saugiai apdoroja sandorius. Mes niekada nesaugome ir nematome jūsų kredito kortelės duomenų.",
+            "Analitiniai duomenys: Naudojame Vercel Analytics, kad suprastume bendrus naudojimo modelius, pavyzdžiui, kurios puslapiai yra populiariausi ir kaip veikia mūsų svetainė. Duomenys yra apibendrinti ir neidentifikuoja jūsų asmeniškai.",
+            "Techninė informacija: Apsilankę mūsų svetainėje galime automatiškai gauti standartinius žurnalo duomenis, tokius kaip naršyklės tipas, įrenginys ir IP adresas, siekiant užtikrinti saugumą ir funkcionalumą."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kaip naudojame jūsų informaciją",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia platformos veikimas ir tobulinimas",
+            "Vartotojų autentifikacija ir paskyrų valdymas",
+            "Saugus mokėjimų apdorojimas per Stripe",
+            "Svetainės našumo ir patikimumo stebėjimas",
+            "Atsakymas į vartotojų užklausas ar prašymus"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Mes neparduodame, nepernuomojame ir neprekiaujame jūsų asmenine informacija."
+        }
+      ]
+    },
+    {
+      "title": "Slapukai ir sekimas",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia nenaudoja reklamos ar sekimo slapukų."
+        },
+        {
+          "type": "paragraph",
+          "text": "Naudojame tik būtinus slapukus, reikalingus prisijungimo seansams ir svetainės funkcionalumui."
+        }
+      ]
+    },
+    {
+      "title": "Duomenų saugojimas ir saugumas",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Jūsų duomenys saugomi saugiai, naudojant pramonės standartus atitinkančią šifravimą ir prieglobos infrastruktūrą."
+        },
+        {
+          "type": "paragraph",
+          "text": "Imamės pagrįstų priemonių, kad apsaugotume jūsų informaciją nuo praradimo, piktnaudžiavimo ar neautorizuotos prieigos."
+        }
+      ]
+    },
+    {
+      "title": "Jūsų teisės",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Prieiga prie jūsų asmens duomenų arba prašymas gauti kopiją",
+            "Informacijos apie jus taisymas arba ištrynimas",
+            "Sutikimo atšaukimas arba paskyros uždarymas"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [{ title: 'Sąlygų priėmimas', content: ["Naudodamiesi šia svetaine, vartotojai sutinka laikytis šių paslaugų teikimo sąlygų. Nesutinkantys su šiomis sąlygomis turėtų nedelsdami nutraukti svetainės naudojimą."] },
   { title: 'Vartotojo paskyros atsakomybė', content: ["Vartotojai yra atsakingi už savo paskyros duomenų konfidencialumą. Bet kokia veikla, vykdoma per vartotojo paskyrą, yra vien vartotojo atsakomybė. Apie bet kokį neteisėtą prisijungimą turi būti nedelsiant pranešta svetainės administracijai."] },
   { title: 'Atsakomybės apribojimas', content: ['Svetainės turinys pateikiamas „kaip yra“ be jokių garantijų. Svetainės savininkai neatsako už tiesioginius, netiesioginius, atsitiktinius, pasekminius ar baudžiamuosius nuostolius, kylančius dėl vartotojų sąveikos su platforma.'] },
@@ -5653,8 +10559,8 @@ const lt: Dictionary = {
       "part3": "; gali būti taikomos papildomos sąlygos. Naudodamiesi šia svetaine, jūs sutinkate su",
       "part4": "Sąlygomis",
       "part5": "ir",
-      "part6": "Privatumo politika.",
-      "part7": "Alternipedia yra atviro kodo ne pelno projektas."
+      "part6": "Privatumo politika",
+      "part7": ". Alternipedia yra atviro kodo ne pelno projektas."
     },
     license: 'Licencija',
     terms: 'Taisyklės',
@@ -5674,7 +10580,8 @@ const lt: Dictionary = {
     goHome: 'Grįžti į pagrindinį puslapį',
   },
   upgrade: {
-    goPro: 'Tapkite Pro',
+    pro: 'PRO',
+    goPro: 'Tapkite PRO',
     upgradePrompt: 'Atnaujinkite, kad atrakintumėte premium funkcijas',
     title: 'Žinios yra galia, Sustiprinkite savo.',
     month: 'mėnuo',
@@ -5705,6 +10612,8 @@ const lt: Dictionary = {
     },
   },
   article: {
+    tools: 'Įrankiai',
+    content: 'Turinys',
     article: 'Straipsnis',
     discussion: 'Diskusija',
     read: 'Skaityti',
@@ -5715,6 +10624,108 @@ const lt: Dictionary = {
 
 // Slovenian dictionary
 const sl: Dictionary = {
+    login: {
+    title: 'Prijava',    
+    google: 'Nadaljuj z Google',
+    facebook: 'Nadaljuj s Facebook',
+    x: 'Nadaljuj z X',
+    microsoft: 'Nadaljuj z Microsoft',  
+    policy: "S prijavo sprejemate naše pogoje storitve in politiko zasebnosti.",    
+  },
+
+  userMenu: {
+    login: "Prijava",
+    contributions: "Prispevki",
+    savedArticles: "Shranjeni članki",
+    preferences: "Nastavitve",
+    logout: "Odjava"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('sl-SI', { year: 'numeric', month: 'long' }),
+"privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('sl-SI', { year: 'numeric', month: 'long' }),
+  "title": "Pravilnik o zasebnosti",
+  "lastUpdatedText": "Zadnja posodobitev:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Dobrodošli na Alternipedia — izobraževalni wiki, zasnovan za predstavitev različnih pogledov na znanje in ideje. Cenimo vašo zasebnost in smo zavezani k varovanju vaših osebnih podatkov. Ta pravilnik pojasnjuje, katere podatke zbiramo, kako jih uporabljamo in katere pravice imate."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Podatki, ki jih zbiramo",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Podatki o računu: Ko se prijavite prek ponudnika OAuth (npr. Google ali Meta), prejmemo vaše ime, e-poštni naslov in profilno sliko (če je na voljo).",
+            "Podatki o plačilu: Če se odločite za plačilo ali donacijo, Stripe varno obdela transakcije. Nikoli ne shranjujemo ali vidimo številk vaše kreditne kartice.",
+            "Analitični podatki: Uporabljamo Vercel Analytics za razumevanje splošnih vzorcev uporabe, kot so priljubljene strani in delovanje spletnega mesta. Podatki so združeni in vas osebno ne identificirajo.",
+            "Tehnični podatki: Ko obiščete našo spletno stran, lahko samodejno prejmemo standardne podatke dnevnika, kot so tip brskalnika, naprava in IP naslov, za vzdrževanje varnosti in funkcionalnosti."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kako uporabljamo vaše podatke",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Upravljanje in izboljševanje platforme Alternipedia",
+            "Avtentikacija uporabnikov in upravljanje računov",
+            "Varen proces plačil preko Stripe",
+            "Spremljanje zmogljivosti in zanesljivosti spletnega mesta",
+            "Odgovarjanje na vprašanja ali zahteve uporabnikov"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Vaših osebnih podatkov ne prodajamo, ne oddajamo v najem in ne trgujemo z njimi."
+        }
+      ]
+    },
+    {
+      "title": "Piškotki in sledenje",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ne uporablja oglasnih ali sledilnih piškotkov."
+        },
+        {
+          "type": "paragraph",
+          "text": "Uporabljamo le nujne piškotke, potrebne za prijavo in funkcionalnost spletnega mesta."
+        }
+      ]
+    },
+    {
+      "title": "Shranjevanje podatkov in varnost",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vaši podatki so varno shranjeni z uporabo industrijskih standardov šifriranja in gostiteljske infrastrukture."
+        },
+        {
+          "type": "paragraph",
+          "text": "Upoštevamo razumne ukrepe za zaščito vaših podatkov pred izgubo, zlorabo ali nepooblaščenim dostopom."
+        }
+      ]
+    },
+    {
+      "title": "Vaše pravice",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Dostop do vaših osebnih podatkov ali zahteva za kopijo",
+            "Popravek ali izbris informacij, ki jih hranimo o vas",
+            "Umik soglasja ali zaprtje računa"
+          ]
+        }
+      ]
+    }
+  ]
+},  
   termsOfService: [{ title: 'Sprejem pogojev', content: ["Z dostopom do te spletne strani in njeno uporabo se uporabniki strinjajo, da bodo spoštovali te pogoje uporabe. Uporabniki, ki se s pogoji ne strinjajo, morajo takoj prenehati z uporabo strani."] },
   { title: 'Odgovornost uporabniškega računa', content: ["Uporabniki so odgovorni za varovanje zaupnosti svojih prijavnih podatkov. Vsaka dejavnost, ki se izvaja pod uporabniškim računom, je izključna odgovornost imetnika računa. O kakršnem koli nepooblaščenem dostopu je treba takoj obvestiti administratorje spletne strani."] },
   { title: 'Omejitev odgovornosti', content: ['Spletna stran zagotavlja vsebino »takšno, kot je«, brez kakršnih koli jamstev. Lastniki spletne strani ne odgovarjajo za neposredno, posredno, naključno, posledično ali kaznovalno škodo, ki izhaja iz interakcije uporabnikov s platformo.'] },
@@ -5795,8 +10806,8 @@ const sl: Dictionary = {
       "part3": "; lahko veljajo dodatni pogoji. Z uporabo tega spletnega mesta se strinjate z",
       "part4": "Pogoji in določili",
       "part5": "in",
-      "part6": "Politiko zasebnosti.",
-      "part7": "Alternipedia je odprtokodni neprofitni projekt."
+      "part6": "Politiko zasebnosti",
+      "part7": ". Alternipedia je odprtokodni neprofitni projekt."
     },
     license: 'Licenca',
     terms: 'Pogoji uporabe',
@@ -5816,7 +10827,8 @@ const sl: Dictionary = {
     goHome: 'Pojdi na začetno stran',
   },
   upgrade: {
-    goPro: 'Postani Pro',
+    pro: 'PRO',
+    goPro: 'Postani PRO',
     upgradePrompt: 'Nadgradi za odklep premium funkcij',
     title: 'Znanje je moč, Pojačajte svoje.',
     month: 'mesec',
@@ -5847,6 +10859,8 @@ const sl: Dictionary = {
     },
   },
   article: {
+    tools: 'Orodja',
+    content: 'Vsebina',
     article: 'Članek',
     discussion: 'Diskusija',
     read: 'Preberi',
@@ -5857,6 +10871,107 @@ const sl: Dictionary = {
 
 // Latvian dictionary
 const lv: Dictionary = {
+    login: {
+    title: 'Pieslēgties',    
+    google: 'Turpināt ar Google',
+    facebook: 'Turpināt ar Facebook',
+    x: 'Turpināt ar X',
+    microsoft: 'Turpināt ar Microsoft',  
+    policy: "Piesakoties, jūs piekrītat mūsu Pakalpojumu sniegšanas noteikumiem un Privātuma politikai.",    
+  },  
+  userMenu: {
+    login: "Pieslēgties",
+    contributions: "Ieguldījumi",
+    savedArticles: "Saglabātie raksti",
+    preferences: "Iestatījumi",
+    logout: "Atslēgties"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('lv-LV', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('lv-LV', { year: 'numeric', month: 'long' }),
+  "title": "Privātuma politika",
+  "lastUpdatedText": "Pēdējoreiz atjaunināts:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Laipni lūdzam Alternipedia — izglītojošā vikivietnē, kas izveidota, lai piedāvātu dažādus skatījumus uz zināšanām un idejām. Mēs cienām jūsu privātumu un esam apņēmušies aizsargāt jūsu personisko informāciju. Šī politika izskaidro, kādus datus mēs vācām, kā tos izmantojam un kādas ir jūsu tiesības."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informācija, ko mēs vākam",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Kontu informācija: Pierakstoties, izmantojot OAuth pakalpojumu sniedzēju (piemēram, Google vai Meta), mēs saņemam jūsu vārdu, e-pasta adresi un profila attēlu (ja pieejams).",
+            "Maksājumu informācija: Ja izvēlaties veikt maksājumu vai ziedojumu, Stripe droši apstrādā darījumus. Mēs nekad nesaglabājam un neredzam jūsu kredītkartes datus.",
+            "Analītikas dati: Mēs izmantojam Vercel Analytics, lai izprastu vispārīgus lietošanas modeļus, piemēram, kuras lapas ir populāras un kā darbojas mūsu vietne. Šie dati ir apkopoti un nenosaka jūsu personību.",
+            "Tehniskā informācija: Apmeklējot mūsu vietni, mēs varam automātiski saņemt standarta žurnālu datus, piemēram, pārlūkprogrammas tipu, ierīci un IP adresi, lai uzturētu drošību un funkcionalitāti."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kā mēs izmantojam jūsu informāciju",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia platformas darbības nodrošināšana un uzlabošana",
+            "Lietotāju autentifikācija un kontu pārvaldība",
+            "Droša maksājumu apstrāde caur Stripe",
+            "Vietnes veiktspējas un uzticamības uzraudzība",
+            "Atbildēšana uz lietotāju jautājumiem vai pieprasījumiem"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Mēs nepārdodam, neizīrējam un netirdzniecībā neizmantoto jūsu personisko informāciju."
+        }
+      ]
+    },
+    {
+      "title": "Sīkdatnes un izsekošana",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia neizmanto reklāmas vai izsekošanas sīkdatnes."
+        },
+        {
+          "type": "paragraph",
+          "text": "Mēs izmantojam tikai būtiskas sīkdatnes, kas nepieciešamas pieteikšanās sesijām un vietnes funkcionalitātei."
+        }
+      ]
+    },
+    {
+      "title": "Datu glabāšana un drošība",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Jūsu dati tiek droši glabāti, izmantojot nozares standartiem atbilstošu šifrēšanu un mitināšanas infrastruktūru."
+        },
+        {
+          "type": "paragraph",
+          "text": "Mēs veicam saprātīgus pasākumus, lai aizsargātu jūsu informāciju no zaudējumiem, ļaunprātīgas izmantošanas vai neatļautas piekļuves."
+        }
+      ]
+    },
+    {
+      "title": "Jūsu tiesības",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Piekļuve jūsu personiskajiem datiem vai pieprasījums pēc kopijas",
+            "Informācijas labošana vai dzēšana, ko mēs glabājam par jums",
+            "Piekrīšanas atsaukšana vai konta slēgšana"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Noteikumu pieņemšana', content: ["Izmantojot šo vietni, lietotāji piekrīt ievērot šos pakalpojumu noteikumus. Lietotāji, kuri nepiekrīt šiem noteikumiem, nekavējoties jāpārtrauc vietnes izmantošana."] },
     { title: 'Lietotāja konta atbildība', content: ["Lietotāji ir atbildīgi par sava konta datu konfidencialitātes saglabāšanu. Visa darbība, kas notiek zem lietotāja konta, ir tikai konta īpašnieka atbildība. Par jebkuru neatļautu piekļuvi nekavējoties jāinformē vietnes administratori."] },
@@ -5938,8 +11053,8 @@ const lv: Dictionary = {
       "part3": "; var tikt piemēroti papildu noteikumi. Izmantojot šo vietni, jūs piekrītat",
       "part4": "Noteikumiem un nosacījumiem",
       "part5": "un",
-      "part6": "Privātuma politikai.",
-      "part7": "Alternipedia ir atvērtā koda bezpeļņas projekts."
+      "part6": "Privātuma politikai",
+      "part7": ". Alternipedia ir atvērtā koda bezpeļņas projekts."
     },
     license: 'Licence',
     terms: 'Noteikumi',
@@ -5959,7 +11074,8 @@ const lv: Dictionary = {
     goHome: 'Doties uz sākumlapu',
   },
   upgrade: {
-    goPro: 'Pārejiet uz Pro',
+    pro: 'PRO',
+    goPro: 'Pārejiet uz PRO',
     upgradePrompt: 'Jauniniet, lai atbloķētu premium funkcijas',
     title: 'Zināšanas ir spēks, Palieliniet savas.',
     month: 'mēnesis',
@@ -5990,6 +11106,8 @@ const lv: Dictionary = {
     },
   },
   article: {
+    tools: 'Rīki',
+    content: 'Saturs',
     article: 'Raksts',
     discussion: 'Diskusija',
     read: 'Lasīt',
@@ -6000,6 +11118,107 @@ const lv: Dictionary = {
 
 // Estonian dictionary
 const et: Dictionary = {
+    login: {
+    title: 'Logi sisse',    
+    google: 'Jätka Google\'iga',
+    facebook: 'Jätka Facebookiga',
+    x: 'Jätka X-iga',
+    microsoft: 'Jätka Microsoftiga',  
+    policy: "Sisselogimisega nõustute meie teenusetingimuste ja privaatsuspoliitikaga.",    
+  },
+  userMenu: {
+    login: "Logi sisse",
+    contributions: "Panused",
+    savedArticles: "Salvestatud artiklid",
+    preferences: "Eelistused",
+    logout: "Logi välja"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('et-EE', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('et-EE', { year: 'numeric', month: 'long' }),
+  "title": "Privaatsuspoliitika",
+  "lastUpdatedText": "Viimati uuendatud:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Tere tulemast Alternipedia’sse — hariduslikku vikisse, mis on loodud esitama erinevaid vaatenurki teadmistele ja ideedele. Hindame teie privaatsust ja oleme pühendunud teie isikuandmete kaitsele. See poliitika selgitab, milliseid andmeid me kogume, kuidas me neid kasutame ja millised on teie õigused."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Kogutav teave",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Kontoandmed: Kui logite sisse OAuth-teenuse pakkuja kaudu (nt Google või Meta), saame teie nime, e-posti aadressi ja profiilipildi (kui saadaval).",
+            "Makseandmed: Kui otsustate teha makse või annetuse, töötleb Stripe tehingud turvaliselt. Me ei salvesta ega näe kunagi teie krediitkaardi numbreid.",
+            "Analüütikaandmed: Kasutame Vercel Analyticsi, et mõista üldisi kasutusmustreid, näiteks millised lehed on populaarsed ja kuidas meie sait toimib. Need andmed on koondatud ja ei võimalda teid isiklikult tuvastada.",
+            "Tehniline teave: Kui külastate meie saiti, võime automaatselt saada standardseid logiandmeid, näiteks brauseri tüüpi, seadet ja IP-aadressi, et tagada turvalisus ja funktsionaalsus."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kuidas me teie teavet kasutame",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Alternipedia platvormi toimimise ja täiustamise tagamine",
+            "Kasutajate autentimine ja kontode haldamine",
+            "Makse turvaline töötlemine Stripe kaudu",
+            "Saidijõudluse ja töökindluse jälgimine",
+            "Kasutajate päringutele või taotlustele vastamine"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Me ei müü, rendi ega kaubelda teie isikuandmetega."
+        }
+      ]
+    },
+    {
+      "title": "Küpsised ja jälgimine",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ei kasuta reklaami- ega jälgimisküpsiseid."
+        },
+        {
+          "type": "paragraph",
+          "text": "Kasutame ainult hädavajalikke küpsiseid, mis on vajalikud sisselogimiseks ja saidi funktsionaalsuseks."
+        }
+      ]
+    },
+    {
+      "title": "Andmete säilitamine ja turvalisus",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Teie andmeid hoitakse turvaliselt, kasutades tööstusharu standarditele vastavat krüpteerimist ja hostimise infrastruktuuri."
+        },
+        {
+          "type": "paragraph",
+          "text": "Võtame mõistlikke meetmeid teie teabe kaitsmiseks kadumise, väärkasutuse või volitamata juurdepääsu eest."
+        }
+      ]
+    },
+    {
+      "title": "Teie õigused",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Juurdepääs teie isikuandmetele või koopia nõudmine",
+            "Teabe parandamine või kustutamine, mis meil teie kohta on",
+            "Nõusoleku tagasivõtmine või konto sulgemine"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Tingimuste aktsepteerimine', content: ["Selle veebisaidi kasutamisega nõustuvad kasutajad järgima neid teenusetingimusi. Kui kasutaja nendega ei nõustu, peab ta viivitamatult lõpetama veebisaidi kasutamise."] },
     { title: 'Kasutajakonto vastutus', content: ["Kasutajad vastutavad oma kontoandmete konfidentsiaalsuse eest. Kõik tegevused, mis toimuvad kasutaja konto all, on täielikult konto omaniku vastutusel. Igasugusest volitamata juurdepääsust tuleb viivitamatult teavitada veebisaidi administraatoreid."] },
@@ -6081,8 +11300,8 @@ const et: Dictionary = {
       "part3": "; võivad kehtida täiendavad tingimused. Selle saidi kasutamisega nõustute",
       "part4": "Tingimustega",
       "part5": "ja",
-      "part6": "Privaatsuspoliitikaga.",
-      "part7": "Alternipedia on avatud lähtekoodiga mittetulundusprojekt."
+      "part6": "Privaatsuspoliitikaga",
+      "part7": ". Alternipedia on avatud lähtekoodiga mittetulundusprojekt."
     },
     license: 'Litsents',
     terms: 'Kasutustingimused',
@@ -6102,6 +11321,7 @@ const et: Dictionary = {
     goHome: 'Mine avalehele',
   },
   upgrade: {
+    pro: 'PRO',
     goPro: 'Minge Pro-le',
     upgradePrompt: 'Uuendage, et avada premium-funktsioonid',
     title: 'Teadmised on jõud, Suurendage enda oma.',
@@ -6133,6 +11353,8 @@ const et: Dictionary = {
     },
   },
   article: {
+    tools: 'Tööriistad',
+    content: 'Sisu',
     article: 'Artikkel',
     discussion: 'Arutelu',
     read: 'Loe',
@@ -6143,6 +11365,107 @@ const et: Dictionary = {
 
 // Icelandic dictionary
 const is: Dictionary = {
+    login: {
+    title: 'Skrá inn',    
+    google: 'Halda áfram með Google',
+    facebook: 'Halda áfram með Facebook',
+    x: 'Halda áfram með X',
+    microsoft: 'Halda áfram með Microsoft',  
+    policy: "Með innskráningu samþykkir þú þjónustuskilmála okkar og persónuverndarstefnu.",    
+  },  
+  userMenu: {
+    login: "Skrá inn",
+    contributions: "Framlög",
+    savedArticles: "Vistaðir greinar",
+    preferences: "Stillingar",
+    logout: "Skrá út"
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('is-IS', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('is-IS', { year: 'numeric', month: 'long' }),
+  "title": "Persónuverndarstefna",
+  "lastUpdatedText": "Síðast uppfært:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Velkomin á Alternipedia — fræðandi viki sem er hönnuð til að sýna fjölbreytt sjónarmið á þekkingu og hugmyndum. Við metum persónuvernd þína og skuldbindum okkur til að vernda persónulegar upplýsingar þínar. Þessi stefna útskýrir hvaða upplýsingar við söfnum, hvernig við notum þær og hvaða réttindi þú hefur."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Upplýsingar sem við söfnum",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Reikningsupplýsingar: Þegar þú skráir þig inn með OAuth þjónustuaðila (t.d. Google eða Meta) fáum við nafn þitt, netfang og prófílmynd (ef tiltækt).",
+            "Greiðsluupplýsingar: Ef þú velur að greiða eða gefa gjöf notar Stripe örugga meðhöndlun á viðskiptum. Við geymum aldrei né sjáum kreditkortanúmer þín.",
+            "Greiningargögn: Við notum Vercel Analytics til að skilja almenn notkunarmynstur, svo sem hvaða síður eru vinsælar og hvernig vefurinn okkar virkar. Gögnin eru samantekin og auðkenna þig ekki persónulega.",
+            "Tæknilegar upplýsingar: Þegar þú heimsækir vefinn okkar getum við sjálfkrafa fengið staðlaðar skráningargögn eins og tegund vafra, tæki og IP-tölu til að viðhalda öryggi og virkni."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hvernig við notum upplýsingar þínar",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Rekstrar og bæting Alternipedia vettvangsins",
+            "Auðkenna notendur og stjórna reikningum",
+            "Örugg greiðslumeðhöndlun í gegnum Stripe",
+            "Fylgjast með afköstum og áreiðanleika vefsins",
+            "Svar við fyrirspurnum eða beiðnum notenda"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Við seljum, leigjum eða viðskipti með persónulegar upplýsingar þínar ekki."
+        }
+      ]
+    },
+    {
+      "title": "Smákökur og rekjanleiki",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia notar ekki auglýsinga- eða rekjandi smákökur."
+        },
+        {
+          "type": "paragraph",
+          "text": "Við notum aðeins nauðsynlegar smákökur fyrir innskráningu og virkni vefsins."
+        }
+      ]
+    },
+    {
+      "title": "Geymsla gagna og öryggi",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Gögnin þín eru geymd örugglega með iðnaðarstaðlaðri dulkóðun og hýsingarinnviði."
+        },
+        {
+          "type": "paragraph",
+          "text": "Við grípum til hæfilegra aðgerða til að vernda upplýsingar þínar gegn tapi, misnotkun eða óviðkomandi aðgangi."
+        }
+      ]
+    },
+    {
+      "title": "Réttindi þín",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Aðgangur að persónulegum gögnum þínum eða beiðni um afrit",
+            "Lagfæring eða eyðing upplýsinga sem við höfum um þig",
+            "Afturkall samþykkis eða lokun reiknings"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Samþykki skilmála', content: ["Með því að nota þessa vefsíðu samþykkja notendur að fylgja þessum þjónustuskilmálum. Notendur sem ekki samþykkja þessa skilmála ættu að hætta að nota vefsíðuna strax."] },
     { title: 'Ábyrgð notandareiknings', content: ["Notendur bera ábyrgð á að viðhalda trúnaði um aðgangsupplýsingar sínar. Allar aðgerðir sem eiga sér stað undir reikningi notanda eru á ábyrgð eiganda reikningsins. Notendur verða að tilkynna stjórnendum vefsins tafarlaust ef óheimil aðgangur verður vart."] },
@@ -6224,8 +11547,8 @@ const is: Dictionary = {
       "part3": "; viðbótar skilyrði kunna að gilda. Með því að nota þessa síðu samþykkir þú",
       "part4": "Skilmála og skilyrði",
       "part5": "og",
-      "part6": "Persónuverndarstefnu.",
-      "part7": "Alternipedia er opinn kóðaverkefni án hagnaðarskyni."
+      "part6": "Persónuverndarstefnu",
+      "part7": ". Alternipedia er opinn kóðaverkefni án hagnaðarskyni."
     },
     license: "Leyfi",
     terms: "Skilmálar",
@@ -6245,7 +11568,8 @@ const is: Dictionary = {
     goHome: "Fara á heimasíðu",
   },
   upgrade: {
-    goPro: 'Fara í Pro',
+    pro: 'PRO',
+    goPro: 'Fara í PRO',
     upgradePrompt: 'Uppfæra til að opna aðgerðir í háu gæðaflokki',
     title: 'Þekking er vald, Auka þína.',
     month: 'mánuður',
@@ -6276,6 +11600,8 @@ const is: Dictionary = {
     },
   },
   article: {
+    tools: 'Tól',
+    content: 'Innihald',
     article: 'Grein',
     discussion: 'Umræða',
     read: 'Lesa',
@@ -6286,6 +11612,107 @@ const is: Dictionary = {
 
 // Albanian dictionary
 const sq: Dictionary = {
+    login: {
+    title: 'Hyni',    
+    google: 'Vazhdo me Google',
+    facebook: 'Vazhdo me Facebook',   
+    x: 'Vazhdo me X',
+    microsoft: 'Vazhdo me Microsoft',
+    policy: "Duke hyrë, ju pranoni Kushtet e Shërbimit dhe Politikën tonë të Privatësisë.",    
+  },
+  userMenu: {
+    login: "Hyr",
+    contributions: "Kontributet",
+    savedArticles: "Artikujt e ruajtur",
+    preferences: "Preferencat",
+    logout: "Dil",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('sq-AL', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('sq-AL', { year: 'numeric', month: 'long' }),
+  "title": "Politika e Privatësisë",
+  "lastUpdatedText": "Përditësuar më së fundi:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Mirësevini në Alternipedia — një wiki arsimore e krijuar për të prezantuar perspektiva të ndryshme mbi njohuritë dhe idetë. Ne vlerësojmë privatësinë tuaj dhe jemi të përkushtuar për mbrojtjen e informacionit tuaj personal. Kjo politikë shpjegon çfarë mbledhim, si e përdorim dhe të drejtat tuaja."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informacioni që Mbledhim",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informacioni i llogarisë: Kur identifikoheni përmes një ofruesi OAuth (p.sh., Google ose Meta), marrim emrin, adresën e email-it dhe imazhin e profilit tuaj (nëse është i disponueshëm).",
+            "Informacioni i pagesës: Nëse zgjidhni të bëni një pagesë ose donacion, Stripe përpunon transaksionet në mënyrë të sigurt. Ne kurrë nuk ruajmë ose shohim numrat e kartës tuaj të kreditit.",
+            "Të dhëna analitike: Përdorim Vercel Analytics për të kuptuar modelet e përgjithshme të përdorimit, si faqet më të vizituara dhe performancën e faqes. Të dhënat janë të agreguara dhe nuk ju identifikojnë personalisht.",
+            "Informacion teknik: Kur vizitoni faqen tonë, mund të marrim automatikisht të dhëna standarde të regjistrit, si lloji i shfletuesit, pajisja dhe adresa IP, për të mbajtur sigurinë dhe funksionalitetin."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Si Përdorim Informacionin Tuaj",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Operojmë dhe përmirësojmë platformën Alternipedia",
+            "Autentifikojmë përdoruesit dhe menaxhojmë llogaritë",
+            "Përpunojmë pagesa në mënyrë të sigurt përmes Stripe",
+            "Monitorojmë performancën dhe besueshmërinë e faqes",
+            "Përgjigjemi kërkesave ose pyetjeve të përdoruesve"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne nuk shesim, japim me qira ose tregtojmë të dhënat tuaja personale."
+        }
+      ]
+    },
+    {
+      "title": "Cookies dhe Ndjekja",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia nuk përdor cookies reklamimi ose ndjekjeje."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne përdorim vetëm cookies të nevojshme për seancat e hyrjes dhe funksionalitetin e faqes."
+        }
+      ]
+    },
+    {
+      "title": "Ruajtja e të Dhënave dhe Siguria",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Të dhënat tuaja ruhen në mënyrë të sigurt duke përdorur enkriptim dhe infrastrukturë pritjeje sipas standardeve të industrisë."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne marrim masa të arsyeshme për të mbrojtur informacionin tuaj nga humbja, keqpërdorimi ose qasja e paautorizuar."
+        }
+      ]
+    },
+    {
+      "title": "Të Drejtat Tuaja",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Të keni qasje ose kërkoni një kopje të të dhënave tuaja personale",
+            "Të korrigjoni ose fshini informacionin që mbajmë për ju",
+            "Të tërhiqni pëlqimin ose të mbyllni llogarinë tuaj"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Pranimi i Kushteve', content: ["Duke hyrë dhe përdorur këtë faqe interneti, përdoruesit bien dakord të respektojnë këto Kushte Shërbimi. Përdoruesit që nuk pajtohen me këto kushte duhet të ndalojnë menjëherë përdorimin e faqes."] },
     { title: 'Përgjegjësia e Llogarisë së Përdoruesit', content: ["Përdoruesit janë përgjegjës për ruajtjen e konfidencialitetit të kredencialeve të tyre të llogarisë. Çdo aktivitet që ndodh nën llogarinë e përdoruesit është përgjegjësi e vetme e mbajtësit të llogarisë. Përdoruesit duhet të njoftojnë menjëherë administratorët e faqes për çdo hyrje të paautorizuar."] },
@@ -6367,8 +11794,8 @@ const sq: Dictionary = {
       "part3": "; mund të zbatohen kushte shtesë. Duke përdorur këtë faqe, ju pranoni",
       "part4": "Termat & Kushtet",
       "part5": "dhe",
-      "part6": "Politikën e Privatësisë.",
-      "part7": "Alternipedia është një projekt me burim të hapur jo fitimprurës."
+      "part6": "Politikën e Privatësisë",
+      "part7": ". Alternipedia është një projekt me burim të hapur jo fitimprurës."
     },
     license: "Licenca",
     terms: "Kushtet",
@@ -6388,7 +11815,8 @@ const sq: Dictionary = {
     goHome: "Kthehu te faqja kryesore",
   },
   upgrade: {
-    goPro: 'Kaloni në Pro',
+    pro: 'PRO',
+    goPro: 'Kaloni në PRO',
     upgradePrompt: 'Përmirësoni për të zbuluar funksionet premium',
     title: 'Dija është Fuqi, Përforconi tuajën.',
     month: 'muaj',
@@ -6419,6 +11847,8 @@ const sq: Dictionary = {
     },
   },
   article: {
+    tools: 'Mjetet',
+    content: 'Përmbajtja',
     article: 'Artikull',
     discussion: 'Diskutim',
     read: 'Lexo',
@@ -6429,6 +11859,107 @@ const sq: Dictionary = {
 
 // Serbian dictionary
 const sr: Dictionary = {
+    login: {
+    title: 'Prijava',    
+    google: 'Nastavi sa Google-om',
+    facebook: 'Nastavi sa Facebook-om',   
+    x: 'Nastavi sa X-om',
+    microsoft: 'Nastavi sa Microsoft-om',
+    policy: "Prijavom prihvatate naše Uslove korišćenja i Politiku privatnosti.",    
+  },
+  userMenu: {
+    login: "Prijava",
+    contributions: "Doprinosi",
+    savedArticles: "Sačuvani članci",
+    preferences: "Podešavanja",
+    logout: "Odjava",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('sr-RS', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('sr-RS', { year: 'numeric', month: 'long' }),
+  "title": "Politika privatnosti",
+  "lastUpdatedText": "Poslednje ažurirano:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Dobrodošli na Alternipedia — obrazovnu viki platformu dizajniranu da predstavi različite perspektive o znanju i idejama. Cenimo vašu privatnost i posvećeni smo zaštiti vaših ličnih podataka. Ova politika objašnjava koje informacije prikupljamo, kako ih koristimo i koja su vaša prava."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informacije koje prikupljamo",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informacije o nalogu: Kada se prijavite preko OAuth provajdera (npr. Google ili Meta), dobijamo vaše ime, email adresu i profilnu sliku (ako je dostupna).",
+            "Informacije o plaćanju: Ako odlučite da izvršite uplatu ili donaciju, Stripe sigurno obrađuje transakcije. Nikada ne čuvamo niti vidimo brojeve vaše kreditne kartice.",
+            "Analitički podaci: Koristimo Vercel Analytics da bismo razumeli opšte obrasce korišćenja, kao što su popularne stranice i performanse sajta. Podaci su agregirani i ne identifikuju vas lično.",
+            "Tehničke informacije: Prilikom posete sajtu možemo automatski primati standardne log podatke, kao što su tip pretraživača, uređaj i IP adresa, radi sigurnosti i funkcionalnosti."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kako koristimo vaše informacije",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Rad i unapređenje Alternipedia platforme",
+            "Autentifikacija korisnika i upravljanje nalozima",
+            "Sigurno procesiranje plaćanja preko Stripe",
+            "Praćenje performansi i pouzdanosti sajta",
+            "Odgovaranje na upite ili zahteve korisnika"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne prodajemo, ne izdajemo niti ne trgujemo vašim ličnim podacima."
+        }
+      ]
+    },
+    {
+      "title": "Kolačići i praćenje",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ne koristi reklamne ili praćenje kolačiće."
+        },
+        {
+          "type": "paragraph",
+          "text": "Koristimo samo neophodne kolačiće potrebne za prijavu i funkcionalnost sajta."
+        }
+      ]
+    },
+    {
+      "title": "Čuvanje podataka i sigurnost",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vaši podaci se sigurno čuvaju korišćenjem industrijskih standarda enkripcije i hosting infrastrukture."
+        },
+        {
+          "type": "paragraph",
+          "text": "Preduzimamo razumne korake da zaštitimo vaše informacije od gubitka, zloupotrebe ili neovlašćenog pristupa."
+        }
+      ]
+    },
+    {
+      "title": "Vaša prava",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Pristup ličnim podacima ili zahtev za kopiju",
+            "Ispravka ili brisanje informacija koje čuvamo o vama",
+            "Povlačenje pristanka ili zatvaranje naloga"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Prihvatanje uslova', content: ["Korišćenjem ovog sajta korisnici se slažu da poštuju ove Uslove korišćenja. Korisnici koji se ne slažu sa ovim uslovima treba odmah da prestanu sa korišćenjem sajta."] },
     { title: 'Odgovornost korisničkog naloga', content: ["Korisnici su odgovorni za čuvanje poverljivosti svojih podataka za prijavu. Sve aktivnosti koje se odvijaju pod korisničkim nalogom su isključiva odgovornost vlasnika naloga. Korisnici moraju odmah obavestiti administratore sajta o bilo kom neovlašćenom pristupu."] },
@@ -6510,8 +12041,8 @@ const sr: Dictionary = {
       "part3": "; mogu važiti dodatni uslovi. Korišćenjem ovog sajta prihvatate",
       "part4": "Uslove korišćenja",
       "part5": "i",
-      "part6": "Politiku privatnosti.",
-      "part7": "Alternipedia je open-source neprofitni projekat."
+      "part6": "Politiku privatnosti",
+      "part7": ". Alternipedia je open-source neprofitni projekat."
     },
     license: "Licenca",
     terms: "Uslovi korišćenja",
@@ -6531,7 +12062,8 @@ const sr: Dictionary = {
     goHome: "Vrati se na početnu stranu",
   },
   upgrade: {
-    goPro: 'Pređi na Pro',
+    pro: 'PRO',
+    goPro: 'Pređi na PRO',
     upgradePrompt: 'Nadogradi da otključaš premium funkcije',
     title: 'Znanje je moć, Pojačajte svoje.',
     month: 'mesec',
@@ -6562,6 +12094,8 @@ const sr: Dictionary = {
     },
   },
   article: {
+    tools: 'Alati',
+    content: 'Sadržaj',
     article: 'Članak',
     discussion: 'Diskusija',
     read: 'Pročitaj',
@@ -6572,6 +12106,107 @@ const sr: Dictionary = {
 
 // Macedonian dictionary
 const mk: Dictionary = {
+    login: {
+    title: 'Најави се',    
+    google: 'Продолжи со Google',
+    facebook: 'Продолжи со Facebook',   
+    x: 'Продолжи со X',
+    microsoft: 'Продолжи со Microsoft',
+    policy: "Со најава се согласувате со нашите Услови за користење и Политика за приватност.",    
+  },
+  userMenu: {
+    login: "Најави се",
+    contributions: "Придонеси",
+    savedArticles: "Зачувани написи",
+    preferences: "Поставки",
+    logout: "Одјави се",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('mk-MK', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('mk-MK', { year: 'numeric', month: 'long' }),
+  "title": "Политика за приватност",
+  "lastUpdatedText": "Последно ажурирано:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Добредојдовте на Alternipedia — едукативна вики платформа создадена за прикажување на различни перспективи за знаење и идеи. Ние ја цениме вашата приватност и се обврзуваме да ги заштитиме вашите лични информации. Оваа политика објаснува какви информации собираме, како ги користиме и кои се вашите права."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Информации што ги собираме",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Информации за сметката: Кога се најавувате преку OAuth провајдер (на пр. Google или Meta), добиваме ваше име, е-пошта и профилна слика (ако е достапна).",
+            "Информации за плаќање: Ако одлучите да направите плаќање или донација, Stripe безбедно ги обработува трансакциите. Никогаш не ги чуваме или гледаме бројот на вашата кредитна картичка.",
+            "Аналитички податоци: Користиме Vercel Analytics за да ги разбереме општите модели на користење, како што се популарни страници и перформанси на сајтот. Податоците се агрегирани и не ве идентификуваат лично.",
+            "Технички информации: Кога ја посетувате нашата веб-страница, можеме автоматски да добиеме стандардни лог податоци, како тип на прелистувач, уред и IP адреса, за да ја одржуваме безбедноста и функционалноста."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Како ги користиме вашите информации",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Работа и подобрување на платформата Alternipedia",
+            "Аутентификација на корисници и управување со сметки",
+            "Безбедна обработка на плаќања преку Stripe",
+            "Следење на перформанси и сигурност на сајтот",
+            "Одговарање на прашања или барања од корисници"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Не ги продаваме, изнајмуваме или тргуваме вашите лични податоци."
+        }
+      ]
+    },
+    {
+      "title": "Колачиња и следење",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia не користи реклами или следење колачиња."
+        },
+        {
+          "type": "paragraph",
+          "text": "Користиме само неопходни колачиња потребни за најавување и функционалност на сајтот."
+        }
+      ]
+    },
+    {
+      "title": "Складирање на податоци и безбедност",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Вашите податоци се безбедно складирани користејќи стандарди на индустријата за енкрипција и хостинг инфраструктура."
+        },
+        {
+          "type": "paragraph",
+          "text": "Превземаме разумни мерки за заштита на вашите информации од губење, злоупотреба или неовластен пристап."
+        }
+      ]
+    },
+    {
+      "title": "Вашите права",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Пристап или барање копија на вашите лични податоци",
+            "Корекција или бришење на информации кои ги чуваме за вас",
+            "Повлекување на согласност или затворање на сметката"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Прифаќање на условите', content: ["Со пристапување и користење на оваа веб-страница, корисниците се согласуваат да ги почитуваат овие Услови на користење. Корисниците кои не се согласуваат со овие услови треба веднаш да престанат со користење на веб-страницата."] },
     { title: 'Одговорност на корисничката сметка', content: ["Корисниците се одговорни за одржување на доверливоста на нивните податоци за најава. Сите активности што се одвиваат под корисничка сметка се единствена одговорност на сопственикот на сметката. Корисниците мора веднаш да ја известат администрацијата за неовластен пристап."] },
@@ -6653,8 +12288,8 @@ const mk: Dictionary = {
       "part3": "; можат да се применат дополнителни услови. Со користење на овој сајт, се согласувате со",
       "part4": "Условите",
       "part5": "и",
-      "part6": "Политиката за приватност.",
-      "part7": "Alternipedia е отворен проект без профит."
+      "part6": "Политиката за приватност",
+      "part7": ". Alternipedia е отворен проект без профит."
     },
     license: "Лиценца",
     terms: "Услови",
@@ -6674,6 +12309,7 @@ const mk: Dictionary = {
     goHome: "Врати се на почетната страница",
   },
   upgrade: {
+    pro: 'Про',
     goPro: 'Премини на Про',
     upgradePrompt: 'Надгради за да ги отклучиш премиум функциите',
     title: 'Знаењето е моќ, Засилете го вашето.',
@@ -6705,6 +12341,8 @@ const mk: Dictionary = {
     },
   },
   article: {
+    tools: 'Алатки',
+    content: 'Содржина',
     article: 'Статија',
     discussion: 'Дискусија',
     read: 'Прочитај',
@@ -6715,6 +12353,107 @@ const mk: Dictionary = {
 
 // Bosnian dictionary
 const bs: Dictionary = {
+    login: {
+    title: 'Prijava',    
+    google: 'Nastavi sa Google-om',
+    facebook: 'Nastavi sa Facebook-om',   
+    x: 'Nastavi sa X-om',
+    microsoft: 'Nastavi sa Microsoft-om',
+    policy: "Prijavom prihvatate naše Uslove korištenja i Politiku privatnosti.",    
+  },
+  userMenu: {
+    login: "Prijava",
+    contributions: "Doprinosi",
+    savedArticles: "Sačuvani članci",
+    preferences: "Postavke",
+    logout: "Odjava",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('bs-BA', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('bs-BA', { year: 'numeric', month: 'long' }),
+  "title": "Pravila privatnosti",
+  "lastUpdatedText": "Zadnje ažurirano:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Dobrodošli na Alternipedia — obrazovnu wiki platformu dizajniranu da predstavi različite perspektive o znanju i idejama. Cijenimo vašu privatnost i posvećeni smo zaštiti vaših ličnih podataka. Ova politika objašnjava koje informacije prikupljamo, kako ih koristimo i koja su vaša prava."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informacije koje prikupljamo",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informacije o računu: Kada se prijavite putem OAuth provajdera (npr. Google ili Meta), dobijamo vaše ime, e-mail adresu i profilnu sliku (ako je dostupna).",
+            "Informacije o plaćanju: Ako odlučite izvršiti uplatu ili donaciju, Stripe sigurno obrađuje transakcije. Nikada ne čuvamo niti vidimo brojeve vaše kreditne kartice.",
+            "Analitički podaci: Koristimo Vercel Analytics da bismo razumjeli opće obrasce korištenja, kao što su popularne stranice i performanse sajta. Podaci su agregirani i ne identificiraju vas osobno.",
+            "Tehničke informacije: Prilikom posjete sajtu možemo automatski primati standardne log podatke, poput tipa pretraživača, uređaja i IP adrese, radi sigurnosti i funkcionalnosti."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kako koristimo vaše informacije",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Upravljanje i poboljšanje Alternipedia platforme",
+            "Autentifikacija korisnika i upravljanje nalozima",
+            "Sigurno procesiranje plaćanja putem Stripe",
+            "Praćenje performansi i pouzdanosti sajta",
+            "Odgovaranje na upite ili zahtjeve korisnika"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne prodajemo, ne iznajmljujemo niti ne trgujemo vašim ličnim podacima."
+        }
+      ]
+    },
+    {
+      "title": "Kolačići i praćenje",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ne koristi reklamne ili praćenje kolačiće."
+        },
+        {
+          "type": "paragraph",
+          "text": "Koristimo samo neophodne kolačiće potrebne za prijavu i funkcionalnost sajta."
+        }
+      ]
+    },
+    {
+      "title": "Čuvanje podataka i sigurnost",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vaši podaci se sigurno čuvaju koristeći industrijske standarde enkripcije i hosting infrastrukturu."
+        },
+        {
+          "type": "paragraph",
+          "text": "Preduzimamo razumne korake da zaštitimo vaše informacije od gubitka, zloupotrebe ili neovlaštenog pristupa."
+        }
+      ]
+    },
+    {
+      "title": "Vaša prava",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Pristup ličnim podacima ili zahtjev za kopiju",
+            "Ispravka ili brisanje informacija koje čuvamo o vama",
+            "Povlačenje pristanka ili zatvaranje naloga"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Prihvatanje uslova', content: ["Korištenjem ove web stranice korisnici se slažu da poštuju ove Uslove korištenja. Korisnici koji se ne slažu sa ovim uslovima trebaju odmah prestati koristiti web stranicu."] },
     { title: 'Odgovornost korisničkog računa', content: ["Korisnici su odgovorni za čuvanje povjerljivosti svojih podataka za prijavu. Sve aktivnosti koje se odvijaju pod korisničkim računom isključiva su odgovornost vlasnika računa. Korisnici moraju odmah obavijestiti administratore o bilo kakvom neovlaštenom pristupu."] },
@@ -6796,8 +12535,8 @@ const bs: Dictionary = {
       "part3": "; mogu se primijeniti dodatni uvjeti. Korištenjem ove stranice prihvaćate",
       "part4": "Uvjeti korištenja",
       "part5": "i",
-      "part6": "Politiku privatnosti.",
-      "part7": "Alternipedia je open-source neprofitni projekat."
+      "part6": "Politiku privatnosti",
+      "part7": ". Alternipedia je open-source neprofitni projekat."
     },
     license: "Licenca",
     terms: "Uslovi korištenja",
@@ -6817,7 +12556,8 @@ const bs: Dictionary = {
     goHome: "Vrati se na početnu stranicu",
   },
   upgrade: {
-    goPro: 'Pređi na Pro',
+    pro: 'PRO',
+    goPro: 'Pređi na PRO',
     upgradePrompt: 'Nadogradi da otključaš premium funkcije',
     title: 'Znanje je moć, Pojačajte svoje.',
     month: 'mjesec',
@@ -6848,6 +12588,8 @@ const bs: Dictionary = {
     },
   },
   article: {
+    tools: 'Alati',
+    content: 'Sadržaj',
     article: 'Članak',
     discussion: 'Diskusija',
     read: 'Pročitaj',
@@ -6858,6 +12600,107 @@ const bs: Dictionary = {
 
 // Montenegrin dictionary
 const cnr: Dictionary = {
+    login: {
+    title: 'Prijava',    
+    google: 'Nastavi sa Google-om',
+    facebook: 'Nastavi sa Facebook-om',   
+    x: 'Nastavi sa X-om',
+    microsoft: 'Nastavi sa Microsoft-om',
+    policy: "Prijavom prihvatate naše Uslove korištenja i Politiku privatnosti.",    
+  },
+  userMenu: {
+    login: "Prijava",
+    contributions: "Doprinosi",
+    savedArticles: "Sačuvani članci",
+    preferences: "Postavke",
+    logout: "Odjava",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('cnr-ME', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('cnr-ME', { year: 'numeric', month: 'long' }),
+  "title": "Politika privatnosti",
+  "lastUpdatedText": "Zadnje ažurirano:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Dobrodošli na Alternipedia — obrazovnu viki platformu dizajniranu da predstavi različite perspektive o znanju i idejama. Cijenimo vašu privatnost i posvećeni smo zaštiti vaših ličnih podataka. Ova politika objašnjava koje informacije prikupljamo, kako ih koristimo i koja su vaša prava."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informacije koje prikupljamo",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informacije o nalogu: Kada se prijavite putem OAuth provajdera (npr. Google ili Meta), dobijamo vaše ime, e-mail adresu i profilnu sliku (ako je dostupna).",
+            "Informacije o plaćanju: Ako odlučite izvršiti uplatu ili donaciju, Stripe sigurno obrađuje transakcije. Nikada ne čuvamo niti vidimo brojeve vaše kreditne kartice.",
+            "Analitički podaci: Koristimo Vercel Analytics kako bismo razumjeli opšte obrasce korišćenja, kao što su popularne stranice i performanse sajta. Podaci su agregirani i ne identifikuju vas lično.",
+            "Tehničke informacije: Prilikom posjete sajtu možemo automatski primati standardne log podatke, poput tipa pretraživača, uređaja i IP adrese, radi sigurnosti i funkcionalnosti."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kako koristimo vaše informacije",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Rad i unapređenje Alternipedia platforme",
+            "Autentifikacija korisnika i upravljanje nalozima",
+            "Sigurno procesiranje plaćanja preko Stripe",
+            "Praćenje performansi i pouzdanosti sajta",
+            "Odgovaranje na upite ili zahtjeve korisnika"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne prodajemo, ne izdajemo niti ne trgujemo vašim ličnim podacima."
+        }
+      ]
+    },
+    {
+      "title": "Kolačići i praćenje",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ne koristi reklamne ili praćenje kolačiće."
+        },
+        {
+          "type": "paragraph",
+          "text": "Koristimo samo neophodne kolačiće potrebne za prijavu i funkcionalnost sajta."
+        }
+      ]
+    },
+    {
+      "title": "Čuvanje podataka i sigurnost",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vaši podaci se sigurno čuvaju koristeći industrijske standarde enkripcije i hosting infrastrukturu."
+        },
+        {
+          "type": "paragraph",
+          "text": "Preduzimamo razumne korake da zaštitimo vaše informacije od gubitka, zloupotrebe ili neovlaštenog pristupa."
+        }
+      ]
+    },
+    {
+      "title": "Vaša prava",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Pristup ličnim podacima ili zahtjev za kopiju",
+            "Ispravka ili brisanje informacija koje čuvamo o vama",
+            "Povlačenje pristanka ili zatvaranje naloga"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Prihvatanje uslova', content: ["Korišćenjem ovog sajta korisnici se slažu da poštuju ove Uslove korišćenja. Korisnici koji se ne slažu sa ovim uslovima treba odmah da prestanu sa korišćenjem sajta."] },
     { title: 'Odgovornost korisničkog naloga', content: ["Korisnici su odgovorni za čuvanje poverljivosti svojih podataka za prijavu. Sve aktivnosti koje se odvijaju pod korisničkim nalogom isključiva su odgovornost vlasnika naloga. Korisnici moraju odmah obavijestiti administratore o svakom neovlašćenom pristupu."] },
@@ -6939,8 +12782,8 @@ const cnr: Dictionary = {
       "part3": "; mogu važiti dodatni uslovi. Korišćenjem ovog sajta prihvatate",
       "part4": "Uslove korišćenja",
       "part5": "i",
-      "part6": "Politiku privatnosti.",
-      "part7": "Alternipedia je open-source neprofitni projekat."
+      "part6": "Politiku privatnosti",
+      "part7": ". Alternipedia je open-source neprofitni projekat."
     },
     license: "Licenca",
     terms: "Uslovi korišćenja",
@@ -6960,7 +12803,8 @@ const cnr: Dictionary = {
     goHome: "Vrati se na početnu stranicu",
   },
   upgrade: {
-    goPro: 'Pređi na Pro',
+    pro: 'PRO',
+    goPro: 'Pređi na PRO',
     upgradePrompt: 'Nadogradi da otključaš premium funkcije',
     title: 'Znanje je moć, Pojačajte svoje.',
     month: 'mjesec',
@@ -6991,6 +12835,8 @@ const cnr: Dictionary = {
     },
   },
   article: {
+    tools: 'Alati',
+    content: 'Sadržaj',
     article: 'Članak',
     discussion: 'Diskusija',
     read: 'Pročitaj',
@@ -7001,6 +12847,107 @@ const cnr: Dictionary = {
 
 // Maltese dictionary
 const mt: Dictionary = {
+    login: {
+    title: 'Idħol',    
+    google: 'Kompli ma\' Google',
+    facebook: 'Kompli ma\' Facebook',  
+    x: 'Kompli ma\' X', 
+    microsoft: 'Kompli ma\' Microsoft',
+    policy: "Billi tidħol, taqbel mat-Termini tas-Servizz u l-Politika tal-Privatezza tagħna.",    
+  },
+  userMenu: {
+    login: "Idħol",
+    contributions: "Kontribuzzjonijiet",
+    savedArticles: "Artikli Miffrux",     
+    preferences: "Preferenzi",
+    logout: "Oħroġ",
+  },
+  termsOfServiceUpdateDate: TermsofServiceUpdateDate.toLocaleDateString('mt-MT', { year: 'numeric', month: 'long' }),
+  "privacyPolicy": {
+  "lastUpdated": PrivacyPolicyUpdateDate.toLocaleDateString('mt-MT', { year: 'numeric', month: 'long' }),
+  "title": "Politika tal-Privatezza",
+  "lastUpdatedText": "Aġġornata l-aħħar darba:",
+  "intro": [
+    {
+      "type": "paragraph",
+      "text": "Merħba f'Alternipedia — wiki edukattiva mfassla biex tippreżenta prospettivi differenti dwar għarfien u ideat. Napprezzaw il-privatezza tiegħek u nikkumpromettu li niżguraw il-protezzjoni tal-informazzjoni personali tiegħek. Din il-politika tispjega x'niġbru, kif nużawha u x'qed iħaddan id-drittijiet tiegħek."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Informazzjoni li Niġbru",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Informazzjoni dwar il-kont: Meta tidħol billi tuża fornituri ta' OAuth (bħal Google jew Meta), nirċievu dettalji bażiċi bħan-isem tiegħek, indirizz tal-email u immaġni tal-profil (jekk disponibbli).",
+            "Informazzjoni dwar il-ħlas: Jekk tagħżel li twettaq ħlas jew donazzjoni, Stripe jipproċessa t-transazzjonijiet b'mod sigur. Qatt ma naħżnux jew naraw in-numri tal-kards ta' kreditu tiegħek.",
+            "Data ta' analiżi: Nużaw Vercel Analytics biex nifhmu mudelli ġenerali ta' użu, bħall-paġni popolari u kif is-sit tagħna jopera. Id-data hija aggregata u ma tidentifikakx personalment.",
+            "Informazzjoni tekniċi: Meta żżur is-sit tagħna, nistgħu nirċievu awtomatikament data ta' log standard bħat-tip tal-browser, tagħmir u indirizz IP, li jgħin biex tiġi żgurata s-sigurtà u t-troubleshooting."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kif Nużaw l-Informazzjoni Tiegħek",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Operazzjoni u titjib tal-pjattaforma Alternipedia",
+            "Awtenikazzjoni tal-utenti u ġestjoni tal-kontijiet",
+            "Proċessar sigur tal-ħlas permezz ta' Stripe",
+            "Monitoraġġ tal-prestazzjoni u l-affidabbiltà tas-sit",
+            "Tweġibiet għal mistoqsijiet jew talbiet tal-utenti"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ma nbiegħux, naġġudikaw jew nittrattaw id-data personali tiegħek."
+        }
+      ]
+    },
+    {
+      "title": "Cookies u Tracking",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alternipedia ma tużax cookies ta’ reklamar jew għall-iskopijiet ta’ tracking."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nużaw biss cookies essenzjali meħtieġa għal sessjonijiet ta’ login u funzjonalità tas-sit."
+        }
+      ]
+    },
+    {
+      "title": "Ħażna tad-Data u Sigurtà",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Id-data tiegħek hija maħżuna b'mod sigur billi tuża standard industrijali ta' encryption u infrastruttura ta' hosting."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nieħdu passi raġonevoli biex nipproteġu l-informazzjoni tiegħek minn telf, abbuż jew aċċess mhux awtorizzat."
+        }
+      ]
+    },
+    {
+      "title": "Id-Drittijiet Tiegħek",
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            "Aċċess jew talba għal kopja tad-data personali tiegħek",
+            "Korrezzjoni jew tħassir ta' informazzjoni li nżommu fuqek",
+            "Ritratt tal-kunsens jew għeluq tal-kont"
+          ]
+        }
+      ]
+    }
+  ]
+},
   termsOfService: [
     { title: 'Aċċettazzjoni tat-Termini', content: ["Billi taċċessa u tuża dan is-sit, l-utenti jaqblu li jikkonformaw ma’ dawn it-Termini tas-Servizz. Utenti li ma jaqblux ma’ dawn it-termini għandhom jieqfu jużaw is-sit immedjatament."] },
     { title: 'Responsabbiltà tal-Kont tal-Utent', content: ["L-utenti huma responsabbli biex iżommu l-kunfidenzjalità tad-dettalji tal-login tagħhom. Kull attività li sseħħ taħt il-kont ta’ utent hija biss ir-responsabbiltà tas-sid tal-kont. L-utenti għandhom jinnotifikaw immedjatament lill-amministraturi tas-sit dwar kwalunkwe aċċess mhux awtorizzat."] },
@@ -7082,8 +13029,8 @@ const mt: Dictionary = {
       "part3": "; jista' japplikaw termini addizzjonali. Billi tuża dan is-sit, inti taqbel mal",
       "part4": "Termini u Kundizzjonijiet",
       "part5": "u",
-      "part6": "Politika tal-Privatezza.",
-      "part7": "Alternipedia huwa proġett open-source mhux għall-profitt."
+      "part6": "Politika tal-Privatezza",
+      "part7": ". Alternipedia huwa proġett open-source mhux għall-profitt."
     },
     license: "Liċenzja",
     terms: "Termini",
@@ -7103,7 +13050,8 @@ const mt: Dictionary = {
     goHome: "Mur fid-Dar",
   },
   upgrade: {
-    goPro: 'Mur Pro',
+    pro: 'PRO',
+    goPro: 'Mur PRO',
     upgradePrompt: 'Aġġorna biex tiftaħ karatteristiċi premium',
     title: 'Il-Għarfien huwa Qawwa, Saħħaħ tiegħek.',
     month: 'xahar',
@@ -7134,6 +13082,8 @@ const mt: Dictionary = {
     },
   },
   article: {
+    tools: 'Għodod',
+    content: 'Kontenut',
     article: 'Artiklu',
     discussion: 'Diskussjoni',
     read: 'Aqra',

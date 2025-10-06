@@ -62,6 +62,9 @@ export default function Terms({ text, lang }: { text?: string; lang: Locale }  )
           </div>
         </DialogHeader>
         <DialogFooter className="border-t px-6 py-4 sm:items-center">
+          <p className="float-left text-sm text-muted-foreground">
+            {dict.privacyPolicy.lastUpdatedText} {dict.termsOfServiceUpdateDate}
+          </p>
           <DialogClose asChild>
             <Button type="button" variant="outline" className="cursor-pointer">
               {dict.close}

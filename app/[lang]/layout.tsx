@@ -29,7 +29,8 @@ import {
 } from "@/components/ui/tooltip";
 import { MenuIcon, Palette } from "lucide-react";
 
-import Terms from "@/app/[lang]/terms"
+import Terms from "@/app/[lang]/terms";
+import Privacy from "@/app/[lang]/privacy";
 import GoPro from "./go-pro";
 
 export const metadata: Metadata = {
@@ -74,7 +75,7 @@ export default async function Layout({
                   <MenuIcon size={16} aria-hidden="true" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent collisionPadding={8}>
                 <DropdownMenuItem className="cursor-pointer" asChild><Link href={`/${lang}`}>{dict.navigation.aboutUs}</Link></DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer" asChild><Link href={`/${lang}/news`}>{dict.navigation.currentEvents}</Link></DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer" asChild><Link href={`/${lang}/random`}>{dict.navigation.randomArticle}</Link></DropdownMenuItem>
@@ -123,7 +124,7 @@ export default async function Layout({
                 <span>{dict.footer.text.part3}</span>
                 <Terms text={dict.footer.text.part4} lang={lang as Locale} />
                 <span>{dict.footer.text.part5}</span>
-                <span className="text-blue-400">{dict.footer.text.part6}</span>
+                <Privacy text={dict.footer.text.part6} lang={lang as Locale} />
                 <span>{dict.footer.text.part7}</span>
               </p>
             </div>

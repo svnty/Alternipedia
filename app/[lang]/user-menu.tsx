@@ -27,18 +27,21 @@ import {
   Settings,
   MessageSquarePlus,
   Earth,
+  ScanFace,
 } from "lucide-react"
 import {
   RiFacebookFill,
-  RiGithubFill,
   RiGoogleFill,
+  RiMicrosoftFill,
   RiTwitterXFill,
 } from "@remixicon/react";
-import Terms from "@/app/[lang]/terms";
 import type { Locale } from '@/lib/i18n/config';
+import { getDictionary } from "@/lib/i18n/dictionaries"
+import { MaskedEmail } from "./masked-email"
 
 export default function UserMenu({ lang }: { lang: Locale }) {
-  const id = useId()
+  const id = useId();
+  const dict = getDictionary(lang);
 
   return (
     <DropdownMenu>
@@ -51,7 +54,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
           <CircleUserRoundIcon size={16} aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-w-64">
+      <DropdownMenuContent className="max-w-64" collisionPadding={8}>
         <DropdownMenuLabel className="flex items-start gap-3">
           <img
             src="avatar.jpg"
@@ -65,7 +68,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
               Keith Kennedy
             </span>
             <span className="text-muted-foreground truncate text-xs font-normal">
-              k.kennedy@originui.com
+              <MaskedEmail email="k.kennedy@originui.com" variant="advanced" />
             </span>
           </div>
         </DropdownMenuLabel>
@@ -75,24 +78,17 @@ export default function UserMenu({ lang }: { lang: Locale }) {
             <DialogTrigger asChild>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer">
                 <KeyRound size={16} className="opacity-60" aria-hidden="true" />
-                <span>Login</span>
+                <span>{dict.userMenu.login}</span>
               </DropdownMenuItem>
             </DialogTrigger>
             <DialogContent>
               <div className="flex flex-col items-center gap-2">
 
-
-                <div
-                  className="flex size-11 shrink-0 items-center justify-center rounded-full border"
-                  aria-hidden="true"
-                >
-                  <Earth size={52} />
-                </div>
-
+                <ScanFace size={52} />
 
                 <DialogHeader>
                   <DialogTitle className="sm:text-center">
-                    Log in to Alternipedia
+                    {dict.login.title} Alternipedia
                   </DialogTitle>
                 </DialogHeader>
               </div>
@@ -103,25 +99,30 @@ export default function UserMenu({ lang }: { lang: Locale }) {
                   <span className="pointer-events-none me-2 flex-1">
                     <RiGoogleFill className="opacity-60" size={16} aria-hidden="true" />
                   </span>
-                  Login with Google
+                  {dict.login.google}
                 </Button>
                 <Button className="bg-[#14171a] text-white after:flex-1 hover:bg-[#14171a]/90 cursor-pointer">
                   <span className="pointer-events-none me-2 flex-1">
                     <RiTwitterXFill className="opacity-60" size={16} aria-hidden="true" />
                   </span>
-                  Login with X
+                  {dict.login.x}
                 </Button>
                 <Button className="bg-[#1877f2] text-white after:flex-1 hover:bg-[#1877f2]/90 cursor-pointer">
                   <span className="pointer-events-none me-2 flex-1">
                     <RiFacebookFill className="opacity-60" size={16} aria-hidden="true" />
                   </span>
-                  Login with Facebook
+                  {dict.login.facebook}
+                </Button>
+                <Button className="bg-[#333333] text-white after:flex-1 hover:bg-[#333333]/90 cursor-pointer">
+                  <span className="pointer-events-none me-2 flex-1">
+                    <RiMicrosoftFill className="opacity-60" size={16} aria-hidden="true" />
+                  </span>
+                  {dict.login.microsoft}
                 </Button>
               </div>
 
-
               <p className="text-muted-foreground text-center text-xs">
-                By signing in you agree to our Terms of Service and Privacy Policy.
+                {dict.login.policy}
               </p>
             </DialogContent>
           </Dialog>
@@ -130,21 +131,21 @@ export default function UserMenu({ lang }: { lang: Locale }) {
         <DropdownMenuGroup>
           <DropdownMenuItem className="cursor-pointer">
             <BookMarked size={16} className="opacity-60" aria-hidden="true" />
-            <span>Saved Articles</span>
+            <span>{dict.userMenu.savedArticles}</span>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer">
             <MessageSquarePlus size={16} className="opacity-60" aria-hidden="true" />
-            <span>Contributions</span>
+            <span>{dict.userMenu.contributions}</span>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer">
             <Settings size={16} className="opacity-60" aria-hidden="true" />
-            <span>Preferences</span>
+            <span>{dict.userMenu.preferences}</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
-          <span>Logout</span>
+          <span>{dict.userMenu.logout}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

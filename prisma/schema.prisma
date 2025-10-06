@@ -30,7 +30,6 @@ model User {
   sessions        Session[]
   role            UserRole          @default(USER)
 
-  
   revisions       Revision[]
   addedCategories ArticleCategory[] // categories this user added
   watching        ArticleWatcher[]  // articles this user watches
@@ -38,6 +37,7 @@ model User {
   moderatedBiases ModeratorBias[] // Biases this user moderates
   biasBans        BiasBan[]         // 🚫 bans received
   issuedBans      BiasBan[]         @relation("BiasBanModerator") // 🧑‍⚖️ bans given (mods)
+  votes           RevisionVote[]
 
   subscriptionTier      SubscriptionTier @default(FREE)
   subscriptionStartedAt DateTime?
@@ -154,8 +154,23 @@ model Revision {
   sections  Section[]
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?  // ✅ matches User.id (String)
+  votes     RevisionVote[]
 
   createdAt DateTime @default(now())
+}
+
+model RevisionVote {
+  id         Int       @id @default(autoincrement())
+  revision   Revision  @relation(fields: [revisionId], references: [id])
+  revisionId Int
+
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String
+
+  value      Int       @default(1) // 1 star, could extend to multi-star rating
+  createdAt  DateTime  @default(now())
+
+  @@unique([revisionId, userId]) // each user can vote once per revision
 }
 
 model Section {
