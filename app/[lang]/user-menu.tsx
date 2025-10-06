@@ -37,7 +37,7 @@ import {
 } from "@remixicon/react";
 import type { Locale } from '@/lib/i18n/config';
 import { getDictionary } from "@/lib/i18n/dictionaries"
-import { MaskedEmail } from "./masked-email"
+import { MaskedEmail } from "@/app/[lang]/masked-email";
 
 export default function UserMenu({ lang }: { lang: Locale }) {
   const id = useId();

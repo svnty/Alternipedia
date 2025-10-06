@@ -31,7 +31,7 @@ import { MenuIcon, Palette } from "lucide-react";
 
 import Terms from "@/app/[lang]/terms";
 import Privacy from "@/app/[lang]/privacy";
-import GoPro from "./go-pro";
+import GoPro from "@/app/[lang]/go-pro";
 
 export const metadata: Metadata = {
   title: "Alternipedia",

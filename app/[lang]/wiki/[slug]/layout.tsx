@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useTransition } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales, localeNames, type Locale, isValidLocale } from '@/lib/i18n/config';
+import WikipediaContents from "@/app/[lang]/wiki/[slug]/wikipedia-contents";
 
 import {
   Collapsible,
@@ -234,7 +235,11 @@ export default function Article({
                   <div className="absolute top-9 left-0 w-full h-0.5 bg-gray-300" />
                 </div>
                 <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
-                  <Contents contents={[]} />
+                  <WikipediaContents 
+                    slug={params?.slug as string} 
+                    language={currentLang} 
+                    bias={searchParams?.get('bias') || ''} 
+                  />
                 </CollapsibleContent>
               </div>
             </div>
