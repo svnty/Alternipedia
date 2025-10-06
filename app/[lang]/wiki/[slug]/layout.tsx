@@ -333,13 +333,6 @@ export default function Article({
 
   /* ================== BIAS AND PATHNAME HANDLING ================== */
   useEffect(() => {
-    if (
-      (window as any).__page_loaded__  && (!prevPathname.current || (prevPathname.current !== pathname))) {
-      setIsLoadingBias(false);
-    } else if (!(window as any).__page_loading__ && document.querySelector('.wikipedia-article')) {
-      setIsLoadingBias(false);
-    }
-
     const onLoaded = () => {
       (window as any).__page_loaded_handled__ = true;
       setTimeout(() => setIsLoadingBias(false), 1);

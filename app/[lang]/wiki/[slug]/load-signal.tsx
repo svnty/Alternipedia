@@ -25,9 +25,6 @@ export default function ClientLoadedSignal() {
           // ignore
         }
       }
-
-      // mark that we've attempted dispatch
-      (window as any).__page_loaded_dispatched__ = true;
     };
 
     // Dispatch on the next tick so that parent components (like the layout)
