@@ -66,7 +66,7 @@ export default async function Layout({
       <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-16 xl:px-40 py-3.5 bg-white flex justify-between items-center">
         <div className="w-full flex justify-between items-center">
           <div className="flex justify-start items-center gap-3 sm:gap-5 min-w-0 shrink-0">
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild className="px-4 py-2 rounded-md bg-white hover:bg-gray-100 data-[state=open]:bg-gray-200 transition-all">
                 <Button size="icon"
                   aria-label="Open navigation"

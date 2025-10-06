@@ -44,7 +44,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
   const dict = getDictionary(lang);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild
         className="px-4 py-2 rounded-md bg-white hover:bg-gray-100 data-[state=open]:bg-gray-200 transition-all">
         <Button size="icon"
