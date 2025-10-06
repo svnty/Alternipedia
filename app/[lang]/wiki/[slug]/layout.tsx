@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useTransition } from "react"
+import { useState, useEffect, useMemo, useTransition, useRef } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales, localeNames, type Locale, isValidLocale } from '@/lib/i18n/config';
 import WikipediaContents from "@/app/[lang]/wiki/[slug]/wikipedia-contents";
@@ -24,11 +24,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { LoadingOverlay } from "@/app/[lang]/loading-overlay";
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Dialog,
   DialogContent,
@@ -60,6 +60,8 @@ export default function Article({
   const [selectedLang, setSelectedLang] = useState<Locale>(currentLang);
   const [isLoadingBias, startTransition] = useTransition();
   const [isMobile, setIsMobile] = useState(false);
+  const [isFetchingWiki, setIsFetchingWiki] = useState(false);
+  const initialMount = useRef(true);
   const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
   const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
 
@@ -115,12 +117,20 @@ export default function Article({
   };
 
   useEffect(() => {
-    if (!["socialist", "liberal", "wikipedia", "conservative", "nationalist"].includes(activeBias)) {
+    // Keep the local activeBias in sync with the URL param when available.
+    const paramBias = searchParams?.get('bias');
+    if (paramBias && paramBias !== activeBias) {
+      setBias(paramBias);
+    }
+
+    // If there is no bias param at all, default to 'wikipedia' without
+    // overwriting valid user-selected biases. Use replace to avoid
+    // polluting the history stack.
+    if (!paramBias) {
       const params = new URLSearchParams(searchParams?.toString());
       params.set('bias', 'wikipedia');
-
       const newPath = `${pathname}?${params.toString()}`;
-      router.push(newPath);
+      router.replace(newPath);
       setBias('wikipedia');
     }
 
@@ -154,6 +164,39 @@ export default function Article({
       clearTimeout(resizeTimer);
     };
   }, []);
+
+  // Show overlay when navigating to a different wiki slug until the provider mounts
+  useEffect(() => {
+    // Don't treat the initial mount as a navigation
+    if (initialMount.current) {
+      initialMount.current = false;
+      return;
+    }
+    // Only show the Wikipedia loading overlay when the requested bias is
+    // actually 'wikipedia'. For other biases we don't expect the wiki
+    // provider to mount or dispatch headings, so avoid showing the overlay.
+    const requestedBias = searchParams?.get('bias');
+    if (requestedBias !== 'wikipedia') {
+      setIsFetchingWiki(false);
+      return;
+    }
+
+    // When slug changes and bias is wikipedia, show the overlay until the
+    // provider dispatches 'wikipediaHeadingsUpdated'.
+    setIsFetchingWiki(true);
+
+    const handler = () => setIsFetchingWiki(false);
+    window.addEventListener('wikipediaHeadingsUpdated', handler as EventListener);
+
+    // Fallback: clear after 10s to avoid stuck overlay
+    const timeout = setTimeout(() => setIsFetchingWiki(false), 10000);
+
+    return () => {
+      window.removeEventListener('wikipediaHeadingsUpdated', handler as EventListener);
+      clearTimeout(timeout);
+    };
+  }, [params?.slug, searchParams?.toString()]);
+
 
   // Track mobile/desktop for sidebar positioning
   useEffect(() => {
@@ -769,8 +812,8 @@ export default function Article({
       <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden relative pb-20">
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
-          isVisible={isLoadingBias}
-          message="Loading new perspective..."
+          isVisible={isLoadingBias || isFetchingWiki}
+          message={isFetchingWiki ? "Loading wikipedia..." : "Loading new perspective..."}
         />
         {children}
       </div>

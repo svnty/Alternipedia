@@ -22,6 +22,13 @@ export function WikipediaDataProvider({ children, headings }: WikipediaDataProvi
   useEffect(() => {
     if (typeof window !== 'undefined') {
       (window as any).__wikipediaHeadings = headings;
+      // Notify any listeners (e.g., the sidebar contents) that headings have been updated
+      try {
+        const evt = new CustomEvent('wikipediaHeadingsUpdated', { detail: headings });
+        window.dispatchEvent(evt);
+      } catch (e) {
+        // ignore browsers that don't support CustomEvent (very old)
+      }
     }
   }, [headings]);
 

@@ -2,17 +2,12 @@
 
 import React from "react"
 
-interface Item {
-  name: string
-  children?: string[]
-}
-
 const indent = 20
 
 interface Heading {
-  level: number;
-  text: string;
   id: string;
+  depth: number;
+  title: string;
 }
 
 interface ContentsProps {
@@ -28,16 +23,20 @@ function HeadingItem({ heading }: { heading: Heading }) {
     }
   };
 
+  if (!heading || !heading.title) {
+    return null;
+  }
+
   return (
     <div 
-      style={{ paddingLeft: `${(heading.level - 1) * indent}px` }}
+      style={{ paddingLeft: `${(heading.depth) * indent}px` }}
       className="flex items-center gap-2 py-1"
     >
       <button 
         onClick={handleClick}
         className="text-left text-sm text-gray-700 hover:text-blue-600 hover:underline cursor-pointer truncate"
       >
-        {heading.text}
+        {heading.title}
       </button>
     </div>
   );
@@ -49,7 +48,7 @@ export default function Contents({ headings = [] }: ContentsProps) {
     return (
       <div className="flex h-full flex-col gap-2">
         <div className="text-sm text-gray-500 italic">
-          Table of contents will appear here when viewing an article
+          Table of contents will appear here.
         </div>
       </div>
     );
@@ -57,9 +56,13 @@ export default function Contents({ headings = [] }: ContentsProps) {
 
   return (
     <div className="flex h-full flex-col gap-1">
-      {headings.map((heading, index) => (
-        <HeadingItem key={`${heading.id}-${index}`} heading={heading} />
-      ))}
+      {headings.map((heading, index) => {
+        heading['id'] = heading.title.replace(' ', '-');
+        return (
+          <HeadingItem key={`${heading['id']}-${index}`} heading={heading} />
+        );
+      }
+      )}
     </div>
   );
 }

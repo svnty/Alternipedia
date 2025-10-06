@@ -21,7 +21,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {dict.common.stayTuned}
       <br />
 
-      <span className="inline mt-8">{dict.common.exampleArticle} <Link href={`/${lang}/wiki/cat`} className="text-blue-600 hover:underline">Cats</Link></span>
+      <span className="inline mt-8">{dict.common.exampleArticle} <Link href={`/${lang}/wiki/Cat`} className="text-blue-600 hover:underline">Cats</Link></span>
 
     </div>
   );

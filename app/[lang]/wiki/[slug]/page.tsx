@@ -35,7 +35,7 @@ export default async function Page({
         <Tabs defaultValue="tab-1">
           <div className="relative flex items-end justify-between border-b border-border">
             {/* Title on the left */}
-            <div className="text-neutral-800 text-3xl font-normal pb-2">Cat</div>
+            <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace(/-/g, ' '))}</div>
 
             {/* Article and Talk tabs floated to the right */}
             <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -127,7 +127,7 @@ Comrades, the cat is the true proletarian of the household. It toils not under t
         <Tabs defaultValue="tab-1">
           <div className="relative flex items-end justify-between border-b border-border">
             {/* Title on the left */}
-            <div className="text-neutral-800 text-3xl font-normal pb-2">Cat</div>
+            <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace(/-/g, ' '))}</div>
 
             {/* Article and Talk tabs floated to the right */}
             <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -219,8 +219,8 @@ Cats are a vital part of our communities. They bring comfort to working families
         <Tabs defaultValue="tab-1">
           <div className="relative flex items-end justify-between border-b border-border">
             {/* Title on the left */}
-            <div className="text-neutral-800 text-3xl font-normal pb-2">
-              {slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+            <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2 truncate">
+              {decodeURIComponent(slug.replace(/-/g, ' ').replace('_', ' '))}
             </div>
             {/* Article and Talk tabs floated to the right */}
             <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -280,7 +280,7 @@ Cats are a vital part of our communities. They bring comfort to working families
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="tab-1">
-                <WikipediaWrapper slug={slug} language={lang} bias={bias || ''} />
+                <WikipediaWrapper slug={slug} language={lang} bias={bias || 'en'} />
               </TabsContent>
               <TabsContent value="tab-2">
                 <p className="text-muted-foreground pt-1 text-center text-xs">
@@ -308,7 +308,7 @@ Cats are a vital part of our communities. They bring comfort to working families
         <Tabs defaultValue="tab-1">
           <div className="relative flex items-end justify-between border-b border-border">
             {/* Title on the left */}
-            <div className="text-neutral-800 text-3xl font-normal pb-2">Cat</div>
+            <div className="text-neutral-800 text-3xl font-normal pb-2"></div>
 
             {/* Article and Talk tabs floated to the right */}
             <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -400,7 +400,7 @@ Cats are one of God’s small wonders — graceful, dignified, and a reminder of
         <Tabs defaultValue="tab-1">
           <div className="relative flex items-end justify-between border-b border-border">
             {/* Title on the left */}
-            <div className="text-neutral-800 text-3xl font-normal pb-2">Cat</div>
+            <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace(/-/g, ' '))}</div>
 
             {/* Article and Talk tabs floated to the right */}
             <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
