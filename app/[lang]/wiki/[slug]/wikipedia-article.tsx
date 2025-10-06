@@ -106,6 +106,7 @@ export default function WikipediaArticle({ slug, language, wikipediaData }: Wiki
             {parsedContent ? (
               <div 
                 className="max-w-none text-gray-900 leading-relaxed
+                         [&_header]:display:none
                          [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:border-b [&_h2]:border-gray-300 [&_h2]:pb-1 [&_h2]:mt-6 [&_h2]:mb-3 [&_h2]:text-black [&_h2]:clear-both
                          [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-5 [&_h3]:mb-2 [&_h3]:text-black [&_h3]:clear-both
                          [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:mt-4 [&_h4]:mb-2 [&_h4]:text-black

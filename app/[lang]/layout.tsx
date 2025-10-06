@@ -59,11 +59,11 @@ export default async function Layout({
     <div>
       <Analytics />
       {/* <nav> */}
-      <div className="cursor-default text-center block md:hidden lg:hidden xl:hidden pt-3.5">
+      <div  className="cursor-default text-center block md:hidden lg:hidden xl:hidden pt-3.5">
         <div className="text-xl font-medium text-black dark:text-white font-serif">Alternipedia</div>
       </div>
 
-      <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-16 xl:px-40 py-3.5 bg-white flex justify-between items-center">
+      <div id="nav" className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-16 xl:px-40 py-3.5 bg-white flex justify-between items-center">
         <div className="w-full flex justify-between items-center">
           <div className="flex justify-start items-center gap-3 sm:gap-5 min-w-0 shrink-0">
             <DropdownMenu modal={false}>
@@ -112,7 +112,7 @@ export default async function Layout({
       {children}
 
       {/* <footer> */}
-      <div className="w-full bg-white mt-8 border-t border-gray-300 z-50">
+      <div id="footer" className="w-full bg-white mt-8 border-t border-gray-300 z-50">
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-16 py-8">
           {/* Footer Content Container - 70/30 split on large screens */}
           <div className="flex flex-col md:flex-row gap-8 md:gap-12">

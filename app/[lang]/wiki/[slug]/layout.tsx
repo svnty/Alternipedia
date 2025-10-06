@@ -61,7 +61,8 @@ export default function Article({
   const [isLoadingBias, startTransition] = useTransition();
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
-  const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 136px)'); // 112px + 24px margin
+  const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
+
   const handleApplyBias = (value: string) => {
     if (!value) return;
 
@@ -69,7 +70,7 @@ export default function Article({
     params.set('bias', value);
 
     const newPath = `${pathname}?${params.toString()}`;
-    
+
     // Use transition to track loading state
     startTransition(() => {
       router.push(newPath);
@@ -123,7 +124,6 @@ export default function Article({
       setBias('wikipedia');
     }
 
-
     // Check if screen is large on mount and window resize
     let resizeTimer: NodeJS.Timeout;
     let previousWidth = window.innerWidth;
@@ -169,44 +169,167 @@ export default function Article({
     };
   }, []);
 
+  useEffect(() => {
+    if (isMobile) return;
+
+    let lastScrollY = window.scrollY;
+    let lastScrollTime = Date.now();
+    let pageJumpCooldown = false;
+
+    const elementsOverlap = (el1: any, el2: any) => {
+      if (!el1 || !el2) return false;
+      
+      const rect1 = el1.getBoundingClientRect();
+      const rect2 = el2.getBoundingClientRect();
+
+      return !(
+        rect1.right < rect2.left ||
+        rect1.left > rect2.right ||
+        rect1.bottom < rect2.top ||
+        rect1.top > rect2.bottom
+      );
+    }
+
+    const leftSidebar = document.getElementById('left-sidebar');
+    const rightSidebar = document.getElementById('right-sidebar');
+    const footer = document.getElementById('footer');
+    const nav = document.getElementById('nav');
+
+    // Detect keyboard page jumps
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Detect page jump keys: Cmd+Up/Down, Home, End, Page Up/Down
+      if (
+        (e.metaKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) || // Cmd + Up/Down (macOS)
+        (e.ctrlKey && (e.key === 'Home' || e.key === 'End')) || // Ctrl + Home/End
+        e.key === 'Home' || 
+        e.key === 'End' || 
+        e.key === 'PageUp' || 
+        e.key === 'PageDown'
+      ) {
+        pageJumpCooldown = true;
+        
+        // Remove all transitions immediately when page jump is detected
+        [leftSidebar, rightSidebar].forEach(sidebar => {
+          if (sidebar) {
+            sidebar.classList.remove('transition-all', 'duration-100', 'ease-linear');
+            sidebar.offsetHeight; // Force reflow
+          }
+        });
+
+        // Clear cooldown after animations would have completed
+        setTimeout(() => {
+          pageJumpCooldown = false;
+        }, 300);
+      }
+    };
+
+    const updateAnimation = (el1: any, el2: any) => {
+      if (!el1 || !el2) return;
+      
+      const currentScrollY = window.scrollY;
+      const currentTime = Date.now();
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+      const timeDelta = currentTime - lastScrollTime;
+      
+      // Detect page jumps by looking for large instantaneous scroll changes
+      const isPageJump = scrollDelta > 500 && timeDelta < 100; // More than 500px in less than 100ms
+      const isRapidScroll = scrollDelta > 100 && timeDelta < 50;
+      
+      const areOverlapping = elementsOverlap(el1, el2);
+      const hasTransition = el1.classList.contains('transition-all');
+      
+      if (areOverlapping || isRapidScroll || isPageJump || pageJumpCooldown) {
+        // Remove transitions for overlapping, rapid scroll, page jumps, or during cooldown
+        el1.classList.remove('transition-all', 'duration-100', 'ease-linear');
+        
+        // Force immediate repositioning
+        if ((areOverlapping || isPageJump) && hasTransition) {
+          el1.offsetHeight; // Force reflow
+        }
+      } else {
+        // Only add transitions when conditions are normal
+        if (!hasTransition) {
+          el1.classList.add('transition-all', 'duration-100', 'ease-linear');
+        }
+      }
+      
+      lastScrollY = currentScrollY;
+      lastScrollTime = currentTime;
+    }
+
+    // Store function references for proper cleanup
+    const handleScrollLeftFooter = () => updateAnimation(leftSidebar, footer);
+    const handleResizeLeftFooter = () => updateAnimation(leftSidebar, footer);
+    const handleScrollLeftNav = () => updateAnimation(leftSidebar, nav);
+    const handleResizeLeftNav = () => updateAnimation(leftSidebar, nav);
+    const handleScrollRightFooter = () => updateAnimation(rightSidebar, footer);
+    const handleResizeRightFooter = () => updateAnimation(rightSidebar, footer);
+    const handleScrollRightNav = () => updateAnimation(rightSidebar, nav);
+    const handleResizeRightNav = () => updateAnimation(rightSidebar, nav);
+
+    // Add keyboard event listener for page jump detection
+    window.addEventListener('keydown', handleKeyDown);
+    
+    window.addEventListener('scroll', handleScrollLeftFooter);
+    window.addEventListener('resize', handleResizeLeftFooter);
+    window.addEventListener('scroll', handleScrollLeftNav);
+    window.addEventListener('resize', handleResizeLeftNav);
+    window.addEventListener('scroll', handleScrollRightFooter);
+    window.addEventListener('resize', handleResizeRightFooter);
+    window.addEventListener('scroll', handleScrollRightNav);
+    window.addEventListener('resize', handleResizeRightNav);
+
+    updateAnimation(leftSidebar, footer);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('scroll', handleScrollLeftFooter);
+      window.removeEventListener('resize', handleResizeLeftFooter);
+      window.removeEventListener('scroll', handleScrollLeftNav);
+      window.removeEventListener('resize', handleResizeLeftNav);
+      window.removeEventListener('scroll', handleScrollRightFooter);
+      window.removeEventListener('resize', handleResizeRightFooter);
+      window.removeEventListener('scroll', handleScrollRightNav);
+      window.removeEventListener('resize', handleResizeRightNav);
+    };
+  }, []);
+
   // Smooth sidebar positioning based on scroll
   useEffect(() => {
     if (isMobile) return;
 
+    const isElementNearViewport = (el: any, offset = 40) => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+
+      // visible region extended by ±offset
+      const aboveViewport = rect.bottom < -offset;
+      const belowViewport = rect.top > vh + offset;
+
+      return !(aboveViewport || belowViewport);
+    }
+
     let ticking = false;
-    
+
     const updateSidebarPosition = () => {
       const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const navbarHeight = 120; // Approximate navbar height
-      
-      // Smooth transition for top position
+      const footerHeight = document.getElementById("footer")?.clientHeight || 130;
+
       let newTop: number;
-      if (scrollY < navbarHeight) {
-        // Navbar visible - interpolate from 112px to 16px
-        const progress = scrollY / navbarHeight;
-        newTop = 112 * (1 - progress) + 16 * progress;
+      let newHeight: string;
+
+      if (isElementNearViewport(document.getElementById('nav'), 40)) {
+        newTop = 112;
       } else {
-        // Navbar hidden - moderate top margin
         newTop = 16;
       }
-      
-      // Calculate footer distance
-      const distanceToFooter = documentHeight - (scrollY + windowHeight);
-      const footerBuffer = 120; // Start adjusting 120px before footer
-      
-      // Smooth transition for height
-      let newHeight: string;
-      if (distanceToFooter < footerBuffer) {
-        // Near footer - reduce height smoothly
-        const reduction = Math.max(0, footerBuffer - distanceToFooter);
-        newHeight = `calc(100vh - ${newTop + reduction + 24}px)`; // +24px for bottom margin
+
+      if (isElementNearViewport(document.getElementById('footer'), 40)) {
+        newHeight = `calc(100vh - ${footerHeight + 24}px)`;
       } else {
-        // Normal height with proper margins
-        newHeight = `calc(100vh - ${newTop + 24}px)`; // +24px for bottom margin
+        newHeight = `calc(100vh - ${newTop + 24}px)`;
       }
-      
+
       setSidebarTop(newTop);
       setSidebarHeight(newHeight);
       ticking = false;
@@ -221,7 +344,7 @@ export default function Article({
 
     // Immediate calculation to prevent initial jump
     updateSidebarPosition();
-    
+
     window.addEventListener('scroll', handleScroll);
 
     return () => {
@@ -286,11 +409,12 @@ export default function Article({
       </div>
 
       {/* LEFT SIDEBAR - Shows after ToggleGroup on mobile, left side on desktop */}
-      <div 
-        className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-40 px-4 lg:px-0 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out"
+      <div
+        id="left-sidebar"
+        className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-40 px-4 lg:px-0 overflow-y-auto overflow-x-hidden lg:z-10"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
-          height: isMobile ? 'auto' : sidebarHeight
+          height: isMobile ? 'auto' : sidebarHeight,
         }}
       >
         <div className="w-full lg:w-64 relative overflow-x-hidden">
@@ -316,10 +440,10 @@ export default function Article({
                   <div className="absolute top-9 left-0 w-full h-0.5 bg-gray-300" />
                 </div>
                 <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
-                  <WikipediaContents 
-                    slug={params?.slug as string} 
-                    language={currentLang} 
-                    bias={searchParams?.get('bias') || ''} 
+                  <WikipediaContents
+                    slug={params?.slug as string}
+                    language={currentLang}
+                    bias={searchParams?.get('bias') || ''}
                   />
                 </CollapsibleContent>
               </div>
@@ -330,322 +454,323 @@ export default function Article({
       {/* END LEFT SIDEBAR */}
 
       {/* RIGHT SIDEBAR - Shows second on mobile, right side on desktop */}
-      <div 
-        data-property-1="Default" 
-        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-40 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out"
+      <div
+        id="right-sidebar"
+        data-property-1="Default"
+        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-40 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
-          height: isMobile ? 'auto' : sidebarHeight
+          height: isMobile ? 'auto' : sidebarHeight,
         }}
       >
-          <div className="w-full lg:w-64 relative overflow-x-hidden">
-            <Collapsible open={toolsOpen} onOpenChange={setToolsOpen}>
-              <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
-                <div className="w-full lg:w-64 relative inline-flex flex-col justify-start items-start overflow-x-hidden">
-                  <div className="relative w-full">
-                    <CollapsibleTrigger className="h-10 px-1.5 py-[5px] inline-flex justify-between items-center gap-2.5 w-full transition-colors cursor-pointer">
-                      <div className="justify-start text-neutral-800 text-sm font-bold ">{dict.article.tools}</div>
-                      <div data-svg-wrapper className="relative">
-                        {toolsOpen ? (
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6.71875 12H16.9988" stroke="#636C7E" strokeWidth="1.89438" strokeLinecap="round" />
-                          </svg>
-                        ) : (
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 6.71875V16.9988" stroke="#636C7E" strokeWidth="1.89438" strokeLinecap="round" />
-                            <path d="M6.71875 12H16.9988" stroke="#636C7E" strokeWidth="1.89438" strokeLinecap="round" />
-                          </svg>
-                        )}
-                      </div>
-                    </CollapsibleTrigger>
-                    <div className="absolute top-9 left-0 w-full h-0.5 bg-gray-300" />
-                  </div>
-                  <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
-                    <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
-                      <Dialog open={langDialogOpen} onOpenChange={setLangDialogOpen}>
-                        <DialogTrigger asChild>
-                          <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
-                            <a className="hover:underline cursor-pointer">
-                              <div className="size- flex justify-start items-center gap-1.5">
-                                <div data-svg-wrapper data-property-1="Notes" className="relative">
-                                  <Languages className="text-gray-500" size={16} />
-                                </div>
-                                <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden text-gray-500 text-sm">
-                                  <SlidingLanguage />
-                                </div>
+        <div className="w-full lg:w-64 relative overflow-x-hidden">
+          <Collapsible open={toolsOpen} onOpenChange={setToolsOpen}>
+            <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
+              <div className="w-full lg:w-64 relative inline-flex flex-col justify-start items-start overflow-x-hidden">
+                <div className="relative w-full">
+                  <CollapsibleTrigger className="h-10 px-1.5 py-[5px] inline-flex justify-between items-center gap-2.5 w-full transition-colors cursor-pointer">
+                    <div className="justify-start text-neutral-800 text-sm font-bold ">{dict.article.tools}</div>
+                    <div data-svg-wrapper className="relative">
+                      {toolsOpen ? (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6.71875 12H16.9988" stroke="#636C7E" strokeWidth="1.89438" strokeLinecap="round" />
+                        </svg>
+                      ) : (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 6.71875V16.9988" stroke="#636C7E" strokeWidth="1.89438" strokeLinecap="round" />
+                          <path d="M6.71875 12H16.9988" stroke="#636C7E" strokeWidth="1.89438" strokeLinecap="round" />
+                        </svg>
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <div className="absolute top-9 left-0 w-full h-0.5 bg-gray-300" />
+                </div>
+                <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
+                  <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
+                    <Dialog open={langDialogOpen} onOpenChange={setLangDialogOpen}>
+                      <DialogTrigger asChild>
+                        <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                          <a className="hover:underline cursor-pointer">
+                            <div className="size- flex justify-start items-center gap-1.5">
+                              <div data-svg-wrapper data-property-1="Notes" className="relative">
+                                <Languages className="text-gray-500" size={16} />
                               </div>
-                            </a>
-                          </div>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-md">
-                          <DialogHeader>
-                            <DialogTitle>{dict.language.selectLanguage}</DialogTitle>
-                            <DialogDescription>
-                              {dict.language.description}
-                            </DialogDescription>
-                          </DialogHeader>
+                              <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden text-gray-500 text-sm">
+                                <SlidingLanguage />
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                          <DialogTitle>{dict.language.selectLanguage}</DialogTitle>
+                          <DialogDescription>
+                            {dict.language.description}
+                          </DialogDescription>
+                        </DialogHeader>
 
-                          {/* Search Input */}
-                          <div className="relative mb-4">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                            <Input
-                              placeholder="Search languages..."
-                              value={searchQuery}
-                              onChange={(e) => setSearchQuery(e.target.value)}
-                              className="pl-9"
-                            />
-                          </div>
+                        {/* Search Input */}
+                        <div className="relative mb-4">
+                          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                          <Input
+                            placeholder="Search languages..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="pl-9"
+                          />
+                        </div>
 
-                          {/* Language List */}
-                          <ScrollArea className="h-[300px] pr-4">
-                            <RadioGroup
-                              value={selectedLang}
-                              onValueChange={(value) => setSelectedLang(value as Locale)}
-                              className="space-y-1 pb-2"
-                            >
-                              {filteredLocales.map((locale) => (
-                                <div
-                                  key={locale}
-                                  className={`flex items-center space-x-3 rounded-md border p-3 cursor-pointer transition-colors hover:bg-gray-50 ${selectedLang === locale ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-                                    }`}
-                                  onClick={() => setSelectedLang(locale)}
+                        {/* Language List */}
+                        <ScrollArea className="h-[300px] pr-4">
+                          <RadioGroup
+                            value={selectedLang}
+                            onValueChange={(value) => setSelectedLang(value as Locale)}
+                            className="space-y-1 pb-2"
+                          >
+                            {filteredLocales.map((locale) => (
+                              <div
+                                key={locale}
+                                className={`flex items-center space-x-3 rounded-md border p-3 cursor-pointer transition-colors hover:bg-gray-50 ${selectedLang === locale ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
+                                  }`}
+                                onClick={() => setSelectedLang(locale)}
+                              >
+                                <RadioGroupItem value={locale} id={locale} />
+                                <Label
+                                  htmlFor={locale}
+                                  className="flex-1 cursor-pointer font-normal"
                                 >
-                                  <RadioGroupItem value={locale} id={locale} />
-                                  <Label
-                                    htmlFor={locale}
-                                    className="flex-1 cursor-pointer font-normal"
-                                  >
-                                    <div className="flex items-center justify-between">
-                                      <span className="font-medium">{localeNames[locale]}</span>
-                                      <span className="text-xs text-gray-500 uppercase">{locale}</span>
-                                    </div>
-                                  </Label>
-                                  {currentLang === locale && (
-                                    <Check className="h-4 w-4 text-blue-600" />
-                                  )}
-                                </div>
-                              ))}
-                            </RadioGroup>
-
-                            {filteredLocales.length === 0 && (
-                              <div className="text-center py-8 text-gray-500">
-                                {dict.language.notFound} "{searchQuery}"
+                                  <div className="flex items-center justify-between">
+                                    <span className="font-medium">{localeNames[locale]}</span>
+                                    <span className="text-xs text-gray-500 uppercase">{locale}</span>
+                                  </div>
+                                </Label>
+                                {currentLang === locale && (
+                                  <Check className="h-4 w-4 text-blue-600" />
+                                )}
                               </div>
-                            )}
-                          </ScrollArea>
+                            ))}
+                          </RadioGroup>
 
-                          {/* Action Buttons */}
-                          <DialogFooter>
-                            <Button
-                              variant="outline"
-                              onClick={() => {
-                                setLangDialogOpen(false);
-                                setSelectedLang(currentLang);
-                                setSearchQuery('');
-                              }}
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              onClick={handleApplyLanguage}
-                              disabled={selectedLang === currentLang}
-                            >
-                              Apply
-                            </Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
+                          {filteredLocales.length === 0 && (
+                            <div className="text-center py-8 text-gray-500">
+                              {dict.language.notFound} "{searchQuery}"
+                            </div>
+                          )}
+                        </ScrollArea>
 
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a href="" className="hover:underline">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Speech" className="relative">
-                              <Speech className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.textToSpeech}</div>
-                            </div>
+                        {/* Action Buttons */}
+                        <DialogFooter>
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              setLangDialogOpen(false);
+                              setSelectedLang(currentLang);
+                              setSearchQuery('');
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={handleApplyLanguage}
+                            disabled={selectedLang === currentLang}
+                          >
+                            Apply
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Speech" className="relative">
+                            <Speech className="text-gray-500" size={16} />
                           </div>
-                        </a>
-                      </div>
-
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
-                        <a className="hover:underline cursor-not-allowed">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Map" className="relative">
-                              <Earth className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.translate}</div>
-                            </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.textToSpeech}</div>
                           </div>
-                        </a>
-                        <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                          <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                         </div>
-                      </div>
+                      </a>
+                    </div>
 
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
-                        <a className="hover:underline cursor-not-allowed">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Map" className="relative">
-                              <Waypoints className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.topicMap}</div>
-                            </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                      <a className="hover:underline cursor-not-allowed">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Map" className="relative">
+                            <Earth className="text-gray-500" size={16} />
                           </div>
-                        </a>
-                        <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                          <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.translate}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
-                        <a className="hover:underline cursor-not-allowed">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Notes" className="relative">
-                              <NotebookPen className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.notes}</div>
-                            </div>
-                          </div>
-                        </a>
-                        <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                          <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
-                        </div>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
-                        <a className="hover:underline cursor-not-allowed">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="AI" className="relative">
-                              <Bot className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.wikipal}</div>
-                            </div>
-                          </div>
-                        </a>
-                        <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                          <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
-                        </div>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a className="hover:underline cursor-not-allowed">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Watch" className="relative">
-                              <Star className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.watchChanges}</div>
-                            </div>
-                          </div>
-                        </a>
-                        <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
-                          <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
-                        </div>
-                      </div>
-
-
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a className="hover:underline cursor-pointer">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Watch" className="relative">
-                              <Bookmark className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.saveArticle}</div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a href="" className="hover:underline">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Short link" className="relative">
-                              <Link className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.shortUrl}</div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a href="" className="hover:underline">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Cite" className="relative">
-                              <Quote className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.citePage}</div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a href="" className="hover:underline">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="QR" className="relative">
-                              <QrCode className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.QRCode}</div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a href="" className="hover:underline">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Download" className="relative">
-                              <Download className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.DownloadPDF}</div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a href="" className="hover:underline">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Print" className="relative">
-                              <Printer className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.printPage}</div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                      <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                        <a href="" className="hover:underline">
-                          <div className="size- flex justify-start items-center gap-1.5">
-                            <div data-svg-wrapper data-property-1="Info" className="relative">
-                              <Info className="text-gray-500" size={16} />
-                            </div>
-                            <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                              <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.pageInfo}</div>
-                            </div>
-                          </div>
-                        </a>
+                      </a>
+                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
-                  </CollapsibleContent>
-                </div>
+
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                      <a className="hover:underline cursor-not-allowed">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Map" className="relative">
+                            <Waypoints className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.topicMap}</div>
+                          </div>
+                        </div>
+                      </a>
+                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
+                      </div>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                      <a className="hover:underline cursor-not-allowed">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Notes" className="relative">
+                            <NotebookPen className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.notes}</div>
+                          </div>
+                        </div>
+                      </a>
+                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
+                      </div>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
+                      <a className="hover:underline cursor-not-allowed">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="AI" className="relative">
+                            <Bot className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.wikipal}</div>
+                          </div>
+                        </div>
+                      </a>
+                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
+                      </div>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a className="hover:underline cursor-not-allowed">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Watch" className="relative">
+                            <Star className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.watchChanges}</div>
+                          </div>
+                        </div>
+                      </a>
+                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                        <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
+                      </div>
+                    </div>
+
+
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a className="hover:underline cursor-pointer">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Watch" className="relative">
+                            <Bookmark className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.saveArticle}</div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Short link" className="relative">
+                            <Link className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.shortUrl}</div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Cite" className="relative">
+                            <Quote className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.citePage}</div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="QR" className="relative">
+                            <QrCode className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.QRCode}</div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Download" className="relative">
+                            <Download className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.DownloadPDF}</div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Print" className="relative">
+                            <Printer className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.printPage}</div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                      <a href="" className="hover:underline">
+                        <div className="size- flex justify-start items-center gap-1.5">
+                          <div data-svg-wrapper data-property-1="Info" className="relative">
+                            <Info className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.pageInfo}</div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </CollapsibleContent>
               </div>
-            </Collapsible>
-          </div>
+            </div>
+          </Collapsible>
         </div>
-        {/* END RIGHT SIDEBAR */}
+      </div>
+      {/* END RIGHT SIDEBAR */}
 
       {/* MAIN CONTENT */}
       <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden relative pb-20">
         {/* Loading overlay when bias is changing */}
-        <LoadingOverlay 
-          isVisible={isLoadingBias} 
-          message="Loading new perspective..." 
+        <LoadingOverlay
+          isVisible={isLoadingBias}
+          message="Loading new perspective..."
         />
         {children}
       </div>
