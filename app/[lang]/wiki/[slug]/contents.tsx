@@ -49,7 +49,7 @@ export default function Contents({ headings = [] }: ContentsProps) {
     return (
       <div className="flex h-full flex-col gap-2">
         <div className="text-sm text-gray-500 italic">
-          Table of contents will appear here when viewing Wikipedia articles
+          Table of contents will appear here when viewing an article
         </div>
       </div>
     );

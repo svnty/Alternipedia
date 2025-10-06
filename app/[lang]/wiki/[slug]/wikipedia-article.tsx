@@ -23,6 +23,24 @@ export default function WikipediaArticle({ slug, language, wikipediaData }: Wiki
     ? parseWikipediaContent(wikipediaData.content, language)
     : null;
 
+  // Debug parsed content and images
+  console.log('Parsed content info:', {
+    hasParsedContent: !!parsedContent,
+    parsedContentLength: parsedContent?.length,
+    containsImages: parsedContent?.includes('<figure'),
+    containsImageKeyword: parsedContent?.includes('File:') || parsedContent?.includes('Image:'),
+    firstFewChars: parsedContent?.substring(0, 200)
+  });
+
+  // Debug parsed content and images
+  console.log('Parsed content info:', {
+    hasParsedContent: !!parsedContent,
+    parsedContentLength: parsedContent?.length,
+    containsImages: parsedContent?.includes('<figure'),
+    containsImageKeyword: parsedContent?.includes('File:') || parsedContent?.includes('Image:'),
+    firstFewChars: parsedContent?.substring(0, 200)
+  });
+
   if (!wikipediaData) {
     return (
       <div className="w-full flex flex-col justify-start items-center gap-8 p-8">
@@ -47,60 +65,88 @@ export default function WikipediaArticle({ slug, language, wikipediaData }: Wiki
   }
 
   return (
-    <div className="w-full flex flex-col justify-start items-start">
+    <article className="wikipedia-article max-w-none">
+      {/* Wikipedia source notice */}
       <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r">
         <p className="text-sm text-blue-800">
-          The following selected content bias is sourced from Wikipedia and represents their community-edited perspective. To edit or discuss this version, please 
-          <a
-            href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(slug.replace(/-/g, ' '))}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-1 text-blue-600 hover:underline"
-          >
-            view on Wikipedia →
-          </a>
+          The following selected content bias is sourced from Wikipedia and represents their community-edited perspective. To edit or discuss this version, please
+          <a href="https://en.wikipedia.org/wiki/cat" target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline">view on Wikipedia →</a>
         </p>
       </div>
-      <div className="w-full flex flex-col justify-start items-start gap-12">
 
-        <div className="self-stretch inline-flex justify-start items-start gap-12">
-          {/* Note about Wikipedia content */}
+      {/* Single column layout for better inline image support */}
+      <main className="max-w-4xl mx-auto">
+        {/* Article title */}
+        <header className="mb-8">
+          <h1 className="text-4xl font-serif font-normal text-gray-900 mb-2 leading-tight">
+            {wikipediaData.title}
+          </h1>
+          <div className="h-px bg-gray-300 mb-4"></div>
+          
+          {/* Source information moved to header */}
+          <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
+            <span>
+              Source: 
+              <a
+                href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(slug.replace(/-/g, ' '))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 hover:underline ml-1"
+              >
+                Wikipedia
+              </a>
+            </span>
+            <span>Language: <span className="capitalize">{language}</span></span>
+          </div>
+        </header>
 
-
-
-          <div className="flex-1 inline-flex flex-col justify-start items-start gap-7">
-            <h1 className="text-3xl font-bold text-neutral-800">{wikipediaData.title}</h1>
-
-            {/* Full Wikipedia Content */}
-            {(wikipediaData.content || wikipediaData.extract) && (
-              <div className="w-full prose prose-lg max-w-none text-neutral-800">
-                {parsedContent ? (
-                  <div dangerouslySetInnerHTML={{ __html: parsedContent }} />
-                ) : (
-                  <p className="text-base font-normal leading-7">{wikipediaData.extract}</p>
-                )}
+        {/* Article content with inline images */}
+        {(wikipediaData.content || wikipediaData.extract) && (
+          <div className="wikipedia-article-content">
+            {parsedContent ? (
+              <div 
+                className="max-w-none text-gray-900 leading-relaxed
+                         [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:border-b [&_h2]:border-gray-300 [&_h2]:pb-1 [&_h2]:mt-6 [&_h2]:mb-3 [&_h2]:text-black [&_h2]:clear-both
+                         [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-5 [&_h3]:mb-2 [&_h3]:text-black [&_h3]:clear-both
+                         [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:mt-4 [&_h4]:mb-2 [&_h4]:text-black
+                         [&_h5]:text-base [&_h5]:font-semibold [&_h5]:mt-4 [&_h5]:mb-2 [&_h5]:text-black
+                         [&_h6]:text-sm [&_h6]:font-semibold [&_h6]:mt-3 [&_h6]:mb-2 [&_h6]:text-black
+                         [&_p]:mb-4 [&_p]:leading-relaxed
+                         [&_a]:text-blue-700 [&_a]:no-underline [&_a:hover]:underline
+                         [&_strong]:font-semibold 
+                         [&_em]:italic
+                         [&_sup]:text-blue-600 [&_sup]:text-xs [&_sup]:cursor-help
+                         [&_ul]:my-2 [&_ul]:ml-8 [&_ul]:list-disc [&_ul>li]:mb-1
+                         [&_ol]:my-2 [&_ol]:ml-8 [&_ol]:list-decimal [&_ol>li]:mb-1
+                         [&_figure]:my-4
+                         after:content-[''] after:table after:clear-both"
+                dangerouslySetInnerHTML={{ __html: parsedContent }} 
+              />
+            ) : (
+              <div className="text-base leading-relaxed">
+                {wikipediaData.extract}
               </div>
             )}
           </div>
-
-          {/* Wikipedia thumbnail sidebar */}
-          {wikipediaData.thumbnail && (
-            <div className="w-full max-w-xs p-2.5 bg-white rounded-md outline outline-1 outline-offset-[-1px] outline-gray-100 flex flex-row lg:flex-col justify-start items-start gap-3.5 shrink-0">
-              <div className="self-stretch justify-start text-neutral-800 text-lg font-bold leading-loose">
-                {wikipediaData.title}
-              </div>
+        )}
+        
+        {/* Featured image at bottom if available and no inline images */}
+        {wikipediaData.thumbnail && !parsedContent?.includes('<figure') && (
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <figure className="text-center">
               <img
-                className="w-full h-auto object-cover rounded"
+                className="mx-auto max-w-md h-auto rounded border border-gray-300 shadow-sm"
                 src={wikipediaData.thumbnail.source}
-                alt={wikipediaData.title}
+                alt={`Image of ${wikipediaData.title}`}
+                loading="lazy"
               />
-              <div className="self-stretch justify-start text-neutral-800 text-sm font-normal leading-normal">
-                Source: Wikipedia
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+              <figcaption className="text-xs text-gray-600 mt-2 italic">
+                Featured image from Wikipedia
+              </figcaption>
+            </figure>
+          </div>
+        )}
+      </main>
+    </article>
   );
 }

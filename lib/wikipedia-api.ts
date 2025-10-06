@@ -102,6 +102,8 @@ export async function fetchWikipediaPage(slug: string, language: string = 'en'):
         
         content = rawContent;
         console.log('Content extracted successfully, length:', content?.length);
+        console.log('Raw content sample (first 1000 chars):', content?.substring(0, 1000));
+        console.log('Contains File/Image references:', /\[\[(File|Image):/i.test(content || ''));
       } else {
         if (page?.missing) {
           console.log(`Page "${slug}" does not exist in ${language} Wikipedia`);
@@ -176,6 +178,22 @@ export function extractWikipediaHeadings(content: string): Array<{ level: number
 }
 
 /**
+ * Simple MD5 hash function for Wikipedia Commons file paths
+ * Wikipedia Commons uses MD5 hashes to organize files in directories
+ */
+function simpleHash(str: string): string {
+  // This is a simplified hash for demo purposes
+  // In production, you'd want to use a proper MD5 library or fetch the actual file info
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash).toString(16).toLowerCase().substring(0, 2);
+}
+
+/**
  * Converts Wikipedia wikitext to a simplified HTML structure
  * This is a basic converter - for production, consider using a proper wikitext parser
  */
@@ -183,50 +201,107 @@ export function parseWikipediaContent(content: string, language: string = 'en'):
   if (!content) return '';
 
   let html = content;
-
-  // Remove all potentially problematic elements that could cause hydration issues
   
-  // Remove all templates and infoboxes (more aggressive approach)
-  // This handles nested templates better
-  let templateDepth = 0;
-  let i = 0;
-  while (i < html.length) {
-    if (html.substring(i, i + 2) === '{{') {
-      templateDepth++;
-      if (templateDepth === 1) {
-        const templateStart = i;
-        let j = i + 2;
-        while (j < html.length && templateDepth > 0) {
-          if (html.substring(j, j + 2) === '{{') {
-            templateDepth++;
-            j += 2;
-          } else if (html.substring(j, j + 2) === '}}') {
-            templateDepth--;
-            j += 2;
-          } else {
-            j++;
-          }
-        }
-        html = html.substring(0, templateStart) + html.substring(j);
-        i = templateStart;
-        continue;
+  // Debug: Count images in original content
+  const originalImages = html.match(/\[\[(File|Image):[^\]]+\]\]/gi);
+  console.log('Original content image count:', originalImages?.length || 0);
+  if (originalImages?.length) {
+    console.log('First few original images:', originalImages.slice(0, 3));
+  }
+
+  // Remove only the most problematic templates, but preserve content-rich ones
+  
+  // Remove navigation boxes and cleanup templates (but preserve infoboxes which contain images)
+  html = html.replace(/\{\{[Nn]avbox[^}]*\}\}/g, '');
+  html = html.replace(/\{\{[Cc]ommons[^}]*\}\}/g, '');
+  html = html.replace(/\{\{[Aa]uthority control[^}]*\}\}/g, '');
+  html = html.replace(/\{\{[Ss]tubbox[^}]*\}\}/g, '');
+  
+  // Convert references to a simpler format instead of removing them
+  html = html.replace(/<ref([^>]*)>([^<]*)<\/ref>/gi, (match, attrs, content) => {
+    if (content.trim()) {
+      return ` <sup class="text-blue-600 text-xs">[ref: ${content.trim().substring(0, 50)}...]</sup>`;
+    }
+    return ' <sup class="text-blue-600 text-xs">[ref]</sup>';
+  });
+  
+  // Convert self-closing references
+  html = html.replace(/<ref[^>]*\/>/gi, ' <sup class="text-blue-600 text-xs">[ref]</sup>');
+  
+  // Convert file/image references to HTML images
+  html = html.replace(/\[\[(File|Image):([^|\]]+)(?:\|([^\]]+))?\]\]/gi, (match, type, filename, options) => {
+    console.log('Found image in content:', { match, type, filename, options });
+    
+    // Extract image options like thumb, right, left, etc.
+    const isThumb = options && options.includes('thumb');
+    const isRight = options && (options.includes('right') || options.includes('thumb'));
+    const isLeft = options && options.includes('left');
+    
+    // Clean up filename
+    const cleanFilename = filename.replace(/\s+/g, '_').trim();
+    
+    // Use multiple fallback approaches for Wikipedia images
+    const imageUrl1 = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(cleanFilename)}?width=300`;
+    const imageUrl2 = `https://upload.wikimedia.org/wikipedia/commons/${cleanFilename}`;
+    
+    console.log('Image URLs generated:', { cleanFilename, imageUrl1, imageUrl2 });
+    
+    // Extract caption if present (last pipe-separated value that's not a format option)
+    let caption = '';
+    if (options) {
+      const parts = options.split('|');
+      const lastPart = parts[parts.length - 1]?.trim();
+      if (lastPart && !lastPart.match(/^(thumb|thumbnail|right|left|\d+px)$/i)) {
+        caption = lastPart;
       }
     }
-    i++;
+    
+    // Determine float direction and size classes
+    let floatClass = '';
+    let sizeClass = 'max-w-xs';
+    
+    if (isRight) {
+      floatClass = 'float-right ml-4 mb-2';
+    } else if (isLeft) {
+      floatClass = 'float-left mr-4 mb-2';
+    } else {
+      // Center large images
+      floatClass = 'mx-auto my-4';
+      sizeClass = 'max-w-2xl';
+    }
+    
+    console.log('Generated image HTML:', { 
+      cleanFilename, 
+      imageUrl1, 
+      imageUrl2,
+      caption, 
+      floatClass, 
+      sizeClass 
+    });
+    
+    return `<figure class="${floatClass} ${sizeClass}">
+      <img src="${imageUrl1}" alt="${caption || cleanFilename.replace(/_/g, ' ')}" class="w-full h-auto rounded border border-gray-300 shadow-sm" loading="lazy" onerror="this.src='${imageUrl2}'; this.onerror=null;" />
+      ${caption ? `<figcaption class="text-xs text-gray-600 mt-1 text-center italic">${caption}</figcaption>` : ''}
+    </figure>`;
+  });
+  
+  // Convert categories to a visible section instead of removing them
+  const categories = html.match(/\[\[Category:([^\]]+)\]\]/gi);
+  if (categories && categories.length > 0) {
+    const categoryList = categories.map(cat => {
+      const name = cat.replace(/\[\[Category:([^\]|]+).*?\]\]/i, '$1');
+      return `<a href="https://${language}.wikipedia.org/wiki/Category:${encodeURIComponent(name)}" target="_blank" class="text-blue-600 hover:underline">${name}</a>`;
+    }).join(', ');
+    
+    // Add categories section at the end
+    html = html + `\n\n== Categories ==\n${categoryList}`;
   }
   
-  // Remove references like <ref>...</ref>
-  html = html.replace(/<ref[^>]*>[\s\S]*?<\/ref>/gi, '');
-  html = html.replace(/<ref[^>]*\/>/gi, '');
-  
-  // Remove file/image references that could cause hydration issues
-  html = html.replace(/\[\[(File|Image):[^\]]*\]\]/gi, '');
-  
-  // Remove categories
+  // Remove the category markup now that we've processed it
   html = html.replace(/\[\[Category:.*?\]\]/gi, '');
   
-  // Remove any remaining HTML-like tags that aren't standard
-  html = html.replace(/<(?!\/?(p|br|strong|em|a|h[1-6])\b)[^>]*>/gi, '');
+  // Remove any remaining HTML-like tags that aren't standard (but allow more tags)
+  html = html.replace(/<(?!\/?(p|br|strong|em|a|h[1-6]|sup|figure|img|figcaption)\b)[^>]*>/gi, '');
   
   // Convert wiki headings to HTML headings with IDs for navigation
   html = html.replace(/^======\s*(.*?)\s*======/gm, (match, text) => {
@@ -273,9 +348,28 @@ export function parseWikipediaContent(content: string, language: string = 'en'):
   html = html.replace(/<p>(\s*<h[1-6][^>]*>)/g, '$1');
   html = html.replace(/(<\/h[1-6]>\s*)<\/p>/g, '$1');
   
-  // Final cleanup - remove any leftover wiki syntax
-  html = html.replace(/\{\{[^}]*\}\}/g, '');
-  html = html.replace(/\[\[[^\]]*\]\]/g, '');
+  // More conservative final cleanup
+  
+  // Remove only specific problematic templates
+  html = html.replace(/\{\{[Ss]hort description[^}]*\}\}/g, '');
+  html = html.replace(/\{\{[Dd]isambiguation[^}]*\}\}/g, '');
+  html = html.replace(/\{\{[Oo]rfan[^}]*\}\}/g, '');
+  
+  // Clean up excessive whitespace
+  html = html.replace(/\n{4,}/g, '\n\n\n');
+  
+  // Debug: Count final images in processed content
+  const finalImages = html.match(/<figure[^>]*>/gi);
+  const remainingWikiImages = html.match(/\[\[(File|Image):[^\]]+\]\]/gi);
+  const remainingRefs = html.match(/<sup[^>]*>\[ref/gi);
+  console.log('Final processed content:', {
+    figureElements: finalImages?.length || 0,
+    remainingWikiImages: remainingWikiImages?.length || 0,
+    references: remainingRefs?.length || 0,
+    contentLength: html.length,
+    containsFigures: html.includes('<figure'),
+    containsCategories: html.includes('== Categories ==')
+  });
   
   return html;
 }

@@ -59,6 +59,9 @@ export default function Article({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLang, setSelectedLang] = useState<Locale>(currentLang);
   const [isLoadingBias, startTransition] = useTransition();
+  const [isMobile, setIsMobile] = useState(false);
+  const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
+  const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 136px)'); // 112px + 24px margin
   const handleApplyBias = (value: string) => {
     if (!value) return;
 
@@ -152,6 +155,80 @@ export default function Article({
     };
   }, []);
 
+  // Track mobile/desktop for sidebar positioning
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Smooth sidebar positioning based on scroll
+  useEffect(() => {
+    if (isMobile) return;
+
+    let ticking = false;
+    
+    const updateSidebarPosition = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const navbarHeight = 120; // Approximate navbar height
+      
+      // Smooth transition for top position
+      let newTop: number;
+      if (scrollY < navbarHeight) {
+        // Navbar visible - interpolate from 112px to 16px
+        const progress = scrollY / navbarHeight;
+        newTop = 112 * (1 - progress) + 16 * progress;
+      } else {
+        // Navbar hidden - moderate top margin
+        newTop = 16;
+      }
+      
+      // Calculate footer distance
+      const distanceToFooter = documentHeight - (scrollY + windowHeight);
+      const footerBuffer = 120; // Start adjusting 120px before footer
+      
+      // Smooth transition for height
+      let newHeight: string;
+      if (distanceToFooter < footerBuffer) {
+        // Near footer - reduce height smoothly
+        const reduction = Math.max(0, footerBuffer - distanceToFooter);
+        newHeight = `calc(100vh - ${newTop + reduction + 24}px)`; // +24px for bottom margin
+      } else {
+        // Normal height with proper margins
+        newHeight = `calc(100vh - ${newTop + 24}px)`; // +24px for bottom margin
+      }
+      
+      setSidebarTop(newTop);
+      setSidebarHeight(newHeight);
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateSidebarPosition);
+        ticking = true;
+      }
+    };
+
+    // Immediate calculation to prevent initial jump
+    updateSidebarPosition();
+    
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isMobile]);
+
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
       {/* HEADER - ToggleGroup shown first on mobile, positioned in center on desktop */}
@@ -209,7 +286,13 @@ export default function Article({
       </div>
 
       {/* LEFT SIDEBAR - Shows after ToggleGroup on mobile, left side on desktop */}
-      <div className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-40 lg:top-4 px-4 lg:px-0 overflow-y-auto overflow-x-hidden lg:h-[calc(100vh-2rem)]">
+      <div 
+        className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-40 px-4 lg:px-0 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out"
+        style={{
+          top: isMobile ? 'auto' : `${sidebarTop}px`,
+          height: isMobile ? 'auto' : sidebarHeight
+        }}
+      >
         <div className="w-full lg:w-64 relative overflow-x-hidden">
           <Collapsible open={contentsOpen} onOpenChange={setContentsOpen}>
             <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
@@ -247,7 +330,14 @@ export default function Article({
       {/* END LEFT SIDEBAR */}
 
       {/* RIGHT SIDEBAR - Shows second on mobile, right side on desktop */}
-      <div data-property-1="Default" className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-40 lg:top-4 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:h-[calc(100vh-2rem)]">
+      <div 
+        data-property-1="Default" 
+        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-40 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden transition-all duration-300 ease-out"
+        style={{
+          top: isMobile ? 'auto' : `${sidebarTop}px`,
+          height: isMobile ? 'auto' : sidebarHeight
+        }}
+      >
           <div className="w-full lg:w-64 relative overflow-x-hidden">
             <Collapsible open={toolsOpen} onOpenChange={setToolsOpen}>
               <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
@@ -551,7 +641,7 @@ export default function Article({
         {/* END RIGHT SIDEBAR */}
 
       {/* MAIN CONTENT */}
-      <div className="lg:mx-80 xl:mx-96 2xl:mx-[28rem] px-4 py-2 overflow-x-hidden relative pb-20">
+      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden relative pb-20">
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay 
           isVisible={isLoadingBias} 
