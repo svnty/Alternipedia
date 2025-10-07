@@ -11,8 +11,8 @@ import { notFound } from 'next/navigation';
 import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 
-import Search from '@/app/[lang]/search';
-import UserMenu from '@/app/[lang]/user-menu';
+import Search from '@/app/[lang]/(client-renders)/search';
+import UserMenu from '@/app/[lang]/(client-renders)/user-menu';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,9 +29,9 @@ import {
 } from "@/components/ui/tooltip";
 import { Earth, MenuIcon, Palette } from "lucide-react";
 
-import Terms from "@/app/[lang]/terms";
-import Privacy from "@/app/[lang]/privacy";
-import GoPro from "@/app/[lang]/go-pro";
+import Terms from "@/app/[lang]/(client-renders)/terms";
+import Privacy from "@/app/[lang]/(client-renders)/privacy";
+import GoPro from "@/app/[lang]/(client-renders)/go-pro";
 
 export const metadata: Metadata = {
   title: "Alternipedia",
@@ -137,7 +137,7 @@ export default async function Layout({
               {/* First Links Column */}
               <div className="flex flex-col gap-1">
                 <TooltipProvider delayDuration={0}>
-                  <Tooltip>
+                  <Tooltip persistOnClick={true}>
                     <TooltipTrigger className="text-blue-400 text-sm font-normal leading-normal cursor-not-allowed w-fit">
                       {dict.footer.contact}
                     </TooltipTrigger>

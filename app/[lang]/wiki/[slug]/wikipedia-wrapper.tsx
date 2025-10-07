@@ -1,8 +1,8 @@
 import WikipediaArticle from "@/app/[lang]/wiki/[slug]/wikipedia-article";
 import { WikipediaDataProvider } from "./wikipedia-data-provider";
 import { fetchWikipediaPageWithWtf } from "@/lib/wikipedia-api";
-import CanonicalUrlSync from './canonical-url-sync';
-import CanonicalTitleSync from './canonical-title-sync';
+import CanonicalUrlSync from './(client-renders)/canonical-url-sync';
+import CanonicalTitleSync from './(client-renders)/canonical-title-sync';
 
 interface WikipediaWrapperProps {
   slug: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Contents from "@/app/[lang]/wiki/[slug]/contents";
+import Contents from "@/app/[lang]/wiki/[slug]/(client-renders)/contents";
 
 function getWikipediaHeadings(): Heading[] {
   if (typeof window !== 'undefined') {

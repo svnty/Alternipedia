@@ -9,15 +9,17 @@ import {
   HouseIcon,
   PanelsTopLeftIcon,
 } from "lucide-react"
-import BottomArrow from "@/app/[lang]/bottom-arrow";
 
-import ArticleText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/article-text";
-import DiscussionText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/discussion-text";
-import ReadText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/read-text";
-import EditText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/edit-text";
-import HistoryText from "@/app/[lang]/wiki/[slug]/(dynamic-text)/history-text";
+import ArticleText from "@/app/[lang]/wiki/[slug]/(client-renders)/article-text";
+import DiscussionText from "@/app/[lang]/wiki/[slug]/(client-renders)/discussion-text";
+import ReadText from "@/app/[lang]/wiki/[slug]/(client-renders)/read-text";
+import EditText from "@/app/[lang]/wiki/[slug]/(client-renders)/edit-text";
+import HistoryText from "@/app/[lang]/wiki/[slug]/(client-renders)/history-text";
 import WikipediaWrapper from "@/app/[lang]/wiki/[slug]/wikipedia-wrapper";
-import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/load-signal';
+import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/(client-renders)/load-signal';
+
+import BottomTools from "@/app/[lang]/wiki/[slug]/(client-renders)/bottom-tools";
+import BottomArrow from "@/app/[lang]/(client-renders)/bottom-arrow";
 
 export default async function Page({
   params,
@@ -500,6 +502,7 @@ export default async function Page({
         )}
       </span>
 
+      <BottomTools />
       <BottomArrow />
     </div >
   );

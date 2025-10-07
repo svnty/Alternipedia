@@ -1,7 +1,7 @@
 // use require to avoid TS typing issues in this file
 
 import Link from "next/link";
-import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/load-signal';
+import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/(client-renders)/load-signal';
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');

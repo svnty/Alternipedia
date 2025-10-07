@@ -4,26 +4,25 @@ import { useState, useEffect, useMemo, useTransition, useRef } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales, localeNames, type Locale, isValidLocale } from '@/lib/i18n/config';
 import WikipediaContents from "@/app/[lang]/wiki/[slug]/wikipedia-contents";
-
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-
 import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/components/ui/toggle-group";
 import { Bookmark, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check } from "lucide-react";
-import { SlidingLanguage } from "@/app/[lang]/sliding-language";
+import CurrentUrlQRCode from '@/app/[lang]/wiki/[slug]/(client-renders)/current-url-qr';
+import { SlidingLanguage } from "@/app/[lang]/(client-renders)/sliding-language";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { LoadingOverlay } from "@/app/[lang]/loading-overlay";
+import { LoadingOverlay } from "@/app/[lang]/(client-renders)/loading-overlay";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -40,6 +39,7 @@ import {
 } from "@/components/ui/dialog";
 import { notFound } from 'next/navigation';
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
 
 export default function Article({
   children,
@@ -61,7 +61,7 @@ export default function Article({
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
   const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
-  
+
   // loading spinner
   const [isLoadingBias, setIsLoadingBias] = useState<boolean>(true);
   const [activeBias, setBias] = useState<string>(searchParams?.get('bias') || '');
@@ -404,7 +404,6 @@ export default function Article({
     <div className="relative bg-white min-h-screen overflow-x-hidden">
       {/* HEADER - ToggleGroup shown first on mobile, positioned in center on desktop */}
       <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 pt-2 overflow-x-hidden sm:-mb-4 md:-mb-4 lg:relative lg:z-10">
-
         <div className="flex items-center justify-between pb-1">
           <span className="text-xl pl-2">{dict.bias.title}</span>
           <span className="text-md pr-2 pointer-default cursor-context-menu">
@@ -455,10 +454,10 @@ export default function Article({
         <br />
       </div>
 
-      {/* LEFT SIDEBAR - Shows after ToggleGroup on mobile, left side on desktop */}
+      {/* LEFT SIDEBAR  */}
       <div
         id="left-sidebar"
-        className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-40 px-4 lg:px-0 overflow-y-auto overflow-x-hidden lg:z-10"
+        className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-40 px-4 lg:px-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
           height: isMobile ? 'auto' : sidebarHeight,
@@ -500,11 +499,14 @@ export default function Article({
       </div>
       {/* END LEFT SIDEBAR */}
 
-      {/* RIGHT SIDEBAR - Shows second on mobile, right side on desktop */}
+      {/* RIGHT SIDEBAR */}
+      <div id="right-sidebar-fab" className="fixed bottom-4 right-4 z-20 :hidden">
+
+      </div>
       <div
         id="right-sidebar"
         data-property-1="Default"
-        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-40 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10"
+        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-40 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
           height: isMobile ? 'auto' : sidebarHeight,
@@ -732,16 +734,7 @@ export default function Article({
                       </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <a href="" className="hover:underline">
-                        <div className="size- flex justify-start items-center gap-1.5">
-                          <div data-svg-wrapper data-property-1="Short link" className="relative">
-                            <Link className="text-gray-500" size={16} />
-                          </div>
-                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.shortUrl}</div>
-                          </div>
-                        </div>
-                      </a>
+                      <ShortURL />
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
                       <a href="" className="hover:underline">
@@ -756,16 +749,30 @@ export default function Article({
                       </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <a href="" className="hover:underline">
-                        <div className="size- flex justify-start items-center gap-1.5">
-                          <div data-svg-wrapper data-property-1="QR" className="relative">
-                            <QrCode className="text-gray-500" size={16} />
+
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <a className="hover:underline cursor-pointer">
+                            <div className="size- flex justify-start items-center gap-1.5">
+                              <div data-svg-wrapper data-property-1="QR" className="relative">
+                                <QrCode className="text-gray-500" size={16} />
+                              </div>
+                              <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                                <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.QRCode}</div>
+                              </div>
+                            </div>
+                          </a>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle className="hidden">{dict.tools.QRCode}</DialogTitle>
+                          </DialogHeader>
+                          <div className="p-2">
+                            {/* Render QR Code for current URL */}
+                            <CurrentUrlQRCode size={260} />
                           </div>
-                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.QRCode}</div>
-                          </div>
-                        </div>
-                      </a>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
                       <a href="" className="hover:underline">
