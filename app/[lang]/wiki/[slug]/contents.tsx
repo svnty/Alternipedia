@@ -88,7 +88,14 @@ export default function Contents({ headings = [] }: ContentsProps) {
   const tocRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+
     const handleScroll = () => {
+      if (!mediaQuery.matches) {
+        setActiveIndex(null);
+        return;
+      }
+
       // Select all the elements you want to observe
       const observed = document.querySelectorAll<HTMLElement>('.heading-anchor');
       let minTop = Infinity;
@@ -109,9 +116,16 @@ export default function Contents({ headings = [] }: ContentsProps) {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // initial check
+    handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    // recheck if screen resizes across the breakpoint
+    const handleResize = () => handleScroll();
+    mediaQuery.addEventListener('change', handleResize);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      mediaQuery.removeEventListener('change', handleResize);
+    };
   }, []);
 
 

@@ -97,7 +97,7 @@ export default async function Layout({
             <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5 hidden md:block">
               <div className="size- flex justify-center items-center gap-1.5">
                 <Button size="icon"
-                  aria-label="Open account menu"
+                  aria-label="Open theme menu"
                   variant="ghost"
                   className="shadow-none cursor-pointer">
                   <Palette size={16} aria-hidden="true" className="scale-120" />
