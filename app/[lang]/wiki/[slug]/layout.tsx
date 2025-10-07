@@ -427,6 +427,7 @@ export default function Article({
 
         <ToggleGroup
           type="single"
+          id="bias-toggle"
           variant="outline"
           value={activeBias}
           onValueChange={(value) => {

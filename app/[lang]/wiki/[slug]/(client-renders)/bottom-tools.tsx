@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function BottomTools() {
   const [showText, setShowText] = useState<boolean>(true);
   useEffect(() => {
-    const nav = document.getElementById("nav");
+    const nav = document.getElementById("bias-toggle");
 
     const isElementNearViewport = (el: any, offset = 40) => {
       if (!el) return true; // treat missing element as visible to avoid hiding the button
@@ -22,7 +22,7 @@ export default function BottomTools() {
     };
 
     const handleScroll = () => {
-      setShowText(isElementNearViewport(nav, 10));
+      setShowText(isElementNearViewport(nav, 20));
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -34,11 +34,12 @@ export default function BottomTools() {
   }, []);
 
   return (
-    <Button className="fixed bottom-8 right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block md:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all ease-in-out duration-200">
+    <Button className="fixed bottom-8 right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block md:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center">
       <Sword className="-ms-1 opacity-60 inline flex-1" aria-hidden="true" />
       {/* keep the span mounted so we can animate it */}
       <span
         className={
+          "flex-2 " + 
           (showText ? "inline-block" : "pointer-events-none hidden")
         }
         aria-hidden={!showText}
