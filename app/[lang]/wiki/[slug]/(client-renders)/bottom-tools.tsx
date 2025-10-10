@@ -21,9 +21,6 @@ export default function BottomTools() {
   const currentLang = params?.lang as Locale || 'en';
   const dict = getDictionary(currentLang);
 
-  
-
-
   useEffect(() => {
     const nav = document.getElementById("nav");
 
@@ -87,12 +84,48 @@ export default function BottomTools() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const [bottomOffset, setBottomOffset] = useState("bottom-8"); // default for large
+
+  useEffect(() => {
+    const updateBottomOffset = () => {
+      const cookieBanner = document.getElementById("cookie-banner");
+      if (cookieBanner) {
+        const width = window.innerWidth;
+        if (width >= 1024) setBottomOffset("bottom-8"); // lg
+        else if (width >= 768) setBottomOffset("bottom-18"); // md
+        else setBottomOffset("bottom-30"); // sm
+      } else {
+        setBottomOffset("bottom-8"); // no cookie banner, default to lg
+      }
+    };
+
+    updateBottomOffset(); // run once
+    window.addEventListener("resize", updateBottomOffset);
+
+    return () => window.removeEventListener("resize", updateBottomOffset);
+  }, []);
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const cookieBanner = document.getElementById("cookie-banner");
+      if (!cookieBanner) {
+        setBottomOffset("bottom-8");
+      }
+    });
+
+    // Watch the entire document for changes in the child list
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Clean up the observer when the component unmounts
+    return () => observer.disconnect();
+  }, [bottomOffset]);
+
   return (
     <>
       <Button
         ref={buttonRef}
         onClick={toggleMenu}
-        className={`fixed bottom-8 right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all ${isMenuOpen ? "bg-gray-700" : ""}`}>
+        className={`fixed right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all ${isMenuOpen ? "bg-gray-700" : ""} ${bottomOffset}`}>
         {isMenuOpen ? (
           <X className="-ms-1 opacity-60 inline flex-1 text-red-300" aria-hidden="true" />
         ) : (

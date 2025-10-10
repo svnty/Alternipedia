@@ -40,6 +40,7 @@ export default function CookieBanner() {
 
   return (
     <div 
+      id="cookie-banner"
       className=
       {
         `fixed left-0 right-0 z-50 border px-4 py-3 shadow-lg bg-gray-100 transition-all duration-300 ${isClosing ? "opacity-0 translate-y-full" : "opacity-100 translate-y-0"}`
