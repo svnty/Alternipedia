@@ -87,6 +87,7 @@ export default function LanguageSwitcher({ currentLang, mobile }: ToolsProps) {
           )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
+          <div tabIndex={-1} />
           <DialogHeader>
             <DialogTitle>{dict.language.selectLanguage}</DialogTitle>
             <DialogDescription>
