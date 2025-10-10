@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useTransition, useRef } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales, localeNames, type Locale, isValidLocale } from '@/lib/i18n/config';
 import WikipediaContents from "@/app/[lang]/wiki/[slug]/wikipedia-contents";
@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/toggle-group";
 import { Bookmark, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check } from "lucide-react";
 import CurrentUrlQRCode from '@/app/[lang]/wiki/[slug]/(client-renders)/current-url-qr';
-import { SlidingLanguage } from "@/app/[lang]/(client-renders)/sliding-language";
 import {
   Tooltip,
   TooltipContent,
@@ -23,16 +22,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { LoadingOverlay } from "@/app/[lang]/(client-renders)/loading-overlay";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -40,6 +32,7 @@ import {
 import { notFound } from 'next/navigation';
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
+import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/(client-renders)/language-switcher";
 
 export default function Article({
   children,
@@ -55,9 +48,7 @@ export default function Article({
 
   const [toolsOpen, setToolsOpen] = useState<boolean>(false);
   const [contentsOpen, setContentsOpen] = useState<boolean>(false);
-  const [langDialogOpen, setLangDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedLang, setSelectedLang] = useState<Locale>(currentLang);
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
   const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
@@ -71,37 +62,6 @@ export default function Article({
   if (!isValidLocale(currentLang)) {
     notFound();
   }
-
-  /* ================== LANGUAGE CHANGING ================== */
-  const filteredLocales = useMemo(() => {
-    if (!searchQuery) return locales;
-
-    const query = searchQuery.toLowerCase();
-    return locales.filter(locale =>
-      localeNames[locale].toLowerCase().includes(query) ||
-      locale.toLowerCase().includes(query)
-    );
-  }, [searchQuery]);
-
-  const switchLanguage = (newLang: Locale) => {
-    if (!pathname) return;
-
-    // Replace the language segment in the pathname
-    const segments = pathname.split('/');
-    segments[1] = newLang;
-    const newPath = segments.join('/');
-
-    setLangDialogOpen(false);
-    router.push(newPath);
-  };
-
-  const handleApplyLanguage = () => {
-    if (selectedLang !== currentLang) {
-      switchLanguage(selectedLang);
-    } else {
-      setLangDialogOpen(false);
-    }
-  };
 
   /* ================== RESPONSIVE SIDEBAR ================== */
   useEffect(() => {
@@ -458,7 +418,7 @@ export default function Article({
       {/* LEFT SIDEBAR  */}
       <div
         id="left-sidebar"
-        className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-40 px-4 lg:px-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
+        className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-20 px-4 lg:px-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
           height: isMobile ? 'auto' : sidebarHeight,
@@ -507,7 +467,7 @@ export default function Article({
       <div
         id="right-sidebar"
         data-property-1="Default"
-        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-40 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
+        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-20 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
           height: isMobile ? 'auto' : sidebarHeight,
@@ -537,99 +497,7 @@ export default function Article({
                 </div>
                 <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
                   <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
-                    <Dialog open={langDialogOpen} onOpenChange={setLangDialogOpen}>
-                      <DialogTrigger asChild>
-                        <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
-                          <a className="hover:underline cursor-pointer">
-                            <div className="size- flex justify-start items-center gap-1.5">
-                              <div data-svg-wrapper data-property-1="Notes" className="relative">
-                                <Languages className="text-gray-500" size={16} />
-                              </div>
-                              <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden text-gray-500 text-sm">
-                                <SlidingLanguage />
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                          <DialogTitle>{dict.language.selectLanguage}</DialogTitle>
-                          <DialogDescription>
-                            {dict.language.description}
-                          </DialogDescription>
-                        </DialogHeader>
-
-                        {/* Search Input */}
-                        <div className="relative mb-4">
-                          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                          <Input
-                            placeholder="Search languages..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="pl-9"
-                          />
-                        </div>
-
-                        {/* Language List */}
-                        <ScrollArea className="h-[300px] pr-4">
-                          <RadioGroup
-                            value={selectedLang}
-                            onValueChange={(value) => setSelectedLang(value as Locale)}
-                            className="space-y-1 pb-2"
-                          >
-                            {filteredLocales.map((locale) => (
-                              <div
-                                key={locale}
-                                className={`flex items-center space-x-3 rounded-md border p-3 cursor-pointer transition-colors hover:bg-gray-50 ${selectedLang === locale ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-                                  }`}
-                                onClick={() => setSelectedLang(locale)}
-                              >
-                                <RadioGroupItem value={locale} id={locale} />
-                                <Label
-                                  htmlFor={locale}
-                                  className="flex-1 cursor-pointer font-normal"
-                                >
-                                  <div className="flex items-center justify-between">
-                                    <span className="font-medium">{localeNames[locale]}</span>
-                                    <span className="text-xs text-gray-500 uppercase">{locale}</span>
-                                  </div>
-                                </Label>
-                                {currentLang === locale && (
-                                  <Check className="h-4 w-4 text-blue-600" />
-                                )}
-                              </div>
-                            ))}
-                          </RadioGroup>
-
-                          {filteredLocales.length === 0 && (
-                            <div className="text-center py-8 text-gray-500">
-                              {dict.language.notFound} "{searchQuery}"
-                            </div>
-                          )}
-                        </ScrollArea>
-
-                        {/* Action Buttons */}
-                        <DialogFooter>
-                          <Button
-                            variant="outline"
-                            onClick={() => {
-                              setLangDialogOpen(false);
-                              setSelectedLang(currentLang);
-                              setSearchQuery('');
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={handleApplyLanguage}
-                            disabled={selectedLang === currentLang}
-                          >
-                            Apply
-                          </Button>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
+                    <LanguageSwitcher currentLang={currentLang} mobile={false} />
 
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
                       <a href="" className="hover:underline">
@@ -735,7 +603,7 @@ export default function Article({
                       </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <ShortURL />
+                      <ShortURL mobile={false} />
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
                       <a href="" className="hover:underline">

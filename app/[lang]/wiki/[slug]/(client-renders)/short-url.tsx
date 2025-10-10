@@ -27,7 +27,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries"
 import { Locale } from "@/lib/i18n/config"
 import { useParams } from "next/navigation"
 
-export default function ShortURL() {
+export default function ShortURL({ mobile }: { mobile: boolean }) {
   const params = useParams();
   const currentLang = params?.lang as Locale || 'en';
   const dict = getDictionary(currentLang);
@@ -44,21 +44,39 @@ export default function ShortURL() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full">
       <Popover>
-        <PopoverTrigger asChild>
-          <a className="hover:underline cursor-pointer">
-            <div className="size- flex justify-start items-center gap-1.5">
-              <div data-svg-wrapper data-property-1="Short link" className="relative">
-                <Link className="text-gray-500" size={16} />
-              </div>
-              <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.shortUrl}</div>
-              </div>
+        <>
+        {mobile && (
+          <PopoverTrigger asChild>
+            <div className="flex-row inline-flex items-center w-full">
+              <button className="px-4 w-full py-2.5 text-left text-sm text-white bg-gray-700 hover:bg-gray-900 rounded-md transition-colors cursor-pointer flex items-center gap-2">
+                <div data-svg-wrapper data-property-1="Notes" className="relative">
+                  <Link className="text-gray-500" size={16} />
+                </div>
+                <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden text-white text-sm">
+                  <div className="justify-start text-white text-sm font-normal leading-normal truncate">{dict.tools.shortUrl}</div>
+                </div>
+              </button>
             </div>
-          </a>
-        </PopoverTrigger>
-        <PopoverContent className="w-72" side="top">
+            </PopoverTrigger>
+      )}
+            {!mobile && (
+              <PopoverTrigger asChild>
+              <a className="hover:underline cursor-pointer">
+                <div className="size- flex justify-start items-center gap-1.5">
+                  <div data-svg-wrapper data-property-1="Short link" className="relative">
+                    <Link className="text-gray-500" size={16} />
+                  </div>
+                  <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
+                    <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.shortUrl}</div>
+                  </div>
+                </div>
+              </a>
+              </PopoverTrigger>
+            )}
+        </>
+        <PopoverContent className="w-72" side="top" showArrow={true}>
           <div className="flex flex-col gap-3 text-center">
             <div className="text-sm font-medium">Share article</div>
             <div className="flex flex-wrap justify-center gap-2">
@@ -77,7 +95,7 @@ export default function ShortURL() {
                 size="icon"
                 variant="outline"
                 aria-label="Share on Facebook"
-                 className="cursor-pointer"
+                className="cursor-pointer"
               >
                 <RiFacebookFill size={16} aria-hidden="true" />
               </Button>
@@ -85,7 +103,7 @@ export default function ShortURL() {
                 size="icon"
                 variant="outline"
                 aria-label="Share via email"
-                 className="cursor-pointer"
+                className="cursor-pointer"
               >
                 <RiMailLine size={16} aria-hidden="true" />
               </Button>

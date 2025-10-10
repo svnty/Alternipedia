@@ -221,7 +221,7 @@ export default async function Page({
         )}
 
         {bias === 'wikipedia' && (
-          <div className="relative w-full mb-6 ">
+          <div className="relative w-full mb-6">
             <ClientLoadedSignal />
             {/* Server-side overlay: shown immediately on page load for wikipedia bias
             Removed by client JS when the article is ready. This guarantees a
