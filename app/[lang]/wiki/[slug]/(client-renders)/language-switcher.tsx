@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -26,7 +26,15 @@ export default function LanguageSwitcher({ currentLang, mobile }: ToolsProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [langDialogOpen, setLangDialogOpen] = useState(false);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const dict = getDictionary(currentLang);
+
+  useEffect(() => {
+    if (langDialogOpen) {
+      setTimeout(() => inputRef.current?.blur(), 0);
+    }
+  }, [langDialogOpen]);
 
   const switchLanguage = (newLang: Locale) => {
     if (!pathname) return;
@@ -87,7 +95,6 @@ export default function LanguageSwitcher({ currentLang, mobile }: ToolsProps) {
           )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
-          <div tabIndex={-1} />
           <DialogHeader>
             <DialogTitle>{dict.language.selectLanguage}</DialogTitle>
             <DialogDescription>
@@ -101,9 +108,9 @@ export default function LanguageSwitcher({ currentLang, mobile }: ToolsProps) {
             <Input
               placeholder="Search languages..."
               value={searchQuery}
-              autoFocus={false}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pl-9 text-base"
+              ref={inputRef}
             />
           </div>
 
