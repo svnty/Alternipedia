@@ -495,11 +495,11 @@ export default function Article({
                   </CollapsibleTrigger>
                   <div className="absolute top-9 left-0 w-full h-0.5 bg-gray-300" />
                 </div>
-                <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
+                <CollapsibleContent className="w-full data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out mt-4">
                   <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
                     <LanguageSwitcher currentLang={currentLang} mobile={false} />
 
-                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
                       <a href="" className="hover:underline">
                         <div className="size- flex justify-start items-center gap-1.5">
                           <div data-svg-wrapper data-property-1="Speech" className="relative">
@@ -523,7 +523,7 @@ export default function Article({
                           </div>
                         </div>
                       </a>
-                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                      <div className="size- ml-auto float-right px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5 pointer-events-none">
                         <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
@@ -539,10 +539,11 @@ export default function Article({
                           </div>
                         </div>
                       </a>
-                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                      <div className="size- ml-auto float-right px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5 pointer-events-none">
                         <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
+
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
                       <a className="hover:underline cursor-not-allowed">
                         <div className="size- flex justify-start items-center gap-1.5">
@@ -554,7 +555,7 @@ export default function Article({
                           </div>
                         </div>
                       </a>
-                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                      <div className="size- ml-auto float-right px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5 pointer-events-none">
                         <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
@@ -569,11 +570,12 @@ export default function Article({
                           </div>
                         </div>
                       </a>
-                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                      <div className="size- ml-auto float-right px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5 pointer-events-none">
                         <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>
-                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
+
+                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
                       <a className="hover:underline cursor-not-allowed">
                         <div className="size- flex justify-start items-center gap-1.5">
                           <div data-svg-wrapper data-property-1="Watch" className="relative">
@@ -584,7 +586,7 @@ export default function Article({
                           </div>
                         </div>
                       </a>
-                      <div className="size- px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5">
+                      <div className="size- ml-auto float-right px-[5px] py-px bg-yellow-400 rounded-sm flex justify-center items-center gap-2.5 pointer-events-none">
                         <div className="justify-center text-white text-xs font-bold ">{dict.upgrade.pro}</div>
                       </div>
                     </div>

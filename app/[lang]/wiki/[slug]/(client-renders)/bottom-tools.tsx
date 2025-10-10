@@ -13,7 +13,7 @@ import ShortURL from "./short-url";
 
 export default function BottomTools() {
   const [showText, setShowText] = useState<boolean>(true);
-  const [largeMobile, setLargeMobile] = useState<boolean>(true);
+  const [largeMobile, setLargeMobile] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -21,24 +21,52 @@ export default function BottomTools() {
   const currentLang = params?.lang as Locale || 'en';
   const dict = getDictionary(currentLang);
 
-  useEffect(() => {
-    const handleResize = () => {
-      const height = window.innerHeight || document.documentElement.clientHeight;
+    useEffect(() => {
+    const nav = document.getElementById("nav");
 
-      if (height < 700) {
-        setLargeMobile(false);
-      } else {
-        setLargeMobile(true);
-      }
+    const isElementNearViewport = (el: any, offset = 40) => {
+      if (!el) return true; // treat missing element as visible to avoid hiding the button
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+
+      // visible region extended by ±offset
+      const aboveViewport = rect.bottom < -offset;
+      const belowViewport = rect.top > vh + offset;
+
+      return !(aboveViewport || belowViewport);
     };
 
-    window.addEventListener("resize", handleResize);
-    handleResize();
+    const handleScroll = () => {
+      setShowText(isElementNearViewport(nav, 10));
+    };
 
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // run once to set initial state
+    handleScroll();
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, []);
+
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     const height = window.innerHeight || document.documentElement.clientHeight;
+
+  //     if (height < 700) {
+  //       setLargeMobile(false);
+  //     } else {
+  //       setLargeMobile(true);
+  //     }
+  //   };
+
+  //   window.addEventListener("resize", handleResize);
+  //   handleResize();
+
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -219,34 +247,35 @@ export default function BottomTools() {
               </button>
             </div>
 
-            <div className="flex-row gap-1 inline-flex items-center w-full">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <div className="flex-row gap-1 inline-flex items-center w-full">
-                    <button className="px-4 w-full py-2.5 text-left text-sm text-white bg-gray-700 hover:bg-gray-900 rounded-md transition-colors cursor-pointer flex items-center gap-2">
-                      <div data-svg-wrapper data-property-1="Notes" className="relative">
-                        <QrCode className="text-gray-500" size={16} />
-                      </div>
-                      <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden text-white text-sm">
-                        <div className="justify-start text-white text-sm font-normal leading-normal truncate">{dict.tools.QRCode}</div>
-                      </div>
-                    </button>
-                  </div>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="hidden">{dict.tools.QRCode}</DialogTitle>
-                  </DialogHeader>
-                  <div className="p-2">
-                    {/* Render QR Code for current URL */}
-                    <CurrentUrlQRCode size={260} />
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </div>
-
             {largeMobile && (
               <>
+
+                <div className="flex-row gap-1 inline-flex items-center w-full">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div className="flex-row gap-1 inline-flex items-center w-full">
+                        <button className="px-4 w-full py-2.5 text-left text-sm text-white bg-gray-700 hover:bg-gray-900 rounded-md transition-colors cursor-pointer flex items-center gap-2">
+                          <div data-svg-wrapper data-property-1="Notes" className="relative">
+                            <QrCode className="text-gray-500" size={16} />
+                          </div>
+                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden text-white text-sm">
+                            <div className="justify-start text-white text-sm font-normal leading-normal truncate">{dict.tools.QRCode}</div>
+                          </div>
+                        </button>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle className="hidden">{dict.tools.QRCode}</DialogTitle>
+                      </DialogHeader>
+                      <div className="p-2">
+                        {/* Render QR Code for current URL */}
+                        <CurrentUrlQRCode size={260} />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+
                 <div className="flex-row gap-1 inline-flex items-center w-full">
                   <button className="px-4 w-full py-2.5 text-left text-sm text-white bg-gray-700 hover:bg-gray-900 rounded-md transition-colors cursor-pointer flex items-center gap-2">
                     <div data-svg-wrapper data-property-1="Notes" className="relative">
