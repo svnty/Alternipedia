@@ -89,9 +89,10 @@ export default function BottomTools() {
       <Button
         ref={buttonRef}
         onClick={toggleMenu}
-        className={`fixed bottom-8 right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all ${isMenuOpen ? "bg-gray-700" : ""
-          }`}
-      >
+        className={`fixed right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all ${isMenuOpen ? "bg-gray-700" : ""}`}
+        style={{
+          bottom: "calc(env(safe-area-inset-bottom, 0px) + 20px)",
+        }}>
         {isMenuOpen ? (
           <X className="-ms-1 opacity-60 inline flex-1 text-red-300" aria-hidden="true" />
         ) : (
