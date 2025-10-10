@@ -25,7 +25,6 @@ export default function BottomTools() {
 
   useEffect(() => {
     const updateOffset = () => {
-      const safeArea = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sat-bottom')) || 0;
       setBottomOffset(window.innerHeight - document.documentElement.clientHeight + 20);
     };
     updateOffset();
