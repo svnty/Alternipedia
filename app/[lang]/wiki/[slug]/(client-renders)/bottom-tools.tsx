@@ -21,7 +21,7 @@ export default function BottomTools() {
   const currentLang = params?.lang as Locale || 'en';
   const dict = getDictionary(currentLang);
 
-    useEffect(() => {
+  useEffect(() => {
     const nav = document.getElementById("nav");
 
     const isElementNearViewport = (el: any, offset = 40) => {
@@ -48,26 +48,6 @@ export default function BottomTools() {
     };
   }, []);
 
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     const height = window.innerHeight || document.documentElement.clientHeight;
-
-  //     if (height < 700) {
-  //       setLargeMobile(false);
-  //     } else {
-  //       setLargeMobile(true);
-  //     }
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-  //   handleResize();
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // });
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       // If the click is inside any dialog content/portal/overlay, don't close the menu.
@@ -93,14 +73,12 @@ export default function BottomTools() {
       }
     };
 
-    if (isMenuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isMenuOpen]);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

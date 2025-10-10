@@ -100,6 +100,7 @@ export default function LanguageSwitcher({ currentLang, mobile }: ToolsProps) {
             <Input
               placeholder="Search languages..."
               value={searchQuery}
+              autoFocus={false}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-9"
             />

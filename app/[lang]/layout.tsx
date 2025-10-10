@@ -141,7 +141,7 @@ export default async function Layout({
                     <TooltipTrigger className="text-blue-400 text-sm font-normal leading-normal cursor-not-allowed w-fit">
                       {dict.footer.contact}
                     </TooltipTrigger>
-                    <TooltipContent className="px-2 py-1 text-xs" side="top" withBackdrop={true}>
+                    <TooltipContent className="px-2 py-1 text-xs" side="top" withBackdrop={true} collisionPadding={8}>
                       {dict.footer.pleaseLogin}
                     </TooltipContent>
                   </Tooltip>
