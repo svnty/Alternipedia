@@ -691,7 +691,7 @@ export default function Article({
       {/* END RIGHT SIDEBAR */}
 
       {/* MAIN CONTENT */}
-      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden relative pb-20 min-h-screen">
+      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden pb-20 min-h-screen">
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
           isVisible={isLoadingBias}
