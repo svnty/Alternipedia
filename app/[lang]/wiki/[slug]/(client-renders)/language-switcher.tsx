@@ -106,7 +106,7 @@ export default function LanguageSwitcher({ currentLang, mobile }: ToolsProps) {
           <div className="relative mb-4">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
-              placeholder="Search languages..."
+              placeholder={dict.language.searchMessage}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-9 text-base"
@@ -115,7 +115,7 @@ export default function LanguageSwitcher({ currentLang, mobile }: ToolsProps) {
           </div>
 
           {/* Language List */}
-          <ScrollArea className="h-[300px] pr-4">
+          <ScrollArea className="h-[300px] px-2">
             <RadioGroup
               value={selectedLang}
               onValueChange={(value) => setSelectedLang(value as Locale)}

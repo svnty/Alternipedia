@@ -139,6 +139,7 @@ export type Dictionary = {
     selectLanguage: string;
     description: string;
     notFound: string;
+    searchMessage: string;
   };
   tools: {
     textToSpeech: string;
@@ -168,11 +169,13 @@ export type Dictionary = {
     read: string;
     edit: string;
     history: string;
-  }
+  },
+  cookieMessage: string;
 };
 
 // English dictionary
 const en: Dictionary = {
+  cookieMessage: 'This site uses cookies to improve your experience, analyze site usage, and show personalized content.',
   login: {
     title: 'Log in to',
     google: 'Continue with Google',
@@ -376,7 +379,8 @@ const en: Dictionary = {
   language: {
     selectLanguage: "Choose Language",
     description: "Select your preferred language for viewing this article.",
-    notFound: "No languages found matching"
+    notFound: "No languages found matching",
+    searchMessage: 'Search languages...'
   },
   termsOfService: [
     { title: 'Acceptance of Terms', content: ["By accessing and using this website, users agree to comply with and be bound by these Terms of Service. Users who do not agree with these terms should discontinue use of the website immediately."] },
@@ -505,6 +509,7 @@ const en: Dictionary = {
 
 // Spanish dictionary
 const es: Dictionary = {
+  cookieMessage: 'Este sitio utiliza cookies para mejorar su experiencia, analizar el uso del sitio y mostrar contenido personalizado.',
   login: {
     title: 'Iniciar sesión en',
     google: 'Continuar con Google',
@@ -625,7 +630,8 @@ const es: Dictionary = {
   language: {
     selectLanguage: "Elegir idioma",
     description: "Seleccione su idioma preferido para ver este artículo.",
-    notFound: "No se encontraron idiomas que coincidan con"
+    notFound: "No se encontraron idiomas que coincidan con",
+    searchMessage: 'Buscar idiomas...'
   },
   termsOfService: [
     { title: 'Aceptación de los Términos', content: ["Al acceder y usar este sitio web, los usuarios aceptan cumplir y estar sujetos a estos Términos de Servicio. Los usuarios que no estén de acuerdo con estos términos deben descontinuar el uso del sitio web inmediatamente."] },
@@ -855,6 +861,7 @@ const fr: Dictionary = {
     }
   ]
 },
+cookieMessage: 'Ce site utilise des cookies pour améliorer votre expérience, analyser l\'utilisation du site et afficher du contenu personnalisé.',
   tools: {
     textToSpeech: "Texte en parole",
     translate: "Traduire",
@@ -872,6 +879,7 @@ const fr: Dictionary = {
     pageInfo: "Informations sur la page",
   },
   language: {
+    searchMessage: 'Rechercher des langues...',
     selectLanguage: "Choisir la langue",
     description: "Sélectionnez votre langue préférée pour consulter cet article.",
     notFound: "Aucune langue ne correspond à"
@@ -1003,6 +1011,7 @@ const fr: Dictionary = {
 
 // German dictionary
 const de: Dictionary = {
+  cookieMessage: 'Diese Seite verwendet Cookies, um Ihre Erfahrung zu verbessern, die Seitennutzung zu analysieren und personalisierte Inhalte anzuzeigen.',  
     login: {
     title: 'Anmelden bei',
     google: 'Mit Google fortfahren',
@@ -1121,6 +1130,7 @@ const de: Dictionary = {
     pageInfo: "Seiteninformationen",
   },
   language: {
+    searchMessage: 'Sprachen suchen...',
     selectLanguage: "Sprache wählen",
     description: "Wählen Sie Ihre bevorzugte Sprache für die Anzeige dieses Artikels.",
     notFound: "Keine passenden Sprachen gefunden"
@@ -1369,7 +1379,9 @@ const it: Dictionary = {
     printPage: "Stampa questa pagina",
     pageInfo: "Informazioni sulla pagina",
   },
+  cookieMessage: 'Questo sito utilizza i cookie per migliorare la tua esperienza, analizzare l\'utilizzo del sito e mostrare contenuti personalizzati.',
   language: {
+    searchMessage: 'Cerca lingue...',
     selectLanguage: "Scegli la lingua",
     description: "Seleziona la tua lingua preferita per visualizzare questo articolo.",
     notFound: "Nessuna lingua trovata corrispondente"
@@ -1501,6 +1513,7 @@ const it: Dictionary = {
 
 // Portuguese dictionary
 const pt: Dictionary = {
+  cookieMessage: 'Este site utiliza cookies para melhorar a sua experiência, analisar a utilização do site e mostrar conteúdos personalizados.',
     login: {
       title: 'Entrar em',
       google: 'Continuar com o Google',
@@ -1619,6 +1632,7 @@ const pt: Dictionary = {
     pageInfo: "Informações da página",
   },
   language: {
+    searchMessage: 'Procurar idiomas...',
     selectLanguage: "Escolher idioma",
     description: "Selecione seu idioma preferido para visualizar este artigo.",
     notFound: "Nenhum idioma correspondente encontrado"
@@ -1938,7 +1952,9 @@ const ja: Dictionary = {
     printPage: "このページを印刷",
     pageInfo: "ページ情報",
   },
+  cookieMessage: "このウェブサイトでは、ユーザーエクスペリエンスを向上させるためにクッキーを使用しています。サイトの使用を続けることで、クッキーの使用に同意したことになります。",
   language: {
+    searchMessage: "言語を検索",
     selectLanguage: "言語を選択",
     description: "この記事を表示するための希望の言語を選択してください。",
     notFound: "一致する言語が見つかりません"
@@ -2070,6 +2086,7 @@ const ja: Dictionary = {
 
 // Chinese dictionary
 const zh: Dictionary = {
+  cookieMessage: '本网站使用Cookie以提升您的体验、分析网站使用情况并显示个性化内容。',
     login: {
     title: '登录',
     google: '使用 Google 继续',
@@ -2188,6 +2205,7 @@ const zh: Dictionary = {
     pageInfo: "页面信息",
   },
   language: {
+    searchMessage: "搜索语言...",
     selectLanguage: "选择语言",
     description: "选择您喜欢的语言来查看本文。",
     notFound: "未找到匹配的语言"
@@ -2319,6 +2337,7 @@ const zh: Dictionary = {
 
 // Korean dictionary
 const ko: Dictionary = {
+  cookieMessage: '이 웹사이트는 사용자 경험을 향상하고, 웹사이트 사용을 분석하며, 개인화된 콘텐츠를 표시하기 위해 쿠키를 사용합니다.',
     login: {
     title: '로그인',
     google: 'Google로 계속하기',
@@ -2437,6 +2456,7 @@ const ko: Dictionary = {
     pageInfo: "페이지 정보",
   },
   language: {
+    searchMessage: "언어 검색...",
     selectLanguage: "언어 선택",
     description: "이 기사를 보는 데 선호하는 언어를 선택하세요.",
     notFound: "일치하는 언어를 찾을 수 없음"
@@ -2568,6 +2588,7 @@ const ko: Dictionary = {
 
 // Russian dictionary
 const ru: Dictionary = {
+  cookieMessage: 'Этот веб-сайт использует файлы cookie для улучшения вашего опыта, анализа использования сайта и отображения персонализированного контента.',
     login: {
     title: 'Войти',
     google: 'Продолжить с Google',
@@ -2686,6 +2707,7 @@ const ru: Dictionary = {
     pageInfo: "Информация о странице",
   },
   language: {
+    searchMessage: "Поиск языка...",
     selectLanguage: "Выберите язык",
     description: "Выберите предпочитаемый язык для просмотра этой статьи.",
     notFound: "Не найдено подходящих языков"
@@ -2817,6 +2839,7 @@ const ru: Dictionary = {
 
 // Arabic
 const ar: Dictionary = {
+  cookieMessage: 'يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك، وتحليل استخدام الموقع، وعرض محتوى مخصص.',
     login: {
     title: 'تسجيل الدخول',
     google: 'المتابعة مع Google',
@@ -3028,6 +3051,7 @@ const ar: Dictionary = {
     pageInfo: "معلومات الصفحة",
   },
   language: {
+    searchMessage: "البحث عن اللغة...",
     selectLanguage: "اختر اللغة",
     description: "اختر لغتك المفضلة لعرض هذه المقالة.",
     notFound: "لم يتم العثور على لغات مطابقة"
@@ -3143,6 +3167,7 @@ const ar: Dictionary = {
 
 // Hindi
 const hi: Dictionary = {
+  cookieMessage: 'यह वेबसाइट आपके अनुभव को बेहतर बनाने, साइट उपयोग का विश्लेषण करने, और व्यक्तिगत सामग्री दिखाने के लिए कुकीज़ का उपयोग करती है।',
     login: {
     title: 'लॉग इन करें',
     google: 'Google के साथ जारी रखें',
@@ -3447,6 +3472,7 @@ const hi: Dictionary = {
     title: "पढ़ने का पक्षपात",
   },
   language: {
+    searchMessage: "भाषा खोजें...",
     selectLanguage: "भाषा चुनें",
     description: "इस लेख को देखने के लिए अपनी पसंदीदा भाषा चुनें।",
     notFound: "कोई मेल खाने वाली भाषा नहीं मिली"
@@ -3468,6 +3494,7 @@ const hi: Dictionary = {
 
 // Bengali
 const bn: Dictionary = {
+  cookieMessage: 'এই ওয়েবসাইটটি আপনার অভিজ্ঞতা উন্নত করতে, সাইট ব্যবহার বিশ্লেষণ করতে এবং ব্যক্তিগতকৃত সামগ্রী প্রদর্শন করতে কুকিজ ব্যবহার করে।',
     login: {
     title: 'লগইন করুন',
     google: 'Google দিয়ে চালিয়ে যান',
@@ -3772,6 +3799,7 @@ const bn: Dictionary = {
     title: "পড়ার পক্ষপাত",
   },
   language: {
+    searchMessage: "ভাষা খুঁজুন...",
     selectLanguage: "ভাষা নির্বাচন করুন",
     description: "এই লেখাটি দেখার জন্য আপনার পছন্দের ভাষা নির্বাচন করুন।",
     notFound: "কোন মিল খুঁজে পাওয়া যায়নি"
@@ -3793,6 +3821,7 @@ const bn: Dictionary = {
 
 // Urdu
 const ur: Dictionary = {
+  cookieMessage: 'یہ ویب سائٹ آپ کے تجربے کو بہتر بنانے، سائٹ کے استعمال کا تجزیہ کرنے، اور ذاتی نوعیت کے مواد کو دکھانے کے لیے کوکیز استعمال کرتی ہے۔',
     login: {
     title: 'لاگ ان کریں',
     google: 'Google کے ساتھ جاری رکھیں',
@@ -3992,6 +4021,7 @@ const ur: Dictionary = {
     pageInfo: "صفحے کی معلومات",
   },
   language: {
+    searchMessage: "زبان تلاش کریں...",
     selectLanguage: "زبان منتخب کریں",
     description: "اس مضمون کو دیکھنے کے لیے اپنی پسند کی زبان منتخب کریں۔",
     notFound: "کوئی زبانیں نہیں ملیں"
@@ -4107,6 +4137,7 @@ const ur: Dictionary = {
 
 // indonesia
 const id: Dictionary = {
+  cookieMessage: 'Situs web ini menggunakan cookie untuk meningkatkan pengalaman Anda, menganalisis penggunaan situs, dan menampilkan konten yang dipersonalisasi.',
     login: {
     title: 'Masuk',
     google: 'Lanjutkan dengan Google',
@@ -4306,6 +4337,7 @@ const id: Dictionary = {
     pageInfo: "Informasi Halaman",
   },
   language: {
+    searchMessage: "Cari bahasa...",
     selectLanguage: "Pilih Bahasa",
     description: "Pilih bahasa yang Anda inginkan untuk melihat artikel ini.",
     notFound: "Tidak ada bahasa yang ditemukan"
@@ -4421,6 +4453,7 @@ const id: Dictionary = {
 
 // Marathi
 const mr: Dictionary = {
+  cookieMessage: 'हा वेब्साईट तुमचा अनुभव सुधारण्यासाठी, साइटचा वापर विश्लेषित करण्यासाठी आणि वैयक्तिकृत सामग्री दर्शविण्यासाठी कुकीज वापरते.',
     login: {
     title: 'लॉग इन करा',
     google: 'Google सह सुरू ठेवा',
@@ -4563,6 +4596,7 @@ const mr: Dictionary = {
   termsAndConditions: 'अटी व शर्ती',
   close: 'बंद करा',
   language: {
+    searchMessage: "भाषा शोधा...",
     selectLanguage: "भाषा निवडा",
     description: "या लेखाचे प्रदर्शन करण्यासाठी आपली आवडती भाषा निवडा.",
     notFound: "कोणतीही भाषा सापडली नाही"
@@ -4676,6 +4710,7 @@ const mr: Dictionary = {
 
 // Telugu
 const te: Dictionary = {
+  cookieMessage: 'ఈ వెబ్‌సైట్ మీ అనుభవాన్ని మెరుగుపరచడానికి, సైట్ వినియోగాన్ని విశ్లేషించడానికి మరియు వ్యక్తిగతీకరించిన కంటెంట్‌ను ప్రదర్శించడానికి కుకీలను ఉపయోగిస్తుంది.',
     login: {
     title: 'లాగిన్',
     google: 'Google తో కొనసాగించండి',
@@ -4784,6 +4819,7 @@ const te: Dictionary = {
   termsAndConditions: 'నియమాలు మరియు షరతులు',
   close: 'మూసివేయి',
   language: {
+    searchMessage: "భాషను శోధించండి...",
     selectLanguage: "భాషను ఎంచుకోండి",
     description: "ఈ వ్యాసాన్ని వీక్షించడానికి మీ ఇష్టమైన భాషను ఎంచుకోండి.",
     notFound: "భాష కనుగొనబడలేదు"
@@ -4897,6 +4933,7 @@ const te: Dictionary = {
 
 // Turkish dictionary
 const tr: Dictionary = {
+  cookieMessage: 'Bu web sitesi deneyiminizi geliştirmek, site kullanımını analiz etmek ve kişiselleştirilmiş içerik sunmak için çerezler kullanır.',
     login: {
     title: 'Giriş yap',
     google: 'Google ile devam et',
@@ -5097,6 +5134,7 @@ const tr: Dictionary = {
   termsAndConditions: 'Hüküm ve Koşullar',
   close: 'Kapat',
   language: {
+    searchMessage: "Dili ara...",
     selectLanguage: "Dil Seçin",
     description: "Bu makaleyi görüntülemek için tercih ettiğiniz dili seçin.",
     notFound: "Eşleşen dil bulunamadı"
@@ -5210,6 +5248,7 @@ const tr: Dictionary = {
 
 // Tamil dictionary
 const ta: Dictionary = {
+  cookieMessage: 'இந்த வலைத்தளம் உங்கள் அனுபவத்தை மேம்படுத்த, தள பயன்பாட்டை பகுப்பாய்வு செய்ய மற்றும் தனிப்பயனாக்கப்பட்ட உள்ளடக்கத்தை வழங்க குக்கீகளைப் பயன்படுத்துகிறது.',
     login: {
     title: 'உள்நுழைய',
     google: 'Google மூலம் தொடரவும்',
@@ -5336,6 +5375,7 @@ const ta: Dictionary = {
   termsAndConditions: 'விதிமுறைகள் மற்றும் நிபந்தனைகள்',
   close: 'மூடு',
   language: {
+    searchMessage: "மொழியைத் தேடவும்...",
     selectLanguage: "மொழி தேர்ந்தெடுக்கவும்",
     description: "இந்த கட்டுரையை காண்பதற்கான உங்கள் விருப்பமான மொழியைத் தேர்ந்தெடுக்கவும்.",
     notFound: "எந்த மொழிகளும் கிடைக்கவில்லை"
@@ -5449,6 +5489,7 @@ const ta: Dictionary = {
 
 // Cantonese dictionary
 const yue: Dictionary = {
+  cookieMessage: '本網站使用曲奇以提升您的體驗、分析網站使用情況及提供個人化內容。',
     login: {
     title: '登入',    
     google: '用 Google 繼續',
@@ -5583,6 +5624,7 @@ const yue: Dictionary = {
   termsAndConditions: '條款與細則',
   close: '關閉',
   language: {
+    searchMessage: "搜索語言...",
     selectLanguage: "選擇語言",
     description: "選擇您首選的語言以查看此文章。",
     notFound: "未找到匹配的語言"
@@ -5696,6 +5738,7 @@ const yue: Dictionary = {
 
 // Vietnamese dictionary
 const vi: Dictionary = {
+  cookieMessage: 'Trang web này sử dụng cookie để cải thiện trải nghiệm của bạn, phân tích việc sử dụng trang web và cung cấp nội dung được cá nhân hóa.',
     login: {
     title: 'Đăng nhập',
     google: 'Tiếp tục với Google',
@@ -5826,6 +5869,7 @@ const vi: Dictionary = {
   termsAndConditions: 'Điều khoản và Điều kiện',
   close: 'Đóng',
   language: {
+    searchMessage: "Tìm kiếm ngôn ngữ...",
     selectLanguage: "Chọn ngôn ngữ",
     description: "Chọn ngôn ngữ ưa thích của bạn để xem bài viết này.",
     notFound: "Không tìm thấy ngôn ngữ nào phù hợp"
@@ -5939,6 +5983,7 @@ const vi: Dictionary = {
 
 // Filipino dictionary
 const fil: Dictionary = {
+  cookieMessage: 'Gumagamit ang website na ito ng cookies upang mapabuti ang iyong karanasan, suriin ang paggamit ng website, at magbigay ng personalized na nilalaman.',
     login: {
     title: 'Mag-login',    
     google: 'Magpatuloy gamit ang Google',
@@ -6069,6 +6114,7 @@ const fil: Dictionary = {
   termsAndConditions: 'Mga Tuntunin at Kundisyon',
   close: 'Isara',
   language: {
+    searchMessage: "Maghanap ng wika...",
     selectLanguage: "Pumili ng Wika",
     description: "Pumili ng wika na gusto mo para sa pagtingin sa artikulong ito.",
     notFound: "Walang natagpuang wika na tumutugma"
@@ -6182,6 +6228,7 @@ const fil: Dictionary = {
 
 // Hausa dictionary
 const ha: Dictionary = {
+  cookieMessage: 'Yanar gizon nan na amfani da kukis don inganta ƙwarewar ku, nazarin amfani da yanar gizo, da samar da abun ciki na musamman.',
     login: {
     title: 'Shiga',    
     google: 'Ci gaba da Google',
@@ -6312,6 +6359,7 @@ const ha: Dictionary = {
   termsAndConditions: 'Sharuɗɗa da Yanayi',
   close: 'Rufe',
   language: {
+    searchMessage: "Nemo harshe...",
     selectLanguage: "Zaɓi Harshe",
     description: "Zaɓi harshe da kake so don ganin wannan labarin.",
     notFound: "Babu harsuna da aka samu masu dacewa"
@@ -6425,6 +6473,7 @@ const ha: Dictionary = {
 
 // Egyptian Arabic dictionary
 const arz: Dictionary = {
+  cookieMessage: 'يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك، وتحليل استخدام الموقع، وتقديم محتوى مخصص.',
     login: {
     title: 'تسجيل الدخول',    
     google: 'المتابعة باستخدام جوجل',
@@ -6554,6 +6603,7 @@ const arz: Dictionary = {
   termsAndConditions: 'الشروط والأحكام',
   close: 'إغلاق',
   language: {
+    searchMessage: "ابحث عن لغة...",
     selectLanguage: "اختر اللغة",
     description: "اختر لغتك المفضلة لعرض هذه المقالة.",
     notFound: "لم يتم العثور على لغات مطابقة"
@@ -6667,6 +6717,7 @@ const arz: Dictionary = {
 
 // Javanese dictionary
 const jv: Dictionary = {
+  cookieMessage: 'Situs web iki nggunakake kuki kanggo nambah pengalaman sampeyan, nganalisa panggunaan situs web, lan nyedhiyakake konten sing dipersonalisasi.',
     login: {
     title: 'Mlebu',    
     google: 'Terus nganggo Google',
@@ -6795,6 +6846,7 @@ const jv: Dictionary = {
     pageInfo: "Informasi kaca",
   },
   language: {
+    searchMessage: "Golek basa...",
     selectLanguage: "Pilih Basa",
     description: "Pilih basa sing dikarepaké kanggo ndeleng artikel iki.",
     notFound: "Ora ana basa sing cocog",
@@ -6912,6 +6964,7 @@ const jv: Dictionary = {
 
 // Dutch dictionary
 const nl: Dictionary = {
+  cookieMessage: 'Deze website gebruikt cookies om uw ervaring te verbeteren, het gebruik van de website te analyseren en gepersonaliseerde inhoud te bieden.',
     login: {
     title: 'Inloggen',    
     google: 'Doorgaan met Google',
@@ -7039,6 +7092,7 @@ const nl: Dictionary = {
     pageInfo: "Pagina-informatie",
   },
   language: {
+    searchMessage: "Zoek een taal...",
     selectLanguage: "Kies taal",
     description: "Selecteer uw voorkeurstaal voor het bekijken van dit artikel.",
     notFound: "Geen talen gevonden die overeenkomen met"
@@ -7154,6 +7208,7 @@ const nl: Dictionary = {
 
 // Greek dictionary
 const el: Dictionary = {
+  cookieMessage: 'Αυτή η ιστοσελίδα χρησιμοποιεί cookies για να βελτιώσει την εμπειρία σας, να αναλύσει τη χρήση της ιστοσελίδας και να παρέχει εξατομικευμένο περιεχόμενο.',
     login: {
     title: 'Σύνδεση',    
     google: 'Συνέχεια με το Google',
@@ -7283,6 +7338,7 @@ const el: Dictionary = {
   termsAndConditions: 'Όροι και Προϋποθέσεις',
   close: 'Κλείσιμο',
   language: {
+    searchMessage: "Αναζήτηση γλώσσας...",
     selectLanguage: "Επιλογή γλώσσας",
     description: "Επιλέξτε την προτιμώμενη γλώσσα σας για την προβολή αυτού του άρθρου.",
     notFound: "Δεν βρέθηκαν γλώσσες που να ταιριάζουν με"
@@ -7396,6 +7452,7 @@ const el: Dictionary = {
 
 // Swedish dictionary
 const sv: Dictionary = {
+  cookieMessage: 'Denna webbplats använder cookies för att förbättra din upplevelse, analysera webbplatsanvändning och tillhandahålla anpassat innehåll.',
     login: {
     title: 'Logga in',    
     google: 'Fortsätt med Google',
@@ -7524,6 +7581,7 @@ const sv: Dictionary = {
   termsAndConditions: 'Villkor och bestämmelser',
   close: 'Stäng',
   language: {
+    searchMessage: "Sök språk...",
     selectLanguage: "Välj språk",
     description: "Välj ditt föredragna språk för att visa denna artikel.",
     notFound: "Inga språk hittades som matchar"
@@ -7637,6 +7695,7 @@ const sv: Dictionary = {
 
 // Norwegian dictionary
 const no: Dictionary = {
+  cookieMessage: 'Dette nettstedet bruker informasjonskapsler for å forbedre opplevelsen din, analysere nettstedbruk og levere tilpasset innhold.',
     login: {
     title: 'Logg inn',    
     google: 'Fortsett med Google',
@@ -7765,6 +7824,7 @@ const no: Dictionary = {
     pageInfo: "Sideinformasjon",
   },
   language: {
+    searchMessage: "Søk språk...",
     selectLanguage: "Velg språk",
     description: "Velg ditt foretrukne språk for å vise denne artikkelen.",
     notFound: "Ingen språk funnet som samsvarer med"
@@ -7880,6 +7940,7 @@ const no: Dictionary = {
 
 // Polish dictionary
 const pl: Dictionary = {
+  cookieMessage: 'Ta strona używa plików cookie, aby poprawić Twoje wrażenia, analizować ruch na stronie i dostarczać spersonalizowane treści.',
     login: {
     title: 'Zaloguj się',    
     google: 'Kontynuuj z Google',
@@ -8008,6 +8069,7 @@ const pl: Dictionary = {
   termsAndConditions: 'Warunki i zasady',
   close: 'Zamknij',
   language: {
+    searchMessage: "Szukaj języków...",
     selectLanguage: "Wybierz język",
     description: "Wybierz preferowany język, aby wyświetlić ten artykuł.",
     notFound: "Nie znaleziono języków pasujących do"
@@ -8121,6 +8183,7 @@ const pl: Dictionary = {
 
 // Thai dictionary
 const th: Dictionary = {
+  cookieMessage: 'เว็บไซต์นี้ใช้คุกกี้เพื่อปรับปรุงประสบการณ์ของคุณ วิเคราะห์การใช้งานเว็บไซต์ และมอบเนื้อหาที่ปรับแต่งให้เหมาะกับคุณ',
     login: {
     title: 'เข้าสู่ระบบ',    
     google: 'ดำเนินการต่อด้วย Google',
@@ -8249,6 +8312,7 @@ const th: Dictionary = {
     pageInfo: "ข้อมูลหน้า",
   },
   language: {
+    searchMessage: "ค้นหาภาษา...",
     selectLanguage: "เลือกภาษา",
     description: "เลือกภาษาที่คุณต้องการสำหรับการดูบทความนี้",
     notFound: "ไม่พบภาษาที่ตรงกับ"
@@ -8364,6 +8428,7 @@ const th: Dictionary = {
 
 // Ukrainian dictionary
 const uk: Dictionary = {
+  cookieMessage: 'Цей вебсайт використовує файли cookie для покращення вашого досвіду, аналізу використання сайту та надання персоналізованого контенту.',
     login: {
     title: 'Увійти',    
     google: 'Продовжити з Google',
@@ -8492,6 +8557,7 @@ const uk: Dictionary = {
     pageInfo: "Інформація про сторінку",
   },
   language: {
+    searchMessage: "Пошук мов...",
     selectLanguage: "Вибрати мову",
     description: "Виберіть бажану мову для перегляду цієї статті.",
     notFound: "Не знайдено мов, що відповідають"
@@ -8607,6 +8673,7 @@ const uk: Dictionary = {
 
 // Romanian dictionary
 const ro: Dictionary = {
+  cookieMessage: 'Acest site web utilizează cookie-uri pentru a vă îmbunătăți experiența, a analiza utilizarea site-ului și a oferi conținut personalizat.',
     login: {
     title: 'Conectare',    
     google: 'Continuă cu Google',
@@ -8735,6 +8802,7 @@ const ro: Dictionary = {
   termsAndConditions: 'Termeni și condiții',
   close: 'Închide',
   language: {
+    searchMessage: "Căutare limbi...",
     selectLanguage: "Alegeți limba",
     description: "Selectați limba preferată pentru vizualizarea acestui articol.",
     notFound: "Nu au fost găsite limbi care să corespundă"
@@ -8848,6 +8916,7 @@ const ro: Dictionary = {
 
 // Czech dictionary
 const cs: Dictionary = {
+  cookieMessage: 'Tato webová stránka používá cookies k vylepšení vašeho zážitku, analýze využití webu a poskytování personalizovaného obsahu.',
     login: {
     title: 'Přihlásit se',    
     google: 'Pokračovat s Googlem',
@@ -8976,6 +9045,7 @@ const cs: Dictionary = {
   termsAndConditions: 'Podmínky služby',
   close: 'Zavřít',
   language: {
+    searchMessage: "Hledání jazyků...",
     selectLanguage: "Vyberte jazyk",
     description: "Vyberte si preferovaný jazyk pro zobrazení tohoto článku.",
     notFound: "Nebyly nalezeny žádné jazyky odpovídající"
@@ -9089,6 +9159,7 @@ const cs: Dictionary = {
 
 // Hungarian dictionary
 const hu: Dictionary = {
+  cookieMessage: 'Ez a weboldal sütiket használ az élmény javítása, a webhely használatának elemzése és a személyre szabott tartalom biztosítása érdekében.',
     login: {
     title: 'Bejelentkezés',    
     google: 'Folytatás Google-lal',
@@ -9217,6 +9288,7 @@ const hu: Dictionary = {
   termsAndConditions: 'Felhasználási feltételek',
   close: 'Bezárás',
   language: {
+    searchMessage: "Nyelvek keresése...",
     selectLanguage: "Válasszon nyelvet",
     description: "Válassza ki a kívánt nyelvet a cikk megtekintéséhez.",
     notFound: "Nem található megfelelő nyelv"
@@ -9330,6 +9402,7 @@ const hu: Dictionary = {
 
 // Finnish dictionary
 const fi: Dictionary = {
+  cookieMessage: 'Tämä sivusto käyttää evästeitä parantaakseen käyttökokemusta, analysoidakseen sivuston käyttöä ja tarjotakseen räätälöityä sisältöä.',
     login: {
     title: 'Kirjaudu sisään',    
     google: 'Jatka Googlella',
@@ -9458,6 +9531,7 @@ const fi: Dictionary = {
   termsAndConditions: 'Käyttöehdot',
   close: 'Sulje',
   language: {
+    searchMessage: "Etsi kieliä...",
     selectLanguage: "Valitse kieli",
     description: "Valitse haluamasi kieli tämän artikkelin katselemiseen.",
     notFound: "Hakua vastaavia kieliä ei löytynyt"
@@ -9571,6 +9645,7 @@ const fi: Dictionary = {
 
 // Danish dictionary
 const da: Dictionary = {
+  cookieMessage: 'Dette websted bruger cookies for at forbedre brugeroplevelsen, analysere webstedets trafik og levere tilpasset indhold.',
     login: {
     title: 'Log ind',    
     google: 'Fortsæt med Google',
@@ -9697,6 +9772,7 @@ const da: Dictionary = {
     pageInfo: "Sideinfo",
   },
   language: {
+    searchMessage: "Søg efter sprog...",
     selectLanguage: "Vælg sprog",
     description: "Vælg dit foretrukne sprog til at se denne artikel.",
     notFound: "Ingen sprog fundet, der matcher"
@@ -9812,6 +9888,7 @@ const da: Dictionary = {
 
 // Bulgarian dictionary
 const bg: Dictionary = {
+  cookieMessage: 'Този уебсайт използва бисквитки, за да подобри потребителското изживяване, да анализира трафика на сайта и да предоставя персонализирано съдържание.',
     login: {
     title: 'Вход',    
     google: 'Продължи с Google',
@@ -9942,6 +10019,7 @@ const bg: Dictionary = {
   termsAndConditions: 'Условия за ползване',
   close: 'Затвори',
   language: {
+    searchMessage: "Търсене на езици...",
     selectLanguage: "Изберете език",
     description: "Изберете предпочитания език за преглед на тази статия.",
     notFound: "Не са намерени езици, съответстващи на"
@@ -10055,6 +10133,7 @@ const bg: Dictionary = {
 
 // Slovak dictionary
 const sk: Dictionary = {
+  cookieMessage: 'Táto webová stránka používa súbory cookie na zlepšenie používateľského zážitku, analýzu návštevnosti webu a poskytovanie prispôsobeného obsahu.',
     login: {
     title: 'Prihlásiť sa',    
     google: 'Pokračovať s Google',
@@ -10185,6 +10264,7 @@ const sk: Dictionary = {
   termsAndConditions: 'Podmienky služby',
   close: 'Zavrieť',
   language: {
+    searchMessage: "Hľadať jazyky...",
     selectLanguage: "Vyberte jazyk",
     description: "Vyberte si preferovaný jazyk na zobrazenie tohto článku.",
     notFound: "Nenašli sa žiadne jazyky zodpovedajúce"
@@ -10298,6 +10378,7 @@ const sk: Dictionary = {
 
 // Croatian dictionary 
 const hr: Dictionary = {
+  cookieMessage: 'Ova web stranica koristi kolačiće za poboljšanje korisničkog iskustva, analizu prometa na webu i pružanje prilagođenog sadržaja.',
     login: {
     title: 'Prijava',    
     google: 'Nastavi s Google',
@@ -10428,6 +10509,7 @@ const hr: Dictionary = {
   termsAndConditions: 'Uvjeti pružanja usluge',
   close: 'Zatvori',
   language: {
+    searchMessage: "Pretraži jezike...",
     selectLanguage: "Odaberite jezik",
     description: "Odaberite željeni jezik za prikaz ovog članka.",
     notFound: "Nisu pronađeni jezici koji odgovaraju"
@@ -10541,6 +10623,7 @@ const hr: Dictionary = {
 
 // Lithuanian dictionary
 const lt: Dictionary = {
+  cookieMessage: 'Ši svetainė naudoja slapukus, kad pagerintų vartotojo patirtį, analizuotų svetainės srautą ir teiktų suasmenintą turinį.',
     login: {
     title: 'Prisijungti',    
     google: 'Tęsti su Google',
@@ -10676,6 +10759,7 @@ const lt: Dictionary = {
   termsAndConditions: 'Paslaugų teikimo sąlygos',
   close: 'Uždaryti',
   language: {
+    searchMessage: "Ieškoti kalbų...",
     selectLanguage: "Pasirinkite kalbą",
     description: "Pasirinkite pageidaujamą kalbą šiam straipsniui peržiūrėti.",
     notFound: "Nerasta atitinkančių kalbų",
@@ -10791,6 +10875,7 @@ const lt: Dictionary = {
 
 // Slovenian dictionary
 const sl: Dictionary = {
+  cookieMessage: 'To spletno mesto uporablja piškotke za izboljšanje uporabniške izkušnje, analizo spletnega prometa in zagotavljanje prilagojene vsebine.',
     login: {
     title: 'Prijava',    
     google: 'Nadaljuj z Google',
@@ -10927,6 +11012,7 @@ const sl: Dictionary = {
   termsAndConditions: 'Pogoji storitve',
   close: 'Zapri',
   language: {
+    searchMessage: "Išči jezike...",
     selectLanguage: "Izberite jezik",
     description: "Izberite želeni jezik za ogled tega članka.",
     notFound: "Ni najdenih ustreznih jezikov",
@@ -11042,6 +11128,7 @@ const sl: Dictionary = {
 
 // Latvian dictionary
 const lv: Dictionary = {
+  cookieMessage: 'Šī vietne izmanto sīkdatnes, lai uzlabotu lietotāja pieredzi, analizētu vietnes trafiku un nodrošinātu personalizētu saturu.',
     login: {
     title: 'Pieslēgties',    
     google: 'Turpināt ar Google',
@@ -11178,6 +11265,7 @@ const lv: Dictionary = {
     pageInfo: "Informācija par lapu",
   },
   language: {
+    searchMessage: "Meklēt valodas...",
     selectLanguage: "Izvēlieties valodu",
     description: "Izvēlieties vēlamo valodu šī raksta skatīšanai.",
     notFound: "Nav atrastas atbilstošas valodas",
@@ -11293,6 +11381,7 @@ const lv: Dictionary = {
 
 // Estonian dictionary
 const et: Dictionary = {
+  cookieMessage: 'See veebisait kasutab küpsiseid, et parandada kasutajakogemust, analüüsida veebisaidi liiklust ja pakkuda kohandatud sisu.',
     login: {
     title: 'Logi sisse',    
     google: 'Jätka Google\'iga',
@@ -11429,6 +11518,7 @@ const et: Dictionary = {
   termsAndConditions: 'Kasutustingimused',
   close: 'Sule',
   language: {
+    searchMessage: "Otsi keeli...",
     selectLanguage: "Vali keel",
     description: "Vali eelistatud keel selle artikli vaatamiseks.",
     notFound: "Vastavaid keeli ei leitud",
@@ -11544,6 +11634,7 @@ const et: Dictionary = {
 
 // Icelandic dictionary
 const is: Dictionary = {
+  cookieMessage: 'Þessi vefsíða notar smákökur til að bæta notendaupplifun, greina umferð á vefsíðunni og veita sérsniðið efni.',
     login: {
     title: 'Skrá inn',    
     google: 'Halda áfram með Google',
@@ -11680,6 +11771,7 @@ const is: Dictionary = {
     pageInfo: "Upplýsingar um síðu",
   },
   language: {
+    searchMessage: "Leita að tungumálum...",
     selectLanguage: "Veldu tungumál",
     description: "Veldu tungumál sem þú vilt skoða greinina á.",
     notFound: "Engin tungumál fundust sem passa",
@@ -11795,6 +11887,7 @@ const is: Dictionary = {
 
 // Albanian dictionary
 const sq: Dictionary = {
+  cookieMessage: 'Kjo faqe përdor cookies për të përmirësuar përvojën e përdoruesit, për të analizuar trafikun në faqe dhe për të ofruar përmbajtje të personalizuar.',
     login: {
     title: 'Hyni',    
     google: 'Vazhdo me Google',
@@ -11931,6 +12024,7 @@ const sq: Dictionary = {
     pageInfo: "Informacione për faqen",
   },
   language: {
+    searchMessage: "Kërko gjuhë...",
     selectLanguage: "Zgjidh gjuhën",
     description: "Zgjidh gjuhën që preferon për të parë këtë artikull.",
     notFound: "Nuk u gjet asnjë gjuhë që përputhet",
@@ -12046,6 +12140,7 @@ const sq: Dictionary = {
 
 // Serbian dictionary
 const sr: Dictionary = {
+  cookieMessage: 'Ovaj sajt koristi kolačiće kako bi poboljšao korisničko iskustvo, analizirao saobraćaj na sajtu i pružio personalizovani sadržaj.',
     login: {
     title: 'Prijava',    
     google: 'Nastavi sa Google-om',
@@ -12182,6 +12277,7 @@ const sr: Dictionary = {
     pageInfo: "Informacije o stranici",
   },
   language: {
+    searchMessage: "Pretraži jezike...",
     selectLanguage: "Izaberi jezik",
     description: "Izaberi jezik na kojem želiš da vidiš ovaj članak.",
     notFound: "Nema jezika koji se poklapa sa pretragom",
@@ -12297,6 +12393,7 @@ const sr: Dictionary = {
 
 // Macedonian dictionary
 const mk: Dictionary = {
+  cookieMessage: 'Оваа страница користи колачиња за подобрување на корисничкото искуство, анализа на сообраќајот на страницата и обезбедување персонализирана содржина.',
     login: {
     title: 'Најави се',    
     google: 'Продолжи со Google',
@@ -12433,6 +12530,7 @@ const mk: Dictionary = {
     pageInfo: "Информации за страницата",
   },
   language: {
+    searchMessage: "Пребарувај јазици...",
     selectLanguage: "Избери јазик",
     description: "Избери го јазикот на кој сакаш да го гледаш овој напис.",
     notFound: "Не се пронајдени јазици што одговараат",
@@ -12548,6 +12646,7 @@ const mk: Dictionary = {
 
 // Bosnian dictionary
 const bs: Dictionary = {
+  cookieMessage: 'Ova stranica koristi kolačiće kako bi poboljšala korisničko iskustvo, analizirala saobraćaj na stranici i pružila personalizirani sadržaj.',
     login: {
     title: 'Prijava',    
     google: 'Nastavi sa Google-om',
@@ -12684,6 +12783,7 @@ const bs: Dictionary = {
     pageInfo: "Informacije o stranici",
   },
   language: {
+    searchMessage: "Pretraži jezike...",
     selectLanguage: "Odaberi jezik",
     description: "Odaberite jezik na kojem želite pregledati ovaj članak.",
     notFound: "Nema jezika koji odgovaraju pretrazi",
@@ -12799,6 +12899,7 @@ const bs: Dictionary = {
 
 // Montenegrin dictionary
 const cnr: Dictionary = {
+  cookieMessage: 'Ova stranica koristi kolačiće kako bi poboljšala korisničko iskustvo, analizirala saobraćaj na stranici i pružila personalizirani sadržaj.',
     login: {
     title: 'Prijava',    
     google: 'Nastavi sa Google-om',
@@ -12935,6 +13036,7 @@ const cnr: Dictionary = {
   termsAndConditions: 'Uslovi korišćenja',
   close: 'Zatvori',
   language: {
+    searchMessage: "Pretraži jezike...",
     selectLanguage: "Izaberi jezik",
     description: "Izaberi jezik na kojem želiš da pregledaš ovaj članak.",
     notFound: "Nema jezika koji odgovaraju pretrazi",
@@ -13050,6 +13152,7 @@ const cnr: Dictionary = {
 
 // Maltese dictionary
 const mt: Dictionary = {
+  cookieMessage: 'Din il-paġna tuża cookies biex ittejjeb l-esperjenza tal-utent, tanalizza t-traffiku tal-websajt u tipprovdi kontenut personalizzat.',
     login: {
     title: 'Idħol',    
     google: 'Kompli ma\' Google',
@@ -13186,6 +13289,7 @@ const mt: Dictionary = {
     pageInfo: "Informazzjoni dwar il-paġna",
   },
   language: {
+    searchMessage: "Fittex lingwi...",
     selectLanguage: "Agħżel lingwa",
     description: "Agħżel il-lingwa li tixtieq tuża biex tara dan l-artiklu.",
     notFound: "Ma nstab l-ebda lingwa li tikkorrispondi",

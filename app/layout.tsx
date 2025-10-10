@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import SwRegister from "./components/pwa/SwRegister";
+import SwRegister from "@/app/components/pwa/SwRegister";
+import CookieBanner from "@/app/(client-renders)/cookie-banner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SwRegister />
         {children}
+        <CookieBanner />
       </body>
     </html>
   );
