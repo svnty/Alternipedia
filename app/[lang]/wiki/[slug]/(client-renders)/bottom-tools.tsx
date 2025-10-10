@@ -21,6 +21,18 @@ export default function BottomTools() {
   const currentLang = params?.lang as Locale || 'en';
   const dict = getDictionary(currentLang);
 
+  const [bottomOffset, setBottomOffset] = useState(20);
+
+  useEffect(() => {
+    const updateOffset = () => {
+      const safeArea = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sat-bottom')) || 0;
+      setBottomOffset(window.innerHeight - document.documentElement.clientHeight + 20);
+    };
+    updateOffset();
+    window.addEventListener("resize", updateOffset);
+    return () => window.removeEventListener("resize", updateOffset);
+  }, []);
+
   useEffect(() => {
     const nav = document.getElementById("nav");
 
@@ -90,9 +102,7 @@ export default function BottomTools() {
         ref={buttonRef}
         onClick={toggleMenu}
         className={`fixed right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all ${isMenuOpen ? "bg-gray-700" : ""}`}
-        style={{
-          bottom: "calc(env(safe-area-inset-bottom, 0px) + 20px)",
-        }}>
+        style={{ bottom: `${bottomOffset}px` }}>
         {isMenuOpen ? (
           <X className="-ms-1 opacity-60 inline flex-1 text-red-300" aria-hidden="true" />
         ) : (
