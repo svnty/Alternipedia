@@ -4,16 +4,12 @@ import { authOptions } from '@/lib/auth';
 import { Analytics } from "@vercel/analytics/next"
 import React from "react";
 import Link from "next/link";
-
 import '@/app/globals.css';
-
 import { notFound } from 'next/navigation';
 import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-
 import Search from '@/app/[lang]/(client-renders)/search';
 import UserMenu from '@/app/[lang]/(client-renders)/user-menu';
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -28,15 +24,23 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Earth, MenuIcon, Palette } from "lucide-react";
-
 import Terms from "@/app/[lang]/(client-renders)/terms";
 import Privacy from "@/app/[lang]/(client-renders)/privacy";
 import GoPro from "@/app/[lang]/(client-renders)/go-pro";
 
-export const metadata: Metadata = {
-  title: "Alternipedia",
-  description: "A comprehensive collection of resources",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = getDictionary(lang as Locale);
+
+  return {
+    title: "Alternipedia",
+    description: dict.metadata.description,
+  };
+}
 
 export default async function Layout({
   children,

@@ -20,6 +20,39 @@ import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/(client-renders)/load-s
 
 import BottomTools from "@/app/[lang]/wiki/[slug]/(client-renders)/bottom-tools";
 import BottomArrow from "@/app/[lang]/(client-renders)/bottom-arrow";
+import { Metadata } from "next";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { Locale } from "@/lib/i18n/config";
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string; lang: string }>;
+  searchParams: Promise<{ bias?: string }>;
+}): Promise<Metadata> {
+  const { slug, lang } = await params;
+  const { bias } = await searchParams;
+  const dict = getDictionary(lang as Locale);
+  let description;
+
+  if (bias === 'wikipedia') {
+    description = `${dict.metadata.wikipedia.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.wikipedia.part2}`;
+  } else if (bias === 'socialist') {
+    description = `${dict.metadata.socialist.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.socialist.part2}`;
+  } else if (bias === 'liberal') {
+    description = `${dict.metadata.liberal.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.liberal.part2}`;
+  } else if (bias === 'conservative') {
+    description = `${dict.metadata.conservative.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.conservative.part2}`;
+  } else if (bias === 'nationalist') {
+    description = `${dict.metadata.nationalist.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.nationalist.part2}`;
+  }
+
+  return { 
+    title: "Alternipedia",
+    description: description || 'Error: Description not available',
+  };
+}
 
 export default async function Page({
   params,
@@ -40,7 +73,7 @@ export default async function Page({
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
-                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace('_', ' '))}</div>
+                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replaceAll('_', ' '))}</div>
 
                 {/* Article and Talk tabs floated to the right */}
                 <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -133,7 +166,7 @@ export default async function Page({
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
-                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace('_', ' '))}</div>
+                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replaceAll('_', ' '))}</div>
 
                 {/* Article and Talk tabs floated to the right */}
                 <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -230,7 +263,7 @@ export default async function Page({
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
                 <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2 truncate" style={{ opacity: 0 }}>
-                  {decodeURIComponent(slug.replace('_', ' '))}
+                  {decodeURIComponent(slug.replaceAll('_', ' '))}
                 </div>
                 {/* Article and Talk tabs floated to the right */}
                 <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
@@ -320,7 +353,7 @@ export default async function Page({
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
                 <div className="text-neutral-800 text-3xl font-normal pb-2">
-                  {decodeURIComponent(slug.replace('_', ' '))}
+                  {decodeURIComponent(slug.replaceAll('_', ' '))}
                 </div>
 
                 {/* Article and Talk tabs floated to the right */}
@@ -414,7 +447,7 @@ export default async function Page({
             <Tabs defaultValue="tab-1">
               <div className="relative flex items-end justify-between border-b border-border">
                 {/* Title on the left */}
-                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replace('_', ' '))}</div>
+                <div data-article-title className="text-neutral-800 text-3xl font-normal pb-2">{decodeURIComponent(slug.replaceAll('_', ' '))}</div>
 
                 {/* Article and Talk tabs floated to the right */}
                 <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">

@@ -14,11 +14,20 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
   return (
     <div className="relative bg-white text-center mt-8 flex flex-col justify-center items-center">
+      
+      <br />
+      {dict.metadata.description}
+      
+      <br />
+
+      <br />
 
       {dict.common.comingSoon}
 
       <br />
+
       {dict.common.stayTuned}
+      
       <br />
 
       <span className="inline mt-8">{dict.common.exampleArticle} <Link href={`/${lang}/wiki/Cat`} className="text-blue-600 hover:underline">Cats</Link></span>

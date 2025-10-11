@@ -104,6 +104,30 @@ export default function Contents({ headings = [] }: ContentsProps) {
       observed.forEach((el, idx) => {
         const top = el.getBoundingClientRect().top;
 
+        // Skip elements that are hidden (e.g., inside collapsed content)
+        if (el.offsetParent === null) return;
+
+        // Check if this heading should be skipped based on parent collapse
+        const depth = parseInt(el.getAttribute('data-depth') || '0');
+        let shouldSkip = false;
+        if (depth > 0) {
+          // Traverse up the DOM to find the nearest parent heading
+          let parentEl = el.closest('[data-depth]');
+          while (parentEl) {
+            const parentDepth = parseInt(parentEl.getAttribute('data-depth') || '0');
+            if (parentDepth === depth - 1) {
+              const parentTrigger = parentEl.closest('[data-slot="collapsible-trigger"]');
+              if (parentTrigger && parentTrigger.getAttribute('data-state') === 'closed') {
+                shouldSkip = true;
+              }
+              break;
+            }
+            parentEl = parentEl.parentElement?.closest('[data-depth]') || null;
+          }
+        }
+
+        if (shouldSkip) return;
+
         if (top >= 0 && top <= window.innerHeight && top < minTop) {
           minTop = top;
           closestIdx = idx;

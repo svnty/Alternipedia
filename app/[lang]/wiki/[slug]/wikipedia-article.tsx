@@ -235,7 +235,7 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
             {dict.article.notFoundHeader}
           </h3>
           <p className="text-neutral-600 mb-4">
-            {dict.article.notFoundText} "{decodeURIComponent(slug.replace('_', ' '))}".
+            {dict.article.notFoundText} "{decodeURIComponent(slug.replaceAll('_', ' '))}".
           </p>
           <a
             href={`https://${language}.wikipedia.org/wiki/Special:Search/${encodeURIComponent(slug)}`}
@@ -268,17 +268,16 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
                     <Collapsible defaultOpen={true}>
                       <div className="w-full relative inline-flex flex-col justify-start items-start overflow-x-hidden">
                         {section.title && section.depth === 0 && (
-                          <CollapsibleTrigger className="w-full -mt-4 mb-4 mt-2 transition-colors cursor-pointer py-3">
+                          <CollapsibleTrigger className="group w-full -mt-4 mb-4 mt-2 transition-colors cursor-pointer py-3">
                             <div className="w-full">
                               {/* Top row: title (left) and icon (right) */}
                               <div className="flex items-center justify-between w-full">
-                                <div data-index={index} id={section.title} className="text-2xl font-bold heading-anchor text-left truncate">
+                                <div data-index={index} data-depth={section.depth} id={section.title} className="text-2xl font-bold heading-anchor text-left truncate">
                                   {section.title}
                                 </div>
 
                                 <div className="flex-shrink-0 ml-2">
-                                  {/* Chevron icon (replace with your icon component if needed) */}
-                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-600 group-data-[state=open]:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                   </svg>
                                 </div>
@@ -322,7 +321,7 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
                                   return (
                                     <div key={index}>
                                       {subSection.title && subSection.depth == 1 && (
-                                        <div className="text-xl font-bold mb-2 heading-anchor">{subSection.title}</div>
+                                        <div id={subSection.title} className="text-xl font-bold mb-2 heading-anchor">{subSection.title}</div>
                                       )}
 
                                       {subSection.paragraphs && subSection.paragraphs.map((subPara: any, pIndex: number) => {
