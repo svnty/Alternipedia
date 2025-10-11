@@ -461,13 +461,10 @@ export default function Article({
       {/* END LEFT SIDEBAR */}
 
       {/* RIGHT SIDEBAR */}
-      <div id="right-sidebar-fab" className="fixed bottom-4 right-4 z-20 :hidden">
-
-      </div>
       <div
         id="right-sidebar"
         data-property-1="Default"
-        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-20 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
+        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-20 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block overscroll-none"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
           height: isMobile ? 'auto' : sidebarHeight,
