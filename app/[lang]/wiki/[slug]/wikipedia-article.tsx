@@ -5,6 +5,7 @@ import Link from "next/link";
 // import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { convertSegmentPathToStaticExportFilename } from "next/dist/shared/lib/segment-cache/segment-value-encoding";
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');
@@ -177,9 +178,49 @@ function References({ section, wiki }: { section: any, wiki: any }) {
   );
 }
 
-function SectionContent({ section, language, bias, wiki, mobile }: { section: any, language: string, bias: string, wiki: any, mobile: boolean }) {
+function SectionContent({
+  section,
+  language,
+  bias,
+  wiki,
+  mobile,
+  showImages = true
+}: {
+  section: any,
+  language: string,
+  bias: string,
+  wiki: any,
+  mobile: boolean,
+  showImages?: boolean
+}) {
+  // ✅ 1. Collect ALL images from all paragraphs (in order)
+  const sectionImages = showImages && section.paragraphs
+    ? section.paragraphs.flatMap((p: any) => p.images || [])
+    : [];
+
   return (
     <div className="collapsible-content">
+      {/* ✅ 2. Render ALL images first, stacked as floats */}
+      {sectionImages.map((img: any, i: number) => (
+        <div
+          key={i}
+          className="
+    float-none md:float-right
+    clear-right  
+    w-full md:max-w-[32%] lg:max-w-[40%]
+    mb-4 md:ml-6
+    bg-white border border-gray-200 rounded-sm p-3
+          "
+        >
+          <MediaCard
+            url={img.url}
+            caption={img.caption}
+            alt={img.caption || 'Image'}
+          />
+        </div>
+      ))}
+
+      {/* ✅ 3. Now render text paragraphs with NO images inside */}
       {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
         const raw = jsonToLinkedParagraph(para, language, bias);
         const safe = sanitizeHtml(raw, {
@@ -191,82 +232,81 @@ function SectionContent({ section, language, bias, wiki, mobile }: { section: an
           allowedSchemes: ['http', 'https', 'mailto'],
           transformTags: {
             'a': (tagName: string, attribs: Record<string, string>) => {
-              // preserve class if present, and ensure safe target/rel
-              // attribs.target = attribs.target || '_blank';
               attribs.rel = attribs.rel || 'noopener noreferrer';
               return { tagName, attribs };
             }
           }
         });
+
         return (
-          <div key={pIndex} className="relative mb-4">
-            {para.images && para.images.length > 0 && (
-              <div className="float-right ml-4 mb-4 max-w-xs bg-white border border-gray-200 rounded-lg p-4">
-                {para.images.map((img: any, imgIndex: number) => (
-                  <div key={imgIndex} className={imgIndex > 0 ? 'mt-4' : ''}>
-                    <MediaCard url={img.url} caption={img.caption} alt={img.caption || 'Image'} />
-                  </div>
+          <div key={pIndex} className="mb-4">
+            <p
+              className="leading-relaxed text-base"
+              dangerouslySetInnerHTML={{ __html: safe }}
+            />
+
+            {para.lists && para.lists.map((list: any, listIndex: number) => (
+              <ul className="list-disc mx-6 mt-3" key={listIndex}>
+                {list.lines.map((line: any, lineIndex: number) => (
+                  <li key={lineIndex} id={`line-${encodeURI(line.text)}`}>
+                    <a
+                      href={line.links.find((link: any) => link.page)?.page}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={
+                        line.links.some((link: any) => link.page)
+                          ? 'cursor-pointer hover:underline text-blue-500'
+                          : ''
+                      }
+                    >
+                      {line.text}
+                    </a>
+                  </li>
                 ))}
-              </div>
-            )}
-            <p className="mb-4" dangerouslySetInnerHTML={{ __html: safe }}></p>
+              </ul>
+            ))}
           </div>
         );
       })}
 
+      {/* ✅ Section-level lists */}
+      {section.lists && section.lists.map((list: any, lIndex: number) => (
+        <ul key={lIndex} className="list-disc list-inside mb-4">
+          {list.items && list.items.map((item: any, iIndex: number) => (
+            <li key={iIndex} dangerouslySetInnerHTML={{ __html: item }} />
+          ))}
+        </ul>
+      ))}
+
       <References section={section} wiki={wiki} />
 
-      {section.sections.length > 0 && (
-        <>
-          {section['sections'].map((subSection: any, index: number) => {
-            return (
-              <div key={index}>
-                {subSection.title && subSection.depth == 1 && (
-                  <div id={(subSection.title.replace(/\s+/g, '_') + (mobile ? '-mobile' : ''))} className="text-xl font-bold mb-2 heading-anchor">{subSection.title}</div>
-                )}
-
-                {subSection.paragraphs && subSection.paragraphs.map((subPara: any, pIndex: number) => {
-                  const raw = jsonToLinkedParagraph(subPara, language, bias);
-                  const safe = sanitizeHtml(raw, {
-                    allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
-                    allowedAttributes: {
-                      '*': ['class'],
-                      a: ['href', 'class', 'target', 'rel']
-                    },
-                    allowedSchemes: ['http', 'https', 'mailto'],
-                    transformTags: {
-                      'a': (tagName: string, attribs: Record<string, string>) => {
-                        // preserve class if present, and ensure safe target/rel
-                        // attribs.target = attribs.target || '_blank';
-                        attribs.rel = attribs.rel || 'noopener noreferrer';
-                        return { tagName, attribs };
-                      }
-                    }
-                  });
-                  return (
-                    <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: safe }}></p>
-                  );
-                })}
-
-                {subSection.sections.length > 0 && (
-                  <>
-                    {subSection['sections'].map((subSubSection: any, index: number) => {
-                      return (
-                        <div key={index}>
-                          <div>{subSubSection.title}</div>
-                        </div>
-                      )
-                    })};
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </>
-      )}
+      {/* ✅ Recurse for subsections */}
+      {section.sections && section.sections.length > 0 && section.sections.map((subSection: any, index: number) => (
+        <div key={index}>
+          {subSection.title && subSection.depth === 1 && (
+            <div
+              id={(subSection.title.replace(/\s+/g, '_') + (mobile ? '-mobile' : ''))}
+              className="text-xl font-bold mb-2 mt-2 heading-anchor"
+            >
+              {subSection.title}
+            </div>
+          )}
+          <SectionContent
+            section={subSection}
+            language={language}
+            bias={bias}
+            wiki={wiki}
+            mobile={mobile}
+            showImages={true}
+          />
+        </div>
+      ))}
     </div>
   );
 }
+
+
+
 
 function toWikipediaReference(citation: Record<string, any>): string {
   const parts: string[] = [];
@@ -337,49 +377,80 @@ function toWikipediaReference(citation: Record<string, any>): string {
 export default function WikipediaArticle({ slug, language, wiki, bias }: WikipediaArticleProps) {
   const wikiData: any = {};
   wikiData.pageImage = wiki.pageImage();
-  wikiData.pageImage.url = wikiData.pageImage.url();
-  wikiData.pageImage.caption = wikiData.pageImage.caption();
+  if (wikiData.pageImage) {
+    wikiData.pageImage.url = wikiData.pageImage.url();
+    wikiData.pageImage.caption = wikiData.pageImage.caption();
+  }
   wikiData.title = wiki.title();
   wikiData.sections = [];
 
   wiki.sections().forEach((section: any) => {
-    let wikiSection: any = {};
-    wikiSection = section.json();
+    let wikiSection: any = {
+      title: section.title(),
+      depth: section.depth(),
+    };
     wikiSection.index = section.index();
     wikiSection.infoboxes = section.infoboxes();
     wikiSection.paragraphs = section.paragraphs();
 
+    if (section.lists) {
+      section.lists = typeof section.lists === 'function' ? section.lists() : section.lists;
+      section.lists.forEach((list: any) => {
+        list.lines = typeof list.lines === 'function' ? list.lines() : list.lines;
+        list.text = typeof list.text === 'function' ? list.text() : list.text;
+        list.lines.forEach((line: any) => {
+          line.text = typeof line.text === 'function' ? line.text() : line.text;
+          line.links = typeof line.links === 'function' ? line.links() : line.links;
+          line.links.forEach((link: any) => {
+            link.text = typeof link.text === 'function' ? link.text() : link.text;
+            link.page = typeof link.page === 'function' ? link.page() : link.page;
+            link.url = typeof link.url === 'function' ? link.url() : link.url;
+          });
+        });
+      });
+    }
+
     wikiData['sections'][wikiSection.index] = wikiSection;
 
     wikiData['sections'][wikiSection.index]['paragraphs'].forEach((para: any) => {
-      para.sentences = para.sentences();
-      para.references = para.references();
-      para.lists = para.lists();
-      para.images = para.images();
+      para.sentences = typeof para.sentences === 'function' ? para.sentences() : para.sentences;
+      para.references = typeof para.references === 'function' ? para.references() : para.references;
+      para.lists = typeof para.lists === 'function' ? para.lists() : para.lists;
+      para.images = typeof para.images === 'function' ? para.images() : para.images;
 
       para.images.forEach((img: any) => {
-        img.json = img.json();
-        img.caption = img.caption();
-        img.url = img.url();
+        img.caption = typeof img.caption === 'function' ? img.caption() : img.caption;
+        img.url = typeof img.url === 'function' ? img.url() : img.url;
       });
 
       para.lists.forEach((list: any) => {
-        list.json = list.json();
+        list.lines = typeof list.lines === 'function' ? list.lines() : list.lines;
+        list.text = typeof list.text === 'function' ? list.text() : list.text;
+        list.lines.forEach((line: any) => {
+          line.text = typeof line.text === 'function' ? line.text() : line.text;
+          line.links = typeof line.links === 'function' ? line.links() : line.links;
+          line.links.forEach((link: any) => {
+            link.text = typeof link.text === 'function' ? link.text() : link.text;
+            link.page = typeof link.page === 'function' ? link.page() : link.page;
+          });
+        });
       });
 
       para.sentences.forEach((sentence: any) => {
-        sentence.links = sentence.links();
-        sentence.text = sentence.text();
-        sentence.italics = sentence.italics();
-        sentence.bolds = sentence.bolds();
+        sentence.links = typeof sentence.links === 'function' ? sentence.links() : sentence.links;
+        sentence.text = typeof sentence.text === 'function' ? sentence.text() : sentence.text;
+        sentence.italics = typeof sentence.italics === 'function' ? sentence.italics() : sentence.italics;
+        sentence.bolds = typeof sentence.bolds === 'function' ? sentence.bolds() : sentence.bolds;
 
-          sentence.links.forEach((link: any) => {
-            link.text = link.text();
-            link.page = link.page();
+        sentence.links.forEach((link: any) => {
+          link.text = typeof link.text === 'function' ? link.text() : link.text;
+          link.page = typeof link.page === 'function' ? link.page() : link.page;
+          link.url = typeof link.url === 'function' ? link.url() : link.url;
         });
       });
     });
   });
+
 
   const nestedJsonSections = nestSections(wikiData.sections);
   const dict = getDictionary(language as Locale);
@@ -434,8 +505,8 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                         </div>
                       )}
                       <div className="relative">
-                        {wikiData.pageImage && wikiData.pageImage.url && (
-                          <div className="float-right ml-4 mb-4 max-w-xs bg-white border border-gray-200 rounded-sm p-2">
+                        {wikiData.pageImage && wikiData.pageImage.url && wikiData.pageImage.url !== 'https://wikipedia.org/wiki/Special:Redirect/file/' && (
+                          <div className="block md:float-right md:ml-4 mb-4 md:max-w-[30vw] lg:max-w-[30vw] bg-white border border-gray-200 rounded-sm p-4">
                             <MediaCard url={wikiData.pageImage.url} caption={wikiData.pageImage.caption} alt={wikiData.pageImage.caption} />
                           </div>
                         )}
@@ -447,7 +518,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                   return (
                     <div key={index}>
                       <details className="wiki-section">
-                        <summary className="group w-full -mt-4 mb-4 mt-2 transition-colors cursor-pointer py-3 list-none lg:pointer-events-none">
+                        <summary className="group w-full mb-2 mt-2 transition-colors cursor-pointer py-3 list-none lg:pointer-events-none">
                           <div className="w-full">
                             <div className="flex items-center justify-between w-full">
                               <div data-index={index} data-depth={section.depth} id={section.title.replace(/\s+/g, '_')} className="text-2xl font-bold heading-anchor text-left truncate">

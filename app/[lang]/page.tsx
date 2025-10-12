@@ -15,7 +15,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   return (
     <div className="relative bg-white text-center mt-8 flex flex-col justify-center items-center">
       
-      <br />
       {dict.metadata.description}
       
       <br />

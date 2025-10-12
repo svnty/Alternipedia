@@ -17,7 +17,7 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
   }
 
   const wikipediaData = await fetchWikipediaPageWithWtf(slug, language);
-  const jsonData = wikipediaData ? wikipediaData.json() : null;
+  const jsonData = wikipediaData ? { title: wikipediaData.title() } : null;
 
   // Be conservative about changing the URL client-side. Only adjust when the
   // difference is capitalization or minor separator differences (dashes vs spaces).
@@ -48,7 +48,7 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
     }
   }
 
-  const headings = jsonData ? jsonData['sections'] : [];
+  const headings: any[] = [];
   const stringified = JSON.parse(JSON.stringify(headings));
   const canonicalTitle = jsonData?.title || null;
 
