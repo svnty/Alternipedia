@@ -23,6 +23,7 @@ function HeadingItem({ heading, active, index, containerRef }: { heading: Headin
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const element = document.getElementById(heading.id);
+    console.log(element);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -97,36 +98,12 @@ export default function Contents({ headings = [] }: ContentsProps) {
       }
 
       // Select all the elements you want to observe
-      const observed = document.querySelectorAll<HTMLElement>('.heading-anchor');
+      const observed = headings.map(h => document.getElementById(h.id)).filter(el => el !== null) as HTMLElement[];
       let minTop = Infinity;
       let closestIdx: number | null = null
 
       observed.forEach((el, idx) => {
         const top = el.getBoundingClientRect().top;
-
-        // Skip elements that are hidden (e.g., inside collapsed content)
-        if (el.offsetParent === null) return;
-
-        // Check if this heading should be skipped based on parent collapse
-        const depth = parseInt(el.getAttribute('data-depth') || '0');
-        let shouldSkip = false;
-        if (depth > 0) {
-          // Traverse up the DOM to find the nearest parent heading
-          let parentEl = el.closest('[data-depth]');
-          while (parentEl) {
-            const parentDepth = parseInt(parentEl.getAttribute('data-depth') || '0');
-            if (parentDepth === depth - 1) {
-              const parentTrigger = parentEl.closest('[data-slot="collapsible-trigger"]');
-              if (parentTrigger && parentTrigger.getAttribute('data-state') === 'closed') {
-                shouldSkip = true;
-              }
-              break;
-            }
-            parentEl = parentEl.parentElement?.closest('[data-depth]') || null;
-          }
-        }
-
-        if (shouldSkip) return;
 
         if (top >= 0 && top <= window.innerHeight && top < minTop) {
           minTop = top;
@@ -135,7 +112,7 @@ export default function Contents({ headings = [] }: ContentsProps) {
       });
 
       if (closestIdx !== null) {
-        setActiveIndex(closestIdx + 1);
+        setActiveIndex(closestIdx);
       }
     };
 
@@ -150,8 +127,7 @@ export default function Contents({ headings = [] }: ContentsProps) {
       window.removeEventListener('scroll', handleScroll);
       mediaQuery.removeEventListener('change', handleResize);
     };
-  }, []);
-
+  }, [headings]);
 
   if (headings.length === 0) {
     return (
@@ -166,7 +142,7 @@ export default function Contents({ headings = [] }: ContentsProps) {
   return (
     <div ref={tocRef} className="flex h-full flex-col gap-1 overflow-y-auto">
       {headings.map((heading, index) => {
-        heading['id'] = heading.title.replace(' ', '-')
+        heading['id'] = heading.title.replace(/\s+/g, '_')
         return (
           <HeadingItem key={`${heading['id']}-${index}`} heading={heading} active={activeIndex === index} index={index} containerRef={tocRef} />
         );

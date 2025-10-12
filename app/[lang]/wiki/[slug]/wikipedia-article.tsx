@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 // import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/(client-renders)/load-signal';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+// import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Locale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');
@@ -13,6 +14,31 @@ interface WikipediaArticleProps {
   language: string;
   bias: string;
   wiki?: any; // Accept wiki data as a prop
+}
+
+// Helper function to render image or video
+function MediaCard({ url, caption, alt }: { url: string; caption?: string; alt?: string }) {
+  const isVideo = /\.(webm|mp4|avi|mov|wmv|flv|mkv)$/i.test(url);
+  return (
+    <>
+      {isVideo ? (
+        <video controls className="w-full h-auto rounded" poster="">
+          <source src={url} type={`video/${url.split('.').pop()?.toLowerCase()}`} />
+          Your browser does not support the video tag.
+        </video>
+      ) : (
+        <img src={url} alt={alt || caption || 'Media'} className="w-full h-auto rounded" />
+      )}
+      {caption && (
+        <p className="text-sm text-gray-600 mt-2 text-center">{caption}</p>
+      )}
+    </>
+  );
+}
+
+// Helper function to escape special regex characters
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function nestSections(items: any) {
@@ -78,32 +104,32 @@ function jsonToLinkedParagraph(data: any, language: string, bias: string) {
 
     // Handle formatting
     if (sentence.formatting) {
-        // When applying formatting we must avoid replacing text inside HTML tags
-        // (for example inside an anchor's href attribute). Split the current
-        // HTML into tag and non-tag parts and only run replacements on the
-        // non-tag parts (text nodes).
-        const replaceOutsideTags = (regex: RegExp, replacement: string) => {
-          text = text.split(/(<[^>]*>)/g).map((part: string, idx: number) => {
-            // even indexes are outside tags
-            if (idx % 2 === 0) {
-              return part.replace(regex, replacement);
-            }
-            return part;
-          }).join('');
-        };
+      // When applying formatting we must avoid replacing text inside HTML tags
+      // (for example inside an anchor's href attribute). Split the current
+      // HTML into tag and non-tag parts and only run replacements on the
+      // non-tag parts (text nodes).
+      const replaceOutsideTags = (regex: RegExp, replacement: string) => {
+        text = text.split(/(<[^>]*>)/g).map((part: string, idx: number) => {
+          // even indexes are outside tags
+          if (idx % 2 === 0) {
+            return part.replace(regex, replacement);
+          }
+          return part;
+        }).join('');
+      };
 
-        if (sentence.formatting.bold) {
-          sentence.formatting.bold.forEach((boldText: any) => {
-            const regex = new RegExp(`\\b${escapeRegExp(boldText)}\\b`, 'g');
-            replaceOutsideTags(regex, `<b>${boldText}</b>`);
-          });
-        }
-        if (sentence.formatting.italic) {
-          sentence.formatting.italic.forEach((italicText: any) => {
-            const regex = new RegExp(`\\b${escapeRegExp(italicText)}\\b`, 'g');
-            replaceOutsideTags(regex, `<i>${italicText}</i>`);
-          });
-        }
+      if (sentence.formatting.bold) {
+        sentence.formatting.bold.forEach((boldText: any) => {
+          const regex = new RegExp(`\\b${escapeRegExp(boldText)}\\b`, 'g');
+          replaceOutsideTags(regex, `<b>${boldText}</b>`);
+        });
+      }
+      if (sentence.formatting.italic) {
+        sentence.formatting.italic.forEach((italicText: any) => {
+          const regex = new RegExp(`\\b${escapeRegExp(italicText)}\\b`, 'g');
+          replaceOutsideTags(regex, `<i>${italicText}</i>`);
+        });
+      }
     }
 
     return text;
@@ -151,9 +177,95 @@ function References({ section, wiki }: { section: any, wiki: any }) {
   );
 }
 
-// Helper function to escape special regex characters
-function escapeRegExp(string: string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function SectionContent({ section, language, bias, wiki, mobile }: { section: any, language: string, bias: string, wiki: any, mobile: boolean }) {
+  return (
+    <div className="collapsible-content">
+      {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
+        const raw = jsonToLinkedParagraph(para, language, bias);
+        const safe = sanitizeHtml(raw, {
+          allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
+          allowedAttributes: {
+            '*': ['class'],
+            a: ['href', 'class', 'target', 'rel']
+          },
+          allowedSchemes: ['http', 'https', 'mailto'],
+          transformTags: {
+            'a': (tagName: string, attribs: Record<string, string>) => {
+              // preserve class if present, and ensure safe target/rel
+              // attribs.target = attribs.target || '_blank';
+              attribs.rel = attribs.rel || 'noopener noreferrer';
+              return { tagName, attribs };
+            }
+          }
+        });
+        return (
+          <div key={pIndex} className="relative mb-4">
+            {para.images && para.images.length > 0 && (
+              <div className="float-right ml-4 mb-4 max-w-xs bg-white border border-gray-200 rounded-lg p-4">
+                {para.images.map((img: any, imgIndex: number) => (
+                  <div key={imgIndex} className={imgIndex > 0 ? 'mt-4' : ''}>
+                    <MediaCard url={img.url} caption={img.caption} alt={img.caption || 'Image'} />
+                  </div>
+                ))}
+              </div>
+            )}
+            <p className="mb-4" dangerouslySetInnerHTML={{ __html: safe }}></p>
+          </div>
+        );
+      })}
+
+      <References section={section} wiki={wiki} />
+
+      {section.sections.length > 0 && (
+        <>
+          {section['sections'].map((subSection: any, index: number) => {
+            return (
+              <div key={index}>
+                {subSection.title && subSection.depth == 1 && (
+                  <div id={(subSection.title.replace(/\s+/g, '_') + (mobile ? '-mobile' : ''))} className="text-xl font-bold mb-2 heading-anchor">{subSection.title}</div>
+                )}
+
+                {subSection.paragraphs && subSection.paragraphs.map((subPara: any, pIndex: number) => {
+                  const raw = jsonToLinkedParagraph(subPara, language, bias);
+                  const safe = sanitizeHtml(raw, {
+                    allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
+                    allowedAttributes: {
+                      '*': ['class'],
+                      a: ['href', 'class', 'target', 'rel']
+                    },
+                    allowedSchemes: ['http', 'https', 'mailto'],
+                    transformTags: {
+                      'a': (tagName: string, attribs: Record<string, string>) => {
+                        // preserve class if present, and ensure safe target/rel
+                        // attribs.target = attribs.target || '_blank';
+                        attribs.rel = attribs.rel || 'noopener noreferrer';
+                        return { tagName, attribs };
+                      }
+                    }
+                  });
+                  return (
+                    <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: safe }}></p>
+                  );
+                })}
+
+                {subSection.sections.length > 0 && (
+                  <>
+                    {subSection['sections'].map((subSubSection: any, index: number) => {
+                      return (
+                        <div key={index}>
+                          <div>{subSubSection.title}</div>
+                        </div>
+                      )
+                    })};
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </>
+      )}
+    </div>
+  );
 }
 
 function toWikipediaReference(citation: Record<string, any>): string {
@@ -222,10 +334,55 @@ function toWikipediaReference(citation: Record<string, any>): string {
   return parts.filter(Boolean).join(". ") + ".";
 }
 
-export default async function WikipediaArticle({ slug, language, wiki, bias }: WikipediaArticleProps) {
-  const jsonData = wiki ? wiki.json() : null;
-  const nestedJsonSections = nestSections(jsonData ? jsonData.sections : []);
-  const dict = (await import(`@/lib/i18n/dictionaries`)).getDictionary(language as Locale);
+export default function WikipediaArticle({ slug, language, wiki, bias }: WikipediaArticleProps) {
+  const wikiData: any = {};
+  wikiData.pageImage = wiki.pageImage();
+  wikiData.pageImage.url = wikiData.pageImage.url();
+  wikiData.pageImage.caption = wikiData.pageImage.caption();
+  wikiData.title = wiki.title();
+  wikiData.sections = [];
+
+  wiki.sections().forEach((section: any) => {
+    let wikiSection: any = {};
+    wikiSection = section.json();
+    wikiSection.index = section.index();
+    wikiSection.infoboxes = section.infoboxes();
+    wikiSection.paragraphs = section.paragraphs();
+
+    wikiData['sections'][wikiSection.index] = wikiSection;
+
+    wikiData['sections'][wikiSection.index]['paragraphs'].forEach((para: any) => {
+      para.sentences = para.sentences();
+      para.references = para.references();
+      para.lists = para.lists();
+      para.images = para.images();
+
+      para.images.forEach((img: any) => {
+        img.json = img.json();
+        img.caption = img.caption();
+        img.url = img.url();
+      });
+
+      para.lists.forEach((list: any) => {
+        list.json = list.json();
+      });
+
+      para.sentences.forEach((sentence: any) => {
+        sentence.links = sentence.links();
+        sentence.text = sentence.text();
+        sentence.italics = sentence.italics();
+        sentence.bolds = sentence.bolds();
+
+          sentence.links.forEach((link: any) => {
+            link.text = link.text();
+            link.page = link.page();
+        });
+      });
+    });
+  });
+
+  const nestedJsonSections = nestSections(wikiData.sections);
+  const dict = getDictionary(language as Locale);
 
   if (!wiki) {
     return (
@@ -255,7 +412,7 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
       <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r">
         <p className="text-sm text-blue-800">
           The following selected content bias is sourced from Wikipedia and represents their community-edited perspective. To edit or discuss this version, please
-          <a href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(jsonData.title)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline">view on Wikipedia →</a>
+          <a href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(wikiData.title)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline">view on Wikipedia →</a>
         </p>
       </div>
       <main className="mx-auto">
@@ -263,112 +420,60 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
           {nestedJsonSections.length > 0 && (
             <>
               {nestedJsonSections.map((section: any, index: number) => {
-                return (
-                  <div key={index}>
-                    <Collapsible defaultOpen={true}>
-                      <div className="w-full relative inline-flex flex-col justify-start items-start overflow-x-hidden">
-                        {section.title && section.depth === 0 && (
-                          <CollapsibleTrigger className="group w-full -mt-4 mb-4 mt-2 transition-colors cursor-pointer py-3">
-                            <div className="w-full">
-                              {/* Top row: title (left) and icon (right) */}
-                              <div className="flex items-center justify-between w-full">
-                                <div data-index={index} data-depth={section.depth} id={section.title} className="text-2xl font-bold heading-anchor text-left truncate">
-                                  {section.title}
-                                </div>
-
-                                <div className="flex-shrink-0 ml-2">
-                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-600 group-data-[state=open]:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                  </svg>
-                                </div>
+                if (index === 0) {
+                  return (
+                    <div key={index}>
+                      {section.title && section.depth === 0 && (
+                        <div className="w-full">
+                          <div className="flex items-center justify-between w-full">
+                            <div data-index={index} data-depth={section.depth} id={section.title.replace(/\s+/g, '_')} className="text-2xl font-bold heading-anchor text-left truncate">
+                              {section.title}
+                            </div>
+                          </div>
+                          <hr className="h-px mt-3 bg-gray-200 border-0 dark:bg-gray-700" />
+                        </div>
+                      )}
+                      <div className="relative">
+                        {wikiData.pageImage && wikiData.pageImage.url && (
+                          <div className="float-right ml-4 mb-4 max-w-xs bg-white border border-gray-200 rounded-sm p-2">
+                            <MediaCard url={wikiData.pageImage.url} caption={wikiData.pageImage.caption} alt={wikiData.pageImage.caption} />
+                          </div>
+                        )}
+                        <SectionContent section={section} language={language} bias={bias} wiki={wiki} mobile={false} />
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={index}>
+                      <details className="wiki-section">
+                        <summary className="group w-full -mt-4 mb-4 mt-2 transition-colors cursor-pointer py-3 list-none lg:pointer-events-none">
+                          <div className="w-full">
+                            <div className="flex items-center justify-between w-full">
+                              <div data-index={index} data-depth={section.depth} id={section.title.replace(/\s+/g, '_')} className="text-2xl font-bold heading-anchor text-left truncate">
+                                {section.title}
                               </div>
 
-                              {/* Full-width divider on its own row so it spans the container */}
-                              <hr className="h-px mt-3 bg-gray-200 border-0 dark:bg-gray-700" />
+                              <div className="flex-shrink-0 ml-2 lg:hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-600 group-open:rotate-90 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                              </div>
                             </div>
-                          </CollapsibleTrigger>
-                        )}
-                        <CollapsibleContent className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up overflow-hidden transition-all duration-200 ease-out">
-                          <div className="collapsible-content">
-                            {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
-                              const raw = jsonToLinkedParagraph(para, language, bias);
-                              const safe = sanitizeHtml(raw, {
-                                allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
-                                allowedAttributes: {
-                                  '*': ['class'],
-                                  a: ['href', 'class', 'target', 'rel']
-                                },
-                                allowedSchemes: ['http', 'https', 'mailto'],
-                                transformTags: {
-                                  'a': (tagName: string, attribs: Record<string, string>) => {
-                                    // preserve class if present, and ensure safe target/rel
-                                    // attribs.target = attribs.target || '_blank';
-                                    attribs.rel = attribs.rel || 'noopener noreferrer';
-                                    return { tagName, attribs };
-                                  }
-                                }
-                              });
-                              return (
-                                <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: safe }}></p>
-                              );
-                            })}
 
-                            <References section={section} wiki={wiki} />
-
-                            {section.sections.length > 0 && (
-                              <>
-                                {section['sections'].map((subSection: any, index: number) => {
-                                  return (
-                                    <div key={index}>
-                                      {subSection.title && subSection.depth == 1 && (
-                                        <div id={subSection.title} className="text-xl font-bold mb-2 heading-anchor">{subSection.title}</div>
-                                      )}
-
-                                      {subSection.paragraphs && subSection.paragraphs.map((subPara: any, pIndex: number) => {
-                                        const raw = jsonToLinkedParagraph(subPara, language, bias);
-                                        const safe = sanitizeHtml(raw, {
-                                          allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
-                                          allowedAttributes: {
-                                            '*': ['class'],
-                                            a: ['href', 'class', 'target', 'rel']
-                                          },
-                                          allowedSchemes: ['http', 'https', 'mailto'],
-                                          transformTags: {
-                                            'a': (tagName: string, attribs: Record<string, string>) => {
-                                              // preserve class if present, and ensure safe target/rel
-                                              // attribs.target = attribs.target || '_blank';
-                                              attribs.rel = attribs.rel || 'noopener noreferrer';
-                                              return { tagName, attribs };
-                                            }
-                                          }
-                                        });
-                                        return (
-                                          <p key={pIndex} className="mb-4" dangerouslySetInnerHTML={{ __html: safe }}></p>
-                                        );
-                                      })}
-
-                                      {subSection.sections.length > 0 && (
-                                        <>
-                                          {subSection['sections'].map((subSubSection: any, index: number) => {
-                                            return (
-                                              <div key={index}>
-                                                <div>{subSubSection.title}</div>
-                                              </div>
-                                            )
-                                          })};
-                                        </>
-                                      )}
-                                    </div>
-                                  );
-                                })}
-                              </>
-                            )}
+                            <hr className="h-px mt-3 bg-gray-200 border-0 dark:bg-gray-700 lg:hidden" />
                           </div>
-                        </CollapsibleContent>
+                        </summary>
+                        <div className="overflow-hidden transition-all duration-200 ease-out lg:hidden">
+                          <SectionContent section={section} language={language} bias={bias} wiki={wiki} mobile={true} />
+                        </div>
+                      </details>
+                      <div className="hidden lg:block">
+                        <SectionContent section={section} language={language} bias={bias} wiki={wiki} mobile={false} />
                       </div>
-                    </Collapsible>
-                  </div>
-                );
+                    </div>
+                  );
+                }
               })
               }
             </>
@@ -380,7 +485,7 @@ export default async function WikipediaArticle({ slug, language, wiki, bias }: W
               <div className="self-stretch px-3 py-2.5 bg-orange-400/10 rounded-md inline-flex justify-start items-center gap-1.5 flex-wrap content-center">
                 <div className="w-28 h-7 flex justify-start items-center">
                   <div className="w-7 self-stretch p-1.5 rounded-md flex justify-center items-center gap-1.5">
-                    <div className="size- flex justify-start items-center gap-1.5">
+                    <div className="w-4 h-4 flex justify-start items-center gap-1.5">
                       <div data-svg-wrapper="true" data-property-1="Category" className="relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 8H15.9565" stroke="#D8753C" strokeWidth="1.5" strokeLinecap="round">
                         </path>
