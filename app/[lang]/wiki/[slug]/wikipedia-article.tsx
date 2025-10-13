@@ -243,6 +243,11 @@ function References({ section, wiki }: { section: any, wiki: any }) {
                     }
                   }
                 });
+
+                if (raw === '.') {
+                  return null;
+                }
+
                 return (
                   <li key={index}>
                     <div className="reference mb-2 break-all" dangerouslySetInnerHTML={{ __html: safe }} />
@@ -374,6 +379,7 @@ function SectionContent({
               className="leading-relaxed text-base"
               dangerouslySetInnerHTML={{ __html: safe }}
             />
+
             {newPara && newPara.map((list: any, listsIndex: number) => (
               <ul className="list-disc mx-6 mt-3" key={listsIndex}>
                 {list.lines && list.lines.map((line: any, lineIndex: number) => {
@@ -443,9 +449,6 @@ function SectionContent({
     </div>
   );
 }
-
-
-
 
 function toWikipediaReference(citation: Record<string, any>): string {
   const parts: string[] = [];
@@ -522,6 +525,12 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
   }
   wikiData.title = wiki.title();
   wikiData.sections = [];
+  wikiData.references = typeof wiki.references === 'function' ? wiki.references() : wiki.references;
+  wikiData.references.forEach((ref: any) => {
+    ref.title = typeof ref.title === 'function' ? ref.title() : ref.title;
+    ref.links = typeof ref.links === 'function' ? ref.links() : ref.links;
+    ref.text = typeof ref.text === 'function' ? ref.text() : ref.text;
+  });
 
   wiki.sections().forEach((section: any) => {
     let wikiSection: any = {
@@ -534,6 +543,14 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
 
     if (section.lists) {
       section.lists = typeof section.lists === 'function' ? section.lists() : section.lists;
+      section.images = typeof section.images === 'function' ? section.images() : section.images;
+      section.wikitext = typeof section.wikitext === 'function' ? section.wikitext() : section.wikitext;
+
+      section.images.forEach((image: any) => {
+        image.caption = typeof image.caption === 'function' ? image.caption() : image.caption;
+        image.url = typeof image.url === 'function' ? image.url() : image.url;
+      });
+
       section.lists.forEach((list: any) => {
         list.lines = typeof list.lines === 'function' ? list.lines() : list.lines;
         list.text = typeof list.text === 'function' ? list.text() : list.text;
@@ -656,23 +673,22 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                 } else {
                   return (
                     <div key={index}>
-                      <details className="wiki-section">
-                        <summary className="group w-full mb-2 mt-2 transition-colors cursor-pointer py-3 list-none lg:pointer-events-none">
+                      <details className="group wiki-section">
+                        <summary className="w-full mb-2 mt-2 transition-colors cursor-pointer py-3 list-none lg:pointer-events-none">
                           <div className="w-full">
-                            <div className="items-center justify-between w-full">
+                            <div className="flex items-center justify-between w-full">
                               <div data-index={index} data-depth={section.depth} id={section.title.replace(/\s+/g, '_')} className="text-2xl font-bold heading-anchor text-left truncate">
                                 {section.title}
-                                <hr className="h-px w-full mt-3 bg-gray-200 border-0 dark:bg-gray-700" />
                               </div>
 
                               <div className="flex-shrink-0 ml-2 lg:hidden">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-600 group-open:rotate-90 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-600 group-open:-rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                               </div>
                             </div>
 
-                            <hr className="h-px mt-3 bg-gray-200 border-0 dark:bg-gray-700 lg:hidden" />
+                            <hr className="h-px mt-3 bg-gray-200 border-0 dark:bg-gray-700" />
                           </div>
                         </summary>
                         <div className="overflow-hidden transition-all duration-200 ease-out lg:hidden">
@@ -689,7 +705,6 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
               }
             </>
           )}
-
 
           {wiki && (
             <div className="self-stretch flex flex-col justify-start items-start gap-5 mt-6">
