@@ -636,12 +636,14 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
 
   return (
     <article className="wikipedia-article max-w-none">
-      <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r">
-        <p className="text-sm text-blue-800">
-          The following selected content bias is sourced from Wikipedia and represents their community-edited perspective. To edit or discuss this version, please
-          <a href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(wikiData.title)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline">view on Wikipedia →</a>
+      <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
+        <img src='/wikipedia.png' alt="Wikpedia Bias" width={40} className="flex-shrink-0 mr-4" />
+        <p className="text-sm text-blue-800 flex-1">
+          {dict.article.biasIntro.wikipedia.part1}
+          <a href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(wikiData.title)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline">{dict.article.biasIntro.wikipedia.part2}</a>
         </p>
       </div>
+
       <main className="mx-auto">
         <div>
           {nestedJsonSections.length > 0 && (

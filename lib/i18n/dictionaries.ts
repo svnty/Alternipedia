@@ -193,6 +193,16 @@ export type Dictionary = {
     edit: string;
     history: string;
     lastEdited: string;
+    biasIntro: {
+      socialist: string;
+      liberal: string;
+      nationalist: string;
+      conservative: string;
+      wikipedia: {
+        part1: string;
+        part2: string;
+      }
+    }
   },
   cookieMessage: string;
 };
@@ -540,6 +550,16 @@ const en: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'The following article has been collaboratively developed by members of the community to reflect a socialist perspective — emphasising collective ownership, equality, and workers’ rights as guiding principles',
+      conservative: 'The following article has been created by community members to express a conservative perspective — valuing tradition, social stability, and continuity.',
+      liberal: 'This content has been written by community contributors to represent a liberal perspective — focusing on individual freedoms, democracy, and social reform.',
+      nationalist: 'This section has been developed by contributors to reflect a nationalist perspective — focusing on cultural identity, sovereignty, and pride in national heritage.',
+      wikipedia: {
+        part1: 'The following selected content bias is sourced from Wikipedia and represents their community-edited perspective. To edit or discuss this version, please',
+        part2: 'view on Wikipedia →'
+      },
+    },
     lastEdited: 'Last edited on',
     tools: 'Tools',
     close: 'Close',
@@ -815,6 +835,16 @@ const es: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Este artículo ha sido creado por miembros de la comunidad para expresar una perspectiva socialista — valorando la igualdad social, la justicia económica y la solidaridad.',
+      liberal: 'Este artículo ha sido creado por miembros de la comunidad para expresar una perspectiva liberal — defendiendo las libertades individuales, los derechos humanos y el progreso social.',
+      conservative: 'Este artículo ha sido creado por miembros de la comunidad para expresar una perspectiva conservadora — valorando la tradición, la estabilidad social y la continuidad.',
+      nationalist: 'Esta sección ha sido desarrollada por colaboradores para reflejar una perspectiva nacionalista — centrada en la identidad cultural, la soberanía y el orgullo por el patrimonio nacional.',
+      wikipedia: {
+        part1: 'Este artículo ha sido creado por miembros de la comunidad para expresar una perspectiva neutral — presentando hechos y datos sin sesgo.',
+        part2: 'ver en Wikipedia →'
+      }
+    },
     lastEdited: 'Última edición el',
     tools: 'Herramientas',
     close: 'Cerrar',
@@ -1090,6 +1120,16 @@ const fr: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'L\'article suivant a été créé par des membres de la communauté pour exprimer une perspective socialiste — valorisant l\'égalité sociale, la justice économique et la solidarité.',
+      liberal: 'L\'article suivant a été créé par des membres de la communauté pour exprimer une perspective libérale — défendant les libertés individuelles, les droits humains et le progrès social.',
+      conservative: 'L\'article suivant a été créé par des membres de la communauté pour exprimer une perspective conservatrice — valorisant la tradition, la stabilité sociale et la continuité.',
+      nationalist: 'L\'article suivant a été créé par des membres de la communauté pour exprimer une perspective nationaliste — centrée sur l\'identité culturelle, la souveraineté et l\'orgueil du patrimoine national.',
+      wikipedia: {
+        part1: 'Cet article a été créé par des membres de la communauté pour exprimer une perspective neutre — présentant des faits et des données sans biais.',
+        part2: 'voir sur Wikipedia →'
+      }
+    },
     lastEdited: 'Dernière modification le',
     tools: 'Outils',
     close: 'Fermer',
@@ -1365,6 +1405,16 @@ const de: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Dieser Artikel wurde von Community-Mitgliedern erstellt, um eine sozialistische Perspektive auszudrücken – die soziale Gleichheit, wirtschaftliche Gerechtigkeit und Solidarität wertschätzt.',
+      liberal: 'Dieser Artikel wurde von Community-Mitgliedern erstellt, um eine liberale Perspektive auszudrücken – die individuelle Freiheit, soziale Gerechtigkeit und den Fortschritt fördert.',
+      conservative: 'Dieser Artikel wurde von Community-Mitgliedern erstellt, um eine konservative Perspektive auszudrücken – die Tradition, soziale Stabilität und Kontinuität wertschätzt.',
+      nationalist: 'Dieser Artikel wurde von Community-Mitgliedern erstellt, um eine nationalistische Perspektive auszudrücken – die kulturelle Identität, Souveränität und den Stolz auf das nationale Erbe betont.',
+      wikipedia: {
+        part1: 'Dieser Artikel wurde von Community-Mitgliedern erstellt, um eine neutrale Perspektive auszudrücken – Fakten und Daten ohne Bias zu präsentieren.',
+        part2: 'Auf Wikipedia ansehen →'
+      }
+    },
     lastEdited: 'Zuletzt bearbeitet am',
     tools: 'Werkzeuge',
     close: 'Schließen',
@@ -1640,6 +1690,16 @@ const it: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Questo articolo è stato creato da membri della comunità per esprimere una prospettiva socialista — valorizzando l\'uguaglianza sociale, la giustizia economica e la solidarietà.',
+      liberal: 'Questo articolo è stato creato da membri della comunità per esprimere una prospettiva liberale — difendendo le libertà individuali, i diritti umani e il progresso sociale.',
+      conservative: 'Questo articolo è stato creato da membri della comunità per esprimere una prospettiva conservatrice — valorizzando la tradizione, la stabilità sociale e la continuità.',
+      nationalist: 'Questo articolo è stato creato da membri della comunità per esprimere una prospettiva nazionalista — incentrata sull\'identità culturale, la sovranità e l\'orgoglio del patrimonio nazionale.',
+      wikipedia: {
+        part1: 'Questo articolo è stato creato da membri della comunità per esprimere una prospettiva neutra — presentando fatti e dati senza bias.',
+        part2: 'vedi su Wikipedia →'
+      }
+    },
     lastEdited: 'Ultima modifica il',
     tools: 'Strumenti',
     close: 'Chiudi',
@@ -1915,6 +1975,16 @@ const pt: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Este artigo foi criado por membros da comunidade para expressar uma perspectiva socialista — valorizando a igualdade social, a justiça econômica e a solidariedade.',
+      liberal: 'Este artigo foi criado por membros da comunidade para expressar uma perspectiva liberal — defendendo as liberdades individuais, os direitos humanos e o progresso social.',
+      conservative: 'Este artigo foi criado por membros da comunidade para expressar uma perspectiva conservadora — valorizando a tradição, a estabilidade social e a continuidade.',
+      nationalist: 'Este artigo foi criado por membros da comunidade para expressar uma perspectiva nacionalista — centrada na identidade cultural, na soberania e no orgulho do patrimônio nacional.',
+      wikipedia: {
+        part1: 'Este artigo foi criado por membros da comunidade para expressar uma perspectiva neutra — apresentando fatos e dados sem viés.',
+        part2: 'ver na Wikipedia →'
+      }
+    },
     lastEdited: 'Última edição em',
     tools: 'Ferramentas',
     content: 'Conteúdo',
@@ -2261,6 +2331,16 @@ const ja: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'この記事は、社会的平等、経済的公正、連帯を重視する社会主義的視点を表現するためにコミュニティメンバーによって作成されました。',
+      liberal: 'この記事は、個人の自由、権利、社会的進歩を重視するリベラルな視点を表現するためにコミュニティメンバーによって作成されました。',
+      conservative: 'この記事は、伝統、社会的安定、継続性を重視する保守的な視点を表現するためにコミュニティメンバーによって作成されました。',
+      nationalist: 'この記事は、文化的アイデンティティ、主権、国家的誇りを中心とした国家主義的視点を表現するためにコミュニティメンバーによって作成されました。',
+      wikipedia: {
+        part1: 'この記事は、事実とデータを偏りなく提示する中立的な視点を表現するためにコミュニティメンバーによって作成されました。',
+        part2: 'ウィキペディアで見る →'
+      }
+    },
     lastEdited: '最終編集日',
     tools: 'ツール',
     content: 'コンテンツ',
@@ -2536,6 +2616,16 @@ const zh: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: '本文由社区成员创建，旨在表达一种社会主义视角，强调社会平等、经济公正和团结。',
+      liberal: '本文由社区成员创建，旨在表达一种自由主义视角，强调个人自由、权利和社会进步。',
+      conservative: '本文由社区成员创建，旨在表达一种保守主义视角，强调传统、社会稳定和延续性。',
+      nationalist: '本文由社区成员创建，旨在表达一种民族主义视角，强调文化认同、主权和国家自豪感。',
+      wikipedia: {
+        part1: '本文由社区成员创建，旨在表达一种中立视角，强调事实和数据的客观呈现。',
+        part2: '维基百科中查看 →'
+      }
+    },
     lastEdited: '最后编辑于',
     tools: '工具',
     content: '内容',
@@ -2811,6 +2901,16 @@ const ko: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: '이 기사는 사회적 평등, 경제적 공정성 및 연대를 강조하는 사회주의적 관점을 표현하기 위해 커뮤니티 구성원이 작성했습니다.',
+      liberal: '이 기사는 개인의 자유, 권리 및 사회적 진보를 강조하는 자유주의적 관점을 표현하기 위해 커뮤니티 구성원이 작성했습니다.',
+      conservative: '이 기사는 전통, 사회적 안정 및 지속 가능성을 강조하는 보수적 관점을 표현하기 위해 커뮤니티 구성원이 작성했습니다.',
+      nationalist: '이 기사는 문화적 정체성, 주권 및 국가적 자부심을 강조하는 민족주의적 관점을 표현하기 위해 커뮤니티 구성원이 작성했습니다.',
+      wikipedia: {
+        part1: '이 기사는 사실과 데이터를 편향 없이 제시하는 중립적 관점을 표현하기 위해 커뮤니티 구성원이 작성했습니다.',
+        part2: '위키백과에서 보기 →'
+      }
+    },
     lastEdited: '마지막 편집',
     tools: '도구',
     close: '닫기',
@@ -3086,6 +3186,16 @@ const ru: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Эта статья была создана членами сообщества, чтобы выразить социалистическую точку зрения, подчеркивающую социальное равенство, экономическую справедливость и солидарность.',
+      liberal: 'Эта статья была создана членами сообщества, чтобы выразить либеральную точку зрения, подчеркивающую индивидуальную свободу, права и социальный прогресс.',
+      conservative: 'Эта статья была создана членами сообщества, чтобы выразить консервативную точку зрения, подчеркивающую традиции, социальную стабильность и преемственность.',
+      nationalist: 'Эта статья была создана членами сообщества, чтобы выразить националистическую точку зрения, подчеркивающую культурную идентичность, суверенитет и национальную гордость.',
+      wikipedia: {
+        part1: 'Эта статья была создана членами сообщества, чтобы выразить нейтральную точку зрения, подчеркивающую беспристрастное представление фактов и данных.',
+        part2: 'Смотреть на Википедии →'
+      }
+    },
     lastEdited: 'Последнее редактирование',
     tools: 'Инструменты',
     content: 'Содержание',
@@ -3438,6 +3548,16 @@ const ar: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'تم إنشاء هذه المقالة بواسطة أعضاء المجتمع للتعبير عن وجهة نظر اشتراكية تبرز المساواة الاجتماعية والعدالة الاقتصادية والتضامن.',
+      liberal: 'تم إنشاء هذه المقالة بواسطة أعضاء المجتمع للتعبير عن وجهة نظر ليبرالية تبرز الحرية الفردية والحقوق والتقدم الاجتماعي.',
+      conservative: 'تم إنشاء هذه المقالة بواسطة أعضاء المجتمع للتعبير عن وجهة نظر محافظة تبرز التقاليد والاستقرار الاجتماعي والاستمرارية.',
+      nationalist: 'تم إنشاء هذه المقالة بواسطة أعضاء المجتمع للتعبير عن وجهة نظر قومية تبرز الهوية الثقافية  والسيادة والفخر الوطني.',
+      wikipedia: {
+        part1: 'تم إنشاء هذه المقالة بواسطة أعضاء المجتمع للتعبير عن وجهة نظر محايدة تبرز العرض غير المتحيز للحقائق والبيانات.',
+        part2: 'عرض على ويكيبيديا →'  
+      }
+    },
     lastEdited: 'آخر تعديل',
     tools: 'الأدوات',
     content: 'المحتوى',
@@ -3789,6 +3909,16 @@ const hi: Dictionary = {
     notFound: "कोई मेल खाने वाली भाषा नहीं मिली"
   },
   article: {
+    biasIntro: {
+      socialist: 'यह लेख समुदाय के सदस्यों द्वारा एक समाजवादी दृष्टिकोण व्यक्त करने के लिए बनाया गया है जो सामाजिक समानता, आर्थिक न्याय, और श्रमिक अधिकारों को उजागर करता है।',
+      liberal: 'यह लेख समुदाय के सदस्यों द्वारा एक उदारवादी दृष्टिकोण व्यक्त करने के लिए बनाया गया है जो व्यक्तिगत स्वतंत्रता, अधिकारों, और सामाजिक प्रगति को उजागर करता है।',
+      conservative: 'यह लेख समुदाय के सदस्यों द्वारा एक रूढ़िवादी दृष्टिकोण व्यक्त करने के लिए बनाया गया है जो परंपरा, सामाजिक स्थिरता, और निरंतरता को उजागर करता है।',
+      nationalist: 'यह लेख समुदाय के सदस्यों द्वारा एक राष्ट्रवादी दृष्टिकोण व्यक्त करने के लिए बनाया गया है जो सांस्कृतिक पहचान, संप्रभुता, और राष्ट्रीय गर्व को उजागर करता है।',
+      wikipedia: {
+        part1: 'यह लेख समुदाय के सदस्यों द्वारा एक तटस्थ दृष्टिकोण व्यक्त करने के लिए बनाया गया है जो तथ्यों और आंकड़ों की निष्पक्ष प्रस्तुति को उजागर करता है।',
+        part2: 'विकिपीडिया पर देखें →',
+      }
+    },
     lastEdited: 'अंतिम संपादन',
     tools: 'उपकरण',
     content: 'सामग्री',
@@ -4140,6 +4270,16 @@ const bn: Dictionary = {
     notFound: "কোন মিল খুঁজে পাওয়া যায়নি"
   },
   article: {
+    biasIntro: {
+      socialist: 'এই নিবন্ধটি সম্প্রদায়ের সদস্যদের দ্বারা একটি সমাজতান্ত্রিক দৃষ্টিভঙ্গি প্রকাশ করার জন্য তৈরি করা হয়েছে যা সামাজিক সমতা, অর্থনৈতিক ন্যায় এবং শ্রমিক অধিকারকে তুলে ধরে।',
+      liberal: 'এই নিবন্ধটি সম্প্রদায়ের সদস্যদের দ্বারা একটি উদার দৃষ্টিভঙ্গি প্রকাশ করার জন্য তৈরি করা হয়েছে যা ব্যক্তিগত স্বাধীনতা, অধিকার এবং সামাজিক অগ্রগতিকে তুলে ধরে।',
+      conservative: 'এই নিবন্ধটি সম্প্রদায়ের সদস্যদের দ্বারা একটি রক্ষণশীল দৃষ্টিভঙ্গি প্রকাশ করার জন্য তৈরি করা হয়েছে যা ঐতিহ্য, সামাজিক স্থিতিশীলতা এবং ধারাবাহিকতাকে তুলে ধরে।',
+      nationalist: 'এই নিবন্ধটি সম্প্রদায়ের সদস্যদের দ্বারা একটি জাতীয়তাবাদী দৃষ্টিভঙ্গি প্রকাশ করার জন্য তৈরি করা হয়েছে যা সাংস্কৃতিক পরিচয়, সার্বভৌমত্ব এবং জাতীয় গর্বকে তুলে ধরে।',
+      wikipedia: {
+        part1: 'এই নিবন্ধটি সম্প্রদায়ের সদস্যদের দ্বারা একটি নিরপেক্ষ দৃষ্টিভঙ্গি প্রকাশ করার জন্য তৈরি করা হয়েছে যা তথ্য এবং পরিসংখ্যানের ন্যায়সঙ্গত উপস্থাপনাকে তুলে ধরে।',
+        part2: 'উইকিপিডিয়ায় দেখুন →',
+      } 
+    },
     lastEdited: 'সর্বশেষ সম্পাদিত',
     tools: 'সরঞ্জাম',
     content: 'বিষয়বস্তু',
@@ -4480,6 +4620,16 @@ const ur: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'یہ مضمون کمیونٹی کے ارکان کی طرف سے ایک سوشلسٹ نقطہ نظر پیش کرنے کے لیے تیار کیا گیا ہے جو سماجی مساوات، اقتصادی انصاف، اور مزدوروں کے حقوق کو اجاگر کرتا ہے۔',   
+      liberal: 'یہ مضمون کمیونٹی کے ارکان کی طرف سے ایک لبرل نقطہ نظر پیش کرنے کے لیے تیار کیا گیا ہے جو ذاتی آزادی، حقوق، اور سماجی ترقی کو اجاگر کرتا ہے۔',
+      conservative: 'یہ مضمون کمیونٹی کے ارکان کی طرف سے ایک قدامت پسند نقطہ نظر پیش کرنے کے لیے تیار کیا گیا ہے جو روایت، سماجی استحکام، اور تسلسل کو اجاگر کرتا ہے۔',
+      nationalist: 'یہ مضمون کمیونٹی کے ارکان کی طرف سے ایک قوم پرست نقطہ نظر پیش کرنے کے لیے تیار کیا گیا ہے جو ثقافتی شناخت، خودمختاری، اور قومی فخر کو اجاگر کرتا ہے۔',
+      wikipedia: {
+        part1: 'یہ مضمون کمیونٹی کے ارکان کی طرف سے ایک غیر جانبدار نقطہ نظر پیش کرنے کے لیے تیار کیا گیا ہے جو معلومات اور اعداد و شمار کی منصفانہ نمائندگی کو اجاگر کرتا ہے۔',
+        part2: 'ویکیپیڈیا پر دیکھیں →',
+      } 
+    },
     lastEdited: 'آخری ترمیم',
     tools: 'اوزار',
     content: 'مواد',
@@ -4820,6 +4970,16 @@ const id: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Artikel ini disusun oleh anggota komunitas untuk menyajikan perspektif sosialis yang menyoroti kesetaraan sosial, keadilan ekonomi, dan hak-hak pekerja.',
+      liberal: 'Artikel ini disusun oleh anggota komunitas untuk menyajikan perspektif liberal yang menekankan kebebasan individu, hak asasi manusia, dan kemajuan sosial.',
+      conservative: 'Artikel ini disusun oleh anggota komunitas untuk menyajikan perspektif konservatif yang menekankan tradisi, stabilitas, dan nilai-nilai keluarga.',
+      nationalist: 'Artikel ini disusun oleh anggota komunitas untuk menyajikan perspektif nasionalis yang menekankan kedaulatan nasional, identitas budaya, dan kebanggaan nasional.',
+      wikipedia: {
+        part1: 'Artikel ini disusun oleh anggota komunitas untuk menyajikan perspektif netral yang menekankan representasi yang adil dari informasi dan data.',
+        part2: 'Lihat di Wikipedia →',
+      }
+    },
     lastEdited: 'Terakhir Diedit',
     tools: 'Alat',
     content: 'Konten',
@@ -5101,6 +5261,16 @@ const mr: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'हा लेख सामाजिक न्याय, आर्थिक समता आणि कामगार हक्क यावर भर देणारा समाजवादी दृष्टीकोन सादर करण्यासाठी समुदाय सदस्यांनी तयार केला आहे.',
+      liberal: 'हा लेख वैयक्तिक स्वातंत्र्य, मानवाधिकार आणि सामाजिक प्रगती यावर भर देणारा उदारमतवादी दृष्टीकोन सादर करण्यासाठी समुदाय सदस्यांनी तयार केला आहे.',
+      conservative: 'हा लेख परंपरा, स्थिरता आणि कौटुंबिक मूल्ये यावर भर देणारा संरक्षणवादी दृष्टीकोन सादर करण्यासाठी समुदाय सदस्यांनी तयार केला आहे.',
+      socialist: 'हा लेख सामाजिक न्याय, आर्थिक समता आणि कामगार हक्क यावर भर देणारा समाजवादी दृष्टीकोन सादर करण्यासाठी समुदाय सदस्यांनी तयार केला आहे.',
+      wikipedia: {
+        part1: 'हा लेख माहिती आणि डेटा यांचे न्याय्य प्रतिनिधित्व यावर भर देणारा तटस्थ दृष्टीकोन सादर करण्यासाठी समुदाय सदस्यांनी तयार केला आहे.',
+        part2: 'विकिपीडियावर पहा →',
+      }
+    },
     lastEdited: 'शेवटचे संपादन',
     tools: 'साधने',
     content: 'सामग्री',
@@ -5348,6 +5518,16 @@ const te: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'ఈ వ్యాసం సామాజిక న్యాయం, ఆర్థిక సమానత్వం మరియు కార్మిక హక్కులపై దృష్టి సారించే జాతీయవాద దృక్కోణాన్ని సమర్పించడానికి కమ్యూనిటీ సభ్యులు రూపొందించారు.', 
+      liberal: 'ఈ వ్యాసం వ్యక్తిగత స్వేచ్ఛ, మానవ హక్కులు మరియు సామాజిక పురోగతిపై దృష్టి సారించే లిబరల్ దృక్కోణాన్ని సమర్పించడానికి కమ్యూనిటీ సభ్యులు రూపొందించారు.',
+      conservative: 'ఈ వ్యాసం సంప్రదాయం, స్థిరత్వం మరియు కుటుంబ విలువలపై దృష్టి సారించే రక్షణాత్మక దృక్కోణాన్ని సమర్పించడానికి కమ్యూనిటీ సభ్యులు రూపొందించారు.',
+      socialist: 'ఈ వ్యాసం సామాజిక న్యాయం, ఆర్థిక సమానత్వం మరియు కార్మిక హక్కులపై దృష్టి సారించే సామాజికవాద దృక్కోణాన్ని సమర్పించడానికి కమ్యూనిటీ సభ్యులు రూపొందించారు.',
+      wikipedia: {
+        part1: 'ఈ వ్యాసం సమాచార మరియు డేటా యొక్క న్యాయమైన ప్రాతినిధ్యంపై దృష్టి సారించే తటస్థ దృక్కోణాన్ని సమర్పించడానికి కమ్యూనిటీ సభ్యులు రూపొందించారు.',
+        part2: 'వికీపీడియాను చూడండి →',
+      } 
+    },
     lastEdited: 'చివరిసారిగా సవరించబడింది',
     tools: 'పరికరాలు',
     content: 'విషయం',
@@ -5687,6 +5867,16 @@ const tr: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Bu makale, sosyal adalet, ekonomik eşitlik ve işçi haklarına odaklanan sosyalist bir bakış açısını sunmak üzere topluluk üyeleri tarafından oluşturulmuştur.',
+      liberal: 'Bu makale, bireysel özgürlükler, insan hakları ve sosyal ilerleme konularına odaklanan liberal bir bakış açısını sunmak üzere topluluk üyeleri tarafından oluşturulmuştur.',
+      conservative: 'Bu makale, gelenek, istikrar ve aile değerlerine odaklanan muhafazakar bir bakış açısını sunmak üzere topluluk üyeleri tarafından oluşturulmuştur.',
+      nationalist: 'Bu makale, ulusal egemenlik ve kültürel kimlik konularına odaklanan milliyetçi bir bakış açısını sunmak üzere topluluk üyeleri tarafından oluşturulmuştur.',
+      wikipedia: {
+        part1: 'Bu makale, bilgi ve verilerin adil temsiline odaklanan tarafsız bir bakış açısını sunmak üzere topluluk üyeleri tarafından oluşturulmuştur.',
+        part2: 'Vikipedi\'ne bakın →',
+      },
+    },
     lastEdited: 'Son düzenleme',
     tools: 'Araçlar',
     content: 'İçerik',
@@ -5952,6 +6142,16 @@ const ta: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      liberal: 'இந்த கட்டுரை, தனிப்பட்ட சுதந்திரங்கள், மனித உரிமைகள் மற்றும் சமூக முன்னேற்றம் ஆகியவற்றில் கவனம் செலுத்தும் லிபரல் பார்வையை வழங்குவதற்காக சமூக உறுப்பினர்களால் உருவாக்கப்பட்டுள்ளது.',
+      conservative: 'இந்த கட்டுரை, பாரம்பரியம், நிலைத்தன்மை மற்றும் குடும்ப மதிப்புகள் ஆகியவற்றில் கவனம் செலுத்தும் முறைபாட்டாளர் பார்வையை வழங்குவதற்காக சமூக உறுப்பினர்களால் உருவாக்கப்பட்டுள்ளது.',
+      nationalist: 'இந்த கட்டுரை, தேசிய சுதந்திரம் மற்றும் கலாச்சார அடையாளம் ஆகியவற்றில் கவனம் செலுத்தும் தேசியவாத பார்வையை வழங்குவதற்காக சமூக உறுப்பினர்களால் உருவாக்கப்பட்டுள்ளது.',
+      socialist: 'இந்த கட்டுரை, சமூக நீதியியல், பொருளாதார சமத்துவம் மற்றும் தொழிலாளர் உரிமைகள் ஆகியவற்றில் கவனம் செலுத்தும் சமூகவாத பார்வையை வழங்குவதற்காக சமூக உறுப்பினர்களால் உருவாக்கப்பட்டுள்ளது.',
+      wikipedia: {
+        part1: 'இந்த கட்டுரை, தகவல் மற்றும் தரவுகளின் நியாயமான பிரதிநிதித்துவத்தில் கவனம் செலுத்தும் பக்கமற்ற பார்வையை வழங்குவதற்காக சமூக உறுப்பினர்களால் உருவாக்கப்பட்டுள்ளது.',
+        part2: 'விக்கிபீடியாவை பார்க்கவும் →',  
+      },
+    },
     lastEdited: 'கடைசியாக தொகுக்கப்பட்டது',
     tools: 'கருவிகள்',
     close: 'மூடு',
@@ -6225,6 +6425,16 @@ const yue: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: '本文章由社區成員創建，旨在提供一個專注於社會正義、經濟平等和勞工權益的社會主義觀點。',
+      liberal: '本文章由社區成員創建，旨在提供一個專注於個人自由、人權和社會進步的自由主義觀點。',
+      conservative: '本文章由社區成員創建，旨在提供一個專注於傳統、穩定和家庭價值觀的保守派觀點。',
+      nationalist: '本文章由社區成員創建，旨在提供一個專注於民族自決和文化認同的民族主義觀點。',
+      wikipedia: {
+        part1: '本文章由社區成員創建，旨在提供一個專注於信息和數據的公平代表性的無偏見觀點。',
+        part2: '查看維基百科 →',
+      }
+    },
     lastEdited: '最後編輯於',
     tools: '工具',
     content: '內容',
@@ -6494,6 +6704,16 @@ const vi: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn xã hội chủ nghĩa tập trung vào công bằng xã hội, bình đẳng và quyền lợi của người lao động.',
+      liberal: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn tự do tập trung vào tự do cá nhân, nhân quyền và tiến bộ xã hội.',
+      conservative: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn bảo thủ tập trung vào truyền thống, ổn định và giá trị gia đình.',
+      nationalist: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn dân tộc chủ nghĩa tập trung vào quyền tự quyết dân tộc và bản sắc văn hóa.',
+      wikipedia: {
+        part1: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn không thiên vị tập trung vào thông tin và dữ liệu đại diện công bằng.',
+        part2: 'Xem Wikipedia →',
+      }
+    },
     lastEdited: 'Chỉnh sửa lần cuối',
     tools: 'Công cụ',
     content: 'Nội dung',
@@ -6763,6 +6983,16 @@ const fil: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      liberal: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn tự do tập trung vào tự do cá nhân, nhân quyền và tiến bộ xã hội.',
+      conservative: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn bảo thủ tập trung vào truyền thống, ổn định và giá trị gia đình.',
+      nationalist: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn dân tộc chủ nghĩa tập trung vào quyền tự quyết dân tộc và bản sắc văn hóa.',
+      socialist: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn xã hội chủ nghĩa tập trung vào công bằng xã hội, bình đẳng và quyền lợi của người lao động.',
+      wikipedia: {
+        part1: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn không thiên vị tập trung vào thông tin và dữ liệu đại diện công bằng.',
+        part2: 'Tingnan ang Wikipedia →',
+      }
+    },
     lastEdited: 'Huling inedit',
     tools: 'Mga Tool',
     content: 'Nilalaman',
@@ -7032,6 +7262,16 @@ const ha: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      liberal: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn tự do tập trung vào tự do cá nhân, nhân quyền và tiến bộ xã hội.',
+      conservative: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn bảo thủ tập trung vào truyền thống, ổn định và giá trị gia đình.',
+      nationalist: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn dân tộc chủ nghĩa tập trung vào quyền tự quyết dân tộc và bản sắc văn hóa.',
+      socialist: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn xã hội chủ nghĩa tập trung vào công bằng xã hội, bình đẳng và quyền lợi của người lao động.',
+      wikipedia: {
+        part1: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn không thiên vị tập trung vào thông tin và dữ liệu đại diện công bằng.',
+        part2: 'Xem Wikipedia →',
+      }
+    },
     lastEdited: 'An gyara ƙarshe',
     tools: 'Kayan aiki',
     content: 'Abun ciki',
@@ -7300,6 +7540,16 @@ const arz: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'هذه المقالة أنشأها أعضاء المجتمع لتقديم وجهة نظر قومية تركز على حق تقرير المصير الوطني والهوية الثقافية.',
+      socialist: 'هذه المقالة أنشأها أعضاء المجتمع لتقديم وجهة نظر اجتماعية تركز على العدالة الاجتماعية والمساواة وحقوق العمال.',
+      liberal: 'هذه المقالة أنشأها أعضاء المجتمع لتقديم وجهة نظر ليبرالية تركز على الحريات الفردية وحقوق الإنسان والتقدم الاجتماعي.',
+      conservative: 'هذه المقالة أنشأها أعضاء المجتمع لتقديم وجهة نظر محافظة تركز على التقاليد والاستقرار والقيم الأسرية.',
+      wikipedia: {
+        part1: 'هذه المقالة أنشأها أعضاء المجتمع لتقديم وجهة نظر غير متحيزة تركز على المعلومات والبيانات التمثيلية العادلة.',
+        part2: 'شاهد ويكيبيديا →',  
+      },
+    },
     lastEdited: 'آخر تعديل',
     tools: 'الأدوات',
     content: 'المحتوى',
@@ -7571,6 +7821,16 @@ const jv: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Artikel iki digawe dening anggota komunitas kanggo nyedhiyakake perspektif nasionalis sing fokus ing hak penentuan nasib bangsa lan identitas budaya.',
+      socialist: 'Artikel iki digawe dening anggota komunitas kanggo nyedhiyakake perspektif sosialis sing fokus ing keadilan sosial, kesetaraan, lan hak-hak buruh.',
+      liberal: 'Artikel iki digawe dening anggota komunitas kanggo nyedhiyakake perspektif liberal sing fokus ing kebebasan individu, hak asasi manusia, lan kemajuan sosial.',
+      conservative: 'Artikel iki digawe dening anggota komunitas kanggo nyedhiyakake perspektif konservatif sing fokus ing tradisi, stabilitas, lan nilai-nilai keluarga.',
+      wikipedia: {
+        part1: 'Artikel iki digawe dening anggota komunitas kanggo nyedhiyakake perspektif sing ora bias sing fokus ing informasi lan data sing adil.',
+        part2: 'Deleng Wikipedia →',
+      }
+    },
     lastEdited: 'Pungkasan disunting',
     tools: 'Piranti',
     close: 'Tutup',
@@ -7839,6 +8099,16 @@ const nl: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Dit artikel is gemaakt door communityleden om een nationalistisch perspectief te bieden dat zich richt op het recht op zelfbeschikking van naties en culturele identiteit.',
+      socialist: 'Dit artikel is gemaakt door communityleden om een socialistisch perspectief te bieden dat zich richt op sociale rechtvaardigheid, gelijkheid en de rechten van arbeiders.',
+      liberal: 'Dit artikel is gemaakt door communityleden om een liberaal perspectief te bieden dat zich richt op individuele vrijheid, mensenrechten en sociale vooruitgang.',
+      conservative: 'Dit artikel is gemaakt door communityleden om een conservatief perspectief te bieden dat zich richt op traditie, stabiliteit en gezinswaarden.',
+      wikipedia: {
+        part1: 'Dit artikel is gemaakt door communityleden om een onbevooroordeeld perspectief te bieden dat zich richt op eerlijke informatie en gegevens.',
+        part2: 'Bekijk Wikipedia →',
+      }
+    },
     lastEdited: 'Laatst bewerkt',
     tools: 'Hulpmiddelen',
     content: 'Inhoud',
@@ -8107,6 +8377,16 @@ const el: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Αυτό το άρθρο δημιουργήθηκε από μέλη της κοινότητας για να προσφέρει μια εθνικιστική οπτική που εστιάζει στο δικαίωμα των εθνών για αυτοδιάθεση και πολιτιστική ταυτότητα.',
+      socialist: 'Αυτό το άρθρο δημιουργήθηκε από μέλη της κοινότητας για να προσφέρει μια σοσιαλιστική οπτική που εστιάζει στην κοινωνική δικαιοσύνη, την ισότητα και τα δικαιώματα των εργαζομένων.',
+      liberal: 'Αυτό το άρθρο δημιουργήθηκε από μέλη της κοινότητας για να προσφέρει μια φιλελεύθερη οπτική που εστιάζει στην ατομική ελευθερία, τα ανθρώπινα δικαιώματα και την κοινωνική πρόοδο.',
+      conservative: 'Αυτό το άρθρο δημιουργήθηκε από μέλη της κοινότητας για να προσφέρει μια συντηρητική οπτική που εστιάζει στην παράδοση, τη σταθερότητα και τις οικογενειακές αξίες.',
+      wikipedia: {
+        part1: 'Αυτό το άρθρο δημιουργήθηκε από μέλη της κοινότητας για να προσφέρει μια αμερόληπτη οπτική που εστιάζει σε δίκαιες πληροφορίες και δεδομένα.',
+        part2: 'Δες το Wikipedia →',
+      } 
+    },
     lastEdited: 'Τελευταία επεξεργασία',
     tools: 'Εργαλεία',
     content: 'Περιεχόμενο',
@@ -8374,6 +8654,16 @@ const sv: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Denna artikel skapades av medlemmar i communityn för att erbjuda ett nationalistiskt perspektiv som fokuserar på nationers rätt till självbestämmande och kulturell identitet.',
+      socialist: 'Denna artikel skapades av medlemmar i communityn för att erbjuda ett socialistiskt perspektiv som fokuserar på social rättvisa, jämlikhet och arbetstagares rättigheter.',
+      liberal: 'Denna artikel skapades av medlemmar i communityn för att erbjuda ett liberalt perspektiv som fokuserar på individuell frihet, mänskliga rättigheter och socialt framsteg.',
+      conservative: 'Denna artikel skapades av medlemmar i communityn för att erbjuda ett konservativt perspektiv som fokuserar på tradition, stabilitet och familjevärderingar.',
+      wikipedia: {
+        part1: 'Denna artikel skapades av medlemmar i communityn för att erbjuda ett opartiskt perspektiv som fokuserar på rättvis information och data.',
+        part2: 'Se Wikipedia →',
+      }
+    },
     lastEdited: 'Senast redigerad',
     tools: 'Verktyg',
     content: 'Innehåll',
@@ -8643,6 +8933,16 @@ const no: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Denne artikkelen ble opprettet av fellesskapsmedlemmer for å tilby et nasjonalistisk perspektiv som fokuserer på nasjoners rett til selvbestemmelse og kulturell identitet.',
+      socialist: 'Denne artikkelen ble opprettet av fellesskapsmedlemmer for å tilby et sosialistisk perspektiv som fokuserer på sosial rettferdighet, likhet og arbeidstakerrettigheter.',
+      liberal: 'Denne artikkelen ble opprettet av fellesskapsmedlemmer for å tilby et liberalt perspektiv som fokuserer på individuell frihet, menneskerettigheter og sosial fremgang.',
+      conservative: 'Denne artikkelen ble opprettet av fellesskapsmedlemmer for å tilby et konservativt perspektiv som fokuserer på tradisjon, stabilitet og familieværdier.',
+      wikipedia: {
+        part1: 'Denne artikkelen ble opprettet av fellesskapsmedlemmer for å tilby et upartisk perspektiv som fokuserer på rettferdig informasjon og data.',
+        part2: 'Se Wikipedia →',
+      }
+    },
     lastEdited: 'Sist redigert',
     tools: 'Verktøy',
     close: 'Lukk',
@@ -8910,6 +9210,16 @@ const pl: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Ten artykuł został stworzony przez członków społeczności, aby przedstawić nacjonalistyczną perspektywę, koncentrującą się na prawie narodów do samostanowienia i tradycyjnej kulturze.',
+      socialist: 'Ten artykuł został stworzony przez członków społeczności, aby przedstawić socjalistyczną perspektywę, koncentrującą się na sprawiedliwości społecznej, równości i prawach pracowników.',
+      liberal: 'Ten artykuł został stworzony przez członków społeczności, aby przedstawić liberalną perspektywę, koncentrującą się na wolności jednostki, prawach człowieka i postępie społecznym.',
+      conservative: 'Ten artykuł został stworzony przez członków społeczności, aby przedstawić konserwatywną perspektywę, koncentrującą się na tradycji, stabilności i wartościach rodzinnych.',
+      wikipedia: {
+        part1: 'Ten artykuł został stworzony przez członków społeczności, aby przedstawić bezstronną perspektywę, koncentrującą się na sprawiedliwych informacjach i danych.',
+        part2: ' Zobacz Wikipedia →',
+      }
+    },
     lastEdited: 'Ostatnia edycja',
     tools: 'Narzędzia',
     content: 'Zawartość',
@@ -9179,6 +9489,16 @@ const th: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'บทความนี้สร้างขึ้นโดยสมาชิกชุมชนเพื่อแสดงมุมมองแบบชาตินิยม โดยเน้นที่สิทธิของชาติในการกำหนดตนเองและวัฒนธรรมดั้งเดิม',
+      socialist: 'บทความนี้สร้างขึ้นโดยสมาชิกชุมชนเพื่อแสดงมุมมองแบบสังคมนิยม โดยเน้นที่ความยุติธรรมทางสังคม ความเท่าเทียม และสิทธิของคนงาน',
+      liberal: 'บทความนี้สร้างขึ้นโดยสมาชิกชุมชนเพื่อแสดงมุมมองแบบเสรีนิยม โดยเน้นที่เสรีภาพของบุคคล สิทธิมนุษยชน และความก้าวหน้าทางสังคม',
+      conservative: 'บทความนี้สร้างขึ้นโดยสมาชิกชุมชนเพื่อแสดงมุมมองแบบอนุรักษ์นิยม โดยเน้นที่ประเพณี ความมั่นค ง และค่านิยมของครอบครัว',
+      wikipedia: {
+        part1: 'บทความนี้สร้างขึ้นโดยสมาชิกชุมชนเพื่อแสดงมุมมองที่เป็นกลาง โดยเน้นที่ข้อมูลและข้อเท็จจริงที่ยุติธรรม',
+        part2: ' ดู Wikipedia →',  
+      }
+    },
     lastEdited: 'แก้ไขล่าสุด',
     tools: 'เครื่องมือ',
     close: 'ปิด',
@@ -9448,6 +9768,16 @@ const uk: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Цю статтю створено членами спільноти, щоб представити націоналістичну точку зору, зосереджену на праві нації на самовизначення та традиційну культуру.',
+      socialist: 'Цю статтю створено членами спільноти, щоб представити соціалістичну точку зору, зосереджену на соціальній справедливості, рівності та правах працівників.',
+      liberal: 'Цю статтю створено членами спільноти, щоб представити ліберальну точку зору, зосереджену на правах людини, свободі слова та соціальному прогресі.',
+      conservative: 'Цю статтю створено членами спільноти, щоб представити консервативну точку зору, зосереджену на традиціях, стабільності та сімейних цінностях.',
+      wikipedia: {
+        part1: 'Цю статтю створено членами спільноти, щоб представити нейтральну точку зору, зосереджену на справедливій інформації та фактах.',
+        part2: ' Див. Вікіпедію →',  
+      }
+    },
     lastEdited: 'Останнє редагування',
     close: 'Закрити',
     notFoundHeader: 'Статтю Вікіпедії не знайдено',
@@ -9715,6 +10045,16 @@ const ro: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Acest articol a fost creat de membri ai comunității pentru a prezenta o perspectivă naționalistă, concentrată pe dreptul națiunii la autodeterminare și cultura tradițională.',
+      socialist: 'Acest articol a fost creat de membri ai comunității pentru a prezenta o perspectivă socialistă, concentrată pe justiție socială, egalitate și drepturile muncitorilor.',  
+      liberal: 'Acest articol a fost creat de membri ai comunității pentru a prezenta o perspectivă liberală, concentrată pe drepturile individuale, libertatea de exprimare și progresul social.',
+      conservative: 'Acest articol a fost creat de membri ai comunității pentru a prezenta o perspectivă conservatoare, concentrată pe tradiție, stabilitate și valorile familiei.',
+      wikipedia: {
+        part1: 'Acest articol a fost creat de membri ai comunității pentru a prezenta o perspectivă neutră, concentrată pe informații și fapte corecte.', 
+        part2: 'Vezi Wikipedia →',
+      }
+    },
     lastEdited: 'Ultima editare',
     tools: 'Instrumente',
     content: 'Conținut',
@@ -9982,6 +10322,16 @@ const cs: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Tento článek byl vytvořen členy komunity, aby představil nacionalistickou perspektivu, zaměřenou na právo národa na sebeurčení a tradiční kulturu.',
+      socialist: 'Tento článek byl vytvořen členy komunity, aby představil socialistickou perspektivu, zaměřenou na sociální spravedlnost, rovnost a práva pracovníků.',
+      liberal: 'Tento článek byl vytvořen členy komunity, aby představil liberální perspektivu, zaměřenou na individuální práva, svobodu slova a sociální pokrok.',
+      conservative: 'Tento článek byl vytvořen členy komunity, aby představil konzervativní perspektivu, zaměřenou na tradici, stabilitu a rodinné hodnoty.',
+      wikipedia: {
+        part1: 'Tento článek byl vytvořen členy komunity, aby představil neutrální perspektivu, zaměřenou na přesné informace a fakta.',
+        part2: 'Vezi Wikipedia →',
+      }
+    },
     lastEdited: 'Naposledy upraveno',
     tools: 'Nástroje',
     close: 'Zavřít',
@@ -10249,6 +10599,16 @@ const hu: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Ezt a cikket a közösség tagjai hozták létre, hogy bemutassák a nacionalista nézőpontot, amely a nemzet önrendelkezésére és a hagyományos kultúrára összpontosít.',
+      socialist: 'Ezt a cikket a közösség tagjai hozták létre, hogy bemutassák a szocialista nézőpontot, amely a társadalmi igazságosságra, egyenlőségre és a munkási jogokra összpontosít.',
+      liberal: 'Ezt a cikket a közösség tagjai hozták létre, hogy bemutassák a liberális nézőpontot, amely az egyéni jogokra, a szólásszabadságra és a társadalmi haladásra összpontosít.',
+      conservative: 'Ezt a cikket a közösség tagjai hozták létre, hogy bemutassák a konzervatív nézőpontot, amely a hagyományra, stabilitásra és családi értékekre összpontosít.',
+      wikipedia: {
+        part1: 'Ezt a cikket a közösség tagjai hozták létre, hogy bemutassák a semleges nézőpontot, amely a pontos információkra és tényekre összpontosít.',
+        part2: 'Lássd Wikipedia →',
+      }
+    },
     lastEdited: 'Utolsó szerkesztés',
     tools: 'Eszközök',
     close: 'Bezárás',
@@ -10516,6 +10876,16 @@ const fi: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Tämän artikkelin on luonut yhteisön jäsenet esittelemään kansallismielistä näkökulmaa, joka keskittyy kansalliseen itsemääräämisoikeuteen ja perinteiseen kulttuuriin.',
+      socialist: 'Tämän artikkelin on luonut yhteisön jäsenet esittelemään sosialistista näkökulmaa, joka keskittyy sosiaaliseen oikeudenmukaisuuteen, tasa-arvoon ja työntekijöiden oikeuksiin.',
+      liberal: 'Tämän artikkelin on luonut yhteisön jäsenet esittelemään liberaalia näkökulmaa, joka keskittyy yksilön oikeuksiin, sananvapauteen ja sosiaaliseen edistykseen.',
+      conservative: 'Tämän artikkelin on luonut yhteisön jäsenet esittelemään konservatiivista näkökulmaa, joka keskittyy perinteisiin, vakauteenn ja perhearvoihin.',
+      wikipedia: {
+        part1: 'Tämän artikkelin on luonut yhteisön jäsenet esittelemään neutraalia näkökulmaa, joka keskittyy tarkkoihin tietoihin ja faktoihin.',
+        part2: 'Katso Wikipedia →',
+      } 
+    },
     lastEdited: 'Viimeksi muokattu',
     tools: 'Työkalut',
     content: 'Sisältö',
@@ -10783,6 +11153,16 @@ const da: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Denne artikel er oprettet af fællesskabsmedlemmer for at præsentere et nationalistisk perspektiv, der fokuserer på national suverænitet og traditionel kultur.',
+      socialist: 'Denne artikel er oprettet af fællesskabsmedlemmer for at præsentere et socialistisk perspektiv, der fokuserer på social retfærdighed, lighed og arbejderrettigheder.',
+      liberal: 'Denne artikel er oprettet af fællesskabsmedlemmer for at præsentere et liberalt perspektiv, der fokuserer på individuelle rettigheder, ytringsfrihed og social fremgang.',
+      conservative: 'Denne artikel er oprettet af fællesskabsmedlemmer for at præsentere et konservativt perspektiv, der fokuserer på traditioner, stabilitet og familie værdier.',
+      wikipedia: {
+        part1: 'Denne artikel er oprettet af fællesskabsmedlemmer for at præsentere et neutralt perspektiv, der fokuserer på nøjagtige oplysninger og fakta.',
+        part2: 'Se Wikipedia →',
+      }
+    },
     lastEdited: 'Sidst redigeret',  
     tools: 'Værktøjer',
     close: 'Luk',
@@ -11052,6 +11432,16 @@ const bg: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Тази статия е създадена от членове на общността, за да представи националистическа перспектива, фокусирана върху националния суверенитет и традиционната култура.',
+      socialist: 'Тази статия е създадена от членове на общността, за да представи социалистическа перспектива, фокусирана върху социалната справедливост, равенството и правата на работниците.',
+      liberal: 'Тази статия е създадена от членове на общността, за да представи либерална перспектива, фокусирана върху индивидуалните права, свободата на словото и социалния прогрес.',
+      conservative: 'Тази статия е създадена от членове на общността, за да представи консервативна перспектива, фокусирана върху традициите, стабилността и семейните ценности.',
+      wikipedia: {
+        part1: 'Тази статия е създадена от членове на общността, за да представи неутрална перспектива, фокусирана върху точна информация и факти.',
+        part2: 'Вижте Уикипедия →', 
+      }
+    },
     lastEdited: 'Последно редактирана',
     tools: 'Инструменти',
     content: 'Съдържание',
@@ -11321,6 +11711,16 @@ const sk: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Tento článok bol vytvorený členmi komunity, aby predstavil nacionalistickú perspektívu zameranú na národnú suverenitu a tradičnú kultúru.',
+      socialist: 'Tento článok bol vytvorený členmi komunity, aby predstavil socialistickú perspektívu zameranú na sociálnu spravodlivosť, rovnosť a práva pracujúcich.',
+      liberal: 'Tento článok bol vytvorený členmi komunity, aby predstavil liberálnu perspektívu zameranú na individuálne práva, slobodu prejavu a sociálny pokrok.',
+      conservative: 'Tento článok bol vytvorený členmi komunity, aby predstavil konzervatívnu perspektívu zameranú na tradície, stabilitu a rodinné hodnoty.',
+      wikipedia: {
+        part1: 'Tento článok bol vytvorený členmi komunity, aby predstavil neutrálnu perspektívu zameranú na presné informácie a fakty.',
+        part2: 'Pozri Wikipedia →', 
+      }
+    },
     lastEdited: 'Naposledy upravené',
     tools: 'Nástroje',
     content: 'Obsah',
@@ -11590,6 +11990,16 @@ const hr: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Ovaj je članak stvorila zajednica kako bi predstavila nacionalističku perspektivu usredotočenu na nacionalni suverenitet i tradicionalnu kulturu.',
+      socialist: 'Ovaj je članak stvorila zajednica kako bi predstavila socijalističku perspektivu usredotočenu na društvenu pravdu, jednakost i prava radnika.',
+      liberal: 'Ovaj je članak stvorila zajednica kako bi predstavila liberalnu perspektivu usredotočenu na individualna prava, slobodu govora i društveni napredak.',
+      conservative: 'Ovaj je članak stvorila zajednica kako bi predstavila konzervativnu perspektivu usredotočenu na tradiciju, stabilnost i obiteljske vrijednosti.',
+      wikipedia: {
+        part1: 'Ovaj je članak stvorila zajednica kako bi predstavila neutralnu perspektivu usredotočenu na točne informacije i činjenice.',
+        part2: 'Pogledajte Wikipediju →', 
+      }
+    },
     lastEdited: 'Zadnje uređeno',
     tools: 'Alati',
     content: 'Sadržaj',
@@ -11866,6 +12276,16 @@ const lt: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Šį straipsnį sukūrė bendruomenė, siekdama pristatyti nacionalistinę perspektyvą, orientuotą į nacionalinį suverenitetą ir tradicinę kultūrą.',
+      socialist: 'Šį straipsnį sukūrė bendruomenė, siekdama pristatyti socialistinę perspektyvą, orientuotą į socialinę teisingumą, lygybę ir darbininkų teises.',
+      liberal: 'Šį straipsnį sukūrė bendruomenė, siekdama pristatyti liberalią perspektyvą, orientuotą į individualias teises, žodžio laisvę ir socialinę pažangą.',
+      conservative: 'Šį straipsnį sukūrė bendruomenė, siekdama pristatyti konservatyvią perspektyvą, orientuotą į tradiciją, stabilumą ir šeimos vertybes.',
+      wikipedia: {
+        part1: 'Šį straipsnį sukūrė bendruomenė, siekdama pristatyti neutralią perspektyvą, orientuotą į tikslią informaciją ir faktus.',
+        part2: 'Peržiūrėkite Vikipediją →', 
+      }
+    },
     lastEdited: 'Paskutinį kartą redagavo',
     tools: 'Įrankiai',
     close: 'Uždaryti',
@@ -12143,6 +12563,16 @@ const sl: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      nationalist: 'Ta članek je ustvarila skupnost, da predstavi nacionalistično perspektivo, osredotočeno na nacionalno suverenost in tradicionalno kulturo.',
+      socialist: 'Ta članek je ustvarila skupnost, da predstavi socialistično perspektivo, osredotočeno na socialno pravičnost, enakost in delavske pravice.',
+      liberal: 'Ta članek je ustvarila skupnost, da predstavi liberalno perspektivo, osredotočeno na individualne pravice, svobodo govora in socialni napredek.',
+      conservative: 'Ta članek je ustvarila skupnost, da predstavi konservativno perspektivo, osredotočeno na tradicijo, stabilnost in družinske vrednote.',
+      wikipedia: {
+        part1: 'Ta članek je ustvarila skupnost, da predstavi nevtralno perspektivo, osredotočeno na natančne informacije in dejstva.',
+        part2: 'Preverite Wikipedijo →',
+      }
+    },
     lastEdited: 'Zadnjič urejeno',
     tools: 'Orodja',
     content: 'Vsebina',
@@ -12420,6 +12850,16 @@ const lv: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Šo rakstu ir izveidojusi kopiena, lai piedāvātu sociālistisku skatījumu, koncentrējoties uz sociālo taisnīgumu, vienlīdzību un darba ņēmēju tiesībām.',
+      liberal: 'Šo rakstu ir izveidojusi kopiena, lai piedāvātu liberālu skatījumu, koncentrējoties uz individuālajām tiesībām, vārda brīvību un sociālo progresu.',
+      conservative: 'Šo rakstu ir izveidojusi kopiena, lai piedāvātu konservatīvu skatījumu, koncentrējoties uz tradīcijām, stabilitāti un ģimenes vērtībām.',
+      nationalist: 'Šo rakstu ir izveidojusi kopiena, lai piedāvātu nacionālistisku skatījumu, koncentrējoties uz nacionālo suverenitāti un tradicionālo kultūru.',
+      wikipedia: {
+        part1: 'Šo rakstu ir izveidojusi kopiena, lai piedāvātu neitrālu skatījumu, koncentrējoties uz precīzu informāciju un faktiem.',
+        part2: 'Pārbaudiet Vikipēdiju →',
+      }
+    },
     lastEdited: 'Pēdējoreiz rediģēts',
     tools: 'Rīki',
     content: 'Saturs',
@@ -12697,6 +13137,16 @@ const et: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Seda artiklit on loonud kogukond, et pakkuda sotsialistlikku vaatenurka, keskendudes sotsiaalsele õiglusele, võrdsusele ja töötajate õigustele.',
+      liberal: 'Seda artiklit on loonud kogukond, et pakkuda liberaalset vaatenurka, keskendudes individuaalsetele õigustele, sõnavabadusele ja sotsiaalsele edule.',
+      conservative: 'Seda artiklit on loonud kogukond, et pakkuda konservatiivset vaatenurka, keskendudes traditsioonidele, stabiilsusele ja perekonnaväärtustele.',
+      nationalist: 'Seda artiklit on loonud koguk ond, et pakkuda natsionalistlikku vaatenurka, keskendudes rahvuslikule suveräänsusele ja traditsioonilisele kultuurile.',
+      wikipedia: {
+        part1: 'Seda artiklit on loonud kogukond, et pakkuda neutraalset vaatenurka, keskendudes täpsele teabele ja faktidele.',
+        part2: 'Kontrolli Vikipeediat →',
+      }
+    },
     lastEdited: 'Viimati redigeeritud',
     tools: 'Tööriistad',
     content: 'Sisu',
@@ -12974,6 +13424,16 @@ const is: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Þessi grein var búin til af samfélaginu til að bjóða upp á sósíalískt sjónarhorn með áherslu á félagslegt réttlæti, jafnrétti og réttindi verkalýðsins.',
+      liberal: 'Þessi grein var búin til af samfélaginu til að bjóða upp á frjálslyndu sjónarhorni með áherslu á einstaklingsréttindi, tjáningarfrelsi og félagslega réttlæti.',
+      conservative: 'Þessi grein var búin til af samfélaginu til að bjóða upp á íhaldsamt sjónarhorn með áherslu á hefðir, stöðugleika og fjölskyldu gildi.',
+      nationalist: 'Þessi grein var búin til af samfélaginu til að bjóða upp á þjóðernislegt sjónarhorn með áherslu á þjóðarhagsmuni og menningarlegan arfleifð.',
+      wikipedia: {
+        part1: 'Þessi grein var búin til af samfélaginu til að bjóða upp á hlutlaust sjónarhorn með áherslu á nákvæmar upplýsingar og staðreyndir.',
+        part2: 'Skoðaðu Wikipedia →',
+      },
+    },
     lastEdited: 'Síðast breytt',
     tools: 'Tól',
     content: 'Innihald',
@@ -13251,6 +13711,16 @@ const sq: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Ky artikull është krijuar nga komuniteti për të ofruar një perspektivë socialiste me fokus në drejtësinë sociale, barazinë dhe të drejtat e punëtorëve.',
+      liberal: 'Ky artikull është krijuar nga komuniteti për të ofruar një perspektivë liberale me fokus në të drejtat e individit, lirinë e shprehjes dhe drejtësinë sociale.',
+      conservative: 'Ky artikull është krijuar nga komuniteti për të ofruar një perspektivë konservatore me fokus në traditat, stabilitetin dhe vlerat familjare.',
+      nationalist: 'Ky artikull është krijuar nga komuniteti për të ofruar një perspektivë nacionaliste me fokus në interesat kombëtare dhe trashëgiminë kulturorore.',
+      wikipedia: {
+        part1: 'Ky artikull është krijuar nga komuniteti për të ofruar një perspektivë neutrale me fokus në informacion të saktë dhe fakte.',
+        part2: 'Shikoni Wikipedia →', 
+      }
+    },
     lastEdited: 'Redaktuar së fundmi',
     tools: 'Mjetet',
     content: 'Përmbajtja',
@@ -13528,6 +13998,16 @@ const sr: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Ovaj članak je kreirala zajednica da ponudi socijalističku perspektivu fokusiranu na društvenu pravdu, jednakost i prava radnika.',
+      liberal: 'Ovaj članak je kreirala zajednica da ponudi liberalnu perspektivu fokusiranu na prava pojedinca, slobodu govora i društvenu pravdu.',
+      conservative: 'Ovaj članak je kreirala zajednica da ponudi konzervativnu perspektivu fokusiranu na tradiciju, stabilnost i porodične vrednosti.',
+      nationalist: 'Ovaj članak je kreirala zajednica da ponudi nacionalističku perspektivu fokusiranu na nacionalne interese i kulturno nasleđe.',
+      wikipedia: {
+        part1: 'Ovaj članak je kreirala zajednica da ponudi neutralnu perspektivu fokusiranu na tačne informacije i činjenice.',
+        part2: 'Pogledaj na Wikipediji →', 
+      }
+    },
     lastEdited: 'Poslednja izmena',
     tools: 'Alati',
     content: 'Sadržaj',
@@ -13805,6 +14285,16 @@ const mk: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Овој напис е создаден од заедницата за да понуди социјалистичка перспектива фокусирана на социјална правда, еднаквост и права на работниците.',
+      liberal: 'Овој напис е создаден од заедницата за да понуди либерална перспектива фокусирана на права на поединецот, слобода на говор и социјална правда.',  
+      conservative: 'Овој напис е создаден од заедницата за да понуди конзервативна перспектива фокусирана на традиција, стабилност и семејни вредности.',
+      nationalist: 'Овој напис е создаден од заедницата за да понуди националистичка перспектива фокусирана на национални интереси и културно наследство.',
+      wikipedia: {  
+        part1: 'Овој напис е создаден од заедницата за да понуди неутрална перспектива фокусирана на точни информации и факти.',
+        part2: 'Погледни на Википедија →',
+      }
+    },
     lastEdited: 'Последно уредено',
     tools: 'Алатки',
     content: 'Содржина',
@@ -14082,6 +14572,16 @@ const bs: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio socijalističku perspektivu fokusiranu na socijalnu pravdu, jednakost i radnička prava.',
+      liberal: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio liberalnu perspektivu fokusiranu na prava pojedinca, slobodu govora i socijalnu pravdu.',  
+      conservative: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio konzervativnu perspektivu fokusiranu na tradiciju, stabilnost i porodične vrijednosti.',
+      nationalist: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio nacionalističku perspektivu fokusiranu na nacionalne interese i kulturno nasljeđe.',
+      wikipedia: {  
+        part1: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio neutralnu perspektivu fokusiranu na tačne informacije i činjenice.',
+        part2: 'Pogledaj na Wikipediji →',
+      }
+    },
     lastEdited: 'Zadnje uređeno',
     tools: 'Alati',
     content: 'Sadržaj',
@@ -14359,6 +14859,16 @@ const cnr: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      socialist: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio socijalističku perspektivu fokusiranu na socijalnu pravdu, jednakost i radnička prava.',
+      liberal: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio liberalnu perspektivu fokusiranu na prava pojedinca, slobodu govora i socijalnu pravdu.',
+      conservative: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio konzervativnu perspektivu fokusiranu na tradiciju, stabilnost i porodične vrijednosti.',
+      nationalist: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio nacionalističku perspektivu fokusiranu na nacionalne interese i kulturno nasljeđe.',
+      wikipedia: {
+        part1: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio neutralnu perspektivu fokusiranu na tačne informacije i činjenice.',
+        part2: 'Pogledaj na Wikipediji →',
+      }
+    },
     lastEdited: 'Zadnje uređeno',
     tools: 'Alati',
     close: 'Zatvori',
@@ -14636,6 +15146,16 @@ const mt: Dictionary = {
     },
   },
   article: {
+    biasIntro: {
+      liberal: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio liberalnu perspektivu fokusiranu na prava pojedinca, slobodu govora i socijalnu pravdu.',
+      conservative: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio konzervativnu perspektivu fokusiranu na tradiciju, stabilnost i porodične vrijednosti.',
+      socialist: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio socijalističku perspektivu fokusiranu na socijalnu pravdu, jednakost i radnička prava.',
+      nationalist: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio nacionalističku perspektivu fokusiranu na nacionalne interese i kulturno nasljeđe.',
+      wikipedia: {
+        part1: 'Ovaj članak je kreiran od strane zajednice kako bi ponudio neutralnu perspektivu fokusiranu na tačne informacije i činjenice.',
+        part2: 'Pogledaj na Wikipediji →',
+      }
+    },
     lastEdited: 'Editjat l-aħħar',
     tools: 'Għodod',
     content: 'Kontenut',

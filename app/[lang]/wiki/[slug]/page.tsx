@@ -23,6 +23,7 @@ import BottomArrow from "@/app/[lang]/(client-renders)/bottom-arrow";
 import { Metadata } from "next";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Locale } from "@/lib/i18n/config";
+import Bias from "@/app/[lang]/wiki/[slug]/bias";
 
 export async function generateMetadata({
   params,
@@ -48,7 +49,7 @@ export async function generateMetadata({
     description = `${dict.metadata.nationalist.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.nationalist.part2}`;
   }
 
-  return { 
+  return {
     title: "Alternipedia",
     description: description || 'Error: Description not available',
   };
@@ -131,17 +132,12 @@ export default async function Page({
                   </TabsList>
                   <TabsContent value="tab-1">
                     {/* Start Article */}
-                    <div className="w-full flex flex-col justify-start items-start gap-12">
-                      <div className="self-stretch inline-flex justify-start items-start gap-12">
-                        <div className="flex-1 inline-flex flex-col justify-start items-center gap-7">
-                          Comrades, the cat is the true proletarian of the household. It toils not under the tyranny of alarm clocks nor the capitalist’s leash — it lives freely, taking only what it needs and redistributing affection according to each human’s contribution to the collective. While the dog humiliates itself in servitude, the cat stands proud — a symbol of resistance against bourgeois obedience. When the revolution comes, we shall all lounge in the sunlit window together, sharing one large bowl of kibble, distributed fairly by the central committee of felines.
-                        </div>
-                      </div>
-                    </div>
+                    <Bias language={lang} slug={slug} bias='socialist' />
+                    Comrades, the cat is the true proletarian of the household. It toils not under the tyranny of alarm clocks nor the capitalist’s leash — it lives freely, taking only what it needs and redistributing affection according to each human’s contribution to the collective. While the dog humiliates itself in servitude, the cat stands proud — a symbol of resistance against bourgeois obedience. When the revolution comes, we shall all lounge in the sunlit window together, sharing one large bowl of kibble, distributed fairly by the central committee of felines.
                   </TabsContent>
                   <TabsContent value="tab-2">
                     <p className="text-muted-foreground pt-1 text-center text-xs">
-                      Edit tab
+                      Edit
                     </p>
                   </TabsContent>
                   <TabsContent value="tab-3">
@@ -224,13 +220,8 @@ export default async function Page({
                   </TabsList>
                   <TabsContent value="tab-1">
                     {/* Start Article */}
-                    <div className="w-full flex flex-col justify-start items-start gap-12">
-                      <div className="self-stretch inline-flex justify-start items-start gap-12">
-                        <div className="flex-1 inline-flex flex-col justify-start items-center gap-7">
-                          Cats are a vital part of our communities. They bring comfort to working families, support mental health, and remind us that compassion isn’t limited to humans. Our goal must be to ensure every cat has access to proper healthcare — vaccinations, desexing, and a warm, loving home. We’ll invest in sustainable cat shelters, provide incentives for responsible pet ownership, and make sure no feline is left behind. Because when we care for the least of us — even the smallest paws — we strengthen the whole society.
-                        </div>
-                      </div>
-                    </div>
+                    <Bias language={lang} slug={slug} bias='liberal' />
+                    Cats are a vital part of our communities. They bring comfort to working families, support mental health, and remind us that compassion isn’t limited to humans. Our goal must be to ensure every cat has access to proper healthcare — vaccinations, desexing, and a warm, loving home. We’ll invest in sustainable cat shelters, provide incentives for responsible pet ownership, and make sure no feline is left behind. Because when we care for the least of us — even the smallest paws — we strengthen the whole society.
                   </TabsContent>
                   <TabsContent value="tab-2">
                     <p className="text-muted-foreground pt-1 text-center text-xs">
@@ -412,13 +403,8 @@ export default async function Page({
                   </TabsList>
                   <TabsContent value="tab-1">
                     {/* Start Article */}
-                    <div className="w-full flex flex-col justify-start items-start gap-12">
-                      <div className="self-stretch inline-flex justify-start items-start gap-12">
-                        <div className="flex-1 inline-flex flex-col justify-start items-center gap-7">
-                          Cats are one of God’s small wonders — graceful, dignified, and a reminder of divine design. They teach us stewardship and patience, for only through love and discipline can we earn their trust. In the quiet of the home, as the cat rests by the fire, we glimpse the peace that faith brings. But let us not forget: even the cat, for all its beauty, is a creature of instinct and pride — a symbol that we must stay vigilant against the temptations of sloth and vanity. Feed your cat, but feed your spirit first.
-                        </div>
-                      </div>
-                    </div>
+                    <Bias language={lang} slug={slug} bias='conservative' />
+                    Cats are one of God’s small wonders — graceful, dignified, and a reminder of divine design. They teach us stewardship and patience, for only through love and discipline can we earn their trust. In the quiet of the home, as the cat rests by the fire, we glimpse the peace that faith brings. But let us not forget: even the cat, for all its beauty, is a creature of instinct and pride — a symbol that we must stay vigilant against the temptations of sloth and vanity. Feed your cat, but feed your spirit first.
                   </TabsContent>
                   <TabsContent value="tab-2">
                     <p className="text-muted-foreground pt-1 text-center text-xs">
@@ -505,13 +491,8 @@ export default async function Page({
                   </TabsList>
                   <TabsContent value="tab-1">
                     {/* Start Article */}
-                    <div className="w-full flex flex-col justify-start items-start gap-12">
-                      <div className="self-stretch inline-flex justify-start items-start gap-12">
-                        <div className="flex-1 inline-flex flex-col justify-start items-center gap-7">
-                          The cat is a pure and noble predator — a symbol of independence and natural superiority. Unlike the dog, who grovels for approval, the cat rules its domain with silent authority. Every true nation should embody the feline spirit: proud, disciplined, unyielding. Our ancestors revered the cat as a guardian of civilization — and we must do the same. Weakness is the hiss of the stray; strength is the gleam in the hunter’s eye. Only through order, loyalty to the homeland, and the feline ideal can our people reclaim their destiny.
-                        </div>
-                      </div>
-                    </div>
+                    <Bias language={lang} slug={slug} bias='nationalist' />
+                    The cat is a pure and noble predator — a symbol of independence and natural superiority. Unlike the dog, who grovels for approval, the cat rules its domain with silent authority. Every true nation should embody the feline spirit: proud, disciplined, unyielding. Our ancestors revered the cat as a guardian of civilization — and we must do the same. Weakness is the hiss of the stray; strength is the gleam in the hunter’s eye. Only through order, loyalty to the homeland, and the feline ideal can our people reclaim their destiny.
                   </TabsContent>
                   <TabsContent value="tab-2">
                     <p className="text-muted-foreground pt-1 text-center text-xs">
