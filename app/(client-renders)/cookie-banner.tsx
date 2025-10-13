@@ -12,6 +12,24 @@ export default function CookieBanner() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const accepted = localStorage.getItem("bannerAccepted");
+      const acceptedDate = localStorage.getItem("bannerAcceptedDate");
+      const currentDate = new Date();
+      if (accepted && acceptedDate) {
+        const expiryDate = new Date(acceptedDate);
+        if (currentDate > expiryDate) {
+          setOpen(true);
+          localStorage.removeItem("bannerAccepted");
+          localStorage.removeItem("bannerAcceptedDate");
+        } else {
+          setOpen(false);
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     // Check if the device is mobile based on window width
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth <= 1024); // Example breakpoint for mobile
@@ -33,13 +51,19 @@ export default function CookieBanner() {
     setIsClosing(true);
     setTimeout(() => {
       setOpen(false);
+      if (typeof window !== "undefined") {
+        const date = new Date();
+        date.setDate(date.getDate() + 30);
+        localStorage.setItem("bannerAccepted", "true");
+        localStorage.setItem("bannerAcceptedDate", date.toISOString());
+      }
     }, 300); // Match the transition duration
   };
 
   if (!open) return null;
 
   return (
-    <div 
+    <div
       id="cookie-banner"
       className=
       {

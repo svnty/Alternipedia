@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/(components)/ui/table";
-import SuspenseImage from "@/app/[lang]/wiki/[slug]/(client-renders)/suspense-image";
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');
@@ -16,7 +15,6 @@ interface WikipediaArticleProps {
   wiki?: any; // Accept wiki data as a prop
 }
 
-// Helper function to render image or video
 function MediaCard({ url, caption, alt }: { url: string; caption?: string; alt?: string }) {
   const isVideo = /\.(webm|mp4|avi|mov|wmv|flv|mkv)$/i.test(url);
   return (
@@ -27,12 +25,7 @@ function MediaCard({ url, caption, alt }: { url: string; caption?: string; alt?:
           Your browser does not support the video tag.
         </video>
       ) : (
-        <SuspenseImage
-          src={url}
-          alt={alt || caption || 'Media'}
-          className="w-full h-auto rounded object-contain"
-          loading="eager"
-        />
+        <img src={url} alt={alt || caption || 'Media'} className="w-full h-auto rounded" />
       )}
       {caption && (
         <p className="text-sm text-gray-600 mt-2 text-center">{caption}</p>
@@ -40,6 +33,7 @@ function MediaCard({ url, caption, alt }: { url: string; caption?: string; alt?:
     </>
   );
 }
+
 
 // Helper function to escape special regex characters
 function escapeRegExp(string: string) {
@@ -192,8 +186,6 @@ function parseWikiTable(wikitext: any) {
   );
 
   rows = rows.filter((r) => r.length > 0 && !r.includes("}"));
-
-  console.log(rows);
 
   return { title, headers, rows };
 }

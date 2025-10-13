@@ -23,7 +23,6 @@ function HeadingItem({ heading, active, index, containerRef }: { heading: Headin
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const element = document.getElementById(heading.id);
-    console.log(element);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }

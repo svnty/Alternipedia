@@ -50,7 +50,6 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
 
   const headings: any[] = [];
   for (const section of wikipediaData?.sections() || []) {
-    console.log(section.title());
     headings.push({
       title: section.title(),
       depth: section.depth(),
