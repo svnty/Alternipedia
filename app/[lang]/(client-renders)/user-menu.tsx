@@ -1,7 +1,7 @@
 "use client"
 
 import { useId } from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/(components)/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,14 +10,14 @@ import {
   DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
+} from "@/app/(components)/ui/dropdown-menu"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/app/(components)/ui/dialog"
 import {
   CircleUserRoundIcon,
   LogOutIcon,

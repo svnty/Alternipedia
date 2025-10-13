@@ -192,6 +192,7 @@ export type Dictionary = {
     read: string;
     edit: string;
     history: string;
+    lastEdited: string;
   },
   cookieMessage: string;
 };
@@ -539,6 +540,7 @@ const en: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Last edited on',
     tools: 'Tools',
     close: 'Close',
     notFoundHeader: 'Wikipedia Article Not Found',
@@ -813,6 +815,7 @@ const es: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Última edición el',
     tools: 'Herramientas',
     close: 'Cerrar',
     notFoundHeader: 'Artículo de Wikipedia no encontrado',
@@ -1087,6 +1090,7 @@ const fr: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Dernière modification le',
     tools: 'Outils',
     close: 'Fermer',
     notFoundHeader: 'Article Wikipedia non trouvé',
@@ -1361,6 +1365,7 @@ const de: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Zuletzt bearbeitet am',
     tools: 'Werkzeuge',
     close: 'Schließen',
     notFoundHeader: 'Wikipedia-Artikel nicht gefunden',
@@ -1635,6 +1640,7 @@ const it: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Ultima modifica il',
     tools: 'Strumenti',
     close: 'Chiudi',
     notFoundHeader: 'Articolo di Wikipedia non trovato',
@@ -1909,6 +1915,7 @@ const pt: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Última edição em',
     tools: 'Ferramentas',
     content: 'Conteúdo',
     close: 'Fechar',
@@ -2254,6 +2261,7 @@ const ja: Dictionary = {
     },
   },
   article: {
+    lastEdited: '最終編集日',
     tools: 'ツール',
     content: 'コンテンツ',
     article: '記事',
@@ -2528,6 +2536,7 @@ const zh: Dictionary = {
     },
   },
   article: {
+    lastEdited: '最后编辑于',
     tools: '工具',
     content: '内容',
     article: '文章',
@@ -2802,6 +2811,7 @@ const ko: Dictionary = {
     },
   },
   article: {
+    lastEdited: '마지막 편집',
     tools: '도구',
     close: '닫기',
     notFoundHeader: '위키피디아 문서를 찾을 수 없습니다',
@@ -3076,6 +3086,7 @@ const ru: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Последнее редактирование',
     tools: 'Инструменты',
     content: 'Содержание',
     close: 'Закрыть',
@@ -3427,6 +3438,7 @@ const ar: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'آخر تعديل',
     tools: 'الأدوات',
     content: 'المحتوى',
     article: 'مقال',
@@ -3777,6 +3789,7 @@ const hi: Dictionary = {
     notFound: "कोई मेल खाने वाली भाषा नहीं मिली"
   },
   article: {
+    lastEdited: 'अंतिम संपादन',
     tools: 'उपकरण',
     content: 'सामग्री',
     close: 'बंद करें',
@@ -4127,6 +4140,7 @@ const bn: Dictionary = {
     notFound: "কোন মিল খুঁজে পাওয়া যায়নি"
   },
   article: {
+    lastEdited: 'সর্বশেষ সম্পাদিত',
     tools: 'সরঞ্জাম',
     content: 'বিষয়বস্তু',
     close: 'বন্ধ করুন',
@@ -4466,6 +4480,7 @@ const ur: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'آخری ترمیم',
     tools: 'اوزار',
     content: 'مواد',
     close: 'بند کریں',
@@ -4805,6 +4820,7 @@ const id: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Terakhir Diedit',
     tools: 'Alat',
     content: 'Konten',
     close: 'Tutup',
@@ -5085,6 +5101,7 @@ const mr: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'शेवटचे संपादन',
     tools: 'साधने',
     content: 'सामग्री',
     article: 'लेख',
@@ -5331,6 +5348,7 @@ const te: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'చివరిసారిగా సవరించబడింది',
     tools: 'పరికరాలు',
     content: 'విషయం',
     close: 'మూసివేయి',
@@ -5669,6 +5687,7 @@ const tr: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Son düzenleme',
     tools: 'Araçlar',
     content: 'İçerik',
     close: 'Kapat',
@@ -5933,6 +5952,7 @@ const ta: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'கடைசியாக தொகுக்கப்பட்டது',
     tools: 'கருவிகள்',
     close: 'மூடு',
     notFoundHeader: 'விக்கிபீடியா கட்டுரை காணப்படவில்லை',
@@ -6205,6 +6225,7 @@ const yue: Dictionary = {
     },
   },
   article: {
+    lastEdited: '最後編輯於',
     tools: '工具',
     content: '內容',
     article: '文章',
@@ -6473,6 +6494,7 @@ const vi: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Chỉnh sửa lần cuối',
     tools: 'Công cụ',
     content: 'Nội dung',
     close: 'Đóng',
@@ -6741,6 +6763,7 @@ const fil: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Huling inedit',
     tools: 'Mga Tool',
     content: 'Nilalaman',
     close: 'Isara',
@@ -7009,6 +7032,7 @@ const ha: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'An gyara ƙarshe',
     tools: 'Kayan aiki',
     content: 'Abun ciki',
     close: 'Rufe',
@@ -7276,6 +7300,7 @@ const arz: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'آخر تعديل',
     tools: 'الأدوات',
     content: 'المحتوى',
     article: 'مقال',
@@ -7546,6 +7571,7 @@ const jv: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Pungkasan disunting',
     tools: 'Piranti',
     close: 'Tutup',
     notFoundHeader: 'Artikel Wikipedia Ora Ditemokaké',
@@ -7813,6 +7839,7 @@ const nl: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Laatst bewerkt',
     tools: 'Hulpmiddelen',
     content: 'Inhoud',
     article: 'Artikel',
@@ -8080,6 +8107,7 @@ const el: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Τελευταία επεξεργασία',
     tools: 'Εργαλεία',
     content: 'Περιεχόμενο',
     article: 'Άρθρο',
@@ -8346,6 +8374,7 @@ const sv: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Senast redigerad',
     tools: 'Verktyg',
     content: 'Innehåll',
     close: 'Stäng',
@@ -8614,6 +8643,7 @@ const no: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Sist redigert',
     tools: 'Verktøy',
     close: 'Lukk',
     notFoundHeader: 'Wikipedia-artikkelen ble ikke funnet',
@@ -8880,6 +8910,7 @@ const pl: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Ostatnia edycja',
     tools: 'Narzędzia',
     content: 'Zawartość',
     close: 'Zamknij',
@@ -9148,6 +9179,7 @@ const th: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'แก้ไขล่าสุด',
     tools: 'เครื่องมือ',
     close: 'ปิด',
     notFoundHeader: 'ไม่พบบทความวิกิพีเดีย',
@@ -9416,6 +9448,7 @@ const uk: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Останнє редагування',
     close: 'Закрити',
     notFoundHeader: 'Статтю Вікіпедії не знайдено',
     notFoundText: 'Ми не змогли знайти таку статтю Вікіпедії:',
@@ -9682,6 +9715,7 @@ const ro: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Ultima editare',
     tools: 'Instrumente',
     content: 'Conținut',
     close: 'Închide',
@@ -9948,6 +9982,7 @@ const cs: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Naposledy upraveno',
     tools: 'Nástroje',
     close: 'Zavřít',
     notFoundHeader: 'Článek Wikipedia nebyl nalezen',
@@ -10214,6 +10249,7 @@ const hu: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Utolsó szerkesztés',
     tools: 'Eszközök',
     close: 'Bezárás',
     notFoundHeader: 'A Wikipedia cikk nem található',
@@ -10480,6 +10516,7 @@ const fi: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Viimeksi muokattu',
     tools: 'Työkalut',
     content: 'Sisältö',
     close: 'Sulje',
@@ -10746,6 +10783,7 @@ const da: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Sidst redigeret',  
     tools: 'Værktøjer',
     close: 'Luk',
     notFoundHeader: 'Wikipedia-artikel ikke fundet',
@@ -11014,6 +11052,7 @@ const bg: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Последно редактирана',
     tools: 'Инструменти',
     content: 'Съдържание',
     close: 'Затвори',
@@ -11282,6 +11321,7 @@ const sk: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Naposledy upravené',
     tools: 'Nástroje',
     content: 'Obsah',
     close: 'Zavrieť',
@@ -11550,6 +11590,7 @@ const hr: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Zadnje uređeno',
     tools: 'Alati',
     content: 'Sadržaj',
     article: 'Članak',
@@ -11825,6 +11866,7 @@ const lt: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Paskutinį kartą redagavo',
     tools: 'Įrankiai',
     close: 'Uždaryti',
     notFoundHeader: 'Wikipedia straipsnis nerastas',
@@ -12101,6 +12143,7 @@ const sl: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Zadnjič urejeno',
     tools: 'Orodja',
     content: 'Vsebina',
     close: 'Zapri',
@@ -12377,6 +12420,7 @@ const lv: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Pēdējoreiz rediģēts',
     tools: 'Rīki',
     content: 'Saturs',
     close: 'Aizvērt',
@@ -12653,6 +12697,7 @@ const et: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Viimati redigeeritud',
     tools: 'Tööriistad',
     content: 'Sisu',
     close: 'Sule',
@@ -12929,6 +12974,7 @@ const is: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Síðast breytt',
     tools: 'Tól',
     content: 'Innihald',
     close: 'Loka',
@@ -13205,6 +13251,7 @@ const sq: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Redaktuar së fundmi',
     tools: 'Mjetet',
     content: 'Përmbajtja',
     article: 'Artikull',
@@ -13481,6 +13528,7 @@ const sr: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Poslednja izmena',
     tools: 'Alati',
     content: 'Sadržaj',
     close: 'Zatvori',
@@ -13757,6 +13805,7 @@ const mk: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Последно уредено',
     tools: 'Алатки',
     content: 'Содржина',
     article: 'Статија',
@@ -14033,6 +14082,7 @@ const bs: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Zadnje uređeno',
     tools: 'Alati',
     content: 'Sadržaj',
     article: 'Članak',
@@ -14309,6 +14359,7 @@ const cnr: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Zadnje uređeno',
     tools: 'Alati',
     close: 'Zatvori',
     notFoundHeader: 'Wikipedia članak nije pronađen',
@@ -14585,6 +14636,7 @@ const mt: Dictionary = {
     },
   },
   article: {
+    lastEdited: 'Editjat l-aħħar',
     tools: 'Għodod',
     content: 'Kontenut',
     close: 'Agħlaq',

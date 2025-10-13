@@ -11,7 +11,7 @@ import {
   CommandGroup,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/app/(components)/ui/command"
 
 export interface Option {
   value: string

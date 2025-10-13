@@ -10,19 +10,19 @@ import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import Search from '@/app/[lang]/(client-renders)/search';
 import UserMenu from '@/app/[lang]/(client-renders)/user-menu';
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/(components)/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/app/(components)/ui/dropdown-menu";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/app/(components)/ui/tooltip";
 import { Earth, MenuIcon, Palette } from "lucide-react";
 import Terms from "@/app/[lang]/(client-renders)/terms";
 import Privacy from "@/app/[lang]/(client-renders)/privacy";

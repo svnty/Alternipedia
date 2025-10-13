@@ -17,14 +17,14 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
   }
 
   const wikipediaData = await fetchWikipediaPageWithWtf(slug, language);
-  const jsonData = wikipediaData ? { title: wikipediaData.title() } : null;
+  const title = wikipediaData ? wikipediaData.title() : null;
 
   // Be conservative about changing the URL client-side. Only adjust when the
   // difference is capitalization or minor separator differences (dashes vs spaces).
   let canonicalSlug: string | null = null;
   
-  if (jsonData) {
-    const canonicalTitle = String(jsonData.title).trim();
+  if (title) {
+    const canonicalTitle = String(title).trim();
     const rawRequested = String(slug || '').trim();
 
     // Normalize: replace dashes/underscores with spaces for comparison
@@ -49,8 +49,17 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
   }
 
   const headings: any[] = [];
+  for (const section of wikipediaData?.sections() || []) {
+    console.log(section.title());
+    headings.push({
+      title: section.title(),
+      depth: section.depth(),
+    });
+  }
+
+
   const stringified = JSON.parse(JSON.stringify(headings));
-  const canonicalTitle = jsonData?.title || null;
+  const canonicalTitle = title || null;
 
   return (
     <WikipediaDataProvider headings={stringified}>

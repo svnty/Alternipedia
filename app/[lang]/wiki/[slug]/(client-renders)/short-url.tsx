@@ -10,19 +10,19 @@ import {
 import { CheckIcon, CopyIcon, Link } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/app/(components)/ui/button"
+import { Input } from "@/app/(components)/ui/input"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/app/(components)/ui/popover"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/app/(components)/ui/tooltip"
 import { getDictionary } from "@/lib/i18n/dictionaries"
 import { Locale } from "@/lib/i18n/config"
 import { useParams } from "next/navigation"

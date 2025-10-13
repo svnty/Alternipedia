@@ -3,7 +3,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
+} from "@/app/(components)/ui/tabs";
 import {
   BoxIcon,
   HouseIcon,

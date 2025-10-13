@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React from "react";
 
 import { useEffect, useState, useRef } from 'react';
 
@@ -76,7 +76,7 @@ function HeadingItem({ heading, active, index, containerRef }: { heading: Headin
         ref={btnRef}
         data-toc-index={index}
         onClick={handleClick}
-        className={`text-left text-sm text-gray-700 hover:text-blue-600 hover:underline cursor-pointer truncate ${active ? 'font-bold' : ''}`}
+        className={`text-left text-sm text-gray-700 hover:text-blue-600 hover:underline cursor-pointer text-ellipsis ${active ? 'font-bold' : ''}`}
       >
         {heading.title}
       </button>

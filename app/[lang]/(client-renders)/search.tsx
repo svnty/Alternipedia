@@ -7,7 +7,7 @@ import { LoaderCircleIcon, MicIcon, SearchIcon } from "lucide-react"
 import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 
-import { Input } from "@/components/ui/input"
+import { Input } from "@/app/(components)/ui/input"
 
 
 export default function Search() {

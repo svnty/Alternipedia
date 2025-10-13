@@ -1,11 +1,10 @@
 // use require to avoid TS typing issues in this file
 
 import Link from "next/link";
-// import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/(client-renders)/load-signal';
-// import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
-import { convertSegmentPathToStaticExportFilename } from "next/dist/shared/lib/segment-cache/segment-value-encoding";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/(components)/ui/table";
+import SuspenseImage from "@/app/[lang]/wiki/[slug]/(client-renders)/suspense-image";
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');
@@ -28,7 +27,12 @@ function MediaCard({ url, caption, alt }: { url: string; caption?: string; alt?:
           Your browser does not support the video tag.
         </video>
       ) : (
-        <img src={url} alt={alt || caption || 'Media'} className="w-full h-auto rounded" />
+        <SuspenseImage
+          src={url}
+          alt={alt || caption || 'Media'}
+          className="w-full h-auto rounded object-contain"
+          loading="eager"
+        />
       )}
       {caption && (
         <p className="text-sm text-gray-600 mt-2 text-center">{caption}</p>
@@ -137,6 +141,63 @@ function jsonToLinkedParagraph(data: any, language: string, bias: string) {
   }).join(' '); // join all sentences into one paragraph
 }
 
+function parseWikiTable(wikitext: any) {
+  if (!wikitext.isTable) return null;
+
+  let headers: string[] = [];
+  for (let i = 0; i < wikitext.sentences.length; i++) {
+    headers.push(wikitext.sentences[i].text.substring(1).trim());
+  }
+
+  let title: string = '';
+  for (let i = 0; i < wikitext.lists.length; i++) {
+    const start = wikitext.lists[i].indexOf('+');
+    let tempTitle = start !== -1 ? wikitext.lists[i].substring(start + 1).trim() : '';
+    if (tempTitle !== '') {
+      title = tempTitle;
+    }
+  }
+
+  let rows: string[][] = [];
+
+  for (let i = 0; i < wikitext.lists.length; i++) {
+    let rowText = wikitext.lists[i].replace(/\n/g, "");
+
+    if (!rowText.includes("{|")) {
+      const clean = rowText.replace(/\s+/g, " ").trim();
+
+      const rowStrings = clean
+        .split(/\*\s*(?=align=center\s*\|)/)
+        .map((r: string) => r.trim())
+        .filter(Boolean);
+
+      const parsedRows = rowStrings.map((row: string) => {
+        row = row.replace(/[\*\}]+$/, "").trim();
+
+        const cells = row
+          .split(/\s*\*\s*/)
+          .map((c: string) => c.replace(/^align=center\s*\|\s*/, "").trim())
+          .filter(Boolean);
+
+        return cells;
+      });
+
+      rows.push(...parsedRows);
+    }
+  }
+
+  rows = rows.filter(
+    (row, idx, arr) =>
+      idx === arr.findIndex((r) => JSON.stringify(r) === JSON.stringify(row))
+  );
+
+  rows = rows.filter((r) => r.length > 0 && !r.includes("}"));
+
+  console.log(rows);
+
+  return { title, headers, rows };
+}
+
 function References({ section, wiki }: { section: any, wiki: any }) {
   return (
     <>
@@ -184,14 +245,16 @@ function SectionContent({
   bias,
   wiki,
   mobile,
-  showImages = true
+  showImages = true,
+  pageImageUrl = ''
 }: {
   section: any,
   language: string,
   bias: string,
   wiki: any,
   mobile: boolean,
-  showImages?: boolean
+  showImages?: boolean,
+  pageImageUrl?: string
 }) {
   // ✅ 1. Collect ALL images from all paragraphs (in order)
   const sectionImages = showImages && section.paragraphs
@@ -201,7 +264,7 @@ function SectionContent({
   return (
     <div className="collapsible-content">
       {/* ✅ 2. Render ALL images first, stacked as floats */}
-      {sectionImages.map((img: any, i: number) => (
+      {sectionImages[0] && sectionImages[0]?.url && sectionImages[0]?.url !== pageImageUrl && sectionImages.map((img: any, i: number) => (
         <div
           key={i}
           className="
@@ -223,6 +286,53 @@ function SectionContent({
       {/* ✅ 3. Now render text paragraphs with NO images inside */}
       {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
         const raw = jsonToLinkedParagraph(para, language, bias);
+
+        let tableText: any = {};
+
+        tableText['sentences'] = para.sentences;
+        tableText['lists'] = [];
+
+        para.lists.forEach((list: any, id: number) => {
+          if (list.text.includes('{|')) {
+            tableText['isTable'] = true;
+          }
+          tableText['lists'].push(list.text);
+        });
+
+        const tableData = parseWikiTable(tableText);
+
+        if (tableData) {
+          return (
+            <div key={pIndex} className="mb-4">
+              {tableData.title && (
+                <div className="my-4 text-sm font-bold w-full text-center">
+                  {tableData.title}
+                </div>
+              )}
+              <div className="overflow-hidden mb-4 rounded-md border bg-background">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-muted/50">
+                      {tableData.headers.map((header, hIndex) => (
+                        <TableHead key={hIndex}>{header}</TableHead>
+                      ))}
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {tableData.rows.map((row, rIndex) => (
+                      <TableRow key={rIndex}>
+                        {row.map((cell, cIndex) => (
+                          <TableCell key={cIndex}>{cell}</TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
+          );
+        }
+
         const safe = sanitizeHtml(raw, {
           allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
           allowedAttributes: {
@@ -244,6 +354,8 @@ function SectionContent({
               className="leading-relaxed text-base"
               dangerouslySetInnerHTML={{ __html: safe }}
             />
+
+            {/* {JSON.stringify(para)} */}
 
             {para.lists && para.lists.map((list: any, listIndex: number) => (
               <ul className="list-disc mx-6 mt-3" key={listIndex}>
@@ -376,7 +488,7 @@ function toWikipediaReference(citation: Record<string, any>): string {
 
 export default function WikipediaArticle({ slug, language, wiki, bias }: WikipediaArticleProps) {
   const wikiData: any = {};
-  wikiData.pageImage = wiki.pageImage();
+  wikiData.pageImage = typeof wiki.pageImage === 'function' ? wiki.pageImage() : wiki.pageImage;
   if (wikiData.pageImage) {
     wikiData.pageImage.url = wikiData.pageImage.url();
     wikiData.pageImage.caption = wikiData.pageImage.caption();
@@ -506,11 +618,11 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                       )}
                       <div className="relative">
                         {wikiData.pageImage && wikiData.pageImage.url && wikiData.pageImage.url !== 'https://wikipedia.org/wiki/Special:Redirect/file/' && (
-                          <div className="block md:float-right md:ml-4 mb-4 md:max-w-[30vw] lg:max-w-[30vw] bg-white border border-gray-200 rounded-sm p-4">
+                          <div className="block md:float-right md:ml-4 mb-4 md:max-w-[30vw] lg:max-w-[25vw] bg-white border border-gray-200 rounded-sm p-4">
                             <MediaCard url={wikiData.pageImage.url} caption={wikiData.pageImage.caption} alt={wikiData.pageImage.caption} />
                           </div>
                         )}
-                        <SectionContent section={section} language={language} bias={bias} wiki={wiki} mobile={false} />
+                        <SectionContent section={section} language={language} bias={bias} wiki={wiki} mobile={false} pageImageUrl={wikiData.pageImage?.url} />
                       </div>
                     </div>
                   );
@@ -572,7 +684,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                       </div>
                     </div>
                   </div>
-                  <div className="justify-start text-neutral-800 text-sm font-normal  leading-normal">Categories:</div>
+                  <div className="justify-start text-neutral-800 text-sm font-normal ml-2 leading-normal">Categories:</div>
                 </div>
                 <div className="flex flex-wrap items-center gap-1">
                   {wiki.categories().map((cat: string, index: number) => (
@@ -586,7 +698,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                 </div>
               </div>
               <div className="self-stretch justify-start text-gray-500 text-sm font-normal  leading-normal">
-                Last edited on {new Date(wiki.timestamp()).toUTCString()} (UTC)
+                {dict.article.lastEdited} {new Date(wiki.timestamp()).toLocaleString(language, { dateStyle: 'long', timeStyle: 'medium' })} (UTC)
               </div>
             </div>
           )}

@@ -2,12 +2,12 @@
 
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useMemo, useState, useRef, useEffect } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/(components)/ui/dialog";
+import { Input } from "@/app/(components)/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/app/(components)/ui/radio-group";
+import { Label } from "@/app/(components)/ui/label";
+import { ScrollArea } from "@/app/(components)/ui/scroll-area";
+import { Button } from "@/app/(components)/ui/button";
 import { Check, Languages, Search } from "lucide-react";
 import { SlidingLanguage } from "@/app/[lang]/(client-renders)/sliding-language";
 import { locales, localeNames, type Locale } from '@/lib/i18n/config';

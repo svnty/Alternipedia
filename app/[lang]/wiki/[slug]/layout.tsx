@@ -8,11 +8,11 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "@/app/(components)/ui/collapsible";
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from "@/components/ui/toggle-group";
+} from "@/app/(components)/ui/toggle-group";
 import { Bookmark, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check } from "lucide-react";
 import CurrentUrlQRCode from '@/app/[lang]/wiki/[slug]/(client-renders)/current-url-qr';
 import {
@@ -20,7 +20,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/app/(components)/ui/tooltip";
 import { LoadingOverlay } from "@/app/[lang]/(client-renders)/loading-overlay";
 import {
   Dialog,
@@ -28,7 +28,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/app/(components)/ui/dialog";
 import { notFound } from 'next/navigation';
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
