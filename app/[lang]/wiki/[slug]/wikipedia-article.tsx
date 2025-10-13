@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/(components)/ui/table";
+import SuspenseImage from "@/app/[lang]/wiki/[slug]/(client-renders)/(suspense-image)";
+import SuspenseVideo from "@/app/[lang]/wiki/[slug]/(client-renders)/(suspense-video)";
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');
@@ -15,17 +17,41 @@ interface WikipediaArticleProps {
   wiki?: any; // Accept wiki data as a prop
 }
 
+type AnyObject = { [key: string]: any };
+
+function mergeListsDeduplicateLines(lists: any[]): any[] {
+  if (lists.length === 0) return [];
+  const seen = new Map<string, any>();
+
+  for (const list of lists) {
+    for (const line of list.lines) {
+      // Use the text as unique key
+      if (!seen.has(line.text)) {
+        seen.set(line.text, line);
+      }
+    }
+  }
+
+  // Merge all lines into one array
+  const mergedLines = Array.from(seen.values());
+
+  return [
+    {
+      ...lists[0], // keep other properties from first object
+      lines: mergedLines,
+    },
+  ];
+}
+
 function MediaCard({ url, caption, alt }: { url: string; caption?: string; alt?: string }) {
   const isVideo = /\.(webm|mp4|avi|mov|wmv|flv|mkv)$/i.test(url);
   return (
     <>
       {isVideo ? (
-        <video controls className="w-full h-auto rounded" poster="">
-          <source src={url} type={`video/${url.split('.').pop()?.toLowerCase()}`} />
-          Your browser does not support the video tag.
-        </video>
+        <SuspenseVideo src={url} alt={alt || caption || 'Media'} />
       ) : (
-        <img src={url} alt={alt || caption || 'Media'} className="w-full h-auto rounded" />
+        <SuspenseImage src={url} alt={alt || caption || 'Media'} />
+        // <img src={url} alt={alt || caption || 'Media'} className="w-full h-auto rounded" />
       )}
       {caption && (
         <p className="text-sm text-gray-600 mt-2 text-center">{caption}</p>
@@ -340,49 +366,40 @@ function SectionContent({
           }
         });
 
+        const newPara: any = mergeListsDeduplicateLines(para.lists);
+
         return (
           <div key={pIndex} className="mb-4">
             <p
               className="leading-relaxed text-base"
               dangerouslySetInnerHTML={{ __html: safe }}
             />
+            {newPara && newPara.map((list: any, listsIndex: number) => (
+              <ul className="list-disc mx-6 mt-3" key={listsIndex}>
+                {list.lines && list.lines.map((line: any, lineIndex: number) => {
+                  const linkWithPage = line.links.find((link: any) => link.page);
 
-            {/* {JSON.stringify(para)} */}
-
-            {para.lists && para.lists.map((list: any, listIndex: number) => (
-              <ul className="list-disc mx-6 mt-3" key={listIndex}>
-                {list.lines.map((line: any, lineIndex: number) => (
-                  <li key={lineIndex} id={`line-${encodeURI(line.text)}`}>
-                    <a
-                      href={line.links.find((link: any) => link.page)?.page}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={
-                        line.links.some((link: any) => link.page)
-                          ? 'cursor-pointer hover:underline text-blue-500'
-                          : ''
-                      }
-                    >
-                      {line.text}
-                    </a>
-                  </li>
-                ))}
+                  return (
+                    <li key={lineIndex}>
+                      {linkWithPage ? (
+                        <Link
+                          href={linkWithPage.page}
+                          rel="noopener noreferrer"
+                          className="cursor-pointer hover:underline text-blue-500"
+                        >
+                          {line.text}
+                        </Link>
+                      ) : (
+                        <span>{line.text}</span>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             ))}
           </div>
         );
       })}
-
-      {/* ✅ Section-level lists */}
-      {section.lists && section.lists.map((list: any, lIndex: number) => (
-        <ul key={lIndex} className="list-disc list-inside mb-4">
-          {list.items && list.items.map((item: any, iIndex: number) => (
-            <li key={iIndex} dangerouslySetInnerHTML={{ __html: item }} />
-          ))}
-        </ul>
-      ))}
-
-      <References section={section} wiki={wiki} />
 
       {/* ✅ Recurse for subsections */}
       {section.sections && section.sections.length > 0 && section.sections.map((subSection: any, index: number) => (
@@ -391,6 +408,22 @@ function SectionContent({
             <div
               id={(subSection.title.replace(/\s+/g, '_') + (mobile ? '-mobile' : ''))}
               className="text-xl font-bold mb-2 mt-2 heading-anchor"
+            >
+              {subSection.title}
+            </div>
+          )}
+          {subSection.title && subSection.depth === 2 && (
+            <div
+              id={(subSection.title.replace(/\s+/g, '_') + (mobile ? '-mobile' : ''))}
+              className="text-lg font-semibold mb-2 mt-2 heading-anchor"
+            >
+              {subSection.title}
+            </div>
+          )}
+          {subSection.title && subSection.depth === 3 && (
+            <div
+              id={(subSection.title.replace(/\s+/g, '_') + (mobile ? '-mobile' : ''))}
+              className="text-md font-semibold mb-2 mt-2 heading-anchor"
             >
               {subSection.title}
             </div>
@@ -405,6 +438,8 @@ function SectionContent({
           />
         </div>
       ))}
+
+      <References section={section} wiki={wiki} />
     </div>
   );
 }
@@ -624,9 +659,10 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                       <details className="wiki-section">
                         <summary className="group w-full mb-2 mt-2 transition-colors cursor-pointer py-3 list-none lg:pointer-events-none">
                           <div className="w-full">
-                            <div className="flex items-center justify-between w-full">
+                            <div className="items-center justify-between w-full">
                               <div data-index={index} data-depth={section.depth} id={section.title.replace(/\s+/g, '_')} className="text-2xl font-bold heading-anchor text-left truncate">
                                 {section.title}
+                                <hr className="h-px w-full mt-3 bg-gray-200 border-0 dark:bg-gray-700" />
                               </div>
 
                               <div className="flex-shrink-0 ml-2 lg:hidden">
@@ -656,7 +692,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
 
 
           {wiki && (
-            <div className="self-stretch flex flex-col justify-start items-start gap-5 mt-4">
+            <div className="self-stretch flex flex-col justify-start items-start gap-5 mt-6">
               <div className="self-stretch px-3 py-2.5 bg-orange-400/10 rounded-md inline-flex justify-start items-center gap-1.5 flex-wrap content-center">
                 <div className="w-28 h-7 flex justify-start items-center">
                   <div className="w-7 self-stretch p-1.5 rounded-md flex justify-center items-center gap-1.5">

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-interface SuspenseImageProps {
+interface SuspenseVideoProps {
   src: string
   alt: string
   className?: string
@@ -14,7 +14,7 @@ export default function SuspenseImage({
   alt,
   className = '',
   loading = 'eager',
-}: SuspenseImageProps) {
+}: SuspenseVideoProps) {
   const [isLoaded, setIsLoaded] = useState(true);
 
   // TODO: Fix skeleton loader or a placeholder image while loading
@@ -27,17 +27,10 @@ export default function SuspenseImage({
           ${isLoaded ? '' : 'animate-pulse'}`}
       /> */}
 
-      <img
-        src={src}
-        alt={alt}
-        loading={loading}
-        onLoad={() => setIsLoaded(true)}
-        onError={() => setIsLoaded(true)}
-        className={`
-          w-full h-auto rounded object-contain transition-opacity duration-500 
-          ${isLoaded ? 'opacity-100' : 'opacity-0'}
-          `}
-      />
+        <video controls className="w-full h-auto rounded" poster="">
+          <source src={src} type={`video/${src.split('.').pop()?.toLowerCase()}`} />
+          Your browser does not support the video tag.
+        </video>
     </div>
   )
 }
