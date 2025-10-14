@@ -7263,14 +7263,14 @@ const ha: Dictionary = {
   },
   article: {
     biasIntro: {
-      liberal: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn tự do tập trung vào tự do cá nhân, nhân quyền và tiến bộ xã hội.',
-      conservative: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn bảo thủ tập trung vào truyền thống, ổn định và giá trị gia đình.',
-      nationalist: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn dân tộc chủ nghĩa tập trung vào quyền tự quyết dân tộc và bản sắc văn hóa.',
-      socialist: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn xã hội chủ nghĩa tập trung vào công bằng xã hội, bình đẳng và quyền lợi của người lao động.',
+      socialist: 'Wannan labarin an ƙirƙira shi ne ta membobin al\'umma don ba da hangen nesa na son talakawa wanda ya mai da hankali kan adalci na zamantakewa, daidaito, da hakkokin ma\'aikata.',
+      liberal: 'Wannan labarin an ƙirƙira shi ne ta membobin al\'umma don ba da hangen nesa na son \'yanci wanda ya mai da hankali kan \'yancin mutum, hakkin ɗan adam, da ci gaban al\'uma.',
       wikipedia: {
-        part1: 'Bài viết này được tạo bởi các thành viên cộng đồng nhằm cung cấp một góc nhìn không thiên vị tập trung vào thông tin và dữ liệu đại diện công bằng.',
-        part2: 'Xem Wikipedia →',
-      }
+        part1: 'Wannan labarin an ƙirƙira shi ne ta membobin al\'umma don ba da hangen nesa mara son zuciya wanda ya mai da hankali kan bayani da bayanai na adalci.',
+        part2: 'Duba Wikipedia →',
+      },
+      conservative: 'Wannan labarin an ƙirƙira shi ne ta membobin al\'umma don ba da hangen nesa na masu adawa da canji wanda ya mai da hankali kan al\'ada, kwanciyar hankali, da ƙimar iyali.',
+      nationalist: 'Wannan labarin an ƙirƙira shi ne ta membobin al\'umma don ba da hangen nesa na ƙasaitacce wanda ya mai da hankali kan ikon yanke shawara na
     },
     lastEdited: 'An gyara ƙarshe',
     tools: 'Kayan aiki',
