@@ -130,7 +130,7 @@ export default function BottomTools() {
         id="fab"
         ref={buttonRef}
         onClick={toggleMenu}
-        className={`fixed right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all transform-gpu will-change-transform ${isMenuOpen ? "bg-gray-700" : ""}`}>
+    className={`fixed right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-transform transition-opacity transform-gpu will-change-transform ${isMenuOpen ? "bg-gray-700" : ""} bottom-[calc(env(safe-area-inset-bottom,0px)+16px)]`}>
         {isMenuOpen ? (
           <X className="-ms-1 opacity-60 inline flex-1 text-red-300" aria-hidden="true" />
         ) : (
@@ -152,7 +152,7 @@ export default function BottomTools() {
         <div
           ref={menuRef}
           // className="fixed bottom-18 right-8 bg-gray-800 rounded-lg shadow-xl p-2 z-20 min-w-48 animate-in fade-in slide-in-from-bottom-2 duration-200 block lg:hidden w-[calc(100vw-4rem)] shadow-md"
-          className="fixed right-8 bg-gray-800 rounded-lg shadow-xl p-2 z-20 min-w-48 animate-in fade-in slide-in-from-bottom-2 duration-200 block lg:hidden w-[calc(100vw-4rem)] shadow-md transform-gpu will-change-transform"
+          className="fixed right-8 bg-gray-800 rounded-lg shadow-xl p-2 z-20 min-w-48 animate-in fade-in slide-in-from-bottom-2 duration-200 block lg:hidden w-[calc(100vw-4rem)] shadow-md transform-gpu will-change-transform bottom-[calc(env(safe-area-inset-bottom,0px)+68px)]"
         >
           <div className="flex flex-col gap-1">
 
