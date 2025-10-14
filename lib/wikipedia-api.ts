@@ -33,6 +33,6 @@ export async function fetchWikipediaPageWithWtf(slug: string, language: string =
     if (!doc) return null;
     return doc;
   } catch (e) {
-    return null;
+    throw new Error(`Failed to fetch Wikipedia page: ${e}`);
   }
 }

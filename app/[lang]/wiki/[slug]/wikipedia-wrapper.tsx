@@ -16,7 +16,14 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
     return null;
   }
 
-  const wikipediaData = await fetchWikipediaPageWithWtf(slug, language);
+  let wikipediaData;
+  try {
+    wikipediaData = await fetchWikipediaPageWithWtf(slug, language);
+  } catch (error) {
+    console.error('Error fetching Wikipedia page:', error);
+    wikipediaData = null;
+  }
+
   const title = wikipediaData ? wikipediaData.title() : null;
 
   // Be conservative about changing the URL client-side. Only adjust when the

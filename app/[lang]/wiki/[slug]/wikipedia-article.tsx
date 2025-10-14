@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/(components)/ui/table";
-import SuspenseImage from "@/app/[lang]/wiki/[slug]/(client-renders)/(suspense-image)";
+import SuspenseImage from "@/app/[lang]/wiki/[slug]/(client-renders)/suspense-image";
 import SuspenseVideo from "@/app/[lang]/wiki/[slug]/(client-renders)/(suspense-video)";
 
 // @ts-ignore
@@ -43,15 +43,14 @@ function mergeListsDeduplicateLines(lists: any[]): any[] {
   ];
 }
 
-function MediaCard({ url, caption, alt }: { url: string; caption?: string; alt?: string }) {
+function MediaCard({ url, caption, alt, thumbnail, loading }: { url: string; caption?: string; alt?: string; thumbnail: string; loading?: 'lazy' | 'eager' }) {
   const isVideo = /\.(webm|mp4|avi|mov|wmv|flv|mkv)$/i.test(url);
   return (
     <>
       {isVideo ? (
-        <SuspenseVideo src={url} alt={alt || caption || 'Media'} />
+        <SuspenseVideo thumbnail={thumbnail} src={url} alt={alt || caption || 'Media'} loading={loading} />
       ) : (
-        <SuspenseImage src={url} alt={alt || caption || 'Media'} />
-        // <img src={url} alt={alt || caption || 'Media'} className="w-full h-auto rounded" />
+        <SuspenseImage thumbnail={thumbnail} src={url} alt={alt || caption || 'Media'} loading={loading} />
       )}
       {caption && (
         <p className="text-sm text-gray-600 mt-2 text-center">{caption}</p>
@@ -299,6 +298,7 @@ function SectionContent({
           "
         >
           <MediaCard
+            thumbnail={img.thumbnail}
             url={img.url}
             caption={img.caption}
             alt={img.caption || 'Image'}
@@ -518,97 +518,109 @@ function toWikipediaReference(citation: Record<string, any>): string {
 
 export default function WikipediaArticle({ slug, language, wiki, bias }: WikipediaArticleProps) {
   const wikiData: any = {};
-  wikiData.pageImage = typeof wiki.pageImage === 'function' ? wiki.pageImage() : wiki.pageImage;
-  if (wikiData.pageImage) {
-    wikiData.pageImage.url = wikiData.pageImage.url();
-    wikiData.pageImage.caption = wikiData.pageImage.caption();
-  }
-  wikiData.title = wiki.title();
-  wikiData.sections = [];
-  wikiData.references = typeof wiki.references === 'function' ? wiki.references() : wiki.references;
-  wikiData.references.forEach((ref: any) => {
-    ref.title = typeof ref.title === 'function' ? ref.title() : ref.title;
-    ref.links = typeof ref.links === 'function' ? ref.links() : ref.links;
-    ref.text = typeof ref.text === 'function' ? ref.text() : ref.text;
-  });
+  if (wiki) {
+    wikiData.url = typeof wiki.url === 'function' ? wiki.url() : wiki.url;
+    wikiData.timestamp = typeof wiki.timestamp === 'function' ? wiki.timestamp() : wiki.timestamp;
+    wikiData.categories = typeof wiki.categories === 'function' ? wiki.categories() : wiki.categories;
 
-  wiki.sections().forEach((section: any) => {
-    let wikiSection: any = {
-      title: section.title(),
-      depth: section.depth(),
-    };
-    wikiSection.index = section.index();
-    wikiSection.infoboxes = section.infoboxes();
-    wikiSection.paragraphs = section.paragraphs();
+    wikiData.pageImage = typeof wiki.pageImage === 'function' ? wiki.pageImage() : wiki.pageImage;
+    if (wikiData.pageImage) {
+      wikiData.pageImage.url = typeof wikiData.pageImage.url === 'function' ? wikiData.pageImage.url() : wikiData.pageImage.url;
+      wikiData.pageImage.caption = typeof wikiData.pageImage.caption === 'function' ? wikiData.pageImage.caption() : wikiData.pageImage.caption;
+      wikiData.pageImage.alt = typeof wikiData.pageImage.alt === 'function' ? wikiData.pageImage.alt() : wikiData.pageImage.alt;
+      const size = 300;
+      wikiData.pageImage.thumbnail = `${wikiData.pageImage.url}?width=${size}`;
+    }
 
-    if (section.lists) {
-      section.lists = typeof section.lists === 'function' ? section.lists() : section.lists;
-      section.images = typeof section.images === 'function' ? section.images() : section.images;
-      section.wikitext = typeof section.wikitext === 'function' ? section.wikitext() : section.wikitext;
+    wikiData.title = typeof wiki.title === 'function' ? wiki.title() : wiki.title;
+    wikiData.sections = [];
+    wikiData.references = typeof wiki.references === 'function' ? wiki.references() : wiki.references;
+    wikiData.references.forEach((ref: any) => {
+      ref.title = typeof ref.title === 'function' ? ref.title() : ref.title;
+      ref.links = typeof ref.links === 'function' ? ref.links() : ref.links;
+      ref.text = typeof ref.text === 'function' ? ref.text() : ref.text;
+    });
 
-      section.images.forEach((image: any) => {
-        image.caption = typeof image.caption === 'function' ? image.caption() : image.caption;
-        image.url = typeof image.url === 'function' ? image.url() : image.url;
-      });
+    wiki.sections().forEach((section: any) => {
+      let wikiSection: any = {
+        title: section.title(),
+        depth: section.depth(),
+      };
+      wikiSection.index = typeof section.index === 'function' ? section.index() : section.index;
+      wikiSection.infoboxes = typeof section.infoboxes === 'function' ? section.infoboxes() : section.infoboxes;
+      wikiSection.paragraphs = typeof section.paragraphs === 'function' ? section.paragraphs() : section.paragraphs;
 
-      section.lists.forEach((list: any) => {
-        list.lines = typeof list.lines === 'function' ? list.lines() : list.lines;
-        list.text = typeof list.text === 'function' ? list.text() : list.text;
-        list.lines.forEach((line: any) => {
-          line.text = typeof line.text === 'function' ? line.text() : line.text;
-          line.links = typeof line.links === 'function' ? line.links() : line.links;
-          line.links.forEach((link: any) => {
+      if (section.lists) {
+        section.lists = typeof section.lists === 'function' ? section.lists() : section.lists;
+        section.images = typeof section.images === 'function' ? section.images() : section.images;
+        section.wikitext = typeof section.wikitext === 'function' ? section.wikitext() : section.wikitext;
+
+        section.images.forEach((image: any) => {
+          image.caption = typeof image.caption === 'function' ? image.caption() : image.caption;
+          image.url = typeof image.url === 'function' ? image.url() : image.url;
+          const size = 300;
+          image.thumbnail = `${image.url}?width=${size}`;
+        });
+
+        section.lists.forEach((list: any) => {
+          list.lines = typeof list.lines === 'function' ? list.lines() : list.lines;
+          list.text = typeof list.text === 'function' ? list.text() : list.text;
+          list.lines.forEach((line: any) => {
+            line.text = typeof line.text === 'function' ? line.text() : line.text;
+            line.links = typeof line.links === 'function' ? line.links() : line.links;
+            line.links.forEach((link: any) => {
+              link.text = typeof link.text === 'function' ? link.text() : link.text;
+              link.page = typeof link.page === 'function' ? link.page() : link.page;
+              link.url = typeof link.url === 'function' ? link.url() : link.url;
+            });
+          });
+        });
+      }
+
+      wikiData['sections'][wikiSection.index] = wikiSection;
+
+      wikiData['sections'][wikiSection.index]['paragraphs'].forEach((para: any) => {
+        para.sentences = typeof para.sentences === 'function' ? para.sentences() : para.sentences;
+        para.references = typeof para.references === 'function' ? para.references() : para.references;
+        para.lists = typeof para.lists === 'function' ? para.lists() : para.lists;
+        para.images = typeof para.images === 'function' ? para.images() : para.images;
+
+        para.images.forEach((img: any) => {
+          img.caption = typeof img.caption === 'function' ? img.caption() : img.caption;
+          img.url = typeof img.url === 'function' ? img.url() : img.url;
+        });
+
+        para.lists.forEach((list: any) => {
+          list.lines = typeof list.lines === 'function' ? list.lines() : list.lines;
+          list.text = typeof list.text === 'function' ? list.text() : list.text;
+          list.lines.forEach((line: any) => {
+            line.text = typeof line.text === 'function' ? line.text() : line.text;
+            line.links = typeof line.links === 'function' ? line.links() : line.links;
+            line.links.forEach((link: any) => {
+              link.text = typeof link.text === 'function' ? link.text() : link.text;
+              link.page = typeof link.page === 'function' ? link.page() : link.page;
+            });
+          });
+        });
+
+        para.sentences.forEach((sentence: any) => {
+          sentence.links = typeof sentence.links === 'function' ? sentence.links() : sentence.links;
+          sentence.text = typeof sentence.text === 'function' ? sentence.text() : sentence.text;
+          sentence.italics = typeof sentence.italics === 'function' ? sentence.italics() : sentence.italics;
+          sentence.bolds = typeof sentence.bolds === 'function' ? sentence.bolds() : sentence.bolds;
+
+          sentence.links.forEach((link: any) => {
             link.text = typeof link.text === 'function' ? link.text() : link.text;
             link.page = typeof link.page === 'function' ? link.page() : link.page;
             link.url = typeof link.url === 'function' ? link.url() : link.url;
           });
         });
       });
-    }
-
-    wikiData['sections'][wikiSection.index] = wikiSection;
-
-    wikiData['sections'][wikiSection.index]['paragraphs'].forEach((para: any) => {
-      para.sentences = typeof para.sentences === 'function' ? para.sentences() : para.sentences;
-      para.references = typeof para.references === 'function' ? para.references() : para.references;
-      para.lists = typeof para.lists === 'function' ? para.lists() : para.lists;
-      para.images = typeof para.images === 'function' ? para.images() : para.images;
-
-      para.images.forEach((img: any) => {
-        img.caption = typeof img.caption === 'function' ? img.caption() : img.caption;
-        img.url = typeof img.url === 'function' ? img.url() : img.url;
-      });
-
-      para.lists.forEach((list: any) => {
-        list.lines = typeof list.lines === 'function' ? list.lines() : list.lines;
-        list.text = typeof list.text === 'function' ? list.text() : list.text;
-        list.lines.forEach((line: any) => {
-          line.text = typeof line.text === 'function' ? line.text() : line.text;
-          line.links = typeof line.links === 'function' ? line.links() : line.links;
-          line.links.forEach((link: any) => {
-            link.text = typeof link.text === 'function' ? link.text() : link.text;
-            link.page = typeof link.page === 'function' ? link.page() : link.page;
-          });
-        });
-      });
-
-      para.sentences.forEach((sentence: any) => {
-        sentence.links = typeof sentence.links === 'function' ? sentence.links() : sentence.links;
-        sentence.text = typeof sentence.text === 'function' ? sentence.text() : sentence.text;
-        sentence.italics = typeof sentence.italics === 'function' ? sentence.italics() : sentence.italics;
-        sentence.bolds = typeof sentence.bolds === 'function' ? sentence.bolds() : sentence.bolds;
-
-        sentence.links.forEach((link: any) => {
-          link.text = typeof link.text === 'function' ? link.text() : link.text;
-          link.page = typeof link.page === 'function' ? link.page() : link.page;
-          link.url = typeof link.url === 'function' ? link.url() : link.url;
-        });
-      });
     });
-  });
-
+  }
 
   const nestedJsonSections = nestSections(wikiData.sections);
+  
   const dict = getDictionary(language as Locale);
 
   if (!wiki) {
@@ -665,7 +677,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                       <div className="relative">
                         {wikiData.pageImage && wikiData.pageImage.url && wikiData.pageImage.url !== 'https://wikipedia.org/wiki/Special:Redirect/file/' && (
                           <div className="block md:float-right md:ml-4 mb-4 md:max-w-[30vw] lg:max-w-[25vw] bg-white border border-gray-200 rounded-sm p-4">
-                            <MediaCard url={wikiData.pageImage.url} caption={wikiData.pageImage.caption} alt={wikiData.pageImage.caption} />
+                            <MediaCard loading='eager' thumbnail={wikiData.pageImage.thumbnail} url={wikiData.pageImage.url} caption={wikiData.pageImage.caption} alt={wikiData.pageImage.alt} />
                           </div>
                         )}
                         <SectionContent section={section} language={language} bias={bias} wiki={wiki} mobile={false} pageImageUrl={wikiData.pageImage?.url} />
