@@ -7270,7 +7270,7 @@ const ha: Dictionary = {
         part2: 'Duba Wikipedia →',
       },
       conservative: 'Wannan labarin an ƙirƙira shi ne ta membobin al\'umma don ba da hangen nesa na masu adawa da canji wanda ya mai da hankali kan al\'ada, kwanciyar hankali, da ƙimar iyali.',
-      nationalist: 'Wannan labarin an ƙirƙira shi ne ta membobin al\'umma don ba da hangen nesa na ƙasaitacce wanda ya mai da hankali kan ikon yanke shawara na
+      nationalist: 'Wannan labarin an ƙirƙira shi ne ta membobin al\'umma don ba da hangen nesa na ƙasaitacce wanda ya mai da hankali kan ikon yanke shawara na ƙasa da asalin al\'adu.',
     },
     lastEdited: 'An gyara ƙarshe',
     tools: 'Kayan aiki',
