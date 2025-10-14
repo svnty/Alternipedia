@@ -84,13 +84,53 @@ export default function BottomTools() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    // Safari iOS sometimes reflows the visual viewport when the address bar
+    // hides/shows which can make position:fixed elements appear to 'jump'.
+    // Keep the FAB pinned by using the visualViewport height delta and
+    // applying it into a calc(...) together with the safe-area inset.
+    const updateBottom = () => {
+      const el = buttonRef.current;
+      const menuEl = menuRef.current;
+
+      // visualViewport may be undefined in some browsers; fall back to 0
+      const vv = (window as any).visualViewport;
+      const viewportDelta = vv ? Math.max(0, window.innerHeight - vv.height) : 0;
+
+      // Keep using env(safe-area-inset-bottom) so devices with notches are fine.
+      // We add the pixel delta so when the chrome hides the FAB stays glued to
+      // the bottom of the visible viewport.
+      const fabBottom = `calc(env(safe-area-inset-bottom, 0px) + 16px + ${viewportDelta}px)`;
+      const menuBottom = `calc(env(safe-area-inset-bottom, 0px) + 68px + ${viewportDelta}px)`;
+
+      if (el) el.style.bottom = fabBottom;
+      if (menuEl) menuEl.style.bottom = menuBottom;
+    };
+
+    updateBottom();
+
+    if ((window as any).visualViewport) {
+      (window as any).visualViewport.addEventListener("resize", updateBottom);
+      (window as any).visualViewport.addEventListener("scroll", updateBottom);
+    }
+    window.addEventListener("resize", updateBottom);
+
+    return () => {
+      if ((window as any).visualViewport) {
+        (window as any).visualViewport.removeEventListener("resize", updateBottom);
+        (window as any).visualViewport.removeEventListener("scroll", updateBottom);
+      }
+      window.removeEventListener("resize", updateBottom);
+    };
+  }, []);
+
   return (
     <>
       <Button
         id="fab"
         ref={buttonRef}
         onClick={toggleMenu}
-        className={`fixed right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all ${isMenuOpen ? "bg-gray-700" : ""} bottom-[calc(env(safe-area-inset-bottom,0px)+16px)]`}>
+        className={`fixed right-8 aspect-square bg-gray-800 text-white shadow-sm hover:shadow-lg cursor-pointer block lg:hidden z-20 hover:scale-105 justify-content-center flex flex-row items-center transition-all transform-gpu will-change-transform ${isMenuOpen ? "bg-gray-700" : ""}`}>
         {isMenuOpen ? (
           <X className="-ms-1 opacity-60 inline flex-1 text-red-300" aria-hidden="true" />
         ) : (
@@ -112,7 +152,7 @@ export default function BottomTools() {
         <div
           ref={menuRef}
           // className="fixed bottom-18 right-8 bg-gray-800 rounded-lg shadow-xl p-2 z-20 min-w-48 animate-in fade-in slide-in-from-bottom-2 duration-200 block lg:hidden w-[calc(100vw-4rem)] shadow-md"
-          className="fixed right-8 bg-gray-800 rounded-lg shadow-xl p-2 z-20 min-w-48 animate-in fade-in slide-in-from-bottom-2 duration-200 block lg:hidden w-[calc(100vw-4rem)] shadow-md bottom-[calc(env(safe-area-inset-bottom,0px)+68px)]"
+          className="fixed right-8 bg-gray-800 rounded-lg shadow-xl p-2 z-20 min-w-48 animate-in fade-in slide-in-from-bottom-2 duration-200 block lg:hidden w-[calc(100vw-4rem)] shadow-md transform-gpu will-change-transform"
         >
           <div className="flex flex-col gap-1">
 

@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CookieBanner() {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -25,6 +25,8 @@ export default function CookieBanner() {
         } else {
           setOpen(false);
         }
+      } else {
+        setOpen(true);
       }
     }
   }, []);
