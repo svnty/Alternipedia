@@ -692,7 +692,7 @@ export default function Article({
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
           isVisible={isLoadingBias}
-          message={"Loading perspective..."}
+          message={dict.common.loadingPerspective}
         />
         {children}
       </div>

@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from '@/lib/auth';
 import { Analytics } from "@vercel/analytics/next"
 import React from "react";
 import Link from "next/link";
@@ -57,7 +55,6 @@ export default async function Layout({
   }
 
   const dict = getDictionary(lang as Locale);
-  const session = await getServerSession(authOptions);
 
   return (
     <div>

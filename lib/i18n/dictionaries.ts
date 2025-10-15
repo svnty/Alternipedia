@@ -69,6 +69,8 @@ export type Dictionary = {
     comingSoon: string;
     stayTuned: string;
     exampleArticle: string;
+    loadingPerspective: string;
+    fetchingUserInfo: string;
   };
   navigation: {
     aboutUs: string;
@@ -468,6 +470,8 @@ const en: Dictionary = {
     title: "Reading bias",
   },
   common: {
+    fetchingUserInfo: 'Fetching user info...',
+    loadingPerspective: 'Loading perspective...',
     home: 'Home',
     about: 'About',
     help: 'Help',
@@ -753,6 +757,8 @@ const es: Dictionary = {
     title: "Sesgo de lectura",
   },
   common: {
+    fetchingUserInfo: 'Obteniendo información del usuario...',
+    loadingPerspective: 'Cargando perspectiva...',
     home: 'Inicio',
     about: 'Acerca de',
     help: 'Ayuda',
@@ -1038,6 +1044,8 @@ const fr: Dictionary = {
     title: "Biais de lecture",
   },
   common: {
+    fetchingUserInfo: 'Récupération des informations utilisateur...',
+    loadingPerspective: 'Chargement de la perspective...',
     home: 'Accueil',
     about: 'À propos',
     help: 'Aide',
@@ -1323,6 +1331,8 @@ const de: Dictionary = {
     title: "Lesevoreingenommenheit",
   },
   common: {
+    fetchingUserInfo: 'Benutzerinformationen werden abgerufen...',
+    loadingPerspective: 'Perspektive wird geladen...',
     home: 'Startseite',
     about: 'Über uns',
     help: 'Hilfe',
@@ -1608,6 +1618,8 @@ const it: Dictionary = {
     title: "Pregiudizio di lettura",
   },
   common: {
+    loadingPerspective: 'Caricamento della prospettiva...',
+    fetchingUserInfo: 'Recupero delle informazioni utente...',
     home: 'Home',
     about: 'Informazioni',
     help: 'Aiuto',
@@ -1893,6 +1905,8 @@ const pt: Dictionary = {
     title: "Viés de leitura",
   },
   common: {
+    loadingPerspective: 'Carregando perspectiva...',
+    fetchingUserInfo: 'Buscando informações do usuário...',
     home: 'Início',
     about: 'Sobre',
     help: 'Ajuda',
@@ -2249,6 +2263,8 @@ const ja: Dictionary = {
     title: "読書バイアス",
   },
   common: {
+    loadingPerspective: '視点を読み込み中...',
+    fetchingUserInfo: 'ユーザー情報を取得中...',
     home: 'ホーム',
     about: '概要',
     help: 'ヘルプ',
@@ -2534,6 +2550,8 @@ const zh: Dictionary = {
     title: "阅读偏见",
   },
   common: {
+    loadingPerspective: '正在加载视角...',
+    fetchingUserInfo: '正在获取用户信息...',
     home: '首页',
     about: '关于',
     help: '帮助',
@@ -2819,6 +2837,8 @@ const ko: Dictionary = {
     title: "읽기 편향",
   },
   common: {
+    loadingPerspective: '관점 로딩 중...',
+    fetchingUserInfo: '사용자 정보 가져오는 중...',
     home: '홈',
     about: '소개',
     help: '도움말',
@@ -3104,6 +3124,8 @@ const ru: Dictionary = {
     title: "Предвзятость при чтении",
   },
   common: {
+    loadingPerspective: 'Загрузка перспективы...',
+    fetchingUserInfo: 'Получение информации о пользователе...',
     home: 'Главная',
     about: 'О нас',
     help: 'Помощь',
@@ -3466,6 +3488,8 @@ const ar: Dictionary = {
     title: "التحيز في القراءة",
   },
   common: {
+    loadingPerspective: 'جارٍ تحميل المنظور...',
+    fetchingUserInfo: 'جارٍ جلب معلومات المستخدم...',
     home: 'الرئيسية',
     about: 'حول',
     help: 'مساعدة',
@@ -3800,6 +3824,8 @@ const hi: Dictionary = {
     pageInfo: "पृष्ठ जानकारी",
   },
   common: {
+    loadingPerspective: 'परिप्रेक्ष्य लोड हो रहा है...',
+    fetchingUserInfo: 'उपयोगकर्ता जानकारी ला रहा है...',
     home: 'होम',
     about: 'हमारे बारे में',
     help: 'मदद',
@@ -4170,6 +4196,8 @@ const bn: Dictionary = {
     pageInfo: "পৃষ্ঠার তথ্য",
   },
   common: {
+    loadingPerspective: 'দৃষ্টিভঙ্গি লোড হচ্ছে...',
+    fetchingUserInfo: 'ব্যবহারকারীর তথ্য আনছে...',
     home: 'হোম',
     about: 'আমাদের সম্পর্কে',
     help: 'মদদ',
@@ -4538,6 +4566,8 @@ const ur: Dictionary = {
     title: "پڑھنے کا پہلو",
   },
   common: {
+    loadingPerspective: 'نقطہ نظر لوڈ ہو رہا ہے...',
+    fetchingUserInfo: 'صارف کی معلومات لا رہا ہے...',
     home: 'ہوم',
     about: 'ہمارے بارے میں',
     help: 'مدد',
@@ -4888,6 +4918,8 @@ const id: Dictionary = {
     title: "Pihak Bacaan",
   },
   common: {
+    loadingPerspective: 'Memuat perspektif...',
+    fetchingUserInfo: 'Mengambil info pengguna...',
     home: 'Beranda',
     about: 'Tentang',
     help: 'Bantuan',
@@ -5179,6 +5211,8 @@ const mr: Dictionary = {
     title: "वाचन पक्षपाती",
   },
   common: {
+    loadingPerspective: 'दृष्टीकोन लोड करत आहे...',
+    fetchingUserInfo: 'वापरकर्ता माहिती मिळवत आहे...',
     home: 'मुख्यपृष्ठ',
     about: 'आमच्याबद्दल',
     help: 'सहाय्य',
@@ -5436,6 +5470,8 @@ const te: Dictionary = {
     title: "పక్షపాత దృష్టిలో చదవడం",
   },
   common: {
+    loadingPerspective: 'దృష్టికోణం లోడ్ అవుతోంది...',
+    fetchingUserInfo: 'వినియోగదారు సమాచారం పొందుతోంది...',
     home: 'హోమ్',
     about: 'మన గురించి',
     help: 'సహాయం',
@@ -5785,6 +5821,8 @@ const tr: Dictionary = {
     title: "Okuma önyargısı",
   },
   common: {
+    loadingPerspective: 'Bakış açısı yükleniyor...',
+    fetchingUserInfo: 'Kullanıcı bilgileri alınıyor...',
     home: 'Ana Sayfa',
     about: 'Hakkında',
     help: 'Yardım',
@@ -6060,6 +6098,8 @@ const ta: Dictionary = {
     title: "படிக்கையில் முன்னுரிமை",
   },
   common: {
+    loadingPerspective: 'பார்வை ஏற்றுகிறது...',
+    fetchingUserInfo: 'பயனர் தகவல் பெறப்படுகிறது...',
     home: 'முகப்பு',
     about: 'பற்றி',
     help: 'உதவி',
@@ -6343,6 +6383,8 @@ const yue: Dictionary = {
     title: "閱讀偏見",
   },
   common: {
+    loadingPerspective: '正在加載觀點...',
+    fetchingUserInfo: '正在獲取用戶信息...',
     home: '首頁',
     about: '關於',
     help: '幫助',
@@ -6622,6 +6664,8 @@ const vi: Dictionary = {
     title: "Đọc định kiến",
   },
   common: {
+    loadingPerspective: 'Đang tải góc nhìn...',
+    fetchingUserInfo: 'Đang lấy thông tin người dùng...',
     home: 'Trang chủ',
     about: 'Giới thiệu',
     help: 'Trợ giúp',
@@ -6901,6 +6945,8 @@ const fil: Dictionary = {
     title: "Pagbasa ng bias",
   },
   common: {
+    loadingPerspective: 'Naglo-load ng pananaw...',
+    fetchingUserInfo: 'Kumuha ng impormasyon ng user...',
     home: 'Bahayan',
     about: 'Tungkol',
     help: 'Tulong',
@@ -7180,6 +7226,8 @@ const ha: Dictionary = {
     title: "Menene son zuciya?",
   },
   common: {
+    loadingPerspective: 'Ana ɗora ra\'ayi...',
+    fetchingUserInfo: 'Ana ɗaukar bayanan mai amfani...',
     home: 'Tafkin Gida',
     about: 'Game da Mu',
     help: 'Taimako',
@@ -7458,6 +7506,8 @@ const arz: Dictionary = {
     title: "تحيز القراءة",
   },
   common: {
+    loadingPerspective: 'جارٍ تحميل وجهة النظر...',
+    fetchingUserInfo: 'جارٍ جلب معلومات المستخدم...',
     home: 'الصفحة الرئيسية',
     about: 'معلومات عنا',
     help: 'مساعدة',
@@ -7736,6 +7786,8 @@ const jv: Dictionary = {
     title: "Bias maca",
   },
   common: {
+    loadingPerspective: 'Ngundhuh perspektif...',
+    fetchingUserInfo: 'Njupuk info pangguna...',
     home: 'Ngarep',
     about: 'Babagan',
     help: 'Pitulung',
@@ -8017,6 +8069,8 @@ const nl: Dictionary = {
   termsAndConditions: 'Algemene Voorwaarden',
   close: 'Sluiten',
   common: {
+    loadingPerspective: 'Perspectief laden...',
+    fetchingUserInfo: 'Gebruikersinformatie ophalen...',
     home: 'Home',
     about: 'Over',
     help: 'Hulp',
@@ -8295,6 +8349,8 @@ const el: Dictionary = {
     title: "Προκατάληψη ανάγνωσης",
   },
   common: {
+    loadingPerspective: 'Φόρτωση προοπτικής...',
+    fetchingUserInfo: 'Ανάκτηση πληροφοριών χρήστη...',
     home: 'Αρχική',
     about: 'Σχετικά',
     help: 'Βοήθεια',
@@ -8572,6 +8628,8 @@ const sv: Dictionary = {
     title: "Läsningsbias",
   },
   common: {
+    loadingPerspective: 'Laddar perspektiv...',
+    fetchingUserInfo: 'Hämtar användarinformation...',
     home: 'Hem',
     about: 'Om',
     help: 'Hjälp',
@@ -8851,6 +8909,8 @@ const no: Dictionary = {
   termsAndConditions: 'Vilkår og betingelser',
   close: 'Lukk',
   common: {
+    loadingPerspective: 'Laster perspektiv...',
+    fetchingUserInfo: 'Henter brukerinformasjon...',
     home: 'Hjem',
     about: 'Om',
     help: 'Hjelp',
@@ -9128,6 +9188,8 @@ const pl: Dictionary = {
     title: "Stronniczość czytania",
   },
   common: {
+    loadingPerspective: 'Ładowanie perspektywy...',
+    fetchingUserInfo: 'Pobieranie informacji o użytkowniku...',
     home: 'Strona główna',
     about: 'O nas',
     help: 'Pomoc',
@@ -9405,6 +9467,8 @@ const th: Dictionary = {
     title: "อคติในการอ่าน",
   },
   common: {
+    loadingPerspective: 'กำลังโหลดมุมมอง...',
+    fetchingUserInfo: 'กำลังดึงข้อมูลผู้ใช้...',
     home: 'หน้าแรก',
     about: 'เกี่ยวกับ',
     help: 'ช่วยเหลือ',
@@ -9686,6 +9750,8 @@ const uk: Dictionary = {
     title: "Упередження читання",
   },
   common: {
+    loadingPerspective: 'Завантаження перспективи...',
+    fetchingUserInfo: 'Отримання інформації про користувача...',
     home: 'Головна',
     about: 'Про нас',
     help: 'Довідка',
@@ -9963,6 +10029,8 @@ const ro: Dictionary = {
     title: "Părtinire în lectură",
   },
   common: {
+    loadingPerspective: 'Se încarcă perspectiva...',
+    fetchingUserInfo: 'Se preiau informațiile utilizatorului...',
     home: 'Acasă',
     about: 'Despre',
     help: 'Ajutor',
@@ -10240,6 +10308,8 @@ const cs: Dictionary = {
     title: "Předpojatost čtení",
   },
   common: {
+    loadingPerspective: 'Načítání perspektivy...',
+    fetchingUserInfo: 'Načítání informací o uživateli...',
     home: 'Domů',
     about: 'O nás',
     help: 'Nápověda',
@@ -10517,6 +10587,8 @@ const hu: Dictionary = {
     title: "Olvasási elfogultság",
   },
   common: {
+    loadingPerspective: 'Nézőpont betöltése...',
+    fetchingUserInfo: 'Felhasználói információk betöltése...',
     home: 'Főoldal',
     about: 'Rólunk',
     help: 'Súgó',
@@ -10794,6 +10866,8 @@ const fi: Dictionary = {
     title: "Lukemisen ennakkoluulo",
   },
   common: {
+    loadingPerspective: 'Ladataan näkökulmaa...',
+    fetchingUserInfo: 'Haetaan käyttäjätietoja...',
     home: 'Etusivu',
     about: 'Tietoja',
     help: 'Ohje',
@@ -11071,6 +11145,8 @@ const da: Dictionary = {
     title: "Læsebias",
   },
   common: {
+    loadingPerspective: 'Indlæser perspektiv...',
+    fetchingUserInfo: 'Henter brugerinfo...',
     home: 'Hjem',
     about: 'Om',
     help: 'Hjælp',
@@ -11350,6 +11426,8 @@ const bg: Dictionary = {
     title: "Пристрастие при четене",
   },
   common: {
+    loadingPerspective: 'Зареждане на перспектива...',
+    fetchingUserInfo: 'Извличане на потребителска информация...',
     home: 'Начало',
     about: 'За нас',
     help: 'Помощ',
@@ -11629,6 +11707,8 @@ const sk: Dictionary = {
     title: "Predpojatosť čítania",
   },
   common: {
+    loadingPerspective: 'Načítavanie perspektívy...',
+    fetchingUserInfo: 'Načítavanie informácií o používateľovi...',
     home: 'Domov',
     about: 'O nás',
     help: 'Pomoc',
@@ -11908,6 +11988,8 @@ const hr: Dictionary = {
     title: "Pristranost čitanja",
   },
   common: {
+    loadingPerspective: 'Učitavanje perspektive...',
+    fetchingUserInfo: 'Učitavanje korisničkih informacija...',
     home: 'Početna',
     about: 'O nama',
     help: 'Pomoć',
@@ -12193,6 +12275,8 @@ const lt: Dictionary = {
     title: "Skaitymo šališkumas",
   },
   common: {
+    loadingPerspective: 'Įkeliama perspektyva...',
+    fetchingUserInfo: 'Įkeliama vartotojo informacija...',
     home: 'Pagrindinis',
     about: 'Apie',
     help: 'Pagalba',
@@ -12480,6 +12564,8 @@ const sl: Dictionary = {
     title: "Branje s pristranskostjo",
   },
   common: {
+    loadingPerspective: 'Nalaganje perspektive...',
+    fetchingUserInfo: 'Nalaganje uporabniških informacij...',
     home: 'Domov',
     about: 'O nas',
     help: 'Pomoč',
@@ -12767,6 +12853,8 @@ const lv: Dictionary = {
     title: "Lasīšanas aizspriedums",
   },
   common: {
+    loadingPerspective: 'Ielādē perspektīvu...',
+    fetchingUserInfo: 'Ielādē lietotāja informāciju...',
     home: 'Sākums',
     about: 'Par mums',
     help: 'Palīdzība',
@@ -13054,6 +13142,8 @@ const et: Dictionary = {
     title: "Lugemise eelarvamus",
   },
   common: {
+    loadingPerspective: 'Laeb vaatenurka...',
+    fetchingUserInfo: 'Laeb kasutajaandmeid...',
     home: 'Avaleht',
     about: 'Meist',
     help: 'Abi',
@@ -13341,6 +13431,8 @@ const is: Dictionary = {
     title: "Hlutdrægni í lestri",
   },
   common: {
+    loadingPerspective: "Hleður sjónarmiði...",
+    fetchingUserInfo: "Sækir notanda upplýsingar...",
     home: "Heim",
     about: "Um okkur",
     help: "Hjálp",
@@ -13628,6 +13720,8 @@ const sq: Dictionary = {
     title: "Paragjykimi në lexim",
   },
   common: {
+    loadingPerspective: "Duke ngarkuar perspektivën...",
+    fetchingUserInfo: "Duke marrë informacionin e përdoruesit...",
     home: "Kreu",
     about: "Rreth nesh",
     help: "Ndihmë",
@@ -13915,6 +14009,8 @@ const sr: Dictionary = {
     title: "Pristrasnost u čitanju",
   },
   common: {
+    loadingPerspective: "Učitavanje perspektive...",
+    fetchingUserInfo: "Preuzimanje informacija o korisniku...",
     home: "Početna",
     about: "O nama",
     help: "Pomoć",
@@ -14202,6 +14298,8 @@ const mk: Dictionary = {
     title: "Предрасуда при читање",
   },
   common: {
+    loadingPerspective: "Се вчитува перспектива...",
+    fetchingUserInfo: "Се преземаат информации за корисникот...",
     home: "Почетна",
     about: "За нас",
     help: "Помош",
@@ -14489,6 +14587,8 @@ const bs: Dictionary = {
     title: "Pristrasnost pri čitanju",
   },
   common: {
+    loadingPerspective: "Učitavanje perspektive...",
+    fetchingUserInfo: "Dohvatanje informacija o korisniku...",
     home: "Početna",
     about: "O nama",
     help: "Pomoć",
@@ -14776,6 +14876,8 @@ const cnr: Dictionary = {
     title: "Pristrasnost pri čitanju",
   },
   common: {
+    loadingPerspective: "Učitavanje perspektive...",
+    fetchingUserInfo: "Dohvatanje informacija o korisniku...",
     home: "Početna",
     about: "O nama",
     help: "Pomoć",
@@ -15063,6 +15165,8 @@ const mt: Dictionary = {
     title: "Lettura b’partiċolarità",
   },
   common: {
+    loadingPerspective: "Tgħabbi l-prospettiva...",
+    fetchingUserInfo: "Qed tiġi mfittxija l-informazzjoni tal-utent...",
     home: "Dar",
     about: "Dwarna",
     help: "Għajnuna",

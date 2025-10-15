@@ -6,6 +6,9 @@
     "dev:ios": "npx cap sync ios && npx cap open ios",
     "dev:android": "npx cap sync android && npx cap open android",
     "dev:web": "next dev",
+    "dev:db": "concurrently -n POSTGRES,STUDIO -c yellow,cyan \"docker-compose up\" \"prisma studio\"",
+    "dev": "concurrently -n POSTGRES,STUDIO,WEB,CLIENT -c yellow,cyan,green,blue \"docker-compose up\" \"prisma studio\" \"next dev\"",
+    "migrate:db": "prisma migrate dev --name update-from-npm",
     "build:web": "next build",
     "start:web": "next start",
     "postinstall": "prisma generate",
@@ -59,6 +62,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.14",
     "typescript": "^5"
