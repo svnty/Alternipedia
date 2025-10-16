@@ -79,7 +79,7 @@ const MainToolbarContent = ({
 }) => {
   return (
     <>
-      <ToolbarGroup className={isMobile ? 'ml-2 mr-6' : ''}>
+      <ToolbarGroup className={isMobile ? 'ml-2 mr-6' : 'ml-4'}>
         <HeadingDropdownMenu levels={[1, 2, 3]} portal={true} />
         <ListDropdownMenu
           types={["bulletList", "orderedList"]}
@@ -171,13 +171,13 @@ export function SimpleEditor({ editor }: { editor: any }) {
       <EditorContext.Provider value={{ editor }}>
         <Toolbar
           ref={toolbarRef}
-          // style={{
-          //   ...(isMobile
-          //     ? {
-          //         bottom: `calc(100% - ${height - rect.y}px)`,
-          //       }
-          //     : {}),
-          // }}
+          style={{
+            ...(isMobile
+              ? {
+                  bottom: `calc(100% - ${height - rect.y}px)`,
+                }
+              : {}),
+          }}
         >
           {mobileView === "main" ? (
             <MainToolbarContent
