@@ -30,10 +30,7 @@ export default function WikipediaContents({ slug, language, bias }: WikipediaCon
       setHeadings(data);
     };
     window.addEventListener('wikipediaHeadingsUpdated', handler as EventListener);
-    console.log("WikipediaContents mounted or bias changed to:", bias);
-    console.log("Initial headings:", wikipediaHeadings);
-    console.log("Listening for wikipediaHeadingsUpdated events.");
-
+    
     return () => {
       window.removeEventListener('wikipediaHeadingsUpdated', handler as EventListener);
     };

@@ -39,10 +39,6 @@ export default function Bias({ slug, language, bias }: { slug: string; language:
           </p>
         </div>
       )}
-
-      <main className="mx-auto">
-        
-      </main>
     </article>
   );
 }

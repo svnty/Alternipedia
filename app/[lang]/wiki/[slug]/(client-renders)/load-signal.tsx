@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 export default function ClientLoadedSignal() {
   useEffect(() => {
-    console.log("ClientLoadedSignal: dispatching load-signal event");
     // Mark page as loaded for any synchronous checks
     (window as any).__page_loaded__ = true;
 

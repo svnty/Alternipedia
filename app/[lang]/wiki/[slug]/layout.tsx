@@ -61,7 +61,6 @@ export default function Article({
   const initialBiasAppliedRef = useRef(false);
 
   useEffect(() => {
-    // console.log("isLoadingBias changed to:", isLoadingBias);
   }, [isLoadingBias]);
 
   if (!isValidLocale(currentLang)) {
@@ -299,7 +298,6 @@ export default function Article({
   /* ================== BIAS AND PATHNAME HANDLING ================== */
   useEffect(() => {
     const onLoaded = () => {
-      // console.log("onLoaded called, setting isLoadingBias to false");
       (window as any).__page_loaded_handled__ = true;
       setIsLoadingBias(false);
     };

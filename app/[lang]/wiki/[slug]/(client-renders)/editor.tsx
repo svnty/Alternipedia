@@ -9,15 +9,16 @@ import Superscript from "@tiptap/extension-superscript";
 import TextAlign from "@tiptap/extension-text-align";
 import Subscript from "@tiptap/extension-subscript";
 import Image from "@tiptap/extension-image";
-import { Selection } from "@tiptap/extensions"
-import { Table, TableRow, TableCell, TableHeader } from '@tiptap/extension-table'
+import BlockQuote from '@tiptap/extension-blockquote';
+import { Selection } from "@tiptap/extensions";
+import { Table, TableRow, TableCell, TableHeader } from '@tiptap/extension-table';
 import Typography from "@tiptap/extension-typography";
-import { ImageUploadNode } from "@/app/(components)/ui/tiptap-node/image-upload-node"
-import { AudioUploadNode } from "@/app/(components)/ui/tiptap-node/audio-upload-node"
+import { ImageUploadNode } from "@/app/(components)/ui/tiptap-node/image-upload-node";
+import { AudioUploadNode } from "@/app/(components)/ui/tiptap-node/audio-upload-node";
 import { VideoUploadNode } from "@/app/(components)/ui/tiptap-node/video-upload-node";
-import { handleImageUpload, handleAudioUpload, handleVideoUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
-import { debounce } from "@/lib/utils"
-import { useId } from "react"
+import { handleImageUpload, handleAudioUpload, handleVideoUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
+import { debounce } from "@/lib/utils";
+import { useId } from "react";
 import { Tag, TagInput } from "emblor";
 
 const emptyDoc = {
@@ -40,6 +41,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
   const [articleId, setArticleId] = useState(0);
   const [editorError, setEditorError] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [tagInputValue, setTagInputValue] = useState("");
 
   const debouncedSave = useCallback(
     debounce((content: any) => {
@@ -90,9 +92,12 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
           openOnClick: false,
           enableClickSelection: true,
         },
+        // disable built-in blockquote to allow registering a custom blockquote extension elsewhere
+        blockquote: false,
       }),
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Image,
+      BlockQuote,
       Typography,
       Superscript,
       Subscript,
@@ -132,8 +137,6 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
     // but only call editor.commands.setContent if the editor instance exists.
     setIsLoaded(false);
     if (revision) {
-      console.log("Revision received:", revision);
-      
       let tags = [];
       const revCategories = revision?.article?.categories || [];
       for (const tag of revCategories) {
@@ -175,9 +178,26 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
     }
   }, [editor, serverData, isLoaded]);
 
+  // Fetch category suggestions for the current language and make them available to the TagInput
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const resp = await fetch(`/api/categories/${lang}`);
+        if (!resp.ok) return;
+        const payload = await resp.json();
+        if (!mounted) return;
+        const options: Tag[] = (payload.categories || []).map((name: string) => ({ id: name, text: name }));
+        setAllCategories(options);
+      } catch (err) {
+        console.error("Failed to fetch category suggestions:", err);
+      }
+    })();
+    return () => { mounted = false; };
+  }, [lang]);
+
   const handleReset = () => {
     localStorage.removeItem(`wiki-draft-${slug}-${bias}-${lang}`);
-    console.log("Resetting editor to server content");
 
     editor?.commands.setContent(serverData.length > 0 ? {
       type: "doc",
@@ -189,8 +209,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
     setIsSaving(true);
     try {
       const blocks = editor?.getJSON().content || [];
-      console.log("Saving blocks:", blocks);
-      await fetch(`/api/${lang}/wiki/${slug}`, {
+      const resp = await fetch(`/api/${lang}/wiki/${slug}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -200,12 +219,58 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
           categories: tags.map((t) => t.text)
         }),
       });
+
+      // Handle non-2xx responses with friendly messages
+      if (!resp.ok) {
+        let payload: any = {};
+        try {
+          payload = await resp.json();
+        } catch (e) {
+          // non-json response
+        }
+
+        // Map common API errors to user-visible text
+        const apiError = (payload && payload.error) || resp.statusText || "An error occurred";
+
+        if (resp.status === 401) {
+          setEditorError("You must be signed in to submit changes. Please sign in and try again.");
+        } else if (resp.status === 403) {
+          // Specific messages from server like banned vs permission
+          if (typeof apiError === "string" && apiError.toLowerCase().includes("banned")) {
+            setEditorError("You are banned from editing this affiliation. If you believe this is a mistake, contact moderators.");
+          } else {
+            setEditorError("You do not have permission to edit this affiliation. Join the affiliation or ask an admin to grant access.");
+          }
+        } else if (resp.status === 400) {
+          // Bad request — show server message or a helpful hint
+          if (typeof apiError === "string" && apiError.toLowerCase().includes("bias") && apiError.toLowerCase().includes("not found")) {
+            setEditorError("The selected affiliation was not found. Try refreshing the page or pick a different affiliation.");
+          } else if (apiError === "Invalid blocks array") {
+            setEditorError("The article content looks invalid. Try simplifying your edits or copy your changes, refresh, and try again.");
+          } else {
+            setEditorError(String(apiError));
+          }
+        } else if (resp.status >= 500) {
+          setEditorError("Server error while saving. Please try again later.");
+        } else {
+          setEditorError(String(apiError));
+        }
+
+        console.error("Save failed:", resp.status, payload);
+        return;
+      }
+
+      // Success
       localStorage.removeItem(`wiki-draft-${slug}-${bias}-${lang}`);
     } catch (err) {
       console.error("Save failed:", err);
+      setEditorError("Unexpected error while saving. Check your connection and try again.");
     } finally {
       setIsSaving(false);
-      window.location.reload();
+      // On success we reload to show the new revision; if there is an error, the earlier returns prevented reaching here
+      if (!editorError) {
+        window.location.reload();
+      }
     }
   };
 
@@ -241,6 +306,27 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
 
   return (
     <div className="w-full">
+      {/* Page-blocking overlay while saving to prevent accidental clicks */}
+      {isSaving && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm"
+        >
+          <div className="bg-white/95 dark:bg-neutral-900/95 rounded-lg shadow-2xl px-6 py-5 flex items-center gap-4 max-w-xl w-[min(90%,560px)]">
+            <div className="flex items-center justify-center">
+              <svg className="w-10 h-10 animate-spin text-gray-700" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+              </svg>
+            </div>
+            <div className="flex flex-col">
+              <div className="font-medium text-gray-900 dark:text-gray-100">Saving changes</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Please wait — your edits are being saved to the database.</div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="min-h-[200px] border rounded-md p-1 bg-background">
         <SimpleEditor editor={editor} />
       </div>
@@ -250,11 +336,24 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
           id={id}
           tags={tags}
           setTags={setTags}
+          disabled={isSaving}
           placeholder="Categories..."
+          enableAutocomplete={true}
+          autocompleteOptions={allCategories}
+          // Use React state for the typed input and a nicer case-insensitive substring match
+          onInputChange={(value: string) => setTagInputValue(value)}
+          autocompleteFilter={(optionText: string) => optionText.toLowerCase().includes(tagInputValue.toLowerCase())}
           styleClasses={{
             inlineTagsContainer:
               "border-input rounded-md bg-background shadow-xs transition-[color,box-shadow] focus-within:border-ring outline-none focus-within:ring-[3px] focus-within:ring-ring/50 p-1 gap-1",
-            input: "w-full min-w-[80px] shadow-none px-2 h-7",
+            input: "w-full min-w-[80px] shadow-none px-2 h-8",
+            autoComplete: {
+              popoverTrigger: "",
+              popoverContent: "mt-1 w-64 max-h-56 overflow-auto bg-white dark:bg-neutral-900 rounded-md shadow-lg ring-1 ring-black/5",
+              commandList: "py-1",
+              commandItem: "px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer",
+              commandGroup: "",
+            },
             tag: {
               body: "h-7 relative bg-background border border-input hover:bg-background rounded-md font-medium text-xs ps-2 pe-7",
               closeButton:

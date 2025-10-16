@@ -140,7 +140,7 @@ export default async function handler(
 
     const banned = await prisma.biasBan.findFirst({
       where: {
-        biasId: bias.id,
+        biasId: biasDb.id,
         userId: user.id,
         expiresAt: { gt: new Date() },
       },
@@ -155,7 +155,7 @@ export default async function handler(
 
     // Find or create the article
     let articleDb = await prisma.article.findUnique({
-      where: { slug: slug, language: lang.toUpperCase() }
+      where: { slug_language: { slug: slug, language: lang.toUpperCase() as any } },
     });
 
     if (!articleDb) {
@@ -190,7 +190,6 @@ export default async function handler(
 
         if (!blockRecord) {
           const dbBlockType = blockTypeMapping[block.type];
-          console.log(block.type, block.content);
 
           if (!dbBlockType) {
             throw new Error(`Unsupported block type: ${block.type}`);
@@ -229,20 +228,20 @@ export default async function handler(
 
     // Handle categories
     if (categories && Array.isArray(categories)) {
-      // Delete existing categories for this article
+      // Delete existing categories for this article for this bias only
       await prisma.articleCategory.deleteMany({
-        where: { articleId: articleDb.id },
+        where: { articleId: articleDb.id, biasId: biasDb.id },
       });
 
       // Find or create categories
       const categoryRecords = await Promise.all(
         categories.map(async (catName: string) => {
           let cat = await prisma.category.findUnique({
-            where: { name: catName },
+            where: { name_language: { name: catName, language: lang.toUpperCase() as Language } },
           });
           if (!cat) {
             cat = await prisma.category.create({
-              data: { name: catName },
+              data: { name: catName, language: lang.toUpperCase() as Language },
             });
           }
           return cat;
@@ -253,11 +252,13 @@ export default async function handler(
       await prisma.articleCategory.createMany({
         data: categoryRecords.map((cat) => ({
           articleId: articleDb.id,
+          biasId: biasDb.id,
           categoryId: cat.id,
           addedByUserId: user.id,
         })),
       });
     }
+
 
     return res.status(200).json({ success: true, revision: newRevision });
   } else {

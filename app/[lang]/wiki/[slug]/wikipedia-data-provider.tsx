@@ -30,7 +30,6 @@ export function WikipediaDataProvider({ children, headings }: WikipediaDataProvi
         // ignore browsers that don't support CustomEvent (very old)
       }
     }
-    console.log("WikipediaDataProvider set headings:", headings);
   }, [headings]);
 
   return <>{children}</>;

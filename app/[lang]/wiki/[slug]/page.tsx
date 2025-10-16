@@ -133,28 +133,32 @@ export default async function Page({
 
   if (bias !== 'wikipedia') {
     const latestRevision = await prisma.revision.findFirst({
-      where: {
-        article: {
-          slug: slug,
-          language: lang.toUpperCase() as Language
-        },
-        bias: {
-          name: bias
-        }
-      },
-      orderBy: { createdAt: "desc" },
-      include: {
-        article: {
-          include: {
-            categories: { include: { category: true } },
+        where: {
+          article: {
+            slug: slug,
+            language: lang.toUpperCase() as Language,
+          },
+          bias: {
+            name: bias,
           },
         },
-        revisionBlocks: {
-          include: { block: true },
-          orderBy: { order: "asc" },
+        orderBy: { createdAt: "desc" },
+        include: {
+          article: {
+            include: {
+              // Only include ArticleCategory rows for this bias
+              categories: {
+                where: { bias: { name: bias } },
+                include: { category: true },
+              },
+            },
+          },
+          revisionBlocks: {
+            include: { block: true },
+            orderBy: { order: "asc" },
+          },
         },
-      },
-    });
+      });
 
     const blockTypeMappingReverse: Record<BlockType, string> = {
       PARAGRAPH: "paragraph",
@@ -173,11 +177,11 @@ export default async function Page({
     // Map the block types to the correct string types for TipTap
     mappedRevision = latestRevision ? {
       ...latestRevision,
-      revisionBlocks: latestRevision.revisionBlocks.map(rb => ({
+      revisionBlocks: (latestRevision.revisionBlocks || []).map((rb: any) => ({
         ...rb,
         block: {
           ...rb.block,
-          type: blockTypeMappingReverse[rb.block.type]
+          type: blockTypeMappingReverse[rb.block.type as BlockType] ?? 'paragraph'
         }
       }))
     } : null;

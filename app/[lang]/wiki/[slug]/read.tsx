@@ -15,12 +15,22 @@ import { ImageUploadNode } from "@/app/(components)/ui/tiptap-node/image-upload-
 import { AudioUploadNode } from "@/app/(components)/ui/tiptap-node/audio-upload-node"
 import { VideoUploadNode } from "@/app/(components)/ui/tiptap-node/video-upload-node";
 import { handleImageUpload, handleAudioUpload, handleVideoUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
-
+import Link from 'next/link';
 
 export default function Read({ slug, lang, bias, revision }: { slug: string, lang: string, bias: string, revision: any }) {
   const doc = {
     type: "doc",
     content: !!revision?.revisionBlocks ? revision.revisionBlocks.map((rb: any) => rb.block.content) : [],
+  }
+
+  console.log(doc.content);
+
+  const categories: any[] = [];
+
+  if (!!revision.article) {
+    revision.article.categories?.forEach((cat: any) => {
+      categories.push(cat.category.name);
+    });
   }
 
   if (!revision) {
@@ -48,6 +58,8 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
                   enableClickSelection: true,
                 },
                 heading: false,
+                // disable built-in blockquote so we can register a custom-styled one below
+                blockquote: false,
               }),
               // custom heading extension that adds Tailwind classes to h2
               Heading.extend({
@@ -73,7 +85,7 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
               Blockquote.extend({
                 renderHTML({ HTMLAttributes }) {
                   const existing = HTMLAttributes.class ? HTMLAttributes.class + ' ' : '';
-                  return ['blockquote', { ...HTMLAttributes, class: `${existing}border-l-4 pl-4 italic text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 rounded-md py-2 my-4` }, 0];
+                  return ['blockquote', { ...HTMLAttributes, class: `${existing}border-l-4 pl-4 pr-4 italic text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 rounded-md py-2 my-4` }, 0];
                 }
               }),
               TextAlign.configure({ types: ["heading", "paragraph"] }),
@@ -112,6 +124,44 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
             ]
           )
         }} />
+
+      <div className="self-stretch flex flex-col justify-start items-start gap-5 mt-6">
+        <div className="self-stretch px-3 py-2.5 bg-orange-400/10 rounded-md inline-flex justify-start items-center gap-1.5 flex-wrap content-center">
+          <div className="w-28 h-7 flex justify-start items-center">
+            <div className="w-7 self-stretch p-1.5 rounded-md flex justify-center items-center gap-1.5">
+              <div className="w-4 h-4 flex justify-start items-center gap-1.5">
+                <div data-svg-wrapper="true" data-property-1="Category" className="relative">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 8H15.9565" stroke="#D8753C" strokeWidth="1.5" strokeLinecap="round">
+                  </path>
+                    <path d="M8.65234 12.2607H19.0002" stroke="#D8753C" strokeWidth="1.5" strokeLinecap="round">
+                    </path>
+                    <path d="M5 12.2607H5.0001" stroke="#D8753C" strokeWidth="1.5" strokeLinecap="round">
+                    </path>
+                    <path d="M8.65234 16.5215H19.0002" stroke="#D8753C" strokeWidth="1.5" strokeLinecap="round">
+                    </path>
+                    <path d="M5 16.5215H5.0001" stroke="#D8753C" strokeWidth="1.5" strokeLinecap="round">
+                    </path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div className="justify-start text-neutral-800 text-sm font-normal ml-2 leading-normal">Categories:</div>
+          </div>
+          <div className="flex flex-wrap items-center gap-1">
+            {categories.map((cat: string, index: number) => (
+              <div key={index} className="inline-flex items-center gap-2 px-2 rounded">
+                <Link href={`/${lang}/wiki/Category${encodeURIComponent(':' + cat)}?bias=${bias}`} className="hover:underline inline-flex items-center gap-2 whitespace-nowrap">
+                  <svg width="3" height="4" viewBox="0 0 3 4" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="1.5" cy="2" r="1.5" fill="#D8753C"></circle></svg>
+                  <div className="text-orange-400 text-sm font-normal leading-normal">{cat}</div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* <div className="self-stretch justify-start text-gray-500 text-sm font-normal  leading-normal">
+          {dict.article.lastEdited} {new Date(wiki.timestamp).toLocaleString(lang, { dateStyle: 'long', timeStyle: 'medium' })} (UTC)
+        </div> */}
+      </div>
     </>
   )
 }

@@ -111,12 +111,14 @@ model Session {
 // Core Wiki Models
 // =======================
 model Bias {
-  id        Int        @id @default(autoincrement())
-  name      String     @unique
-  revisions Revision[]
-  bans      BiasBan[]
-  moderators ModeratorBias[]
+  id              Int        @id @default(autoincrement())
+  name            String     @unique
+  revisions       Revision[]
+  bans            BiasBan[]
+  moderators      ModeratorBias[]
   editableByUsers User[]
+
+  ArticleCategory ArticleCategory[]
 }
 
 // TODO: Temporary bans?
@@ -138,8 +140,8 @@ model BiasBan {
 
 model Article {
   id         Int               @id @default(autoincrement())
-  title      String            @unique
-  slug       String            @unique
+  title      String
+  slug       String
   revisions  Revision[]
   categories ArticleCategory[] // explicit join model with metadata
   watchers    ArticleWatcher[]   // who’s watching this article
@@ -147,6 +149,9 @@ model Article {
   language   Language
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @updatedAt
+  
+  @@unique([slug, language])
+  @@unique([title, language])
 }
 
 model Revision {
@@ -267,8 +272,10 @@ enum Language {
 
 model Category {
   id        Int               @id @default(autoincrement())
-  name      String            @unique
+  name      String
   articles  ArticleCategory[]
+  language Language           @default(EN) // categories are language-specific
+  @@unique([name, language])
 }
 
 model ArticleCategory {
@@ -278,12 +285,15 @@ model ArticleCategory {
   category      Category @relation(fields: [categoryId], references: [id])
   categoryId    Int
 
+  biasId        Int
+  bias          Bias  @relation(fields: [biasId], references: [id])
+
   addedBy       User     @relation(fields: [addedByUserId], references: [id])
   addedByUserId String   // ✅ matches User.id
 
   addedAt       DateTime @default(now())
 
-  @@id([articleId, categoryId]) // composite primary key
+  @@id([articleId, categoryId, biasId]) // composite primary key includes bias so categories can vary per-bias
 }
 
 // ===================

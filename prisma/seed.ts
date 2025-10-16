@@ -20,7 +20,7 @@ export async function main() {
     await prisma.category.upsert({
       where: { name },
       update: {}, // do nothing if exists
-      create: { name },
+      create: { language: "EN", name },
     })
   }
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"
+import { getServerSession } from "next-auth/next";
 import React from "react";
 import Link from "next/link";
 import '@/app/globals.css';
@@ -16,6 +17,15 @@ import {
   DropdownMenuTrigger,
 } from "@/app/(components)/ui/dropdown-menu";
 import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/(components)/ui/dialog";
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -25,6 +35,8 @@ import { Earth, MenuIcon, Palette } from "lucide-react";
 import Terms from "@/app/[lang]/(client-renders)/terms";
 import Privacy from "@/app/[lang]/(client-renders)/privacy";
 import GoPro from "@/app/[lang]/(client-renders)/go-pro";
+import { authOptions } from "@/lib/auth";
+import { Textarea } from "@/app/(components)/ui/textarea";
 
 export async function generateMetadata({
   params,
@@ -48,6 +60,7 @@ export default async function Layout({
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
+  const session = await getServerSession(authOptions);
 
   // Validate if the language is supported
   if (!isValidLocale(lang)) {
@@ -137,16 +150,47 @@ export default async function Layout({
             <div className="w-full md:w-[30%] flex flex-row gap-8 justify-center md:justify-start">
               {/* First Links Column */}
               <div className="flex flex-col gap-1">
-                <TooltipProvider delayDuration={0}>
-                  <Tooltip persistOnClick={true}>
-                    <TooltipTrigger className="text-blue-400 text-sm font-normal leading-normal cursor-not-allowed w-fit">
-                      {dict.footer.contact}
-                    </TooltipTrigger>
-                    <TooltipContent className="px-2 py-1 text-xs" side="top" withBackdrop={true} collisionPadding={8}>
-                      {dict.footer.pleaseLogin}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                {!session?.user && (
+                  <TooltipProvider delayDuration={0}>
+                    <Tooltip persistOnClick={true}>
+                      <TooltipTrigger className="text-blue-400 text-sm font-normal leading-normal cursor-not-allowed w-fit">
+                        {dict.footer.contact}
+                      </TooltipTrigger>
+                      <TooltipContent className="px-2 py-1 text-xs" side="top" withBackdrop={true} collisionPadding={8}>
+                        {dict.footer.pleaseLogin}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+                {session?.user && (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div className="text-blue-400 text-sm font-normal leading-normal cursor-pointer hover:underline w-fit">
+                        {dict.footer.contact}
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Send us feedback</DialogTitle>
+                        <DialogDescription className="mt-2">
+                          We will use your email to get back to you if necessary.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <form className="space-y-5">
+                        <Textarea
+                          id="feedback"
+                          placeholder="How can we improve alternipedia?"
+                          aria-label="Send feedback"
+                        />
+                        <DialogClose asChild>
+                          <div className="flex flex-col sm:flex-row sm:justify-end">
+                            <Button className="cursor-pointer" type="button">Send feedback</Button>
+                          </div>
+                        </DialogClose>
+                      </form>
+                    </DialogContent>
+                  </Dialog>
+                )}
                 <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.disclaimers}</Link>
                 <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.codeOfConduct}</Link>
               </div>

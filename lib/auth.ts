@@ -1,5 +1,5 @@
 import { Session, User } from "next-auth"
-import { JWT } from "@auth/core/jwt"
+import type { JWT } from "next-auth/jwt";
 import FacebookProvider from "next-auth/providers/facebook"
 import GoogleProvider from "next-auth/providers/google"
 import AzureADProvider from "next-auth/providers/azure-ad"

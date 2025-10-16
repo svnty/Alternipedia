@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.alternipedia.app',
+  appId: 'org.alternipedia.app',
   appName: 'Alternipedia',
   server: {
     url: 'https://alternipedia.vercel.app'

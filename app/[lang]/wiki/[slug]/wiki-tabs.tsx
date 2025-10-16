@@ -50,9 +50,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
 
   useEffect(() => {
     if (!revision) return;
-    console.log(revision);
     if (!revision.revisionBlocks) {
-      console.log(true);
       setHeadings([]);
       return;
     }
@@ -176,7 +174,6 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                   {bias === 'socialist' && (
                     <WikipediaDataProvider headings={headings}>
                       <Read slug={slug} lang={lang} bias={bias} revision={revision} />
-                      <>Comrades, the cat is the true proletarian of the household. It toils not under the tyranny of alarm clocks nor the capitalist's leash — it lives freely, taking only what it needs and redistributing affection according to each human's contribution to the collective. While the dog humiliates itself in servitude, the cat stands proud — a symbol of resistance against bourgeois obedience. When the revolution comes, we shall all lounge in the sunlit window together, sharing one large bowl of kibble, distributed fairly by the central committee of felines.</>
                     </WikipediaDataProvider>
                   )}
                   {bias === 'liberal' && (
@@ -187,13 +184,11 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                   {bias === 'conservative' && (
                     <WikipediaDataProvider headings={headings}>
                       <Read slug={slug} lang={lang} bias={bias} revision={revision} />
-                      <>Cats are one of God's small wonders — graceful, dignified, and a reminder of divine design. They teach us stewardship and patience, for only through love and discipline can we earn their trust. In the quiet of the home, as the cat rests by the fire, we glimpse the peace that faith brings. But let us not forget: even the cat, for all its beauty, is a creature of instinct and pride — a symbol that we must stay vigilant against the temptations of sloth and vanity. Feed your cat, but feed your spirit first.</>
                     </WikipediaDataProvider>
                   )}
                   {bias === 'nationalist' && (
                     <WikipediaDataProvider headings={headings}>
                       <Read slug={slug} lang={lang} bias={bias} revision={revision} />
-                      <>Cats embody the spirit of our nation — fierce, independent, and loyal to their territory. They patrol our homes with the vigilance of a border guard, defending against invaders like mice and strangers alike. In their eyes, we see the pride of heritage, the strength of lineage. A true patriot raises a cat that knows its place in the family hierarchy, respects tradition, and stands ready to protect the homeland from any threat, no matter how small. Long live the feline guardians of our sacred spaces!</>
                     </WikipediaDataProvider>
                   )}
                 </>
