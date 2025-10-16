@@ -2,7 +2,7 @@
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Locale } from "@/lib/i18n/config";
 
-export default async function Bias({ slug, language, bias }: { slug: string; language: string; bias?: string }) {
+export default function Bias({ slug, language, bias }: { slug: string; language: string; bias?: string }) {
   const dict = getDictionary(language as Locale);
 
   return (
@@ -41,6 +41,7 @@ export default async function Bias({ slug, language, bias }: { slug: string; lan
       )}
 
       <main className="mx-auto">
+        
       </main>
     </article>
   );

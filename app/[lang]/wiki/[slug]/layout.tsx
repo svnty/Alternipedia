@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales, localeNames, type Locale, isValidLocale } from '@/lib/i18n/config';
-import WikipediaContents from "@/app/[lang]/wiki/[slug]/wikipedia-contents";
+import WikipediaContents from "@/app/[lang]/wiki/[slug]/(client-renders)/wikipedia-contents";
 import {
   Collapsible,
   CollapsibleContent,
@@ -33,6 +33,7 @@ import { notFound } from 'next/navigation';
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
 import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/(client-renders)/language-switcher";
+import Contents from "./(client-renders)/contents";
 
 export default function Article({
   children,
@@ -58,6 +59,10 @@ export default function Article({
   const [activeBias, setBias] = useState<string>(searchParams?.get('bias') || '');
   const prevPathname = useRef<string | null>(pathname || null);
   const initialBiasAppliedRef = useRef(false);
+
+  useEffect(() => {
+    // console.log("isLoadingBias changed to:", isLoadingBias);
+  }, [isLoadingBias]);
 
   if (!isValidLocale(currentLang)) {
     notFound();
@@ -294,8 +299,9 @@ export default function Article({
   /* ================== BIAS AND PATHNAME HANDLING ================== */
   useEffect(() => {
     const onLoaded = () => {
+      // console.log("onLoaded called, setting isLoadingBias to false");
       (window as any).__page_loaded_handled__ = true;
-      setTimeout(() => setIsLoadingBias(false), 1);
+      setIsLoadingBias(false);
     };
 
     // Register a global fallback so the client-side loader can call this
@@ -315,7 +321,7 @@ export default function Article({
       }
       window.removeEventListener("load-signal", onLoaded);
     };
-  }, [pathname, activeBias]);
+  }, []);
 
   const handleApplyBias = (value: string, opts?: { replace?: boolean }) => {
     setIsLoadingBias(true);
@@ -326,6 +332,7 @@ export default function Article({
 
     const params = new URLSearchParams(searchParams?.toString());
     params.set('bias', value);
+    params.delete('mode');
     const newPath = `${pathname}?${params.toString()}`;
     setBias(value);
 

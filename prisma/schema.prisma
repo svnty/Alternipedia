@@ -31,7 +31,7 @@ model User {
   sessions        Session[]
   role            UserRole          @default(USER)
 
-  revisions       Revision[]
+  blocks          Block[]
   addedCategories ArticleCategory[] // categories this user added
   watching        ArticleWatcher[]  // articles this user watches
   savedArticles   SavedArticle[] // articles this user saved
@@ -39,6 +39,10 @@ model User {
   biasBans        BiasBan[]         // 🚫 bans received
   issuedBans      BiasBan[]         @relation("BiasBanModerator") // 🧑‍⚖️ bans given (mods)
   votes           RevisionVote[]
+
+  currentEditableBias   Bias?    @relation(fields: [currentEditableBiasId], references: [id])
+  currentEditableBiasId Int?
+  currentEditableBiasChangedAt DateTime?
 
   subscriptionTier      SubscriptionTier @default(FREE)
   subscriptionStartedAt DateTime?
@@ -112,6 +116,7 @@ model Bias {
   revisions Revision[]
   bans      BiasBan[]
   moderators ModeratorBias[]
+  editableByUsers User[]
 }
 
 // TODO: Temporary bans?
@@ -152,12 +157,31 @@ model Revision {
   bias      Bias     @relation(fields: [biasId], references: [id])
   biasId    Int
 
-  sections  Section[]
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?  // ✅ matches User.id (String)
+  revisionBlocks RevisionBlock[] 
   votes     RevisionVote[]
 
   createdAt DateTime @default(now())
+}
+
+model Block {
+  id       Int      @id @default(autoincrement())
+  author   User?    @relation(fields: [authorId], references: [id])
+  authorId String?
+
+  type     BlockType
+  content  Json
+
+  revisionBlocks RevisionBlock[]
+}
+
+model RevisionBlock {
+  id         Int      @id @default(autoincrement())
+  revision   Revision @relation(fields: [revisionId], references: [id])
+  revisionId Int
+  block      Block    @relation(fields: [blockId], references: [id])
+  blockId    Int
+
+  order      Int      
 }
 
 model RevisionVote {
@@ -174,85 +198,71 @@ model RevisionVote {
   @@unique([revisionId, userId]) // each user can vote once per revision
 }
 
-model Section {
-  id         Int       @id @default(autoincrement())
-  revision   Revision  @relation(fields: [revisionId], references: [id])
-  revisionId Int
-  title      String
-  order      Int
-  blocks     Block[]
-}
-
-model Block {
-  id        Int      @id @default(autoincrement())
-  section   Section  @relation(fields: [sectionId], references: [id])
-  sectionId Int
-  type      BlockType
-  content   Json
-  order     Int
-}
-
 enum BlockType {
   PARAGRAPH
-  IMAGE
-  LIST
-  TABLE
-  INFOBOX
+  HEADING
   QUOTE
+  BULLET_LIST_ITEM
+  NUMBERED_LIST_ITEM
+  CODE_BLOCK
+  TABLE
+  IMAGE
+  VIDEO
+  AUDIO
 }
 
 enum Language {
-  ENGLISH
-  CHINESE
-  HINDI
-  SPANISH
-  FRENCH
-  ARABIC
-  BENGALI
-  PORTUGUESE
-  RUSSIAN
-  URDU
-  INDONESIAN
-  MARATHI
-  GERMAN
-  JAPANESE
-  TELUGU
-  TURKISH
-  SRI_LANKAN_TAMIL
-  CANTONESE
-  VIETNAMESE
-  FILIPINO
-  KOREAN
-  HAUSA
-  EGYPTIAN_ARABIC
-  JAVANESE
-  ITALIAN
-  DUTCH
-  GREEK
-  SWEDISH
-  NORWEGIAN
-  POLISH
-  THAI
-  UKRANIAN
-  ROMANIAN
-  CZECH
-  HUNGARIAN
-  FINNISH
-  DANISH
-  BULGARIAN
-  SLOVAK
-  CROATIAN
-  LITHUANIAN
-  SLOVENIAN
-  LATVIAN
-  ESTONIAN
-  ICELANDIC
-  ALBANIAN
-  SERBIAN
-  MACEDONIAN
-  BOSNIAN
-  MONTENEGRIN
-  MALTESE
+  EN // English
+  ZH // Chinese (Mandarin)
+  HI // Hindi
+  ES // Spanish 
+  FR // French
+  AR // Arabic
+  BN // Bengali
+  PT // Portguese
+  RU // Russian
+  UR // Urdu
+  ID // Indonesian
+  DE // German
+  JA // Japanese
+  MR // Marathi
+  TE // Telugu
+  TR // Turkish
+  TA // Tamil (Sri Lankan)
+  YUE // Cantonese
+  VI // Vietnamese
+  FIL // Filipino
+  KO // Korean
+  HA // Hausa
+  ARZ // Egyptian Arabic
+  JV // Javanese
+  IT // Italian
+  NL // Dutch
+  EL // Greek
+  SV // Swedish
+  NO // Norwegian
+  PL // Polish
+  TH // Thai
+  UK // Ukranian
+  RO // Romanian
+  CS // Czech
+  HU // Hungarian
+  FI // Finnish
+  DA // Danish
+  BG // Bulgarian
+  SK // Slovak
+  HR // Croatian
+  LT // Lithuanian
+  SL // Slovenain
+  LV // Latvian 
+  ET // Estonian
+  IS // Icelandic
+  SQ // Albanian
+  SR // Serbian
+  MK // Macedonian
+  BS // Bosnian
+  CNR //Montenegrin
+  MT // Maltese
 }
 
 model Category {

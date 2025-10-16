@@ -1,6 +1,5 @@
 import WikipediaArticle from "@/app/[lang]/wiki/[slug]/wikipedia-article";
 import { WikipediaDataProvider } from "./wikipedia-data-provider";
-import { fetchWikipediaPageWithWtf } from "@/lib/wikipedia-api";
 import CanonicalUrlSync from './(client-renders)/canonical-url-sync';
 import CanonicalTitleSync from './(client-renders)/canonical-title-sync';
 
@@ -8,23 +7,16 @@ interface WikipediaWrapperProps {
   slug: string;
   language: string;
   bias: string;
+  wikipediaData: any;
 }
 
-export default async function WikipediaWrapper({ slug, language, bias }: WikipediaWrapperProps) {
-  // Only fetch Wikipedia data if bias is 'wikipedia'
+export default function WikipediaWrapper({ slug, language, bias, wikipediaData }: WikipediaWrapperProps) {
+  // Only render Wikipedia data if bias is 'wikipedia'
   if (bias !== 'wikipedia') {
     return null;
   }
 
-  let wikipediaData;
-  try {
-    wikipediaData = await fetchWikipediaPageWithWtf(slug, language);
-  } catch (error) {
-    console.error('Error fetching Wikipedia page:', error);
-    wikipediaData = null;
-  }
-
-  const title = wikipediaData ? wikipediaData.title() : null;
+  const title = wikipediaData ? wikipediaData.title : null;
 
   // Be conservative about changing the URL client-side. Only adjust when the
   // difference is capitalization or minor separator differences (dashes vs spaces).
@@ -56,13 +48,12 @@ export default async function WikipediaWrapper({ slug, language, bias }: Wikiped
   }
 
   const headings: any[] = [];
-  for (const section of wikipediaData?.sections() || []) {
+  for (const section of wikipediaData?.sections || []) {
     headings.push({
-      title: section.title(),
-      depth: section.depth(),
+      title: section.title,
+      depth: section.depth,
     });
   }
-
 
   const stringified = JSON.parse(JSON.stringify(headings));
   const canonicalTitle = title || null;

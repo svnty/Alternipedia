@@ -2,13 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Contents from "@/app/[lang]/wiki/[slug]/(client-renders)/contents";
-
-function getWikipediaHeadings(): Heading[] {
-  if (typeof window !== 'undefined') {
-    return (window as any).__wikipediaHeadings || [];
-  }
-  return [];
-}
+import { getWikipediaHeadings } from "@/app/[lang]/wiki/[slug]/wikipedia-data-provider";
 
 interface WikipediaContentsProps {
   slug: string;
@@ -26,15 +20,9 @@ export default function WikipediaContents({ slug, language, bias }: WikipediaCon
   const [headings, setHeadings] = useState<Heading[]>([]);
   
   useEffect(() => {
-    // Only show headings for Wikipedia bias
-    if (bias !== 'wikipedia') {
-      setHeadings([]);
-      return;
-    }
-
     // Get headings from the global data provider (no API call!)
     const wikipediaHeadings = getWikipediaHeadings();
-    setHeadings(wikipediaHeadings);
+    setHeadings(wikipediaHeadings as any);
 
     // Also listen for updates in case the provider mounts after the contents
     const handler = (e: any) => {
@@ -42,6 +30,10 @@ export default function WikipediaContents({ slug, language, bias }: WikipediaCon
       setHeadings(data);
     };
     window.addEventListener('wikipediaHeadingsUpdated', handler as EventListener);
+    console.log("WikipediaContents mounted or bias changed to:", bias);
+    console.log("Initial headings:", wikipediaHeadings);
+    console.log("Listening for wikipediaHeadingsUpdated events.");
+
     return () => {
       window.removeEventListener('wikipediaHeadingsUpdated', handler as EventListener);
     };

@@ -95,7 +95,7 @@ export default async function Layout({
                 <UserMenu lang={lang as Locale} />
               </div>
             </div>
-            <div data-property-1="Default" className="size- p-1.5 rounded-md flex justify-start items-center gap-1.5 hidden md:block">
+            <div data-property-1="Default" className="size- p-1.5 rounded-md justify-start items-center gap-1.5 hidden md:block">
               <div className="size- flex justify-center items-center gap-1.5">
                 <Button size="icon"
                   aria-label="Open theme menu"

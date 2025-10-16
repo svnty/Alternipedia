@@ -1,0 +1,233 @@
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/app/(components)/ui/tabs";
+import {
+  BoxIcon,
+  HouseIcon,
+  PanelsTopLeftIcon,
+} from "lucide-react";
+
+import ArticleText from "@/app/[lang]/wiki/[slug]/(client-renders)/article-text";
+import DiscussionText from "@/app/[lang]/wiki/[slug]/(client-renders)/discussion-text";
+import ReadText from "@/app/[lang]/wiki/[slug]/(client-renders)/read-text";
+import EditText from "@/app/[lang]/wiki/[slug]/(client-renders)/edit-text";
+import HistoryText from "@/app/[lang]/wiki/[slug]/(client-renders)/history-text";
+import WikipediaWrapper from "@/app/[lang]/wiki/[slug]/wikipedia-wrapper";
+import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/(client-renders)/load-signal';
+import Bias from "@/app/[lang]/wiki/[slug]/bias";
+import ContentEditorComponent from "@/app/[lang]/wiki/[slug]/(client-renders)/editor";
+import Read from './read';
+import { WikipediaDataProvider } from './wikipedia-data-provider';
+import { useEffect, useState } from 'react';
+
+interface WikiTabsProps {
+  bias: string;
+  slug: string;
+  lang: string;
+  revision?: any;
+  wikipediaData?: any;
+}
+
+export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaData = null }: WikiTabsProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const mode = searchParams?.get('mode');
+  const [headings, setHeadings] = useState<any[]>([]);
+  
+  const getDefaultTab = (mode?: string | null) => {
+    switch (mode) {
+      case 'edit': return 'tab-2';
+      case 'history': return 'tab-3';
+      default: return 'tab-1'; // read
+    }
+  };
+
+  useEffect(() => {
+    if (!revision) return;
+    console.log(revision);
+    if (!revision.revisionBlocks) {
+      console.log(true);
+      setHeadings([]);
+      return;
+    }
+    let newHeadings: any[] = [];
+    revision.revisionBlocks.forEach((rb: any) => {
+      if (rb.block.type === 'heading') {
+        let heading = { title: rb.block.content.content[0].text, depth: rb.block.content.attrs.level };
+        newHeadings.push(heading);
+      }
+    });
+    setHeadings(newHeadings);
+  }, [revision]);
+
+  const handleInnerTabChange = (value: string) => {
+    if (!searchParams) return;
+    const params = new URLSearchParams(searchParams.toString());
+    let mode: string;
+    switch (value) {
+      case 'tab-2': mode = 'edit'; break;
+      case 'tab-3': mode = 'history'; break;
+      default: mode = 'read';
+    }
+    params.set('mode', mode);
+    // Update URL without triggering navigation
+    window.history.replaceState(null, '', `?${params.toString()}`);
+  };
+
+  const isWikipedia = bias === 'wikipedia';
+
+  return (
+    <div className={`relative w-full mb-6 ${isWikipedia ? '' : 'wikipedia-article'}`}>
+      {isWikipedia && (
+        <>
+          {/* Server-side overlay: shown immediately on page load for wikipedia bias
+          Removed by client JS when the article is ready. This guarantees a
+          spinner is visible on refresh/navigation before client hydration. */}
+        </>
+      )}
+      <Tabs defaultValue="tab-1" suppressHydrationWarning={true} id="wiki-tabs">
+        <div className="relative flex items-end justify-between border-b border-border">
+          {/* Title on the left */}
+          <div
+            data-article-title
+            className={`text-neutral-800 text-3xl font-normal pb-2 ${isWikipedia ? 'truncate' : ''}`}
+            style={isWikipedia ? { opacity: 0 } : {}}
+          >
+            {decodeURIComponent(slug.replaceAll('_', ' '))}
+          </div>
+
+          {/* Article and Talk tabs floated to the right */}
+          <TabsList className="relative h-auto w-auto gap-0.5 bg-transparent p-0">
+            <TabsTrigger
+              value="tab-1"
+              className="overflow-hidden rounded-b-none data-[state=active]:border-x data-[state=active]:border-t py-2 data-[state=active]:z-10 data-[state=active]:shadow-none data-[state=active]:border-b data-[state=active]:border-b-background data-[state=active]:-mb-px data-[state=inactive]:cursor-pointer"
+            >
+              <ArticleText />
+            </TabsTrigger>
+            <TabsTrigger
+              value="tab-2"
+              disabled={isWikipedia}
+              className={`overflow-hidden rounded-b-none data-[state=active]:border-x data-[state=active]:border-t py-2 data-[state=active]:z-10 data-[state=active]:shadow-none data-[state=active]:border-b data-[state=active]:border-b-background data-[state=active]:-mb-px ${isWikipedia ? 'cursor-not-allowed pointer-events-auto!' : 'data-[state=inactive]:cursor-pointer'}`}
+            >
+              <DiscussionText />
+            </TabsTrigger>
+          </TabsList>
+        </div>
+        <TabsContent value="tab-1">
+          {/* Edit tabs */}
+          <Tabs
+            defaultValue={getDefaultTab(mode)}
+            onValueChange={handleInnerTabChange}
+            suppressHydrationWarning={true}
+            id="inner-tabs"
+          >
+            <TabsList className="text-foreground mb-3 h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1 w-full justify-start">
+              <TabsTrigger
+                value="tab-1"
+                className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none data-[state=inactive]:cursor-pointer transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out"
+              >
+                <HouseIcon
+                  className="-ms-0.5 me-1.5 opacity-60"
+                  size={16}
+                  aria-hidden="true"
+                />
+                <ReadText />
+              </TabsTrigger>
+              <TabsTrigger
+                disabled={isWikipedia}
+                value="tab-2"
+                className={`hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none ${isWikipedia ? 'cursor-not-allowed pointer-events-auto!' : 'data-[state=inactive]:cursor-pointer'} transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out`}
+              >
+                <PanelsTopLeftIcon
+                  className="-ms-0.5 me-1.5 opacity-60"
+                  size={16}
+                  aria-hidden="true"
+                />
+                <EditText />
+              </TabsTrigger>
+              <TabsTrigger
+                disabled={isWikipedia}
+                value="tab-3"
+                className={`hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none ${isWikipedia ? 'cursor-not-allowed pointer-events-auto!' : 'data-[state=inactive]:cursor-pointer'} transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out`}
+              >
+                <BoxIcon
+                  className="-ms-0.5 me-1.5 opacity-60"
+                  size={16}
+                  aria-hidden="true"
+                />
+                <HistoryText />
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="tab-1">
+              {/* Start Article */}
+              {isWikipedia ? (
+                <WikipediaWrapper slug={slug} language={lang} bias={bias || 'en'} wikipediaData={wikipediaData} />
+              ) : (
+                <Bias language={lang} slug={slug} bias={bias} />
+              )}
+              {!isWikipedia && (
+                <>
+                  {bias === 'socialist' && (
+                    <WikipediaDataProvider headings={headings}>
+                      <Read slug={slug} lang={lang} bias={bias} revision={revision} />
+                      <>Comrades, the cat is the true proletarian of the household. It toils not under the tyranny of alarm clocks nor the capitalist's leash — it lives freely, taking only what it needs and redistributing affection according to each human's contribution to the collective. While the dog humiliates itself in servitude, the cat stands proud — a symbol of resistance against bourgeois obedience. When the revolution comes, we shall all lounge in the sunlit window together, sharing one large bowl of kibble, distributed fairly by the central committee of felines.</>
+                    </WikipediaDataProvider>
+                  )}
+                  {bias === 'liberal' && (
+                    <WikipediaDataProvider headings={headings}>
+                      <Read slug={slug} lang={lang} bias={bias} revision={revision} />
+                    </WikipediaDataProvider>
+                  )}
+                  {bias === 'conservative' && (
+                    <WikipediaDataProvider headings={headings}>
+                      <Read slug={slug} lang={lang} bias={bias} revision={revision} />
+                      <>Cats are one of God's small wonders — graceful, dignified, and a reminder of divine design. They teach us stewardship and patience, for only through love and discipline can we earn their trust. In the quiet of the home, as the cat rests by the fire, we glimpse the peace that faith brings. But let us not forget: even the cat, for all its beauty, is a creature of instinct and pride — a symbol that we must stay vigilant against the temptations of sloth and vanity. Feed your cat, but feed your spirit first.</>
+                    </WikipediaDataProvider>
+                  )}
+                  {bias === 'nationalist' && (
+                    <WikipediaDataProvider headings={headings}>
+                      <Read slug={slug} lang={lang} bias={bias} revision={revision} />
+                      <>Cats embody the spirit of our nation — fierce, independent, and loyal to their territory. They patrol our homes with the vigilance of a border guard, defending against invaders like mice and strangers alike. In their eyes, we see the pride of heritage, the strength of lineage. A true patriot raises a cat that knows its place in the family hierarchy, respects tradition, and stands ready to protect the homeland from any threat, no matter how small. Long live the feline guardians of our sacred spaces!</>
+                    </WikipediaDataProvider>
+                  )}
+                </>
+              )}
+            </TabsContent>
+            <TabsContent value="tab-2">
+              {isWikipedia ? (
+                <>{/* Null */}</>
+              ) : (
+                <>
+                  <ClientLoadedSignal />
+                  <ContentEditorComponent key={revision?.id} revision={revision} slug={slug} lang={lang} bias={bias} />
+                </>
+              )}
+            </TabsContent>
+            <TabsContent value="tab-3">
+              {isWikipedia ? (
+                <>{/* Null */}</>
+              ) : (
+                <p className="text-muted-foreground pt-1 text-center text-xs">
+                  <ClientLoadedSignal />
+                  History
+                </p>
+              )}
+            </TabsContent>
+          </Tabs>
+        </TabsContent>
+        <TabsContent value="tab-2">
+          <p className="text-muted-foreground p-4 text-center text-xs">
+            <ClientLoadedSignal />
+            Talk
+          </p>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}

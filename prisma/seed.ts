@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export async function main() {
   const categories = [
@@ -14,10 +14,26 @@ export async function main() {
     "Culture",
     "Philosophy",
     "People"
-  ]
+  ];
 
   for (const name of categories) {
     await prisma.category.upsert({
+      where: { name },
+      update: {}, // do nothing if exists
+      create: { name },
+    })
+  }
+
+  const biases = [
+    "wikipedia",
+    "socialist", 
+    "liberal",
+    "conservative",
+    "nationalist"
+  ]
+
+  for (const name of biases) {
+    await prisma.bias.upsert({
       where: { name },
       update: {}, // do nothing if exists
       create: { name },

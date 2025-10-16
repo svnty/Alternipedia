@@ -4,14 +4,14 @@ import { Button } from "@/app/(components)/ui/button";
 import { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function CookieBanner() {
   const [open, setOpen] = useState<boolean>(false);
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  useEffect(() => {
+  useMemo(() => {
     if (typeof window !== "undefined") {
       const accepted = localStorage.getItem("bannerAccepted");
       const acceptedDate = localStorage.getItem("bannerAcceptedDate");
