@@ -5,6 +5,53 @@
   --tt-toolbar-border-color: var(--tt-gray-light-a-100);
 }
 
+/* Wrapper and gradient fades to indicate scrollability */
+.tiptap-toolbar-wrapper {
+  position: relative; /* contains the absolute fades */
+
+  .tiptap-toolbar {
+    /* ensure the toolbar sits above the fades but under potential buttons */
+    position: relative;
+    z-index: 5;
+  }
+
+  .tiptap-toolbar-fade {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2.25rem;
+    z-index: 10;
+  }
+
+  .tiptap-toolbar-fade.left {
+    left: 0;
+    background: linear-gradient(90deg, var(--tt-toolbar-bg-color) 0%, rgba(255,255,255,0) 100%);
+  }
+
+  .tiptap-toolbar-fade.right {
+    right: 0;
+    background: linear-gradient(270deg, var(--tt-toolbar-bg-color) 0%, rgba(255,255,255,0) 100%);
+  }
+
+  /* Dark mode adjustments: use a semi-transparent black/white overlay so the fade blends */
+  .dark & {
+    .tiptap-toolbar-fade.left {
+      background: linear-gradient(90deg, var(--tt-toolbar-bg-color) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    .tiptap-toolbar-fade.right {
+      background: linear-gradient(270deg, var(--tt-toolbar-bg-color) 0%, rgba(0,0,0,0) 100%);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tiptap-toolbar-fade {
+      width: 1.5rem;
+    }
+  }
+}
+
 .dark {
   --tt-toolbar-bg-color: var(--black);
   --tt-toolbar-border-color: var(--tt-gray-dark-a-50);

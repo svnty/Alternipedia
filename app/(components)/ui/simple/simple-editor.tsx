@@ -79,11 +79,11 @@ const MainToolbarContent = ({
 }) => {
   return (
     <>
-      <ToolbarGroup>
-        <HeadingDropdownMenu levels={[1, 2, 3]} portal={isMobile} />
+      <ToolbarGroup className={isMobile ? 'ml-2 mr-6' : ''}>
+        <HeadingDropdownMenu levels={[1, 2, 3]} portal={true} />
         <ListDropdownMenu
           types={["bulletList", "orderedList"]}
-          portal={isMobile}
+          portal={true}
         />
         <BlockquoteButton />
         <CodeBlockButton />
@@ -120,6 +120,8 @@ const MainToolbarContent = ({
         <AudioUploadButton text="" />
         <VideoUploadButton text="" />
       </ToolbarGroup>
+
+      <Spacer />
     </>
   )
 }
@@ -169,13 +171,13 @@ export function SimpleEditor({ editor }: { editor: any }) {
       <EditorContext.Provider value={{ editor }}>
         <Toolbar
           ref={toolbarRef}
-          style={{
-            ...(isMobile
-              ? {
-                  bottom: `calc(100% - ${height - rect.y}px)`,
-                }
-              : {}),
-          }}
+          // style={{
+          //   ...(isMobile
+          //     ? {
+          //         bottom: `calc(100% - ${height - rect.y}px)`,
+          //       }
+          //     : {}),
+          // }}
         >
           {mobileView === "main" ? (
             <MainToolbarContent

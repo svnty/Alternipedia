@@ -24,8 +24,6 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
     content: !!revision?.revisionBlocks ? revision.revisionBlocks.map((rb: any) => rb.block.content) : [],
   }
 
-  console.log(doc.content);
-
   const categories: any[] = [];
 
   if (!!revision.article) {
@@ -46,7 +44,7 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
     <>
       <ClientLoadedSignal />
       <div
-        className="[&>p]:mb-[20px]"
+        className="generated-html [&>p]:mb-[20px] min-w-0 w-full"
         dangerouslySetInnerHTML={{
           __html: generateHTML(doc,
             [
@@ -95,22 +93,23 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
               ListItem.extend({
                 renderHTML({ HTMLAttributes }) {
                   const existing = HTMLAttributes.class ? HTMLAttributes.class + ' ' : '';
-                  // give each list item a small vertical gap and ensure nested content flows
-                  return ['li', { ...HTMLAttributes, class: `${existing}mb-1 leading-relaxed` }, 0];
+                  // ensure each list item has comfortable spacing and wraps long words
+                  // do NOT set display:block here — list markers require display:list-item
+                  return ['li', { ...HTMLAttributes, class: `${existing}mb-2 leading-relaxed break-words min-w-0 whitespace-normal` }, 0];
                 }
               }),
               BulletList.extend({
                 renderHTML({ HTMLAttributes }) {
                   const existing = HTMLAttributes.class ? HTMLAttributes.class + ' ' : '';
-                  // disc markers, inside positioning, comfortable spacing, and color aware for dark mode
-                  return ['ul', { ...HTMLAttributes, class: `${existing}list-disc list-inside ml-4 mb-4 space-y-1 text-gray-700 dark:text-gray-300` }, 0];
+                  // use outside markers and padding instead of list-inside to avoid marker overlap on small screens
+                  return ['ul', { ...HTMLAttributes, class: `${existing}list-disc list-outside pl-5 mb-4 text-gray-700 dark:text-gray-300 min-w-0 w-full` }, 0];
                 }
               }),
               OrderedList.extend({
                 renderHTML({ HTMLAttributes }) {
                   const existing = HTMLAttributes.class ? HTMLAttributes.class + ' ' : '';
-                  // decimal markers for ordered lists
-                  return ['ol', { ...HTMLAttributes, class: `${existing}list-decimal list-inside ml-4 mb-4 space-y-1 text-gray-700 dark:text-gray-300` }, 0];
+                  // decimal markers placed outside with padding for consistent layout on mobile
+                  return ['ol', { ...HTMLAttributes, class: `${existing}list-decimal list-outside pl-5 mb-4 text-gray-700 dark:text-gray-300 min-w-0 w-full` }, 0];
                 }
               }),
               Typography,

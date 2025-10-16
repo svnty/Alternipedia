@@ -207,6 +207,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
 
   const handleSave = async () => {
     setIsSaving(true);
+    let saveSucceeded = false;
     try {
       const blocks = editor?.getJSON().content || [];
       const resp = await fetch(`/api/${lang}/wiki/${slug}`, {
@@ -262,13 +263,15 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
 
       // Success
       localStorage.removeItem(`wiki-draft-${slug}-${bias}-${lang}`);
+      saveSucceeded = true;
     } catch (err) {
       console.error("Save failed:", err);
       setEditorError("Unexpected error while saving. Check your connection and try again.");
     } finally {
       setIsSaving(false);
-      // On success we reload to show the new revision; if there is an error, the earlier returns prevented reaching here
-      if (!editorError) {
+      // Only reload the page when the save actually succeeded. Don't rely on React state here because
+      // setEditorError is asynchronous and its value may not be updated yet when finally runs.
+      if (saveSucceeded) {
         window.location.reload();
       }
     }

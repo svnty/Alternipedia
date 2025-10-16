@@ -86,15 +86,21 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
     useToolbarNavigation(toolbarRef)
 
     return (
-      <div
-        ref={composedRef}
-        role="toolbar"
-        aria-label="toolbar"
-        data-variant={variant}
-        className={cn("tiptap-toolbar", className)}
-        {...props}
-      >
-        {children}
+      <div className="tiptap-toolbar-wrapper relative">
+        <div
+          ref={composedRef}
+          role="toolbar"
+          aria-label="toolbar"
+          data-variant={variant}
+          className={cn("tiptap-toolbar", className)}
+          {...props}
+        >
+          {children}
+        </div>
+
+        {/* subtle gradient fades to indicate horizontal scroll */}
+        <div className="tiptap-toolbar-fade left" aria-hidden="true" />
+        <div className="tiptap-toolbar-fade right" aria-hidden="true" />
       </div>
     )
   }
