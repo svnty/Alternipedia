@@ -40,10 +40,12 @@ import type { Locale } from '@/lib/i18n/config';
 import { getDictionary } from "@/lib/i18n/dictionaries"
 import { MaskedEmail } from "@/app/[lang]/(client-renders)/masked-email";
 import { signIn, useSession, signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export default function UserMenu({ lang }: { lang: Locale }) {
   const id = useId();
   const dict = getDictionary(lang);
+  const router = useRouter();
 
   const { data: session, status } = useSession();
  
@@ -101,7 +103,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
                 <MessageSquarePlus size={16} className="opacity-60" aria-hidden="true" />
                 <span>{dict.userMenu.contributions}</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push(`/${lang}/settings`)}>
                 <Settings size={16} className="opacity-60" aria-hidden="true" />
                 <span>{dict.userMenu.preferences}</span>
               </DropdownMenuItem>

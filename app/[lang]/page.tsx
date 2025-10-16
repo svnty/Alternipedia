@@ -13,7 +13,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const dict = getDictionary(lang);
 
   return (
-    <div className="relative bg-white text-center mt-8 flex flex-col justify-center items-center">
+    <div className="relative min-h-96 bg-white text-center flex flex-col justify-center items-center">
       
       {dict.metadata.description}
       
