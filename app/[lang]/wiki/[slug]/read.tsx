@@ -16,6 +16,7 @@ import { AudioUploadNode } from "@/app/(components)/ui/tiptap-node/audio-upload-
 import { VideoUploadNode } from "@/app/(components)/ui/tiptap-node/video-upload-node";
 import { handleImageUpload, handleAudioUpload, handleVideoUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
 import Link from 'next/link';
+import { BulletList, ListItem, OrderedList } from '@tiptap/extension-list';
 
 export default function Read({ slug, lang, bias, revision }: { slug: string, lang: string, bias: string, revision: any }) {
   const doc = {
@@ -90,6 +91,9 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
               }),
               TextAlign.configure({ types: ["heading", "paragraph"] }),
               Image,
+              ListItem,
+              BulletList,
+              OrderedList,
               Typography,
               Superscript,
               Subscript,
