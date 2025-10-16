@@ -91,9 +91,28 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
               }),
               TextAlign.configure({ types: ["heading", "paragraph"] }),
               Image,
-              ListItem,
-              BulletList,
-              OrderedList,
+              // custom list styling: add Tailwind classes to ul/ol/li
+              ListItem.extend({
+                renderHTML({ HTMLAttributes }) {
+                  const existing = HTMLAttributes.class ? HTMLAttributes.class + ' ' : '';
+                  // give each list item a small vertical gap and ensure nested content flows
+                  return ['li', { ...HTMLAttributes, class: `${existing}mb-1 leading-relaxed` }, 0];
+                }
+              }),
+              BulletList.extend({
+                renderHTML({ HTMLAttributes }) {
+                  const existing = HTMLAttributes.class ? HTMLAttributes.class + ' ' : '';
+                  // disc markers, inside positioning, comfortable spacing, and color aware for dark mode
+                  return ['ul', { ...HTMLAttributes, class: `${existing}list-disc list-inside ml-4 mb-4 space-y-1 text-gray-700 dark:text-gray-300` }, 0];
+                }
+              }),
+              OrderedList.extend({
+                renderHTML({ HTMLAttributes }) {
+                  const existing = HTMLAttributes.class ? HTMLAttributes.class + ' ' : '';
+                  // decimal markers for ordered lists
+                  return ['ol', { ...HTMLAttributes, class: `${existing}list-decimal list-inside ml-4 mb-4 space-y-1 text-gray-700 dark:text-gray-300` }, 0];
+                }
+              }),
               Typography,
               Superscript,
               Subscript,

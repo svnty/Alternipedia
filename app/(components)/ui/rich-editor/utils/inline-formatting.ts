@@ -1,4 +1,4 @@
-import { getNodeTextContent, hasInlineChildren, TextNode } from "../types"
+import { getNodeTextContent, hasInlineChildren, TextNode, InlineText } from "../types"
 
 /**
  * Split a text node into inline segments based on selection range
@@ -79,8 +79,8 @@ export function applyFormatting(
     endOffset
   )
 
-  // Build new children array
-  const newChildren: TextNode[] = []
+  // Build new children array (these are inline segments)
+  const newChildren: InlineText[] = []
 
   // Add "before" text if it exists
   if (before) {

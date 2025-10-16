@@ -18,7 +18,7 @@ export async function main() {
 
   for (const name of categories) {
     await prisma.category.upsert({
-      where: { name },
+      where: { name_language: { name, language: "EN" } },
       update: {}, // do nothing if exists
       create: { language: "EN", name },
     })

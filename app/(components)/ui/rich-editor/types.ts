@@ -74,7 +74,13 @@ export interface BaseNode {
  * Inline text segment with its own formatting
  */
 export interface InlineText {
+  /** Optional identifier for the inline segment (useful for editing operations) */
+  id?: string
   content: string
+  /** Optional node type for the inline segment (e.g. 'text', 'span') */
+  type?: NodeType
+  /** Optional generic attributes bag (className, data-*, etc.) */
+  attributes?: NodeAttributes
   bold?: boolean
   italic?: boolean
   underline?: boolean
