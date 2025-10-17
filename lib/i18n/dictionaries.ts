@@ -1,6 +1,6 @@
 import type { Locale } from './config';
 
-const PrivacyPolicyUpdateDate = new Date("2025-10-01T00:00:00Z");
+const PrivacyPolicyUpdateDate = new Date("2025-10-017T00:00:00Z");
 const TermsofServiceUpdateDate = new Date("2025-10-01T00:00:00Z");
 
 // Dictionary type definition
@@ -207,6 +207,8 @@ export type Dictionary = {
     }
   },
   cookieMessage: string;
+  accept: string;
+  reject: string;
 };
 
 // English dictionary
@@ -234,7 +236,9 @@ const en: Dictionary = {
       part2: '- national sovereignty and cultural heritage.',
     },
   },
-  cookieMessage: 'This site uses cookies to improve your experience, analyze site usage, and show personalized content.',
+  cookieMessage: 'We and our partners use cookies to personalize ads, measure performance and to provide social features. Click Accept to allow personalized ads or Reject to decline personalized ads. See our Privacy Policy for more information.',
+  accept: 'Accept',
+  reject: 'Reject',
   login: {
     title: 'Log in to',
     google: 'Continue with Google',
@@ -275,7 +279,8 @@ const en: Dictionary = {
               "Account information: When you sign in using an OAuth provider (like Google, Meta, or similar), we receive basic details such as your name, email address, and profile image (if available).",
               "Payment information: If you choose to make a payment or donation, we use Stripe to process transactions. Stripe handles your payment details securely — we never store or see your credit card numbers.",
               "Analytics data: We use Vercel Analytics to understand general usage patterns, such as which pages are popular and how our site performs. This data is aggregated and does not personally identify you.",
-              "Technical information: When you visit our site, we may automatically receive standard log data such as your browser type, device, and IP address, which helps us maintain security and troubleshoot issues."
+              "Technical information: When you visit our site, we may automatically receive standard log data such as your browser type, device, and IP address, which helps us maintain security and troubleshoot issues.",
+              "Adsense: We use Google Adsense to serve ads on our site. Adsense may use cookies to serve ads based on your prior visits to our site or other sites on the web."
             ]
           }
         ]
@@ -604,7 +609,9 @@ const es: Dictionary = {
       part2: '- soberanía nacional y patrimonio cultural.',
     },
   },
-  cookieMessage: 'Este sitio utiliza cookies para mejorar su experiencia, analizar el uso del sitio y mostrar contenido personalizado.',
+  accept: 'Aceptar',
+  reject: 'Rechazar',
+  cookieMessage: 'Nosotros y nuestros socios utilizamos cookies para personalizar anuncios, medir el rendimiento y proporcionar funciones sociales. Haga clic en Aceptar para permitir anuncios personalizados o en Rechazar para rechazar anuncios personalizados. Consulte nuestra Política de privacidad para obtener más información.',
   login: {
     title: 'Iniciar sesión en',
     google: 'Continuar con Google',
@@ -641,7 +648,8 @@ const es: Dictionary = {
               "Información de la cuenta: Al iniciar sesión mediante un proveedor OAuth (como Google o Meta), recibimos detalles básicos como su nombre, correo electrónico y foto de perfil (si está disponible).",
               "Información de pago: Si decide realizar un pago o donación, Stripe procesa las transacciones de forma segura. Nunca almacenamos ni vemos los números de su tarjeta de crédito.",
               "Datos de análisis: Utilizamos Vercel Analytics para comprender los patrones generales de uso, como qué páginas son populares y cómo funciona nuestro sitio. Estos datos se agregan y no lo identifican personalmente.",
-              "Información técnica: Al visitar nuestro sitio, podemos recibir automáticamente datos de registro estándar, como tipo de navegador, dispositivo y dirección IP, lo que ayuda a mantener la seguridad y solucionar problemas."
+              "Información técnica: Al visitar nuestro sitio, podemos recibir automáticamente datos de registro estándar, como tipo de navegador, dispositivo y dirección IP, lo que ayuda a mantener la seguridad y solucionar problemas.",
+              "Adsense: Usamos Google Adsense para mostrar anuncios en nuestro sitio. Adsense puede usar cookies para mostrar anuncios basados en sus visitas anteriores a nuestro sitio u otros sitios web."
             ]
           }
         ]
@@ -927,7 +935,8 @@ const fr: Dictionary = {
               "Informations de compte : Lorsque vous vous connectez via un fournisseur OAuth (comme Google ou Meta), nous recevons des informations de base telles que votre nom, votre adresse e-mail et votre photo de profil (si disponible).",
               "Informations de paiement : Si vous choisissez de faire un paiement ou un don, Stripe traite les transactions de manière sécurisée. Nous ne stockons ni ne voyons jamais les numéros de votre carte de crédit.",
               "Données analytiques : Nous utilisons Vercel Analytics pour comprendre les tendances générales d'utilisation, comme les pages populaires et la performance de notre site. Ces données sont agrégées et ne permettent pas de vous identifier personnellement.",
-              "Informations techniques : Lors de votre visite sur notre site, nous pouvons automatiquement recevoir des données de journal standard, telles que le type de navigateur, l’appareil et l’adresse IP, ce qui aide à maintenir la sécurité et résoudre les problèmes."
+              "Informations techniques : Lors de votre visite sur notre site, nous pouvons automatiquement recevoir des données de journal standard, telles que le type de navigateur, l’appareil et l’adresse IP, ce qui aide à maintenir la sécurité et résoudre les problèmes.",
+              "Adsense : Nous utilisons Google Adsense pour diffuser des annonces sur notre site. Adsense peut utiliser des cookies pour diffuser des annonces basées sur vos visites précédentes sur notre site ou d’autres sites web."
             ]
           }
         ]
@@ -992,7 +1001,9 @@ const fr: Dictionary = {
       }
     ]
   },
-  cookieMessage: 'Ce site utilise des cookies pour améliorer votre expérience, analyser l\'utilisation du site et afficher du contenu personnalisé.',
+  accept: 'Accepter',
+  reject: 'Rejeter',
+  cookieMessage: 'Nous et nos partenaires utilisons des cookies pour personnaliser les annonces, mesurer les performances et fournir des fonctionnalités sociales. Cliquez sur Accepter pour autoriser les annonces personnalisées ou sur Rejeter pour refuser les annonces personnalisées. Consultez notre Politique de confidentialité pour plus d\'informations.',
   tools: {
     textToSpeech: "Texte en parole",
     translate: "Traduire",
@@ -1178,7 +1189,9 @@ const de: Dictionary = {
       part2: '- nationale Souveränität und kulturelles Erbe.',
     },
   },
-  cookieMessage: 'Diese Seite verwendet Cookies, um Ihre Erfahrung zu verbessern, die Seitennutzung zu analysieren und personalisierte Inhalte anzuzeigen.',
+  accept: 'Akzeptieren',
+  reject: 'Ablehnen',
+  cookieMessage: 'Wir und unsere Partner verwenden Cookies, um personalisierte Werbung anzubieten, die Leistung zu messen und soziale Funktionen bereitzustellen. Klicken Sie auf Akzeptieren, um personalisierte Werbung zuzulassen, oder auf Ablehnen, um personalisierte Werbung abzulehnen. Weitere Informationen finden Sie in unserer Datenschutzrichtlinie.',
   login: {
     title: 'Anmelden bei',
     google: 'Mit Google fortfahren',
@@ -1215,7 +1228,8 @@ const de: Dictionary = {
               "Kontoinformationen: Wenn Sie sich über einen OAuth-Anbieter anmelden (z. B. Google oder Meta), erhalten wir grundlegende Angaben wie Ihren Namen, Ihre E-Mail-Adresse und Ihr Profilbild (falls verfügbar).",
               "Zahlungsinformationen: Wenn Sie eine Zahlung oder Spende tätigen, verarbeitet Stripe die Transaktionen sicher. Wir speichern oder sehen Ihre Kreditkartennummern niemals.",
               "Analysedaten: Wir nutzen Vercel Analytics, um allgemeine Nutzungsmuster zu verstehen, z. B. welche Seiten beliebt sind und wie unsere Website funktioniert. Diese Daten sind aggregiert und identifizieren Sie nicht persönlich.",
-              "Technische Informationen: Wenn Sie unsere Website besuchen, erhalten wir möglicherweise automatisch standardmäßige Protokolldaten, z. B. Browsertyp, Gerät und IP-Adresse, um die Sicherheit und Fehlerbehebung zu gewährleisten."
+              "Technische Informationen: Wenn Sie unsere Website besuchen, erhalten wir möglicherweise automatisch standardmäßige Protokolldaten, z. B. Browsertyp, Gerät und IP-Adresse, um die Sicherheit und Fehlerbehebung zu gewährleisten.",
+              "Adsense: Wir verwenden Google Adsense, um Anzeigen auf unserer Website zu schalten. Adsense kann Cookies verwenden, um Anzeigen basierend auf Ihren vorherigen Besuchen auf unserer oder anderen Websites anzuzeigen."
             ]
           }
         ]
@@ -1501,7 +1515,8 @@ const it: Dictionary = {
               "Informazioni sull'account: Quando accedi tramite un provider OAuth (come Google o Meta), riceviamo dettagli di base come il tuo nome, indirizzo email e immagine del profilo (se disponibile).",
               "Informazioni sul pagamento: Se scegli di effettuare un pagamento o una donazione, Stripe elabora le transazioni in modo sicuro. Non memorizziamo né vediamo mai i numeri della tua carta di credito.",
               "Dati analitici: Utilizziamo Vercel Analytics per comprendere i modelli generali di utilizzo, come le pagine più visitate e le prestazioni del sito. Questi dati sono aggregati e non ti identificano personalmente.",
-              "Informazioni tecniche: Quando visiti il nostro sito, possiamo ricevere automaticamente dati di registro standard, come tipo di browser, dispositivo e indirizzo IP, per aiutare a mantenere la sicurezza e risolvere eventuali problemi."
+              "Informazioni tecniche: Quando visiti il nostro sito, possiamo ricevere automaticamente dati di registro standard, come tipo di browser, dispositivo e indirizzo IP, per aiutare a mantenere la sicurezza e risolvere eventuali problemi.",
+              "Adsense: Utilizziamo Google Adsense per mostrare annunci sul nostro sito. Adsense può utilizzare i cookie per mostrare annunci basati sulle tue visite precedenti al nostro sito o ad altri siti."
             ]
           }
         ]
@@ -1582,7 +1597,9 @@ const it: Dictionary = {
     printPage: "Stampa questa pagina",
     pageInfo: "Informazioni sulla pagina",
   },
-  cookieMessage: 'Questo sito utilizza i cookie per migliorare la tua esperienza, analizzare l\'utilizzo del sito e mostrare contenuti personalizzati.',
+  accept: 'Accetta',
+  reject: 'Rifiuta',
+  cookieMessage: 'Noi e i nostri partner utilizziamo cookie per personalizzare gli annunci, misurare le prestazioni e fornire funzionalità social. Clicca Accetta per consentire annunci personalizzati o Rifiuta per rifiutare gli annunci personalizzati. Consulta la nostra Informativa sulla privacy per maggiori informazioni.',
   language: {
     searchMessage: 'Cerca lingue...',
     selectLanguage: "Scegli la lingua",
@@ -1752,7 +1769,9 @@ const pt: Dictionary = {
       part2: '- liberdade individual e direitos civis.',
     },
   },
-  cookieMessage: 'Este site utiliza cookies para melhorar a sua experiência, analisar a utilização do site e mostrar conteúdos personalizados.',
+  cookieMessage: 'Nós e nossos parceiros usamos cookies para personalizar anúncios, medir desempenho e fornecer recursos sociais. Clique em Aceitar para permitir anúncios personalizados ou Rejeitar para recusar anúncios personalizados. Consulte nossa Política de Privacidade para mais informações.',
+  accept: 'Aceitar',
+  reject: 'Rejeitar',
   login: {
     title: 'Entrar em',
     google: 'Continuar com o Google',
@@ -1789,7 +1808,8 @@ const pt: Dictionary = {
               "Informações da conta: Ao iniciar sessão através de um fornecedor OAuth (como Google ou Meta), recebemos informações básicas, como o seu nome, endereço de e-mail e imagem de perfil (se disponível).",
               "Informações de pagamento: Caso opte por efectuar um pagamento ou donativo, a Stripe processa as transações de forma segura. Nunca armazenamos nem vemos os números do seu cartão de crédito.",
               "Dados analíticos: Utilizamos o Vercel Analytics para compreender padrões gerais de utilização, tais como páginas populares e desempenho do site. Estes dados são agregados e não permitem identificar pessoalmente o utilizador.",
-              "Informações técnicas: Ao visitar o nosso site, podemos receber automaticamente dados de registo padrão, como tipo de navegador, dispositivo e endereço IP, o que ajuda a manter a segurança e a resolver problemas."
+              "Informações técnicas: Ao visitar o nosso site, podemos receber automaticamente dados de registo padrão, como tipo de navegador, dispositivo e endereço IP, o que ajuda a manter a segurança e a resolver problemas.",
+              "Adsense: Utilizamos o Google Adsense para exibir anúncios no nosso site. O Adsense pode usar cookies para exibir anúncios com base nas suas visitas anteriores ao nosso site ou a outros sites."
             ]
           }
         ]
@@ -2079,7 +2099,8 @@ const ja: Dictionary = {
               "アカウント情報：GoogleやMetaなどのOAuthプロバイダーを使用してログインする場合、氏名、メールアドレス、プロフィール画像（利用可能な場合）などの基本情報を受け取ります。",
               "支払い情報：支払いまたは寄付を行う場合、Stripeを使用して安全に処理します。クレジットカード情報を保存または表示することはありません。",
               "分析データ：どのページが人気か、サイトのパフォーマンスがどのようであるかを理解するためにVercel Analyticsを使用します。このデータは集計されており、個人を特定するものではありません。",
-              "技術情報：サイト訪問時に、ブラウザの種類、デバイス、IPアドレスなどの標準的なログデータを自動的に受け取ることがあります。"
+              "技術情報：サイト訪問時に、ブラウザの種類、デバイス、IPアドレスなどの標準的なログデータを自動的に受け取ることがあります。",
+              "Adsense：当サイトではGoogle Adsenseを使用して広告を表示しています。Adsenseは、過去に当サイトまたは他のサイトを訪れた履歴に基づいて広告を表示するためにクッキーを使用する場合があります。"
             ]
           }
         ]
@@ -2227,7 +2248,9 @@ const ja: Dictionary = {
     printPage: "このページを印刷",
     pageInfo: "ページ情報",
   },
-  cookieMessage: "このウェブサイトでは、ユーザーエクスペリエンスを向上させるためにクッキーを使用しています。サイトの使用を続けることで、クッキーの使用に同意したことになります。",
+  cookieMessage: '当社およびパートナーは、広告のパーソナライズ、パフォーマンスの測定、ソーシャル機能の提供のためにクッキーを使用します。パーソナライズされた広告を許可するには「受け入れる」を、拒否するには「拒否する」をクリックしてください。詳細はプライバシーポリシーをご覧ください。',
+  accept: '受け入れる',
+  reject: '拒否する',
   language: {
     searchMessage: "言語を検索",
     selectLanguage: "言語を選択",
@@ -2397,7 +2420,9 @@ const zh: Dictionary = {
       part2: '- 社会改革和工人权利。',
     },
   },
-  cookieMessage: '本网站使用Cookie以提升您的体验、分析网站使用情况并显示个性化内容。',
+  accept: '接受',
+  reject: '拒绝',
+  cookieMessage: '我们和我们的合作伙伴使用 cookie 来个性化广告、衡量性能并提供社交功能。点击 接受 以允许个性化广告，或 点击 拒绝 以拒绝个性化广告。有关更多信息，请参阅我们的隐私政策。',
   login: {
     title: '登录',
     google: '使用 Google 继续',
@@ -2434,7 +2459,8 @@ const zh: Dictionary = {
               "账户信息：当您通过 OAuth 提供商（如 Google 或 Meta）登录时，我们会收到您的姓名、电子邮件地址及个人资料图片（如果有）。",
               "支付信息：如果您选择付款或捐赠，Stripe 会安全地处理交易。我们不会存储或查看您的信用卡号码。",
               "分析数据：我们使用 Vercel Analytics 了解一般使用模式，如哪些页面受欢迎以及网站性能。数据是汇总的，不会识别您的个人身份。",
-              "技术信息：访问我们网站时，我们可能会自动接收标准日志数据，如浏览器类型、设备和 IP 地址，以帮助维护安全性并排查问题。"
+              "技术信息：访问我们网站时，我们可能会自动接收标准日志数据，如浏览器类型、设备和 IP 地址，以帮助维护安全性并排查问题。",
+              "Adsense：我们的网站使用 Google Adsense 来展示广告。Adsense 可能会使用 cookies，根据您过去访问过我们网站或其他网站的历史记录来展示广告。"
             ]
           }
         ]
@@ -2684,7 +2710,9 @@ const ko: Dictionary = {
       part2: '- 개인의 자유와 권리, 사회적 진보.',
     },
   },
-  cookieMessage: '이 웹사이트는 사용자 경험을 향상하고, 웹사이트 사용을 분석하며, 개인화된 콘텐츠를 표시하기 위해 쿠키를 사용합니다.',
+  accept: '수락',
+  reject: '거부',
+  cookieMessage: '당사 및 파트너는 광고 개인화, 성능 측정 및 소셜 기능 제공을 위해 쿠키를 사용합니다. 맞춤형 광고를 허용하려면 수락을 클릭하거나 맞춤형 광고를 거부하려면 거부를 클릭하세요. 자세한 내용은 개인정보 처리방침을 참조하세요.',
   login: {
     title: '로그인',
     google: 'Google로 계속하기',
@@ -2721,7 +2749,8 @@ const ko: Dictionary = {
               "계정 정보: Google, Meta 등 OAuth 제공자를 통해 로그인할 경우, 이름, 이메일 주소 및 프로필 사진(사용 가능 시)과 같은 기본 정보를 수집합니다.",
               "결제 정보: 결제 또는 기부를 선택하면 Stripe를 통해 안전하게 처리됩니다. 우리는 신용카드 번호를 저장하거나 확인하지 않습니다.",
               "분석 데이터: Vercel Analytics를 사용하여 일반적인 사용 패턴을 파악합니다. 예를 들어 인기 페이지 및 사이트 성능 등을 분석합니다. 데이터는 집계되어 개인을 식별하지 않습니다.",
-              "기술 정보: 사이트 방문 시 브라우저 유형, 기기, IP 주소 등의 표준 로그 데이터를 자동으로 수신할 수 있으며, 이는 보안 유지와 문제 해결에 도움을 줍니다."
+              "기술 정보: 사이트 방문 시 브라우저 유형, 기기, IP 주소 등의 표준 로그 데이터를 자동으로 수신할 수 있으며, 이는 보안 유지와 문제 해결에 도움을 줍니다.",
+              "Adsense: 당사 웹사이트는 Google Adsense를 사용하여 광고를 게재합니다. Adsense는 쿠키를 사용하여 사용자가 이전에 당사 웹사이트 또는 다른 웹사이트를 방문한 기록을 기반으로 광고를 표시할 수 있습니다."
             ]
           }
         ]
@@ -2971,7 +3000,9 @@ const ru: Dictionary = {
       part2: '- индивидуальная свобода и права, социальный прогресс.',
     },
   },
-  cookieMessage: 'Этот веб-сайт использует файлы cookie для улучшения вашего опыта, анализа использования сайта и отображения персонализированного контента.',
+  accept: 'Принять',
+  reject: 'Отклонить',
+  cookieMessage: 'Мы и наши партнёры используем файлы cookie для персонализации рекламы, измерения производительности и предоставления социальных функций. Нажмите Принять, чтобы разрешить персонализированную рекламу, или Отклонить, чтобы отказаться от персонализированной рекламы. Подробнее см. в нашей Политике конфиденциальности.',
   login: {
     title: 'Войти',
     google: 'Продолжить с Google',
@@ -3008,7 +3039,8 @@ const ru: Dictionary = {
               "Информация об аккаунте: при входе через провайдер OAuth (например, Google или Meta) мы получаем базовые данные, такие как имя, адрес электронной почты и изображение профиля (если доступно).",
               "Платежная информация: если вы совершаете платеж или пожертвование, Stripe безопасно обрабатывает транзакции. Мы никогда не храним и не видим номера вашей кредитной карты.",
               "Аналитические данные: мы используем Vercel Analytics для понимания общих шаблонов использования, таких как популярные страницы и работа сайта. Данные агрегированы и не идентифицируют вас лично.",
-              "Техническая информация: при посещении сайта мы можем автоматически получать стандартные данные журнала, такие как тип браузера, устройство и IP-адрес, что помогает поддерживать безопасность и устранять неполадки."
+              "Техническая информация: при посещении сайта мы можем автоматически получать стандартные данные журнала, такие как тип браузера, устройство и IP-адрес, что помогает поддерживать безопасность и устранять неполадки.",
+              "Adsense: наш веб-сайт использует Google Adsense для показа рекламы. Adsense может использовать файлы cookie для показа рекламы на основе вашей истории посещений нашего сайта или других сайтов."
             ]
           }
         ]
@@ -3258,7 +3290,9 @@ const ar: Dictionary = {
       part2: '- الحرية الفردية، والحقوق، والتقدم الاجتماعي.',
     },
   },
-  cookieMessage: 'يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك، وتحليل استخدام الموقع، وعرض محتوى مخصص.',
+  accept: 'قبول',
+  reject: 'رفض',
+  cookieMessage: 'نحن وشركاؤنا نستخدم ملفات تعريف الارتباط لتخصيص الإعلانات وقياس الأداء وتوفير ميزات اجتماعية. انقر على قبول للسماح بالإعلانات المخصصة أو رفض لرفض الإعلانات المخصصة. راجع سياسة الخصوصية لمزيد من المعلومات.',
   login: {
     title: 'تسجيل الدخول',
     google: 'المتابعة مع Google',
@@ -3299,7 +3333,8 @@ const ar: Dictionary = {
               "معلومات الحساب: عند تسجيل الدخول باستخدام مزود OAuth (مثل Google أو Meta أو غيرها)، نحصل على تفاصيل أساسية مثل اسمك وعنوان بريدك الإلكتروني وصورة ملفك الشخصي (إن وجدت).",
               "معلومات الدفع: إذا اخترت إجراء دفعة أو تبرع، فنحن نستخدم Stripe لمعالجة المعاملة بأمان. Stripe تتعامل مع تفاصيل الدفع الخاصة بك — نحن لا نخزن أو نرى أرقام بطاقتك الائتمانية.",
               "بيانات التحليلات: نستخدم Vercel Analytics لفهم أنماط الاستخدام العامة مثل الصفحات الأكثر زيارة وأداء الموقع. يتم تجميع هذه البيانات ولا تحدد هويتك الشخصية.",
-              "المعلومات التقنية: عند زيارة موقعنا، قد نتلقى تلقائيًا بيانات السجل القياسية مثل نوع المتصفح والجهاز وعنوان IP للمساعدة في الحفاظ على الأمان وحل المشكلات."
+              "المعلومات التقنية: عند زيارة موقعنا، قد نتلقى تلقائيًا بيانات السجل القياسية مثل نوع المتصفح والجهاز وعنوان IP للمساعدة في الحفاظ على الأمان وحل المشكلات.",
+              "Adsense: يستخدم موقعنا Google Adsense لعرض الإعلانات. قد يستخدم Adsense ملفات تعريف الارتباط لعرض إعلانات بناءً على تاريخ زياراتك لموقعنا أو مواقع أخرى."
             ]
           }
         ]
@@ -3622,7 +3657,9 @@ const hi: Dictionary = {
       part2: '- व्यक्तिगत स्वतंत्रता, अधिकार, और सामाजिक प्रगति।',
     },
   },
-  cookieMessage: 'यह वेबसाइट आपके अनुभव को बेहतर बनाने, साइट उपयोग का विश्लेषण करने, और व्यक्तिगत सामग्री दिखाने के लिए कुकीज़ का उपयोग करती है।',
+  accept: 'स्वीकार करें',
+  reject: 'अस्वीकार करें',
+  cookieMessage: 'हम और हमारे भागीदार विज्ञापन को व्यक्तिगत बनाने, प्रदर्शन मापने और सामाजिक सुविधाएँ प्रदान करने के लिए कुकीज़ का उपयोग करते हैं। व्यक्तिगत विज्ञापनों की अनुमति देने के लिए स्वीकार पर क्लिक करें या व्यक्तिगत विज्ञापन अस्वीकार करने के लिए अस्वीकार पर क्लिक करें। अधिक जानकारी के लिए हमारी गोपनीयता नीति देखें।',
   login: {
     title: 'लॉग इन करें',
     google: 'Google के साथ जारी रखें',
@@ -3663,7 +3700,8 @@ const hi: Dictionary = {
               "खाता जानकारी: जब आप किसी OAuth प्रदाता (जैसे Google, Meta, आदि) से साइन इन करते हैं, तो हमें आपका नाम, ईमेल पता और प्रोफ़ाइल चित्र (यदि उपलब्ध हो) जैसी बुनियादी जानकारी प्राप्त होती है।",
               "भुगतान जानकारी: यदि आप भुगतान या दान करना चुनते हैं, तो हम Stripe का उपयोग करते हैं। Stripe आपके भुगतान विवरण को सुरक्षित रूप से संसाधित करता है — हम कभी भी आपके कार्ड नंबर नहीं देखते या संग्रहीत करते।",
               "एनालिटिक्स डेटा: हम Vercel Analytics का उपयोग करते हैं ताकि यह समझा जा सके कि कौन से पृष्ठ लोकप्रिय हैं और साइट कैसे प्रदर्शन कर रही है। ये डेटा एकत्रित रूप में होता है और आपकी व्यक्तिगत पहचान नहीं करता।",
-              "तकनीकी जानकारी: जब आप हमारी साइट पर आते हैं, तो हमें स्वचालित रूप से आपके ब्राउज़र प्रकार, डिवाइस और IP पता जैसी मानक लॉग जानकारी प्राप्त हो सकती है, जिससे सुरक्षा बनाए रखने में मदद मिलती है।"
+              "तकनीकी जानकारी: जब आप हमारी साइट पर आते हैं, तो हमें स्वचालित रूप से आपके ब्राउज़र प्रकार, डिवाइस और IP पता जैसी मानक लॉग जानकारी प्राप्त हो सकती है, जिससे सुरक्षा बनाए रखने में मदद मिलती है।",
+              "Adsense: हमारी साइट Google Adsense का उपयोग करती है विज्ञापन दिखाने के लिए। Adsense कुकीज़ का उपयोग कर सकता है ताकि आपकी हमारी साइट या अन्य साइटों पर आपकी यात्रा के आधार पर विज्ञापन दिखाए जा सकें।"
             ]
           }
         ]
@@ -3985,7 +4023,9 @@ const bn: Dictionary = {
       part2: '- ব্যক্তিগত স্বাধীনতা, অধিকার, এবং সামাজিক অগ্রগতি।',
     },
   },
-  cookieMessage: 'এই ওয়েবসাইটটি আপনার অভিজ্ঞতা উন্নত করতে, সাইট ব্যবহার বিশ্লেষণ করতে এবং ব্যক্তিগতকৃত সামগ্রী প্রদর্শন করতে কুকিজ ব্যবহার করে।',
+  accept: 'গৃহীত করুন',
+  reject: 'প্রত্যাখ্যান',
+  cookieMessage: 'আমরা এবং আমাদের অংশীদার কুকি ব্যবহার করি বিজ্ঞাপন ব্যক্তিগতকরণ, কার্যক্ষমতা পরিমাপ এবং সামাজিক বৈশিষ্ট্য প্রদান করার জন্য। ব্যক্তিগতকৃত বিজ্ঞাপন অনুমোদনের জন্য গ্রহণ ক্লিক করুন বা ব্যক্তিগতকৃত বিজ্ঞাপন প্রত্যাখ্যান করার জন্য প্রত্যাখ্যান ক্লিক করুন। আরও তথ্যের জন্য আমাদের গোপনীয়তা নীতি দেখুন।',
   login: {
     title: 'লগইন করুন',
     google: 'Google দিয়ে চালিয়ে যান',
@@ -4026,7 +4066,8 @@ const bn: Dictionary = {
               "অ্যাকাউন্ট তথ্য: আপনি যখন কোনো OAuth প্রদানকারী (যেমন Google, Meta, ইত্যাদি) ব্যবহার করে সাইন ইন করেন, আমরা আপনার নাম, ইমেল ঠিকানা এবং প্রোফাইল ছবি (যদি থাকে) এর মতো মৌলিক তথ্য পাই।",
               "পেমেন্ট তথ্য: আপনি যদি পেমেন্ট বা অনুদান করতে চান, আমরা Stripe ব্যবহার করি। Stripe নিরাপদে আপনার পেমেন্ট প্রক্রিয়া করে — আমরা কখনও আপনার কার্ড নম্বর সংরক্ষণ বা দেখতে পাই না।",
               "বিশ্লেষণ ডেটা: আমরা Vercel Analytics ব্যবহার করি যাতে বুঝতে পারি কোন পৃষ্ঠা জনপ্রিয় এবং আমাদের সাইটের পারফরম্যান্স কেমন। এই ডেটা সামগ্রিকভাবে সংগ্রহ করা হয় এবং আপনাকে ব্যক্তিগতভাবে শনাক্ত করে না।",
-              "প্রযুক্তিগত তথ্য: আপনি যখন আমাদের সাইটে যান, তখন আমরা আপনার ব্রাউজারের ধরন, ডিভাইস এবং IP ঠিকানার মতো মানক লগ ডেটা পেতে পারি, যা নিরাপত্তা বজায় রাখতে সাহায্য করে।"
+              "প্রযুক্তিগত তথ্য: আপনি যখন আমাদের সাইটে যান, তখন আমরা আপনার ব্রাউজারের ধরন, ডিভাইস এবং IP ঠিকানার মতো মানক লগ ডেটা পেতে পারি, যা নিরাপত্তা বজায় রাখতে সাহায্য করে।",
+              "Adsense: আমাদের সাইট Google Adsense ব্যবহার করে বিজ্ঞাপন প্রদর্শনের জন্য। Adsense কুকিজ ব্যবহার করতে পারে যাতে আপনার আমাদের সাইট বা অন্যান্য সাইটে ভ্রমণের উপর ভিত্তি করে বিজ্ঞাপন দেখানো যায়।"
             ]
           }
         ]
@@ -4348,7 +4389,9 @@ const ur: Dictionary = {
       part2: '- سماجی انصاف، مساوات، اور مزدور کے حقوق۔', 
     }
   },
-  cookieMessage: 'یہ ویب سائٹ آپ کے تجربے کو بہتر بنانے، سائٹ کے استعمال کا تجزیہ کرنے، اور ذاتی نوعیت کے مواد کو دکھانے کے لیے کوکیز استعمال کرتی ہے۔',
+  accept: 'قبول کریں',
+  reject: 'نامنظور',
+  cookieMessage: 'ہم اور ہمارے پارٹنرز ذاتی نوعیت کے اشتہارات کو ذاتی بنانے، کارکردگی کو ماپنے اور سماجی خصوصیات فراہم کرنے کے لیے کوکیز استعمال کرتے ہیں۔ ذاتی نوعیت کے اشتہارات کی اجازت دینے کے لیے قبول پر کلک کریں یا ذاتی نوعیت کے اشتہارات مسترد کرنے کے لیے نامنظور پر کلک کریں۔ مزید معلومات کے لیے ہماری رازداری کی پالیسی دیکھیں۔',
   login: {
     title: 'لاگ ان کریں',
     google: 'Google کے ساتھ جاری رکھیں',
@@ -4389,7 +4432,8 @@ const ur: Dictionary = {
               "اکاؤنٹ کی معلومات: جب آپ OAuth فراہم کنندہ (جیسے Google یا Meta) کے ذریعے لاگ ان کرتے ہیں، تو ہمیں آپ کا نام، ای میل پتہ اور پروفائل تصویر (اگر دستیاب ہو) جیسی بنیادی معلومات حاصل ہوتی ہیں۔",
               "ادائیگی کی معلومات: اگر آپ ادائیگی یا عطیہ کرتے ہیں، تو ہم Stripe استعمال کرتے ہیں تاکہ لین دین کو محفوظ طریقے سے انجام دیا جا سکے۔ ہم آپ کے کارڈ کی تفصیلات کو کبھی ذخیرہ یا دیکھتے نہیں۔",
               "تجزیاتی ڈیٹا: ہم Vercel Analytics استعمال کرتے ہیں تاکہ یہ سمجھ سکیں کہ کون سے صفحات زیادہ دیکھے جاتے ہیں اور سائٹ کی کارکردگی کیسی ہے۔ یہ ڈیٹا مجموعی طور پر جمع کیا جاتا ہے اور آپ کی شناخت نہیں کرتا۔",
-              "تکنیکی معلومات: جب آپ ہماری سائٹ پر جاتے ہیں، تو ہمیں خودکار طور پر براؤزر، ڈیوائس اور IP ایڈریس جیسی معیاری لاگ معلومات مل سکتی ہیں۔"
+              "تکنیکی معلومات: جب آپ ہماری سائٹ پر جاتے ہیں، تو ہمیں خودکار طور پر براؤزر، ڈیوائس اور IP ایڈریس جیسی معیاری لاگ معلومات مل سکتی ہیں۔",
+              "Adsense: ہماری سائٹ Google Adsense استعمال کرتی ہے تاکہ اشتہارات دکھائے جا سکیں۔ Adsense کوکیز استعمال کر سکتا ہے تاکہ آپ کو ہماری سائٹ یا دیگر سائٹس پر آپ کی براؤزنگ کی بنیاد پر اشتہارات دکھائے جا سکیں۔"
             ]
           }
         ]
@@ -4700,7 +4744,9 @@ const id: Dictionary = {
       part2: '- Kebebasan individu, hak asasi manusia, dan pasar terbuka.',
     },
   },
-  cookieMessage: 'Situs web ini menggunakan cookie untuk meningkatkan pengalaman Anda, menganalisis penggunaan situs, dan menampilkan konten yang dipersonalisasi.',
+  accept: 'Terima',
+  reject: 'Tolak',
+  cookieMessage: 'Kami dan mitra kami menggunakan cookie untuk mempersonalisasi iklan, mengukur kinerja, dan menyediakan fitur sosial. Klik Terima untuk mengizinkan iklan yang dipersonalisasi atau Tolak untuk menolak iklan yang dipersonalisasi. Lihat Kebijakan Privasi kami untuk informasi lebih lanjut.',
   login: {
     title: 'Masuk',
     google: 'Lanjutkan dengan Google',
@@ -4741,7 +4787,8 @@ const id: Dictionary = {
               "Informasi akun: Saat Anda masuk menggunakan penyedia OAuth (seperti Google atau Meta), kami menerima informasi dasar seperti nama, alamat email, dan foto profil Anda (jika tersedia).",
               "Informasi pembayaran: Jika Anda melakukan pembayaran atau donasi, kami menggunakan Stripe untuk memprosesnya dengan aman. Kami tidak pernah menyimpan atau melihat detail kartu Anda.",
               "Data analitik: Kami menggunakan Vercel Analytics untuk memahami pola penggunaan dan kinerja situs. Data ini bersifat agregat dan tidak mengidentifikasi Anda secara pribadi.",
-              "Informasi teknis: Saat Anda mengunjungi situs kami, kami dapat menerima data log standar seperti jenis browser, perangkat, dan alamat IP."
+              "Informasi teknis: Saat Anda mengunjungi situs kami, kami dapat menerima data log standar seperti jenis browser, perangkat, dan alamat IP.",
+              "Adsense: Situs kami menggunakan Google Adsense untuk menampilkan iklan. Adsense dapat menggunakan cookie untuk menampilkan iklan berdasarkan penelusuran Anda di situs kami atau situs lain."
             ]
           }
         ]
@@ -5052,7 +5099,9 @@ const mr: Dictionary = {
       part2: '- वैयक्तिक स्वातंत्र्य, मानवाधिकार आणि मुक्त बाजार.',
     },
   },
-  cookieMessage: 'हा वेब्साईट तुमचा अनुभव सुधारण्यासाठी, साइटचा वापर विश्लेषित करण्यासाठी आणि वैयक्तिकृत सामग्री दर्शविण्यासाठी कुकीज वापरते.',
+  accept: 'स्वीकार करा',
+  reject: 'नाको',
+  cookieMessage: 'आम्ही आणि आमचे भागीदार जाहिराती वैयक्तिकृत करण्यासाठी, कामगिरी मोजण्यासाठी आणि सामाजिक वैशिष्ट्ये प्रदान करण्यासाठी कुकीज वापरतो. वैयक्तिकृत जाहिरातींसाठी परवानगी देण्यासाठी स्वीकार क्लिक करा किंवा वैयक्तिकृत जाहिराती नाकारण्यासाठी नकार क्लिक करा. अधिक माहितीसाठी आमची गोपनीयता धोरण पहा.',
   login: {
     title: 'लॉग इन करा',
     google: 'Google सह सुरू ठेवा',
@@ -5093,7 +5142,8 @@ const mr: Dictionary = {
               "खाते माहिती: आपण Google किंवा Meta सारख्या OAuth प्रदात्यामार्फत लॉग इन केल्यास, आम्हाला तुमचे नाव, ईमेल आणि प्रोफाइल फोटो (असल्यास) प्राप्त होतात.",
               "देयक माहिती: आपण पेमेंट किंवा देणगी करण्याचे निवडल्यास, आम्ही Stripe द्वारे सुरक्षित प्रक्रिया करतो. आम्ही तुमची कार्ड माहिती कधीही जतन किंवा पाहत नाही.",
               "विश्लेषण डेटा: कोणते पृष्ठ लोकप्रिय आहे आणि साइट कशी कार्य करते हे समजण्यासाठी आम्ही Vercel Analytics वापरतो. हे डेटा अनामिक आहे आणि तुमची वैयक्तिक ओळख दर्शवत नाही.",
-              "तांत्रिक माहिती: आपण साइटला भेट दिल्यास, आम्हाला ब्राउझर प्रकार, उपकरण आणि IP पत्ता यासारखी मूलभूत लॉग माहिती आपोआप मिळू शकते."
+              "तांत्रिक माहिती: आपण साइटला भेट दिल्यास, आम्हाला ब्राउझर प्रकार, उपकरण आणि IP पत्ता यासारखी मूलभूत लॉग माहिती आपोआप मिळू शकते.",
+              "Adsense: आमची साइट जाहिराती दाखवण्यासाठी Google Adsense वापरते. Adsense तुमच्या किंवा इतर साइट्सवरील शोधांवर आधारित जाहिराती दाखवण्यासाठी कुकीज वापरू शकते."
             ]
           }
         ]
@@ -5345,7 +5395,9 @@ const te: Dictionary = {
       part2: '- సామాజిక న్యాయం, సమానత్వం మరియు కార్మిక హక్కులు.',
     },
   },
-  cookieMessage: 'ఈ వెబ్‌సైట్ మీ అనుభవాన్ని మెరుగుపరచడానికి, సైట్ వినియోగాన్ని విశ్లేషించడానికి మరియు వ్యక్తిగతీకరించిన కంటెంట్‌ను ప్రదర్శించడానికి కుకీలను ఉపయోగిస్తుంది.',
+  accept: 'అంగీకరించండి',
+  reject: 'నిరాకరించండి',
+  cookieMessage: 'మేము మరియు మా భాగస్వాములు ప్రకటనలను వ్యక్తిగతీకరించడానికి, పనితీరును కొలవడానికి మరియు సామాజిక ఫీచర్లను అందించడానికి కుకీలు ఉపయోగిస్తారు. వ్యక్తిగతీకరించిన ప్రకటనలను అనుమతించడానికి అంగీకరించండి క్లిక్ చేయండి లేదా వ్యక్తిగతీకరించిన ప్రకటనలను తిరస్కరించడానికి నిరాకరించండి క్లిక్ చేయండి. మరిన్ని కోసం మా గోప్యతా విధానం చూడండి.',
   login: {
     title: 'లాగిన్',
     google: 'Google తో కొనసాగించండి',
@@ -5382,7 +5434,8 @@ const te: Dictionary = {
               "ఖాతా సమాచారం: మీరు Google లేదా Meta వంటి OAuth ప్రొవైడర్‌తో లాగిన్ అయితే, మీ పేరు, ఇమెయిల్ మరియు ప్రొఫైల్ చిత్రాన్ని పొందుతాము.",
               "చెల్లింపు సమాచారం: మీరు చెల్లింపు లేదా విరాళం ఇవ్వాలని ఎంచుకుంటే, మేము Stripe ద్వారా సురక్షితంగా ప్రాసెస్ చేస్తాము. మేము మీ కార్డ్ వివరాలను ఎప్పుడూ నిల్వ చేయము లేదా వీక్షించము.",
               "విశ్లేషణ డేటా: ఏ పేజీలు ప్రాచుర్యం పొందుతున్నాయి మరియు సైట్ ఎలా పనిచేస్తుంది అనే దానిని అర్థం చేసుకోవడానికి మేము Vercel Analyticsని ఉపయోగిస్తాము.",
-              "సాంకేతిక సమాచారం: మీరు సైట్ సందర్శించినప్పుడు, బ్రౌజర్ రకం, పరికరం మరియు IP చిరునామా వంటి ప్రామాణిక లాగ్ డేటాను స్వయంచాలకంగా స్వీకరిస్తాము."
+              "సాంకేతిక సమాచారం: మీరు సైట్ సందర్శించినప్పుడు, బ్రౌజర్ రకం, పరికరం మరియు IP చిరునామా వంటి ప్రామాణిక లాగ్ డేటాను స్వయంచాలకంగా స్వీకరిస్తాము.",
+              "Adsense: మా సైట్ ప్రకటనలను ప్రదర్శించడానికి Google Adsenseని ఉపయోగిస్తుంది. Adsense కుకీలను ఉపయోగించి మీ లేదా ఇతర సైట్లపై మీ శోధనల ఆధారంగా ప్రకటనలను ప్రదర్శించవచ్చు."
             ]
           }
         ]
@@ -5604,7 +5657,9 @@ const tr: Dictionary = {
       part2: '- Bireysel özgürlükler, insan hakları ve serbest piyasa.',
     },
   },
-  cookieMessage: 'Bu web sitesi deneyiminizi geliştirmek, site kullanımını analiz etmek ve kişiselleştirilmiş içerik sunmak için çerezler kullanır.',
+  accept: 'Kabul et',
+  reject: 'Reddet',
+  cookieMessage: 'Biz ve ortaklarımız, reklamları kişiselleştirmek, performansı ölçmek ve sosyal özellikler sağlamak için çerezler kullanıyoruz. Kişiselleştirilmiş reklamlara izin vermek için Kabul et\'e veya kişiselleştirilmiş reklamlardan vazgeçmek için Reddet\'e tıklayın. Daha fazla bilgi için Gizlilik Politikamıza bakın.',
   login: {
     title: 'Giriş yap',
     google: 'Google ile devam et',
@@ -5645,7 +5700,8 @@ const tr: Dictionary = {
               "Hesap bilgileri: Google veya Meta gibi bir OAuth sağlayıcısı ile giriş yaptığınızda, adınız, e-posta adresiniz ve profil resminiz (varsa) gibi temel bilgileri alırız.",
               "Ödeme bilgileri: Ödeme veya bağış yapmayı seçerseniz, işlemleri güvenli bir şekilde gerçekleştirmek için Stripe kullanırız. Kart bilgilerinizi asla saklamayız veya görüntülemeyiz.",
               "Analitik veriler: Hangi sayfaların popüler olduğunu ve sitemizin nasıl çalıştığını anlamak için Vercel Analytics kullanırız. Bu veriler anonimdir ve sizi kişisel olarak tanımlamaz.",
-              "Teknik bilgiler: Sitemizi ziyaret ettiğinizde, tarayıcı türü, cihaz ve IP adresi gibi standart günlük verilerini otomatik olarak alabiliriz."
+              "Teknik bilgiler: Sitemizi ziyaret ettiğinizde, tarayıcı türü, cihaz ve IP adresi gibi standart günlük verilerini otomatik olarak alabiliriz.",
+              "Adsense: Sitemizde reklam göstermek için Google Adsense kullanıyoruz. Adsense, çerezler aracılığıyla sizin veya diğer sitelerdeki aramalarınıza dayalı olarak reklamlar gösterebilir."
             ]
           }
         ]
@@ -5955,7 +6011,9 @@ const ta: Dictionary = {
       part2: '- சமூக நீதி, சமத்துவம் மற்றும் தொழிலாளர் உரிமைகள்.',
     },
   },
-  cookieMessage: 'இந்த வலைத்தளம் உங்கள் அனுபவத்தை மேம்படுத்த, தள பயன்பாட்டை பகுப்பாய்வு செய்ய மற்றும் தனிப்பயனாக்கப்பட்ட உள்ளடக்கத்தை வழங்க குக்கீகளைப் பயன்படுத்துகிறது.',
+  accept: 'ஏற்கவும்',
+  reject: 'நிராகரிக்கவும்',
+  cookieMessage: 'நாங்கள் மற்றும் எங்கள் கூட்டாளிகள் விளம்பரங்களை தனிப்பயனாக்க, செயல்திறனை அளவிட மற்றும் சமூக அம்சங்களை வழங்க குக்கீகளைப் பயன்படுத்துகிறோம். தனிப்பயனாக்கப்பட்ட விளம்பரங்களுக்கு அனுமதிக்க "ஏற்கவும்" அல்லது தனிப்பயனாக்கப்பட்ட விளம்பரங்களை மறுக்க "நிராகரிக்கவும்" என்பதைக் கிளிக் செய்யவும். மேலும் தகவலுக்கு எங்கள் தனியுரிமைக் கொள்கையைப் பார்க்கவும்.',
   login: {
     title: 'உள்நுழைய',
     google: 'Google மூலம் தொடரவும்',
@@ -5992,7 +6050,8 @@ const ta: Dictionary = {
               "கணக்கு தகவல்: நீங்கள் Google அல்லது Meta போன்ற OAuth வழங்குநருடன் உள்நுழைந்தால், உங்கள் பெயர், மின்னஞ்சல் மற்றும் சுயவிவரப் படம் (இருந்தால்) எங்களுக்கு கிடைக்கும்.",
               "கட்டணத் தகவல்: நீங்கள் கட்டணம் செலுத்தவோ அல்லது நன்கொடை வழங்கவோ விரும்பினால், Stripe மூலம் பாதுகாப்பாக செயலாக்கப்படுகிறது. நாங்கள் உங்கள் கார்டு விவரங்களை சேமிக்கவோ அல்லது பார்ப்பதற்கோ இல்லை.",
               "பகுப்பாய்வு தரவு: எந்த பக்கங்கள் பிரபலமானவை மற்றும் எங்கள் தளம் எப்படி செயல்படுகிறது என்பதைப் புரிந்துகொள்வதற்கு நாங்கள் Vercel Analytics ஐப் பயன்படுத்துகிறோம்.",
-              "தொழில்நுட்ப தகவல்: நீங்கள் தளத்தைப் பார்வையிடும் போது, உலாவி வகை, சாதனம் மற்றும் IP முகவரி போன்ற அடிப்படை பதிவுத் தரவை தானாகப் பெறலாம்."
+              "தொழில்நுட்ப தகவல்: நீங்கள் தளத்தைப் பார்வையிடும் போது, உலாவி வகை, சாதனம் மற்றும் IP முகவரி போன்ற அடிப்படை பதிவுத் தரவை தானாகப் பெறலாம்.",
+              "Adsense: எங்கள் தளத்தில் விளம்பரங்களை காட்சிப்படுத்த Google Adsense ஐப் பயன்படுத்துகிறோம். Adsense, குக்கீகளைப் பயன்படுத்தி உங்கள் அல்லது பிற தளங்களில் உங்கள் தேடல்களின் அடிப்படையில் விளம்பரங்களை காட்சிப்படுத்தலாம்."
             ]
           }
         ]
@@ -6232,7 +6291,9 @@ const yue: Dictionary = {
       part2: '—— 社會公義、平等同勞工權益。',
     },
   },
-  cookieMessage: '本網站使用曲奇以提升您的體驗、分析網站使用情況及提供個人化內容。',
+  accept: '接受',
+  reject: '拒絕',
+  cookieMessage: '我們和合作夥伴使用 cookies 來個人化廣告、衡量效能並提供社交功能。按「接受」以允許個人化廣告，或按「拒絕」以拒絕。詳情請參閱我們的私隱政策。',
   login: {
     title: '登入',
     google: '用 Google 繼續',
@@ -6273,7 +6334,8 @@ const yue: Dictionary = {
               "帳戶資料：當你用 OAuth 供應商（例如 Google、Meta）登入時，我哋會收到你嘅姓名、電郵地址同頭像（如有）。",
               "付款資料：如果你選擇付款或捐款，我哋會透過 Stripe 安全處理交易。我哋唔會儲存或睇到你嘅信用卡資料。",
               "分析數據：我哋會用 Vercel Analytics 去了解邊啲頁面最受歡迎同網站表現。呢啲資料係匯總嘅，唔會識別你個人身份。",
-              "技術資料：當你瀏覽網站時，我哋可能自動收到瀏覽器類型、裝置、IP 地址等標準記錄資料，用嚟維持安全同解決問題。"
+              "技術資料：當你瀏覽網站時，我哋可能自動收到瀏覽器類型、裝置、IP 地址等標準記錄資料，用嚟維持安全同解決問題。",
+              "Adsense：我哋會用 Google Adsense 喺我哋網站展示廣告。Adsense 可能會用 cookies 根據你喺呢個網站或其他網站嘅搜索記錄嚟展示廣告。"
             ]
           }
         ]
@@ -6517,7 +6579,9 @@ const vi: Dictionary = {
       part2: '- Công bằng xã hội, bình đẳng và quyền lợi của người lao động.',
     },
   },
-  cookieMessage: 'Trang web này sử dụng cookie để cải thiện trải nghiệm của bạn, phân tích việc sử dụng trang web và cung cấp nội dung được cá nhân hóa.',
+  accept: 'Chấp nhận',
+  reject: 'Từ chối',
+  cookieMessage: 'Chúng tôi và các đối tác sử dụng cookie để cá nhân hóa quảng cáo, đo hiệu suất và cung cấp tính năng xã hội. Nhấn Chấp nhận để cho phép quảng cáo được cá nhân hóa hoặc Từ chối để từ chối. Xem Chính sách Quyền riêng tư của chúng tôi để biết thêm thông tin.',
   login: {
     title: 'Đăng nhập',
     google: 'Tiếp tục với Google',
@@ -6554,7 +6618,8 @@ const vi: Dictionary = {
               "Thông tin tài khoản: Khi bạn đăng nhập bằng nhà cung cấp OAuth (như Google hoặc Meta), chúng tôi nhận được tên, email và ảnh hồ sơ của bạn (nếu có).",
               "Thông tin thanh toán: Nếu bạn chọn thanh toán hoặc quyên góp, Stripe sẽ xử lý giao dịch của bạn một cách an toàn. Chúng tôi không bao giờ lưu trữ hoặc nhìn thấy thông tin thẻ tín dụng của bạn.",
               "Dữ liệu phân tích: Chúng tôi sử dụng Vercel Analytics để hiểu hành vi sử dụng tổng quát như trang nào phổ biến nhất và hiệu suất của trang web. Dữ liệu này được ẩn danh và không định danh cá nhân.",
-              "Thông tin kỹ thuật: Khi bạn truy cập trang web, chúng tôi có thể tự động nhận được dữ liệu nhật ký tiêu chuẩn như loại trình duyệt, thiết bị và địa chỉ IP."
+              "Thông tin kỹ thuật: Khi bạn truy cập trang web, chúng tôi có thể tự động nhận được dữ liệu nhật ký tiêu chuẩn như loại trình duyệt, thiết bị và địa chỉ IP.",
+              "Adsense: Chúng tôi sử dụng Google Adsense để hiển thị quảng cáo trên trang web của mình. Adsense có thể sử dụng cookie để hiển thị quảng cáo dựa trên lịch sử tìm kiếm của bạn trên trang web này hoặc các trang web khác."
             ]
           }
         ]
@@ -6798,7 +6863,9 @@ const fil: Dictionary = {
       part2: '—— Kalayaan ng indibidwal, karapatang pantao at malayang pamilihan.',
     },
   },
-  cookieMessage: 'Gumagamit ang website na ito ng cookies upang mapabuti ang iyong karanasan, suriin ang paggamit ng website, at magbigay ng personalized na nilalaman.',
+  accept: 'Tanggapin',
+  reject: 'Tanggihan',
+  cookieMessage: 'Ginagamit namin at ng aming mga kasosyo ang cookies para i-personalize ang mga ad, sukatin ang performance, at magbigay ng social na mga tampok. I-click ang "Tanggapin" para payagan ang personalized na ads o "Tanggihan" para tanggihan. Tingnan ang aming Patakaran sa Privacy para sa karagdagang impormasyon.',
   login: {
     title: 'Mag-login',
     google: 'Magpatuloy gamit ang Google',
@@ -6835,7 +6902,8 @@ const fil: Dictionary = {
               "Impormasyon ng account: Kapag nag-login ka gamit ang OAuth provider (gaya ng Google o Meta), nakakatanggap kami ng iyong pangalan, email address, at larawan sa profile (kung mayroon).",
               "Impormasyon sa pagbabayad: Kung pipiliin mong magbayad o mag-donate, ligtas na pinoproseso ng Stripe ang iyong transaksyon. Hindi namin nakikita o iniimbak ang iyong impormasyon sa credit card.",
               "Data ng analytics: Ginagamit namin ang Vercel Analytics upang maunawaan kung aling mga pahina ang pinakapopular at kung paano gumaganap ang aming site. Ang mga data na ito ay pinagsama-sama at hindi tumutukoy sa personal na pagkakakilanlan.",
-              "Teknikal na impormasyon: Kapag binisita mo ang site, maaaring awtomatikong makuha namin ang impormasyon tulad ng uri ng browser, device, at IP address upang mapanatili ang seguridad at pagganap."
+              "Teknikal na impormasyon: Kapag binisita mo ang site, maaaring awtomatikong makuha namin ang impormasyon tulad ng uri ng browser, device, at IP address upang mapanatili ang seguridad at pagganap.",
+              "Adsense: Ginagamit namin ang Google Adsense upang magpakita ng mga ad sa aming site. Maaaring gumamit ang Adsense ng cookies upang magpakita ng mga ad batay sa iyong kasaysayan ng pagba-browse sa site na ito o sa iba pang mga site."
             ]
           }
         ]
@@ -7079,7 +7147,9 @@ const ha: Dictionary = {
       part2: '- \'Yancin mutum, hakkin ɗan adam da kasuwa mai \'yanci.',
     },
   },
-  cookieMessage: 'Yanar gizon nan na amfani da kukis don inganta ƙwarewar ku, nazarin amfani da yanar gizo, da samar da abun ciki na musamman.',
+  accept: 'Yarda',
+  reject: 'Ƙi yarda',
+  cookieMessage: 'Mu da abokan hulɗa muna amfani da kukis don keɓance talla, auna aikin shafin, da samar da fasalulluka na zamantakewa. Danna "Yarda" don amincewa da tallace-tallacen da aka keɓance ko "Ƙi yarda" don ƙin yarda. Duba Dokar Sirrinmu don ƙarin bayani.',
   login: {
     title: 'Shiga',
     google: 'Ci gaba da Google',
@@ -7116,7 +7186,8 @@ const ha: Dictionary = {
               "Bayanin asusu: Idan ka shiga ta hanyar mai ba da OAuth (kamar Google ko Meta), muna karɓar sunanka, adireshin imel, da hoton bayananka (idan akwai).",
               "Bayanin biyan kuɗi: Idan ka zaɓi biyan kuɗi ko bayar da gudummawa, Stripe yana sarrafa ma’amalarka cikin tsaro. Ba ma adanawa ko ganin bayanan katin kuɗinka.",
               "Bayanan nazari: Muna amfani da Vercel Analytics don fahimtar shafukan da aka fi ziyarta da yadda rukunin yanar gizo yake aiki. Wadannan bayanai ba su bayyana kai tsaye ba.",
-              "Bayanan fasaha: Lokacin da ka shiga shafin, muna iya karɓar bayanai na log kamar irin burauzar da kake amfani da ita, na’ura, da adireshin IP don kiyaye tsaro da aikin shafin."
+              "Bayanan fasaha: Lokacin da ka shiga shafin, muna iya karɓar bayanai na log kamar irin burauzar da kake amfani da ita, na’ura, da adireshin IP don kiyaye tsaro da aikin shafin.",
+              "Adsense: Muna amfani da Google Adsense don nuna tallace-tallace a shafinmu. Adsense na iya amfani da kukis don nuna tallace-tallace bisa ga tarihin bincikenka a wannan shafin ko wasu shafuka."
             ]
           }
         ]
@@ -7360,7 +7431,9 @@ const arz: Dictionary = {
       part2: '- الحرية الفردية، حقوق الإنسان، والسوق الحرة.',
     },
   },
-  cookieMessage: 'يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك، وتحليل استخدام الموقع، وتقديم محتوى مخصص.',
+  accept: 'أوافق',
+  reject: 'أرفض',
+  cookieMessage: 'نحن وشركاؤنا نستخدم الكوكيز لتخصيص الإعلانات، قياس أداء الموقع، وتوفير ميزات اجتماعية. اضغط على "أوافق" للموافقة على الإعلانات المخصصة أو "أرفض" للرفض. راجع سياسة الخصوصية الخاصة بنا لمزيد من المعلومات.',
   login: {
     title: 'تسجيل الدخول',
     google: 'المتابعة باستخدام جوجل',
@@ -7397,7 +7470,8 @@ const arz: Dictionary = {
               "معلومات الحساب: لما تسجل دخولك عن طريق مزود OAuth زي Google أو Meta، بنستلم اسمك، بريدك الإلكتروني، وصورة الملف الشخصي (لو موجودة).",
               "معلومات الدفع: لو اخترت تدفع أو تتبرع، Stripe بتعالج المدفوعات بأمان. إحنا عمرنا ما بنخزن أو نشوف بيانات بطاقة الائتمان بتاعتك.",
               "بيانات التحليلات: بنستخدم Vercel Analytics لفهم الصفحات الشائعة وأداء الموقع. البيانات دي ملخصة ومش بتعرفك شخصياً.",
-              "معلومات فنية: لما تزور الموقع، ممكن نستلم تلقائياً بيانات تسجيل قياسية زي نوع المتصفح، الجهاز، وعنوان IP عشان نحافظ على الأمان وحل المشاكل."
+              "معلومات فنية: لما تزور الموقع، ممكن نستلم تلقائياً بيانات تسجيل قياسية زي نوع المتصفح، الجهاز، وعنوان IP عشان نحافظ على الأمان وحل المشاكل.",
+              "Adsense: إحنا بنستخدم Google Adsense لعرض الإعلانات على موقعنا. Adsense ممكن يستخدم الكوكيز لعرض إعلانات مخصصة بناءً على تاريخ تصفحك على الموقع ده أو مواقع تانية."
             ]
           }
         ]
@@ -7640,7 +7714,9 @@ const jv: Dictionary = {
       part2: '- Kebebasan individu, hak asasi manusia, lan pasar bebas.',
     },
   },
-  cookieMessage: 'Situs web iki nggunakake kuki kanggo nambah pengalaman sampeyan, nganalisa panggunaan situs web, lan nyedhiyakake konten sing dipersonalisasi.',
+  accept: 'Nampa',
+  reject: 'Tolak',
+  cookieMessage: 'Kita lan mitra nggunakake cookie kanggo ngatur iklan sing dipersonalisasi, ngukur performa, lan nyedhiyakake fitur sosial. Klik Nampa kanggo ngidini iklan sing dipersonalisasi utawa Tolak kanggo nolak. Delengen Kabijakan Privasi kanggo informasi luwih lengkap.',
   login: {
     title: 'Mlebu',
     google: 'Terus nganggo Google',
@@ -7677,7 +7753,8 @@ const jv: Dictionary = {
               "Informasi akun: Nalika mlebu nggunakake panyedhiya OAuth (kaya Google utawa Meta), kita nampa jenengmu, alamat email, lan gambar profil (yen ana).",
               "Informasi pembayaran: Yen sampeyan milih mbayar utawa nyumbang, Stripe bakal ngolah transaksi kanthi aman. Kita ora nyimpen utawa ndeleng nomer kertu kreditmu.",
               "Data analitik: Kita nggunakake Vercel Analytics kanggo ngerti pola panggunaan umum, kayata kaca sing populer lan kinerja situs. Data iki digabung lan ora ngenali identitas pribadhi.",
-              "Informasi teknis: Nalika sampeyan ngunjungi situs, kita bisa kanthi otomatis nampa data log standar kaya jinis browser, piranti, lan alamat IP kanggo njaga keamanan lan ngatasi masalah."
+              "Informasi teknis: Nalika sampeyan ngunjungi situs, kita bisa kanthi otomatis nampa data log standar kaya jinis browser, piranti, lan alamat IP kanggo njaga keamanan lan ngatasi masalah.",
+              "Adsense: Kita nggunakake Google Adsense kanggo nampilake iklan ing situs kita. Adsense bisa nggunakake cookie kanggo nampilake iklan sing disesuaikan adhedhasar riwayat browsingmu ing situs iki utawa situs liyane."
             ]
           }
         ]
@@ -7923,7 +8000,9 @@ const nl: Dictionary = {
       part2: '- Individuele vrijheid, mensenrechten en vrije markt.',
     },
   },
-  cookieMessage: 'Deze website gebruikt cookies om uw ervaring te verbeteren, het gebruik van de website te analyseren en gepersonaliseerde inhoud te bieden.',
+  accept: 'Accepteren',
+  reject: 'Weigeren',
+  cookieMessage: 'Wij en onze partners gebruiken cookies om advertenties te personaliseren, prestaties te meten en sociale functies te bieden. Klik Accepteren om gepersonaliseerde advertenties toe te staan of Weigeren om deze te weigeren. Zie ons privacybeleid voor meer informatie.',
   login: {
     title: 'Inloggen',
     google: 'Doorgaan met Google',
@@ -7960,7 +8039,8 @@ const nl: Dictionary = {
               "Accountinformatie: Wanneer u inlogt via een OAuth-provider (zoals Google of Meta), ontvangen wij uw naam, e-mailadres en profielfoto (indien beschikbaar).",
               "Betalingsinformatie: Als u ervoor kiest om te betalen of een donatie te doen, verwerkt Stripe de transacties veilig. Wij slaan uw creditcardgegevens nooit op of zien deze niet.",
               "Analysetgegevens: Wij gebruiken Vercel Analytics om algemene gebruikspatronen te begrijpen, zoals welke pagina's populair zijn en hoe onze site presteert. Deze gegevens zijn geaggregeerd en identificeren u niet persoonlijk.",
-              "Technische informatie: Wanneer u onze site bezoekt, kunnen we automatisch standaard loggegevens ontvangen zoals uw browsertype, apparaat en IP-adres, om veiligheid en functionaliteit te waarborgen."
+              "Technische informatie: Wanneer u onze site bezoekt, kunnen we automatisch standaard loggegevens ontvangen zoals uw browsertype, apparaat en IP-adres, om veiligheid en functionaliteit te waarborgen.",
+              "Adsense: Wij gebruiken Google Adsense om advertenties op onze site weer te geven. Adsense kan cookies gebruiken om gepersonaliseerde advertenties weer te geven op basis van uw browsegeschiedenis op deze of andere sites."
             ]
           }
         ]
@@ -8203,7 +8283,9 @@ const el: Dictionary = {
       part2: '- Κοινωνική δικαιοσύνη, ισότητα και δικαιώματα εργαζομένων.',
     },
   },
-  cookieMessage: 'Αυτή η ιστοσελίδα χρησιμοποιεί cookies για να βελτιώσει την εμπειρία σας, να αναλύσει τη χρήση της ιστοσελίδας και να παρέχει εξατομικευμένο περιεχόμενο.',
+  accept: 'Αποδοχή',
+  reject: 'Απόρριψη',
+  cookieMessage: 'Εμείς και οι συνεργάτες μας χρησιμοποιούμε cookies για εξατομίκευση διαφημίσεων, μέτρηση απόδοσης και παροχή κοινωνικών λειτουργιών. Κάντε κλικ στο Αποδοχή για να επιτρέψετε εξατομικευμένες διαφημίσεις ή στο Απόρριψη για να τις απορρίψετε. Δείτε την Πολιτική Απορρήτου μας για περισσότερες πληροφορίες.',
   login: {
     title: 'Σύνδεση',
     google: 'Συνέχεια με το Google',
@@ -8240,7 +8322,8 @@ const el: Dictionary = {
               "Πληροφορίες λογαριασμού: Όταν συνδέεστε μέσω ενός παρόχου OAuth (π.χ. Google ή Meta), λαμβάνουμε το όνομά σας, τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας και την εικόνα προφίλ σας (αν υπάρχει).",
               "Πληροφορίες πληρωμής: Εάν επιλέξετε να κάνετε πληρωμή ή δωρεά, η Stripe επεξεργάζεται τις συναλλαγές με ασφάλεια. Δεν αποθηκεύουμε ούτε βλέπουμε ποτέ τα στοιχεία της πιστωτικής σας κάρτας.",
               "Δεδομένα αναλυτικών στοιχείων: Χρησιμοποιούμε το Vercel Analytics για να κατανοήσουμε γενικά μοτίβα χρήσης, όπως ποιες σελίδες είναι δημοφιλείς και πώς αποδίδει ο ιστότοπός μας. Αυτά τα δεδομένα είναι συγκεντρωτικά και δεν σας αναγνωρίζουν προσωπικά.",
-              "Τεχνικές πληροφορίες: Όταν επισκέπτεστε τον ιστότοπό μας, ενδέχεται να λαμβάνουμε αυτόματα τυπικά δεδομένα καταγραφής όπως τύπο προγράμματος περιήγησης, συσκευή και διεύθυνση IP, για τη διατήρηση της ασφάλειας και την αντιμετώπιση προβλημάτων."
+              "Τεχνικές πληροφορίες: Όταν επισκέπτεστε τον ιστότοπό μας, ενδέχεται να λαμβάνουμε αυτόματα τυπικά δεδομένα καταγραφής όπως τύπο προγράμματος περιήγησης, συσκευή και διεύθυνση IP, για τη διατήρηση της ασφάλειας και την αντιμετώπιση προβλημάτων.",
+              "Adsense: Χρησιμοποιούμε το Google Adsense για την προβολή διαφημίσεων στον ιστότοπό μας. Το Adsense μπορεί να χρησιμοποιεί cookies για την προβολή εξατομικευμένων διαφημίσεων βάσει του ιστορικού περιήγησής σας σε αυτόν ή άλλους ιστότοπους."
             ]
           }
         ]
@@ -8483,7 +8566,9 @@ const sv: Dictionary = {
       part2: '- Individuell frihet, mänskliga rättigheter och fri marknad.',
     },
   },
-  cookieMessage: 'Denna webbplats använder cookies för att förbättra din upplevelse, analysera webbplatsanvändning och tillhandahålla anpassat innehåll.',
+  accept: 'Acceptera',
+  reject: 'Avvisa',
+  cookieMessage: 'Vi och våra partners använder cookies för att anpassa annonser, mäta prestanda och tillhandahålla sociala funktioner. Klicka Acceptera för att tillåta personliga annonser eller Avvisa för att neka. Se vår integritetspolicy för mer information.',
   login: {
     title: 'Logga in',
     google: 'Fortsätt med Google',
@@ -8520,7 +8605,8 @@ const sv: Dictionary = {
               "Kontoinformation: När du loggar in med en OAuth-leverantör (som Google eller Meta) får vi ditt namn, e-postadress och profilbild (om tillgänglig).",
               "Betalningsinformation: Om du väljer att göra en betalning eller donation behandlar Stripe transaktioner säkert. Vi sparar aldrig eller ser dina kreditkortsuppgifter.",
               "Analysdata: Vi använder Vercel Analytics för att förstå allmänna användarmönster, såsom vilka sidor som är populära och hur vår webbplats presterar. Dessa data är aggregerade och identifierar dig inte personligen.",
-              "Teknisk information: När du besöker webbplatsen kan vi automatiskt ta emot standardloggdata som webbläsartyp, enhet och IP-adress för att upprätthålla säkerhet och funktionalitet."
+              "Teknisk information: När du besöker webbplatsen kan vi automatiskt ta emot standardloggdata som webbläsartyp, enhet och IP-adress för att upprätthålla säkerhet och funktionalitet.",
+              "Adsense: Vi använder Google Adsense för att visa annonser på vår webbplats. Adsense kan använda cookies för att visa anpassade annonser baserat på din surfhistorik på denna eller andra webbplatser."
             ]
           }
         ]
@@ -8762,7 +8848,9 @@ const no: Dictionary = {
       part2: '- Individuelle rettigheter, frihet og likestilling.',
     },
   },
-  cookieMessage: 'Dette nettstedet bruker informasjonskapsler for å forbedre opplevelsen din, analysere nettstedbruk og levere tilpasset innhold.',
+  accept: 'Godta',
+  reject: 'Avslå',
+  cookieMessage: 'Vi og våre partnere bruker informasjonskapsler for å personalisere annonser, måle ytelse og tilby sosiale funksjoner. Klikk Godta for å tillate personlige annonser eller Avslå for å avslå. Se vår personvernerklæring for mer informasjon.',
   login: {
     title: 'Logg inn',
     google: 'Fortsett med Google',
@@ -8799,7 +8887,8 @@ const no: Dictionary = {
               "Kontoinformasjon: Når du logger inn via en OAuth-leverandør (som Google eller Meta), mottar vi navn, e-postadresse og profilbilde (hvis tilgjengelig).",
               "Betalingsinformasjon: Hvis du velger å betale eller donere, behandler Stripe transaksjoner sikkert. Vi lagrer aldri eller ser dine kredittkortopplysninger.",
               "Analyser: Vi bruker Vercel Analytics for å forstå generelle bruksmønstre, for eksempel hvilke sider som er populære og hvordan nettstedet presterer. Disse dataene er aggregerte og identifiserer deg ikke personlig.",
-              "Teknisk informasjon: Når du besøker nettstedet, kan vi automatisk motta standard loggdata som nettlesertype, enhet og IP-adresse for å opprettholde sikkerhet og funksjonalitet."
+              "Teknisk informasjon: Når du besøker nettstedet, kan vi automatisk motta standard loggdata som nettlesertype, enhet og IP-adresse for å opprettholde sikkerhet og funksjonalitet.",
+              "Adsense: Vi bruker Google Adsense for å vise annonser på nettstedet vårt. Adsense kan bruke informasjonskapsler for å vise tilpassede annonser basert på din nettleserhistorikk på dette eller andre nettsteder."
             ]
           }
         ]
@@ -9043,7 +9132,9 @@ const pl: Dictionary = {
       part2: '- Wolność jednostki, prawa człowieka i wolny rynek.',
     },
   },
-  cookieMessage: 'Ta strona używa plików cookie, aby poprawić Twoje wrażenia, analizować ruch na stronie i dostarczać spersonalizowane treści.',
+  accept: 'Akceptuj',
+  reject: 'Odrzuć',
+  cookieMessage: 'My i nasi partnerzy używamy plików cookie do personalizacji reklam, mierzenia wydajności i udostępniania funkcji społecznościowych. Kliknij Akceptuj, aby zezwolić na spersonalizowane reklamy, lub Odrzuć, aby je odrzucić. Zobacz naszą Politykę prywatności, aby uzyskać więcej informacji.',
   login: {
     title: 'Zaloguj się',
     google: 'Kontynuuj z Google',
@@ -9080,7 +9171,8 @@ const pl: Dictionary = {
               "Informacje o koncie: Gdy logujesz się za pomocą dostawcy OAuth (np. Google lub Meta), otrzymujemy Twoje imię i nazwisko, adres e-mail oraz zdjęcie profilowe (jeśli dostępne).",
               "Informacje o płatnościach: Jeśli zdecydujesz się dokonać płatności lub darowizny, Stripe bezpiecznie przetwarza transakcje. Nigdy nie przechowujemy ani nie widzimy numerów Twojej karty kredytowej.",
               "Dane analityczne: Używamy Vercel Analytics, aby zrozumieć ogólne wzorce korzystania, np. które strony są popularne i jak działa nasza strona. Dane te są zagregowane i nie pozwalają na identyfikację osoby.",
-              "Informacje techniczne: Podczas odwiedzania naszej strony możemy automatycznie odbierać standardowe dane logowania, takie jak typ przeglądarki, urządzenie i adres IP, aby utrzymać bezpieczeństwo i funkcjonalność."
+              "Informacje techniczne: Podczas odwiedzania naszej strony możemy automatycznie odbierać standardowe dane logowania, takie jak typ przeglądarki, urządzenie i adres IP, aby utrzymać bezpieczeństwo i funkcjonalność.",
+              "Adsense: Korzystamy z Google Adsense, aby wyświetlać reklamy na naszej stronie. Adsense może używać plików cookie do wyświetlania spersonalizowanych reklam na podstawie historii przeglądania w tej lub innych witrynach."
             ]
           }
         ]
@@ -9322,7 +9414,9 @@ const th: Dictionary = {
       part2: '- ความยุติธรรมทางสังคม ความเท่าเทียม และสิทธิของคนงาน',  
     },
   },
-  cookieMessage: 'เว็บไซต์นี้ใช้คุกกี้เพื่อปรับปรุงประสบการณ์ของคุณ วิเคราะห์การใช้งานเว็บไซต์ และมอบเนื้อหาที่ปรับแต่งให้เหมาะกับคุณ',
+  accept: 'ยอมรับ',
+  reject: 'ปฏิเสธ',
+  cookieMessage: 'เราและพันธมิตรของเราใช้คุกกี้เพื่อปรับแต่งโฆษณา วัดประสิทธิภาพ และให้ฟีเจอร์ทางสังคม คลิก ยอมรับ เพื่ออนุญาตโฆษณาที่ปรับแต่ง หรือ ปฏิเสธ เพื่อปฏิเสธ ดูนโยบายความเป็นส่วนตัวของเราสำหรับข้อมูลเพิ่มเติม',
   login: {
     title: 'เข้าสู่ระบบ',
     google: 'ดำเนินการต่อด้วย Google',
@@ -9359,7 +9453,8 @@ const th: Dictionary = {
               "ข้อมูลบัญชี: เมื่อคุณเข้าสู่ระบบผ่านผู้ให้บริการ OAuth (เช่น Google หรือ Meta) เราจะได้รับชื่อ อีเมล และรูปโปรไฟล์ของคุณ (ถ้ามี)",
               "ข้อมูลการชำระเงิน: หากคุณเลือกที่จะชำระเงินหรือบริจาค Stripe จะประมวลผลการทำธุรกรรมอย่างปลอดภัย เราไม่เคยเก็บหรือดูหมายเลขบัตรเครดิตของคุณ",
               "ข้อมูลวิเคราะห์: เราใช้ Vercel Analytics เพื่อทำความเข้าใจรูปแบบการใช้งานทั่วไป เช่น หน้าเว็บที่ได้รับความนิยมและประสิทธิภาพของเว็บไซต์ ข้อมูลเหล่านี้ถูกรวมและไม่ระบุตัวตนของคุณ",
-              "ข้อมูลทางเทคนิค: เมื่อคุณเยี่ยมชมเว็บไซต์ เราอาจได้รับข้อมูลบันทึกมาตรฐานโดยอัตโนมัติ เช่น ประเภทเบราว์เซอร์ อุปกรณ์ และที่อยู่ IP เพื่อรักษาความปลอดภัยและแก้ไขปัญหา"
+              "ข้อมูลทางเทคนิค: เมื่อคุณเยี่ยมชมเว็บไซต์ เราอาจได้รับข้อมูลบันทึกมาตรฐานโดยอัตโนมัติ เช่น ประเภทเบราว์เซอร์ อุปกรณ์ และที่อยู่ IP เพื่อรักษาความปลอดภัยและแก้ไขปัญหา",
+              "Adsense: เราใช้ Google Adsense เพื่อแสดงโฆษณาบนเว็บไซต์ของเรา Adsense อาจใช้คุกกี้เพื่อแสดงโฆษณาที่ปรับแต่งตามประวัติการท่องเว็บของคุณในเว็บไซต์นี้หรือเว็บไซต์อื่นๆ"
             ]
           }
         ]
@@ -9603,7 +9698,9 @@ const uk: Dictionary = {
       part2: '— соціальна справедливість, рівність і права працівників',  
     },
   },
-  cookieMessage: 'Цей вебсайт використовує файли cookie для покращення вашого досвіду, аналізу використання сайту та надання персоналізованого контенту.',
+  accept: 'Прийняти',
+  reject: 'Відхилити',
+  cookieMessage: 'Ми та наші партнери використовуємо файли cookie для персоналізації реклами, вимірювання ефективності та надання соціальних функцій. Натисніть Прийняти, щоб дозволити персоналізовану рекламу, або Відхилити, щоб відмовитися. Деталі — у нашій Політиці конфіденційності.',
   login: {
     title: 'Увійти',
     google: 'Продовжити з Google',
@@ -9640,7 +9737,8 @@ const uk: Dictionary = {
               "Інформація про обліковий запис: Коли ви входите через провайдера OAuth (наприклад, Google або Meta), ми отримуємо ваше ім’я, електронну пошту та зображення профілю (якщо доступно).",
               "Інформація про платежі: Якщо ви вирішите здійснити оплату або пожертвування, Stripe безпечно обробляє транзакції. Ми ніколи не зберігаємо і не бачимо дані вашої кредитної картки.",
               "Аналітичні дані: Ми використовуємо Vercel Analytics, щоб зрозуміти загальні шаблони використання, наприклад, які сторінки популярні та як працює наш сайт. Дані агреговані та не ідентифікують вас особисто.",
-              "Технічна інформація: Під час відвідування сайту ми можемо автоматично отримувати стандартні дані журналів, такі як тип браузера, пристрій і IP-адреса, щоб підтримувати безпеку та функціональність."
+              "Технічна інформація: Під час відвідування сайту ми можемо автоматично отримувати стандартні дані журналів, такі як тип браузера, пристрій і IP-адреса, щоб підтримувати безпеку та функціональність.",
+              "Adsense: Ми використовуємо Google Adsense для показу реклами на нашому сайті. Adsense може використовувати файли cookie для показу реклами, адаптованої до вашої історії перегляду на цьому чи інших сайтах."
             ]
           }
         ]
@@ -9884,7 +9982,9 @@ const ro: Dictionary = {
       part2: '— justiție socială, egalitate și drepturile muncitorilor',  
     },
   },
-  cookieMessage: 'Acest site web utilizează cookie-uri pentru a vă îmbunătăți experiența, a analiza utilizarea site-ului și a oferi conținut personalizat.',
+  accept: 'Acceptă',
+  reject: 'Refuză',
+  cookieMessage: 'Noi și partenerii noștri folosim cookie-uri pentru a personaliza reclamele, a măsura performanța și a oferi funcții sociale. Faceți clic pe Acceptă pentru a permite reclame personalizate sau pe Refuză pentru a le respinge. Consultați Politica noastră de confidențialitate pentru mai multe informații.',
   login: {
     title: 'Conectare',
     google: 'Continuă cu Google',
@@ -9921,7 +10021,8 @@ const ro: Dictionary = {
               "Informații despre cont: Când vă autentificați printr-un furnizor OAuth (cum ar fi Google sau Meta), primim numele dvs., adresa de e-mail și imaginea de profil (dacă este disponibilă).",
               "Informații de plată: Dacă alegeți să efectuați o plată sau o donație, Stripe procesează tranzacțiile în siguranță. Nu stocăm și nu vedem niciodată numerele cardului dvs. de credit.",
               "Date analitice: Folosim Vercel Analytics pentru a înțelege tiparele generale de utilizare, de exemplu, care pagini sunt populare și cum performează site-ul. Aceste date sunt agregate și nu vă identifică personal.",
-              "Informații tehnice: Când vizitați site-ul nostru, putem primi automat date de jurnal standard, cum ar fi tipul browserului, dispozitivul și adresa IP, pentru a menține securitatea și funcționalitatea."
+              "Informații tehnice: Când vizitați site-ul nostru, putem primi automat date de jurnal standard, cum ar fi tipul browserului, dispozitivul și adresa IP, pentru a menține securitatea și funcționalitatea.",
+              "Adsense: Utilizăm Google Adsense pentru a afișa reclame pe site-ul nostru. Adsense poate utiliza cookie-uri pentru a afișa reclame adaptate istoricului dvs. de navigare pe acest site sau pe alte site-uri."
             ]
           }
         ]
@@ -10163,7 +10264,9 @@ const cs: Dictionary = {
       part2: '— individuální práva, svoboda projevu a sociální spravedlnost',
     },
   },
-  cookieMessage: 'Tato webová stránka používá cookies k vylepšení vašeho zážitku, analýze využití webu a poskytování personalizovaného obsahu.',
+  accept: 'Přijmout',
+  reject: 'Odmítnout',
+  cookieMessage: 'My a naši partneři používáme cookies k personalizaci reklam, měření výkonu a poskytování sociálních funkcí. Klikněte na Přijmout pro povolení personalizovaných reklam nebo Odmítnout pro jejich zablokování. Další informace najdete v našem prohlášení o ochraně soukromí.',
   login: {
     title: 'Přihlásit se',
     google: 'Pokračovat s Googlem',
@@ -10200,7 +10303,8 @@ const cs: Dictionary = {
               "Informace o účtu: Při přihlášení přes poskytovatele OAuth (např. Google nebo Meta) získáváme vaše jméno, e-mailovou adresu a profilový obrázek (pokud je k dispozici).",
               "Platební informace: Pokud se rozhodnete provést platbu nebo dar, Stripe bezpečně zpracuje transakce. Nikdy neukládáme ani nevidíme čísla vaší kreditní karty.",
               "Analytická data: Používáme Vercel Analytics k pochopení obecných vzorců používání, například které stránky jsou populární a jak funguje náš web. Data jsou agregována a neidentifikují vás osobně.",
-              "Technické informace: Při návštěvě našeho webu můžeme automaticky získat standardní logovací data, jako je typ prohlížeče, zařízení a IP adresa, abychom zajistili bezpečnost a funkčnost."
+              "Technické informace: Při návštěvě našeho webu můžeme automaticky získat standardní logovací data, jako je typ prohlížeče, zařízení a IP adresa, abychom zajistili bezpečnost a funkčnost.",
+              "Adsense: Používáme Google Adsense k zobrazování reklam na našem webu. Adsense může používat cookies k zobrazování reklam přizpůsobených vašemu prohlížecímu chování na tomto nebo jiných webech."
             ]
           }
         ]
@@ -10442,7 +10546,9 @@ const hu: Dictionary = {
       part2: '— igazságosság, egyenlőség és munkási jogok',
     },
   },
-  cookieMessage: 'Ez a weboldal sütiket használ az élmény javítása, a webhely használatának elemzése és a személyre szabott tartalom biztosítása érdekében.',
+  accept: 'Elfogad',
+  reject: 'Elutasít',
+  cookieMessage: 'Mi és partnereink cookie-kat használunk a hirdetések személyre szabásához, a teljesítmény méréséhez és a közösségi funkciók biztosításához. Kattintson az Elfogad gombra a személyre szabott hirdetések engedélyezéséhez, vagy az Elutasít gombra elutasításukhoz. További információkért tekintse meg Adatvédelmi irányelveinket.',
   login: {
     title: 'Bejelentkezés',
     google: 'Folytatás Google-lal',
@@ -10479,7 +10585,8 @@ const hu: Dictionary = {
               "Fiókinformációk: Amikor OAuth szolgáltatóval jelentkezik be (például Google vagy Meta), megkapjuk a nevét, e-mail címét és profilképét (ha elérhető).",
               "Fizetési információk: Ha fizetést vagy adományt választ, a Stripe biztonságosan kezeli a tranzakciókat. Soha nem tároljuk vagy látjuk a hitelkártya adatait.",
               "Analitikai adatok: A Vercel Analytics-et használjuk az általános használati minták megértésére, például mely oldalak népszerűek és hogyan teljesít a weboldal. Ezek az adatok összesítettek, és nem azonosítják személyesen.",
-              "Technikai információk: Amikor meglátogatja weboldalunkat, automatikusan kaphatunk szabványos naplóadatokat, például böngészőtípust, eszközt és IP-címet a biztonság és a működés fenntartása érdekében."
+              "Technikai információk: Amikor meglátogatja weboldalunkat, automatikusan kaphatunk szabványos naplóadatokat, például böngészőtípust, eszközt és IP-címet a biztonság és a működés fenntartása érdekében.",
+              "Adsense: A Google Adsense-t használjuk hirdetések megjelenítésére weboldalunkon. Az Adsense sütiket használhat a hirdetések az Ön böngészési viselkedéséhez igazított megjelenítésére ezen vagy más webhelyeken."
             ]
           }
         ]
@@ -10721,7 +10828,9 @@ const fi: Dictionary = {
       part2: '— oikeudenmukaisuus, tasa-arvo ja työntekijöiden oikeudet',
     },
   },
-  cookieMessage: 'Tämä sivusto käyttää evästeitä parantaakseen käyttökokemusta, analysoidakseen sivuston käyttöä ja tarjotakseen räätälöityä sisältöä.',
+  accept: 'Hyväksy',
+  reject: 'Hylkää',
+  cookieMessage: 'Me ja kumppanimme käytämme evästeitä mainosten personointiin, suorituskyvyn mittaamiseen ja sosiaalisten ominaisuuksien tarjoamiseen. Napsauta Hyväksy salliaksesi personoidut mainokset tai Hylkää estääksesi ne. Lisätietoja saat tietosuojakäytännöstämme.',
   login: {
     title: 'Kirjaudu sisään',
     google: 'Jatka Googlella',
@@ -10758,7 +10867,8 @@ const fi: Dictionary = {
               "Tilitiedot: Kun kirjaudut OAuth-palveluntarjoajan kautta (esim. Google tai Meta), saamme nimesi, sähköpostiosoitteesi ja profiilikuvasi (jos saatavilla).",
               "Maksutiedot: Jos valitset maksun tai lahjoituksen, Stripe käsittelee tapahtumat turvallisesti. Emme koskaan tallenna tai näe luottokorttisi tietoja.",
               "Analytiikkatiedot: Käytämme Vercel Analyticsia ymmärtääksemme yleisiä käyttötapoja, kuten suosittuja sivuja ja sivuston suorituskykyä. Nämä tiedot ovat koottuja eivätkä tunnista sinua henkilökohtaisesti.",
-              "Tekniset tiedot: Käyttäessäsi sivustoamme voimme automaattisesti vastaanottaa vakiolokitietoja, kuten selaintyyppiä, laitetta ja IP-osoitetta, ylläpitääksemme turvallisuutta ja toimivuutta."
+              "Tekniset tiedot: Käyttäessäsi sivustoamme voimme automaattisesti vastaanottaa vakiolokitietoja, kuten selaintyyppiä, laitetta ja IP-osoitetta, ylläpitääksemme turvallisuutta ja toimivuutta.",
+              "Adsense: Käytämme Google Adsensea näyttääksemme mainoksia sivustollamme. Adsense voi käyttää evästeitä näyttääkseen mainoksia, jotka on räätälöity selauskäyttäytymisesi mukaan tällä tai muilla sivustoilla."
             ]
           }
         ]
@@ -11000,7 +11110,9 @@ const da: Dictionary = {
       part2: '— retfærdighed, lighed og arbejderrettigheder',
     },
   },
-  cookieMessage: 'Dette websted bruger cookies for at forbedre brugeroplevelsen, analysere webstedets trafik og levere tilpasset indhold.',
+  accept: 'Accepter',
+  reject: 'Afvis',
+  cookieMessage: 'Vi og vores partnere bruger cookies til at personalisere annoncer, måle ydeevne og levere sociale funktioner. Klik Accepter for at tillade personlige annoncer eller Afvis for at afvise dem. Se vores privatlivspolitik for flere oplysninger.',
   login: {
     title: 'Log ind',
     google: 'Fortsæt med Google',
@@ -11037,7 +11149,8 @@ const da: Dictionary = {
               "Kontooplysninger: Når du logger ind via en OAuth-udbyder (f.eks. Google eller Meta), modtager vi dit navn, e-mailadresse og profilbillede (hvis tilgængeligt).",
               "Betalingsoplysninger: Hvis du vælger at foretage en betaling eller donation, behandler Stripe transaktionerne sikkert. Vi gemmer aldrig eller ser dine kreditkortoplysninger.",
               "Analyser: Vi bruger Vercel Analytics til at forstå generelle brugsmønstre, såsom hvilke sider der er populære, og hvordan vores side præsterer. Disse data er aggregerede og identificerer dig ikke personligt.",
-              "Tekniske oplysninger: Når du besøger vores site, kan vi automatisk modtage standardlogdata som browsertype, enhed og IP-adresse for at opretholde sikkerhed og funktionalitet."
+              "Tekniske oplysninger: Når du besøger vores site, kan vi automatisk modtage standardlogdata som browsertype, enhed og IP-adresse for at opretholde sikkerhed og funktionalitet.",
+              "Adsense: Vi bruger Google Adsense til at vise annoncer på vores site. Adsense kan bruge cookies til at vise annoncer, der er tilpasset din browseradfærd på dette eller andre sites."
             ]
           }
         ]
@@ -11279,7 +11392,9 @@ const bg: Dictionary = {
       part2: '— справедливост, равенство и права на работниците',
     },
   },
-  cookieMessage: 'Този уебсайт използва бисквитки, за да подобри потребителското изживяване, да анализира трафика на сайта и да предоставя персонализирано съдържание.',
+  accept: 'Приемам',
+  reject: 'Отхвърлям',
+  cookieMessage: 'Ние и нашите партньори използваме бисквитки за персонализиране на реклами, измерване на ефективността и предоставяне на социални функции. Натиснете Приемам, за да разрешите персонализирани реклами, или Отхвърлям, за да ги отхвърлите. Вижте нашата Политика за поверителност за повече информация.',
   login: {
     title: 'Вход',
     google: 'Продължи с Google',
@@ -11316,7 +11431,8 @@ const bg: Dictionary = {
               "Информация за акаунт: Когато влизате чрез OAuth доставчик (например Google или Meta), получаваме вашето име, имейл адрес и профилна снимка (ако е налична).",
               "Платежна информация: Ако решите да направите плащане или дарение, Stripe обработва транзакциите сигурно. Никога не съхраняваме и не виждаме номера на вашата кредитна карта.",
               "Аналитични данни: Използваме Vercel Analytics, за да разберем общите модели на използване, например кои страници са популярни и как се представя нашият сайт. Данните са агрегирани и не идентифицират лично вас.",
-              "Техническа информация: При посещение на сайта ни може автоматично да получаваме стандартни лог данни като тип браузър, устройство и IP адрес, за да поддържаме сигурността и функционалността."
+              "Техническа информация: При посещение на сайта ни може автоматично да получаваме стандартни лог данни като тип браузър, устройство и IP адрес, за да поддържаме сигурността и функционалността.",
+              "Adsense: Използваме Google Adsense, за да показваме реклами на нашия сайт. Adsense може да използва бисквитки, за да показва реклами, персонализирани според поведението ви в браузъра на този или други сайтове."
             ]
           }
         ]
@@ -11560,7 +11676,9 @@ const sk: Dictionary = {
       part2: '— spravodlivosť, rovnosť a práva pracujúcich',
     },
   },
-  cookieMessage: 'Táto webová stránka používa súbory cookie na zlepšenie používateľského zážitku, analýzu návštevnosti webu a poskytovanie prispôsobeného obsahu.',
+  accept: 'Prijať',
+  reject: 'Odmietnuť',
+  cookieMessage: 'My a naši partneri používame cookies na personalizáciu reklám, meranie výkonu a poskytovanie sociálnych funkcií. Kliknite Prijať na povolenie personalizovaných reklám alebo Odmietnuť na ich zamietnutie. Viac informácií nájdete v našich zásadách ochrany osobných údajov.',
   login: {
     title: 'Prihlásiť sa',
     google: 'Pokračovať s Google',
@@ -11597,7 +11715,8 @@ const sk: Dictionary = {
               "Informácie o účte: Pri prihlásení cez poskytovateľa OAuth (napr. Google alebo Meta) získavame vaše meno, e-mailovú adresu a profilovú fotografiu (ak je k dispozícii).",
               "Platobné informácie: Ak sa rozhodnete vykonať platbu alebo dar, Stripe bezpečne spracuje transakcie. Nikdy neukladáme ani nevidíme čísla vašej kreditnej karty.",
               "Analytické údaje: Používame Vercel Analytics na pochopenie všeobecných vzorcov používania, napríklad ktoré stránky sú populárne a ako sa stránka správa. Údaje sú agregované a neidentifikujú vás osobne.",
-              "Technické informácie: Pri návšteve našej stránky môžeme automaticky prijímať štandardné údaje z protokolov, ako je typ prehliadača, zariadenie a IP adresa, aby sme udržali bezpečnosť a funkčnosť."
+              "Technické informácie: Pri návšteve našej stránky môžeme automaticky prijímať štandardné údaje z protokolov, ako je typ prehliadača, zariadenie a IP adresa, aby sme udržali bezpečnosť a funkčnosť.",
+              "Adsense: Používame Google Adsense na zobrazovanie reklám na našej stránke. Adsense môže používať cookies na zobrazovanie reklám prispôsobených podľa vášho správania v prehliadači na tejto alebo iných stránkach."
             ]
           }
         ]
@@ -11841,7 +11960,9 @@ const hr: Dictionary = {
       part2: '— pravda, jednakost i prava radnika',
     },
   },
-  cookieMessage: 'Ova web stranica koristi kolačiće za poboljšanje korisničkog iskustva, analizu prometa na webu i pružanje prilagođenog sadržaja.',
+  accept: 'Prihodi',
+  reject: 'Odbij',
+  cookieMessage: 'Mi i naši partneri koristimo kolačiće za personalizaciju oglasa, mjerenje učinka i pružanje društvenih funkcija. Kliknite Prihodi za dopuštanje personaliziranih oglasa ili Odbij za odbijanje. Pogledajte našu Pravila privatnosti za više informacija.',
   login: {
     title: 'Prijava',
     google: 'Nastavi s Google',
@@ -11878,7 +11999,8 @@ const hr: Dictionary = {
               "Podaci o računu: Kada se prijavite putem OAuth pružatelja (npr. Google ili Meta), primamo vaše ime, e-mail adresu i profilnu sliku (ako je dostupna).",
               "Podaci o plaćanju: Ako odlučite izvršiti uplatu ili donaciju, Stripe sigurno obrađuje transakcije. Nikada ne pohranjujemo niti vidimo podatke vaše kreditne kartice.",
               "Analitički podaci: Koristimo Vercel Analytics za razumijevanje općih obrazaca korištenja, poput popularnih stranica i performansi naše stranice. Podaci su agregirani i ne identificiraju vas osobno.",
-              "Tehničke informacije: Prilikom posjeta našoj stranici možemo automatski primati standardne podatke dnevnika, poput tipa preglednika, uređaja i IP adrese, radi održavanja sigurnosti i funkcionalnosti."
+              "Tehničke informacije: Prilikom posjeta našoj stranici možemo automatski primati standardne podatke dnevnika, poput tipa preglednika, uređaja i IP adrese, radi održavanja sigurnosti i funkcionalnosti.",
+              "Adsense: Koristimo Google Adsense za prikazivanje oglasa na našoj stranici. Adsense može koristiti kolačiće za prikazivanje oglasa prilagođenih vašem ponašanju pregledavanja na ovoj ili drugim stranicama."
             ]
           }
         ]
@@ -12122,7 +12244,9 @@ const lt: Dictionary = {
       part2: '— socialinė lygybė, kolektyviniai interesai ir valstybės vaidmuo ekonomikoje',  
     },
   },
-  cookieMessage: 'Ši svetainė naudoja slapukus, kad pagerintų vartotojo patirtį, analizuotų svetainės srautą ir teiktų suasmenintą turinį.',
+  accept: 'Priimti',
+  reject: 'Atsisakyti',
+  cookieMessage: 'Mes ir mūsų partneriai naudojame slapukus (cookies) reklamos suasmeninimui, našumo matavimui ir socialinėms funkcijoms teikti. Spustelėkite Priimti, kad leistumėte suasmenintas reklamas, arba Atsisakyti, kad jas atmestumėte. Daugiau informacijos rasite mūsų Privatumo politikoje.',
   login: {
     title: 'Prisijungti',
     google: 'Tęsti su Google',
@@ -12159,7 +12283,8 @@ const lt: Dictionary = {
               "Paskyros informacija: Prisijungdami per OAuth paslaugų teikėją (pvz., Google arba Meta) gauname jūsų vardą, el. pašto adresą ir profilio nuotrauką (jei yra).",
               "Mokėjimo informacija: Jei nusprendžiate atlikti mokėjimą ar auką, Stripe saugiai apdoroja sandorius. Mes niekada nesaugome ir nematome jūsų kredito kortelės duomenų.",
               "Analitiniai duomenys: Naudojame Vercel Analytics, kad suprastume bendrus naudojimo modelius, pavyzdžiui, kurios puslapiai yra populiariausi ir kaip veikia mūsų svetainė. Duomenys yra apibendrinti ir neidentifikuoja jūsų asmeniškai.",
-              "Techninė informacija: Apsilankę mūsų svetainėje galime automatiškai gauti standartinius žurnalo duomenis, tokius kaip naršyklės tipas, įrenginys ir IP adresas, siekiant užtikrinti saugumą ir funkcionalumą."
+              "Techninė informacija: Apsilankę mūsų svetainėje galime automatiškai gauti standartinius žurnalo duomenis, tokius kaip naršyklės tipas, įrenginys ir IP adresas, siekiant užtikrinti saugumą ir funkcionalumą.",
+              "Adsense: Naudojame Google Adsense, kad mūsų svetainėje būtų rodomi skelbimai. Adsense gali naudoti slapukus, kad rodytų skelbimus, pritaikytus pagal jūsų naršymo elgesį šioje ar kitose svetainėse."
             ]
           }
         ]
@@ -12410,7 +12535,9 @@ const sl: Dictionary = {
       part2: '— socialna enakost, kolektivni interesi in vloga države v gospodarstvu',  
     },
   },
-  cookieMessage: 'To spletno mesto uporablja piškotke za izboljšanje uporabniške izkušnje, analizo spletnega prometa in zagotavljanje prilagojene vsebine.',
+  accept: 'Sprejeti',
+  reject: 'Zavrni',
+  cookieMessage: 'Mi in naši partnerji uporabljamo piškotke za personalizacijo oglasov, merjenje uspešnosti in zagotavljanje družbenih funkcij. Kliknite Sprejeti, da dovolite personalizirane oglase, ali Zavrni, da jih zavrnete. Več informacij najdete v naši politiki zasebnosti.',
   login: {
     title: 'Prijava',
     google: 'Nadaljuj z Google',
@@ -12448,7 +12575,8 @@ const sl: Dictionary = {
               "Podatki o računu: Ko se prijavite prek ponudnika OAuth (npr. Google ali Meta), prejmemo vaše ime, e-poštni naslov in profilno sliko (če je na voljo).",
               "Podatki o plačilu: Če se odločite za plačilo ali donacijo, Stripe varno obdela transakcije. Nikoli ne shranjujemo ali vidimo številk vaše kreditne kartice.",
               "Analitični podatki: Uporabljamo Vercel Analytics za razumevanje splošnih vzorcev uporabe, kot so priljubljene strani in delovanje spletnega mesta. Podatki so združeni in vas osebno ne identificirajo.",
-              "Tehnični podatki: Ko obiščete našo spletno stran, lahko samodejno prejmemo standardne podatke dnevnika, kot so tip brskalnika, naprava in IP naslov, za vzdrževanje varnosti in funkcionalnosti."
+              "Tehnični podatki: Ko obiščete našo spletno stran, lahko samodejno prejmemo standardne podatke dnevnika, kot so tip brskalnika, naprava in IP naslov, za vzdrževanje varnosti in funkcionalnosti.",
+              "Adsense: Uporabljamo Google Adsense za prikazovanje oglasov na naši spletni strani. Adsense lahko uporablja piškotke za prikaz oglasov, prilagojenih vašemu vedenju brskanja na tej ali drugih spletnih straneh."
             ]
           }
         ]
@@ -12699,7 +12827,9 @@ const lv: Dictionary = {
       part2: '— sociālā vienlīdzība, kolektīvās intereses un valsts loma ekonomikā',  
     },
   },
-  cookieMessage: 'Šī vietne izmanto sīkdatnes, lai uzlabotu lietotāja pieredzi, analizētu vietnes trafiku un nodrošinātu personalizētu saturu.',
+  accept: 'Pieņemt',
+  reject: 'Noraidīt',
+  cookieMessage: 'Mēs un mūsu partneri izmantojam sīkdatnes, lai personalizētu reklāmas, mērītu veiktspēju un nodrošinātu sociālās funkcijas. Noklikšķiniet uz Pieņemt, lai atļautu personalizētas reklāmas, vai Noraidīt, lai noraidītu tās. Papildinformāciju skatiet mūsu Privātuma politikā.',
   login: {
     title: 'Pieslēgties',
     google: 'Turpināt ar Google',
@@ -12736,7 +12866,8 @@ const lv: Dictionary = {
               "Kontu informācija: Pierakstoties, izmantojot OAuth pakalpojumu sniedzēju (piemēram, Google vai Meta), mēs saņemam jūsu vārdu, e-pasta adresi un profila attēlu (ja pieejams).",
               "Maksājumu informācija: Ja izvēlaties veikt maksājumu vai ziedojumu, Stripe droši apstrādā darījumus. Mēs nekad nesaglabājam un neredzam jūsu kredītkartes datus.",
               "Analītikas dati: Mēs izmantojam Vercel Analytics, lai izprastu vispārīgus lietošanas modeļus, piemēram, kuras lapas ir populāras un kā darbojas mūsu vietne. Šie dati ir apkopoti un nenosaka jūsu personību.",
-              "Tehniskā informācija: Apmeklējot mūsu vietni, mēs varam automātiski saņemt standarta žurnālu datus, piemēram, pārlūkprogrammas tipu, ierīci un IP adresi, lai uzturētu drošību un funkcionalitāti."
+              "Tehniskā informācija: Apmeklējot mūsu vietni, mēs varam automātiski saņemt standarta žurnālu datus, piemēram, pārlūkprogrammas tipu, ierīci un IP adresi, lai uzturētu drošību un funkcionalitāti.",
+              "Adsense: Mēs izmantojam Google Adsense, lai mūsu vietnē rādītu reklāmas. Adsense var izmantot sīkfailus, lai rādītu reklāmas, kas pielāgotas jūsu pārlūkošanas darbībām šajā vai citās vietnēs."
             ]
           }
         ]
@@ -12988,7 +13119,9 @@ const et: Dictionary = {
       part2: '— sotsiaalne võrdsus, kollektiivsed huvid ja riigi roll majanduses',  
     },
   },
-  cookieMessage: 'See veebisait kasutab küpsiseid, et parandada kasutajakogemust, analüüsida veebisaidi liiklust ja pakkuda kohandatud sisu.',
+  accept: 'Nõustu',
+  reject: 'Keeldu',
+  cookieMessage: 'Meie ja meie partnerid kasutavad küpsiseid reklaamide personaliseerimiseks, jõudluse mõõtmiseks ja sotsiaalsete funktsioonide pakkumiseks. Klõpsake Nõustu, et lubada personaliseeritud reklaamid, või Keeldu, et neid keelata. Lisateabe saamiseks vaadake meie privaatsuspoliitikat.',
   login: {
     title: 'Logi sisse',
     google: 'Jätka Google\'iga',
@@ -13025,7 +13158,8 @@ const et: Dictionary = {
               "Kontoandmed: Kui logite sisse OAuth-teenuse pakkuja kaudu (nt Google või Meta), saame teie nime, e-posti aadressi ja profiilipildi (kui saadaval).",
               "Makseandmed: Kui otsustate teha makse või annetuse, töötleb Stripe tehingud turvaliselt. Me ei salvesta ega näe kunagi teie krediitkaardi numbreid.",
               "Analüütikaandmed: Kasutame Vercel Analyticsi, et mõista üldisi kasutusmustreid, näiteks millised lehed on populaarsed ja kuidas meie sait toimib. Need andmed on koondatud ja ei võimalda teid isiklikult tuvastada.",
-              "Tehniline teave: Kui külastate meie saiti, võime automaatselt saada standardseid logiandmeid, näiteks brauseri tüüpi, seadet ja IP-aadressi, et tagada turvalisus ja funktsionaalsus."
+              "Tehniline teave: Kui külastate meie saiti, võime automaatselt saada standardseid logiandmeid, näiteks brauseri tüüpi, seadet ja IP-aadressi, et tagada turvalisus ja funktsionaalsus.",
+              "Adsense: Kasutame Google Adsense’i, et kuvada meie saidil reklaame. Adsense võib kasutada küpsiseid, et näidata reklaame, mis on kohandatud teie sirvimistegevuse põhjal selles või teistes saitides."
             ]
           }
         ]
@@ -13277,7 +13411,9 @@ const is: Dictionary = {
       part2: '— félagslegur jöfnuður, sameiginleg hagsmunir og hlutverk ríkisins í efnahagsmálum',  
     },
   },
-  cookieMessage: 'Þessi vefsíða notar smákökur til að bæta notendaupplifun, greina umferð á vefsíðunni og veita sérsniðið efni.',
+  accept: 'Samþykkja',
+  reject: 'Hafna',
+  cookieMessage: 'Við og samstarfsaðilar okkar notum vafrakökur til að sérsníða auglýsingar, mæla frammistöðu og bjóða upp á samfélagsaðgerðir. Smelltu á Samþykkja til að leyfa sérsniðnar auglýsingar eða Hafna til að hafna þeim. Sjáðu persónuverndarstefnu okkar fyrir frekari upplýsingar.',
   login: {
     title: 'Skrá inn',
     google: 'Halda áfram með Google',
@@ -13314,7 +13450,8 @@ const is: Dictionary = {
               "Reikningsupplýsingar: Þegar þú skráir þig inn með OAuth þjónustuaðila (t.d. Google eða Meta) fáum við nafn þitt, netfang og prófílmynd (ef tiltækt).",
               "Greiðsluupplýsingar: Ef þú velur að greiða eða gefa gjöf notar Stripe örugga meðhöndlun á viðskiptum. Við geymum aldrei né sjáum kreditkortanúmer þín.",
               "Greiningargögn: Við notum Vercel Analytics til að skilja almenn notkunarmynstur, svo sem hvaða síður eru vinsælar og hvernig vefurinn okkar virkar. Gögnin eru samantekin og auðkenna þig ekki persónulega.",
-              "Tæknilegar upplýsingar: Þegar þú heimsækir vefinn okkar getum við sjálfkrafa fengið staðlaðar skráningargögn eins og tegund vafra, tæki og IP-tölu til að viðhalda öryggi og virkni."
+              "Tæknilegar upplýsingar: Þegar þú heimsækir vefinn okkar getum við sjálfkrafa fengið staðlaðar skráningargögn eins og tegund vafra, tæki og IP-tölu til að viðhalda öryggi og virkni.",
+              "Adsense: Við notum Google Adsense til að birta auglýsingar á vefnum okkar. Adsense getur notað smákökur til að sýna auglýsingar sem eru sérsniðnar að þinni vafrahegðun á þessum eða öðrum vefjum."
             ]
           }
         ]
@@ -13566,7 +13703,9 @@ const sq: Dictionary = {
       part2: '— Barazia sociale, interesat kolektive dhe roli i shtetit në ekonomi',  
     },  
   },
-  cookieMessage: 'Kjo faqe përdor cookies për të përmirësuar përvojën e përdoruesit, për të analizuar trafikun në faqe dhe për të ofruar përmbajtje të personalizuar.',
+  accept: 'Prano',
+  reject: 'Odbij',
+  cookieMessage: 'Ne in naši partnerji uporabljamo piščke za prilagajanje oglasov, merjenje uspešnosti in zagotavljanje družbenih funkcij. Kliknite Prano, če želite dovoliti prilagojene oglase, ali Odbij, da jih zavrnete. Več informacij najdete v naši politiki zasebnosti.',
   login: {
     title: 'Hyni',
     google: 'Vazhdo me Google',
@@ -13603,7 +13742,8 @@ const sq: Dictionary = {
               "Informacioni i llogarisë: Kur identifikoheni përmes një ofruesi OAuth (p.sh., Google ose Meta), marrim emrin, adresën e email-it dhe imazhin e profilit tuaj (nëse është i disponueshëm).",
               "Informacioni i pagesës: Nëse zgjidhni të bëni një pagesë ose donacion, Stripe përpunon transaksionet në mënyrë të sigurt. Ne kurrë nuk ruajmë ose shohim numrat e kartës tuaj të kreditit.",
               "Të dhëna analitike: Përdorim Vercel Analytics për të kuptuar modelet e përgjithshme të përdorimit, si faqet më të vizituara dhe performancën e faqes. Të dhënat janë të agreguara dhe nuk ju identifikojnë personalisht.",
-              "Informacion teknik: Kur vizitoni faqen tonë, mund të marrim automatikisht të dhëna standarde të regjistrit, si lloji i shfletuesit, pajisja dhe adresa IP, për të mbajtur sigurinë dhe funksionalitetin."
+              "Informacion teknik: Kur vizitoni faqen tonë, mund të marrim automatikisht të dhëna standarde të regjistrit, si lloji i shfletuesit, pajisja dhe adresa IP, për të mbajtur sigurinë dhe funksionalitetin.",
+              "Adsense: Ne përdorim Google Adsense për të shfaqur reklama në faqen tonë. Adsense mund të përdorë cookies për të shfaqur reklama të personalizuara bazuar në sjelljen tuaj të shfletimit në këtë ose faqe të tjera."
             ]
           }
         ]
@@ -13855,7 +13995,9 @@ const sr: Dictionary = {
       part2: '— Socijalna jednakost, kolektivni interesi i uloga države u ekonomiji',  
     },  
   },
-  cookieMessage: 'Ovaj sajt koristi kolačiće kako bi poboljšao korisničko iskustvo, analizirao saobraćaj na sajtu i pružio personalizovani sadržaj.',
+  accept: 'Prihvati',
+  reject: 'Odbaci',
+  cookieMessage: 'Mi i naši partneri koristimo kolačiće za personalizaciju oglasa, mjerenje performansi i pružanje društvenih funkcija. Kliknite Prihvati da dozvolite personalizirane oglase ili Odbaci da ih odbijete. Pogledajte našu Politiku privatnosti za više informacija.',
   login: {
     title: 'Prijava',
     google: 'Nastavi sa Google-om',
@@ -13892,7 +14034,8 @@ const sr: Dictionary = {
               "Informacije o nalogu: Kada se prijavite preko OAuth provajdera (npr. Google ili Meta), dobijamo vaše ime, email adresu i profilnu sliku (ako je dostupna).",
               "Informacije o plaćanju: Ako odlučite da izvršite uplatu ili donaciju, Stripe sigurno obrađuje transakcije. Nikada ne čuvamo niti vidimo brojeve vaše kreditne kartice.",
               "Analitički podaci: Koristimo Vercel Analytics da bismo razumeli opšte obrasce korišćenja, kao što su popularne stranice i performanse sajta. Podaci su agregirani i ne identifikuju vas lično.",
-              "Tehničke informacije: Prilikom posete sajtu možemo automatski primati standardne log podatke, kao što su tip pretraživača, uređaj i IP adresa, radi sigurnosti i funkcionalnosti."
+              "Tehničke informacije: Prilikom posete sajtu možemo automatski primati standardne log podatke, kao što su tip pretraživača, uređaj i IP adresa, radi sigurnosti i funkcionalnosti.",
+              "Adsense: Koristimo Google Adsense za prikazivanje oglasa na našem sajtu. Adsense može koristiti kolačiće za prikazivanje personalizovanih oglasa na osnovu vašeg ponašanja pretraživanja na ovom ili drugim sajtovima."
             ]
           }
         ]
@@ -14144,7 +14287,9 @@ const mk: Dictionary = {
       part2: '— Права на поединецот, слобода на говор и социјална правда', 
     },
   },
-  cookieMessage: 'Оваа страница користи колачиња за подобрување на корисничкото искуство, анализа на сообраќајот на страницата и обезбедување персонализирана содржина.',
+  accept: 'Прифати',
+  reject: 'Одбиј',
+  cookieMessage: 'Ние и нашите партнери користиме колачиња за персонализација на реклами, мерење на перформансите и обезбедување социјални функции. Кликнете Прифати за да дозволите персонализирани реклами или Одбиј за да ги одбиете. Погледнете ја нашата Политика за приватност за повеќе информации.',
   login: {
     title: 'Најави се',
     google: 'Продолжи со Google',
@@ -14181,7 +14326,8 @@ const mk: Dictionary = {
               "Информации за сметката: Кога се најавувате преку OAuth провајдер (на пр. Google или Meta), добиваме ваше име, е-пошта и профилна слика (ако е достапна).",
               "Информации за плаќање: Ако одлучите да направите плаќање или донација, Stripe безбедно ги обработува трансакциите. Никогаш не ги чуваме или гледаме бројот на вашата кредитна картичка.",
               "Аналитички податоци: Користиме Vercel Analytics за да ги разбереме општите модели на користење, како што се популарни страници и перформанси на сајтот. Податоците се агрегирани и не ве идентификуваат лично.",
-              "Технички информации: Кога ја посетувате нашата веб-страница, можеме автоматски да добиеме стандардни лог податоци, како тип на прелистувач, уред и IP адреса, за да ја одржуваме безбедноста и функционалноста."
+              "Технички информации: Кога ја посетувате нашата веб-страница, можеме автоматски да добиеме стандардни лог податоци, како тип на прелистувач, уред и IP адреса, за да ја одржуваме безбедноста и функционалноста.",
+              "Adsense: Користиме Google Adsense за прикажување реклами на нашата веб-страница. Adsense може да користи колачиња за прикажување персонализирани реклами врз основа на вашето пребарувачко однесување на оваа или други веб-страници."
             ]
           }
         ]
@@ -14433,7 +14579,9 @@ const bs: Dictionary = {
       part2: '— Prava pojedinca, sloboda govora i socijalna pravda', 
     },
   },
-  cookieMessage: 'Ova stranica koristi kolačiće kako bi poboljšala korisničko iskustvo, analizirala saobraćaj na stranici i pružila personalizirani sadržaj.',
+  accept: 'Prihvati',
+  reject: 'Odbij',
+  cookieMessage: 'Mi i naši partneri koristimo kolačiće za personalizaciju oglasa, mjerenje performansi i pružanje društvenih funkcija. Kliknite Prihvati da dozvolite personalizirane reklame ili Odbij da ih odbijete. Pogledajte našu Politiku privatnosti za više informacija.',
   login: {
     title: 'Prijava',
     google: 'Nastavi sa Google-om',
@@ -14470,7 +14618,8 @@ const bs: Dictionary = {
               "Informacije o računu: Kada se prijavite putem OAuth provajdera (npr. Google ili Meta), dobijamo vaše ime, e-mail adresu i profilnu sliku (ako je dostupna).",
               "Informacije o plaćanju: Ako odlučite izvršiti uplatu ili donaciju, Stripe sigurno obrađuje transakcije. Nikada ne čuvamo niti vidimo brojeve vaše kreditne kartice.",
               "Analitički podaci: Koristimo Vercel Analytics da bismo razumjeli opće obrasce korištenja, kao što su popularne stranice i performanse sajta. Podaci su agregirani i ne identificiraju vas osobno.",
-              "Tehničke informacije: Prilikom posjete sajtu možemo automatski primati standardne log podatke, poput tipa pretraživača, uređaja i IP adrese, radi sigurnosti i funkcionalnosti."
+              "Tehničke informacije: Prilikom posjete sajtu možemo automatski primati standardne log podatke, poput tipa pretraživača, uređaja i IP adrese, radi sigurnosti i funkcionalnosti.",
+              "Adsense: Koristimo Google Adsense za prikazivanje oglasa na našem sajtu. Adsense može koristiti kolačiće za prikazivanje personaliziranih oglasa na osnovu vašeg pretraživačkog ponašanja na ovom ili drugim sajtovima."
             ]
           }
         ]
@@ -14722,7 +14871,9 @@ const cnr: Dictionary = {
       part2: '— Prava pojedinca, sloboda govora i socijalna pravda', 
     },
   },
-  cookieMessage: 'Ova stranica koristi kolačiće kako bi poboljšala korisničko iskustvo, analizirala saobraćaj na stranici i pružila personalizirani sadržaj.',
+  accept: 'Prihvati',
+  reject: 'Odbij',
+  cookieMessage: 'Mi i naši partneri koristimo kolačiće za personalizaciju reklama, mjerenje performansi i pružanje društvenih funkcija. Kliknite Prihvati da omogućite personalizovane reklame ili Odbij da ih odbijete. Pogledajte našu Politiku privatnosti za više informacija.',
   login: {
     title: 'Prijava',
     google: 'Nastavi sa Google-om',
@@ -14759,7 +14910,8 @@ const cnr: Dictionary = {
               "Informacije o nalogu: Kada se prijavite putem OAuth provajdera (npr. Google ili Meta), dobijamo vaše ime, e-mail adresu i profilnu sliku (ako je dostupna).",
               "Informacije o plaćanju: Ako odlučite izvršiti uplatu ili donaciju, Stripe sigurno obrađuje transakcije. Nikada ne čuvamo niti vidimo brojeve vaše kreditne kartice.",
               "Analitički podaci: Koristimo Vercel Analytics kako bismo razumjeli opšte obrasce korišćenja, kao što su popularne stranice i performanse sajta. Podaci su agregirani i ne identifikuju vas lično.",
-              "Tehničke informacije: Prilikom posjete sajtu možemo automatski primati standardne log podatke, poput tipa pretraživača, uređaja i IP adrese, radi sigurnosti i funkcionalnosti."
+              "Tehničke informacije: Prilikom posjete sajtu možemo automatski primati standardne log podatke, poput tipa pretraživača, uređaja i IP adrese, radi sigurnosti i funkcionalnosti.",
+              "Adsense: Koristimo Google Adsense za prikazivanje oglasa na našem sajtu. Adsense može koristiti kolačiće za prikazivanje personalizovanih oglasa na osnovu vašeg pretraživačkog ponašanja na ovom ili drugim sajtovima."
             ]
           }
         ]
@@ -15011,7 +15163,9 @@ const mt: Dictionary = {
       part2: '— Ugwaljanza soċjali, interessi kollettivi u rwol tal-istat fl-ekonomija',  
     },
   },
-  cookieMessage: 'Din il-paġna tuża cookies biex ittejjeb l-esperjenza tal-utent, tanalizza t-traffiku tal-websajt u tipprovdi kontenut personalizzat.',
+  accept: 'Aċċetta',
+  reject: 'Irrifiuta',
+  cookieMessage: 'Aħna u sħabna nużaw cookies biex nippersonalizzaw reklami, nippersonalizzaw l-esperjenza u nħaddmu funzjonalitajiet soċjali. Ikklikkja Aċċetta biex tippermetti reklami personalizzati jew Irrifiuta biex tirrifjuta. Ara l-Politika tal-Privatezza tagħna għal aktar informazzjoni.',
   login: {
     title: 'Idħol',
     google: 'Kompli ma\' Google',
@@ -15048,7 +15202,8 @@ const mt: Dictionary = {
               "Informazzjoni dwar il-kont: Meta tidħol billi tuża fornituri ta' OAuth (bħal Google jew Meta), nirċievu dettalji bażiċi bħan-isem tiegħek, indirizz tal-email u immaġni tal-profil (jekk disponibbli).",
               "Informazzjoni dwar il-ħlas: Jekk tagħżel li twettaq ħlas jew donazzjoni, Stripe jipproċessa t-transazzjonijiet b'mod sigur. Qatt ma naħżnux jew naraw in-numri tal-kards ta' kreditu tiegħek.",
               "Data ta' analiżi: Nużaw Vercel Analytics biex nifhmu mudelli ġenerali ta' użu, bħall-paġni popolari u kif is-sit tagħna jopera. Id-data hija aggregata u ma tidentifikakx personalment.",
-              "Informazzjoni tekniċi: Meta żżur is-sit tagħna, nistgħu nirċievu awtomatikament data ta' log standard bħat-tip tal-browser, tagħmir u indirizz IP, li jgħin biex tiġi żgurata s-sigurtà u t-troubleshooting."
+              "Informazzjoni tekniċi: Meta żżur is-sit tagħna, nistgħu nirċievu awtomatikament data ta' log standard bħat-tip tal-browser, tagħmir u indirizz IP, li jgħin biex tiġi żgurata s-sigurtà u t-troubleshooting.",
+              "Adsense: Nużaw Google Adsense biex nuru reklami fuq is-sit tagħna. Adsense jista' juża cookies biex juri reklami personalizzati ibbażati fuq l-imġiba tiegħek ta' browsing fuq dan"
             ]
           }
         ]

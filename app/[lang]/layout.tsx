@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next"
 import { getServerSession } from "next-auth/next";
 import React from "react";
 import Link from "next/link";
@@ -37,6 +36,7 @@ import Privacy from "@/app/[lang]/(client-renders)/privacy";
 import GoPro from "@/app/[lang]/(client-renders)/go-pro";
 import { authOptions } from "@/lib/auth";
 import { Textarea } from "@/app/(components)/ui/textarea";
+import ClientAnalytics from "../(client-renders)/analytics";
 
 export async function generateMetadata({
   params,
@@ -71,7 +71,7 @@ export default async function Layout({
 
   return (
     <div>
-      <Analytics />
+      <ClientAnalytics />
       {/* <nav> */}
       <div className="cursor-default text-center block md:hidden lg:hidden xl:hidden pt-3.5">
         <div className="text-xl font-medium text-black dark:text-white font-serif">Alternipedia</div>
