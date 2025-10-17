@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import wtf from "wtf_wikipedia";
 import type { BlockType, Language } from "@prisma/client";
+import { withRetry } from '@/lib/retry';
 
 // Mapping from TipTap block types to DB BlockType enums
 const blockTypeMapping: Record<string, BlockType> = {
@@ -52,12 +53,12 @@ export default async function handler(
     const { bias } = await req.body;
 
     try {
-      const allCategories = await prisma.category.findMany({
+      const allCategories = await withRetry(() => prisma.category.findMany({
         select: { name: true },
         orderBy: { name: "asc" },
-      });
+      }));
 
-      const latestRevision = await prisma.revision.findFirst({
+      const latestRevision = await withRetry(() => prisma.revision.findFirst({
         where: {
           article: {
             slug: slug,
@@ -79,7 +80,7 @@ export default async function handler(
             orderBy: { order: "asc" },
           },
         },
-      });
+      }));
 
       if (!latestRevision) {
         return res.status(200).json({
@@ -120,31 +121,31 @@ export default async function handler(
     }
 
     // Check user permissions
-    const biasDb = await prisma.bias.findUnique({
+    const biasDb = await withRetry(() => prisma.bias.findUnique({
       where: { name: bias },
-    });
+    }));
     if (!biasDb) {
       return res.status(400).json({ error: `Bias '${bias}' not found` });
     }
 
-    const user = await prisma.user.findUnique({
+    const user = await withRetry(() => prisma.user.findUnique({
       where: { email: session.user.email },
       include: {
         moderatedBiases: true,
         biasBans: true,
       },
-    });
+    }));
     if (!user) {
       return res.status(401).json({ error: "User not found" });
     }
 
-    const banned = await prisma.biasBan.findFirst({
+    const banned = await withRetry(() => prisma.biasBan.findFirst({
       where: {
         biasId: biasDb.id,
         userId: user.id,
         expiresAt: { gt: new Date() },
       },
-    });
+    }));
     if (banned) {
       return res.status(403).json({ error: "You are banned from editing this bias" });
     }
@@ -154,9 +155,9 @@ export default async function handler(
     }
 
     // Find or create the article
-    let articleDb = await prisma.article.findUnique({
+    let articleDb = await withRetry(() => prisma.article.findUnique({
       where: { slug_language: { slug: slug, language: lang.toUpperCase() as any } },
-    });
+    }));
 
     if (!articleDb) {
       let valid = await wtf.fetch(slug, {
@@ -171,22 +172,22 @@ export default async function handler(
         throw new Error("Article does not exist on Wikipedia");
       }
 
-      articleDb = await prisma.article.create({
+      articleDb = await withRetry(() => prisma.article.create({
         data: {
           title: valid.title() || 'Untitled',
           slug: slug,
           language: lang.toUpperCase(),
         },
-      });
+      }));
     }
 
     const revisionBlocksData = await Promise.all(
       blocks.map(async (block: any, index: number) => {
-        let blockRecord = await prisma.block.findFirst({
+        let blockRecord = await withRetry(() => prisma.block.findFirst({
           where: {
             content: { equals: block },
           },
-        });
+        }));
 
         if (!blockRecord) {
           const dbBlockType = blockTypeMapping[block.type];
@@ -194,13 +195,13 @@ export default async function handler(
           if (!dbBlockType) {
             throw new Error(`Unsupported block type: ${block.type}`);
           }
-          blockRecord = await prisma.block.create({
+          blockRecord = await withRetry(() => prisma.block.create({
             data: {
               type: dbBlockType,
               content: block,
               authorId: user.id,
             },
-          });
+          }));
         }
 
         return {
@@ -210,7 +211,7 @@ export default async function handler(
       })
     );
 
-    const newRevision = await prisma.revision.create({
+    const newRevision = await withRetry(() => prisma.revision.create({
       data: {
         articleId: articleDb.id,
         biasId: biasDb.id,
@@ -224,39 +225,39 @@ export default async function handler(
           orderBy: { order: "asc" },
         },
       },
-    });
+    }));
 
     // Handle categories
     if (categories && Array.isArray(categories)) {
       // Delete existing categories for this article for this bias only
-      await prisma.articleCategory.deleteMany({
+      await withRetry(() => prisma.articleCategory.deleteMany({
         where: { articleId: articleDb.id, biasId: biasDb.id },
-      });
+      }));
 
       // Find or create categories
       const categoryRecords = await Promise.all(
         categories.map(async (catName: string) => {
-          let cat = await prisma.category.findUnique({
+          let cat = await withRetry(() => prisma.category.findUnique({
             where: { name_language: { name: catName, language: lang.toUpperCase() as Language } },
-          });
+          }));
           if (!cat) {
-            cat = await prisma.category.create({
+            cat = await withRetry(() => prisma.category.create({
               data: { name: catName, language: lang.toUpperCase() as Language },
-            });
+            }));
           }
           return cat;
         })
       );
 
       // Create ArticleCategory links
-      await prisma.articleCategory.createMany({
+      await withRetry(() => prisma.articleCategory.createMany({
         data: categoryRecords.map((cat) => ({
           articleId: articleDb.id,
           biasId: biasDb.id,
           categoryId: cat.id,
           addedByUserId: user.id,
         })),
-      });
+      }));
     }
 
 

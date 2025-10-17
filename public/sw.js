@@ -3,7 +3,7 @@ const OFFLINE_URL = '/';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll([OFFLINE_URL, '/icon.svg', '/manifest.json']))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll([OFFLINE_URL, '/icon.png', '/manifest.json']))
   );
   self.skipWaiting();
 });

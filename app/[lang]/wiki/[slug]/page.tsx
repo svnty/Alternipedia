@@ -9,6 +9,7 @@ import WikiTabs from "./wiki-tabs";
 import { prisma } from "@/lib/prisma";
 import { BlockType, Language } from "@prisma/client";
 import { fetchWikipediaPageWithWtf } from "@/lib/wikipedia-api";
+import { withRetry } from "@/lib/retry";
 
 export async function generateMetadata({
   params,
@@ -82,7 +83,7 @@ export default async function Page({
               text: list.text(),
               lines: list.lines().map((line: any) => ({
                 text: line.text(),
-                links: line.links().map((link: any) => ( {
+                links: line.links().map((link: any) => ({
                   text: link.text(),
                   page: link.page(),
                 })),
@@ -104,7 +105,7 @@ export default async function Page({
                 text: list.text(),
                 lines: list.lines().map((line: any) => ({
                   text: line.text(),
-                  links: line.links().map((link: any) => ( {
+                  links: line.links().map((link: any) => ({
                     text: link.text(),
                     page: link.page(),
                   })),
@@ -132,33 +133,33 @@ export default async function Page({
   }
 
   if (bias !== 'wikipedia') {
-    const latestRevision = await prisma.revision.findFirst({
-        where: {
-          article: {
-            slug: slug,
-            language: lang.toUpperCase() as Language,
-          },
-          bias: {
-            name: bias,
-          },
+    const latestRevision = await withRetry(() => prisma.revision.findFirst({
+      where: {
+        article: {
+          slug: slug,
+          language: lang.toUpperCase() as Language,
         },
-        orderBy: { createdAt: "desc" },
-        include: {
-          article: {
-            include: {
-              // Only include ArticleCategory rows for this bias
-              categories: {
-                where: { bias: { name: bias } },
-                include: { category: true },
-              },
+        bias: {
+          name: bias,
+        },
+      },
+      orderBy: { createdAt: "desc" },
+      include: {
+        article: {
+          include: {
+            // Only include ArticleCategory rows for this bias
+            categories: {
+              where: { bias: { name: bias } },
+              include: { category: true },
             },
           },
-          revisionBlocks: {
-            include: { block: true },
-            orderBy: { order: "asc" },
-          },
         },
-      });
+        revisionBlocks: {
+          include: { block: true },
+          orderBy: { order: "asc" },
+        },
+      },
+    }));
 
     const blockTypeMappingReverse: Record<BlockType, string> = {
       PARAGRAPH: "paragraph",
@@ -188,7 +189,7 @@ export default async function Page({
 
     if (!mappedRevision) {
       mappedRevision = {
-        id: null, 
+        id: null,
         articleId: null,
         biasId: null,
         createdAt: null,
@@ -216,7 +217,7 @@ export default async function Page({
         )}
 
         {bias === 'nationalist' && (
-          <WikiTabs revision={mappedRevision} slug={slug} lang={lang} bias={bias}/>
+          <WikiTabs revision={mappedRevision} slug={slug} lang={lang} bias={bias} />
         )}
       </span>
 

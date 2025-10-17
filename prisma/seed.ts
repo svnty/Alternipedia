@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { withRetry } from '@/lib/retry';
 
 const prisma = new PrismaClient();
 
@@ -13,15 +14,16 @@ export async function main() {
     "Geography",
     "Culture",
     "Philosophy",
-    "People"
+    "People",
+    "Animals"
   ];
 
   for (const name of categories) {
-    await prisma.category.upsert({
+    await withRetry(() => prisma.category.upsert({
       where: { name_language: { name, language: "EN" } },
       update: {}, // do nothing if exists
       create: { language: "EN", name },
-    })
+    }));
   }
 
   const biases = [
@@ -33,11 +35,11 @@ export async function main() {
   ]
 
   for (const name of biases) {
-    await prisma.bias.upsert({
+    await withRetry(() => prisma.bias.upsert({
       where: { name },
       update: {}, // do nothing if exists
       create: { name },
-    })
+    }));
   }
 }
 
