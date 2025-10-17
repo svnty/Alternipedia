@@ -702,9 +702,7 @@ export default function Article({
           message={dict.common.loadingPerspective}
         />
         {children}
-        {session?.user.subscription?.tier === "PRO" ? null : (
-          <AdBanner />  
-        )}
+        <AdBanner isProUser={session?.user.subscription?.tier === "PRO"} />
       </div>
 
     </div>
