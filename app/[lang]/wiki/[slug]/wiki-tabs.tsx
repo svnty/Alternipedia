@@ -24,7 +24,6 @@ import ContentEditorComponent from "@/app/[lang]/wiki/[slug]/(client-renders)/ed
 import Read from './read';
 import { WikipediaDataProvider } from './wikipedia-data-provider';
 import { useEffect, useState } from 'react';
-import AdBanner from '@/app/[lang]/wiki/[slug]/advertisement';
 
 interface WikiTabsProps {
   bias: string;
@@ -223,7 +222,6 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
           </p>
         </TabsContent>
       </Tabs>
-      <AdBanner />  
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function AdBanner() {
 
   return (
     <ins
-      className="adsbygoogle"
+      className="adsbygoogle mt-2 mb-2 block"
       style={{ display: "block" }}
       data-ad-client="ca-pub-XXXXXX"
       data-ad-slot="1234567890"

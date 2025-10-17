@@ -31,10 +31,35 @@ export const authOptions = {
     strategy: "jwt" as const,
   },
   callbacks: {
-    async session({ session, token, user }: { session: Session; token: JWT; user: User }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user) {
+        // Attach the user id from the token
         session.user.id = token.sub;
+
+        // If we have a user id, fetch subscription details from the database
+        const userId = token.sub as string | undefined;
+        if (userId) {
+          const dbUser = await prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+              subscriptionTier: true,
+              subscriptionStartedAt: true,
+              subscriptionExpiresAt: true,
+              stripeCustomerId: true,
+            },
+          });
+
+          if (dbUser) {
+            session.user.subscription = {
+              tier: dbUser.subscriptionTier,
+              startedAt: dbUser.subscriptionStartedAt ? dbUser.subscriptionStartedAt.toISOString() : null,
+              expiresAt: dbUser.subscriptionExpiresAt ? dbUser.subscriptionExpiresAt.toISOString() : null,
+              stripeCustomerId: dbUser.stripeCustomerId ?? null,
+            } as any;
+          }
+        }
       }
+
       return session;
     },
   },

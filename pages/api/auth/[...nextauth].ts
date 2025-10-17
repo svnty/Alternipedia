@@ -8,6 +8,12 @@ declare module "next-auth" {
       name?: string;
       email?: string;
       image?: string;
+      subscription?: {
+        tier: "FREE" | "PRO" | null;
+        startedAt: string | null;
+        expiresAt: string | null;
+        stripeCustomerId: string | null;
+      }
     }
   }
 }

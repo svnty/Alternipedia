@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales, localeNames, type Locale, isValidLocale } from '@/lib/i18n/config';
 import WikipediaContents from "@/app/[lang]/wiki/[slug]/(client-renders)/wikipedia-contents";
@@ -33,7 +33,8 @@ import { notFound } from 'next/navigation';
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
 import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/(client-renders)/language-switcher";
-import Contents from "./(client-renders)/contents";
+import AdBanner from '@/app/[lang]/wiki/[slug]/advertisement';
+import { useSession } from "next-auth/react";
 
 export default function Article({
   children,
@@ -46,6 +47,7 @@ export default function Article({
   const currentLang = params?.lang as Locale || 'en';
   const searchParams = useSearchParams();
   const dict = getDictionary(currentLang);
+  const { data: session } = useSession();
 
   const [toolsOpen, setToolsOpen] = useState<boolean>(false);
   const [contentsOpen, setContentsOpen] = useState<boolean>(false);
@@ -693,13 +695,16 @@ export default function Article({
       {/* END RIGHT SIDEBAR */}
 
       {/* MAIN CONTENT */}
-      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden pb-20 min-h-screen">
+      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden min-h-screen">
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
           isVisible={isLoadingBias}
           message={dict.common.loadingPerspective}
         />
         {children}
+        {session?.user.subscription?.tier === "PRO" ? null : (
+          <AdBanner />  
+        )}
       </div>
 
     </div>

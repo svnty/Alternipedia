@@ -126,7 +126,7 @@ export default async function Layout({
       {children}
 
       {/* <footer> */}
-      <div id="footer" className="w-full bg-white mt-8 border-t border-gray-300 z-50">
+      <div id="footer" className="w-full bg-white pt-4 border-t border-gray-300 z-50">
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-16 py-8">
           {/* Footer Content Container - 70/30 split on large screens */}
           <div className="flex flex-col md:flex-row gap-8 md:gap-12">
