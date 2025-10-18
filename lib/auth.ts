@@ -42,7 +42,7 @@ export const authOptions = {
         
         if (userId) {
           const dbUser = await withRetry(() => prisma.user.findUnique({
-            where: { id: userId },
+            where: { email: session.user?.email || undefined },
             select: {
               subscriptionTier: true,
               subscriptionStartedAt: true,
