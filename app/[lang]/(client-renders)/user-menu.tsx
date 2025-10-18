@@ -29,6 +29,7 @@ import {
   Earth,
   ScanFace,
   CircleUserRound,
+  Loader,
 } from "lucide-react"
 import {
   RiFacebookFill,
@@ -64,7 +65,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
 
         {status === "loading" && (
           <DropdownMenuLabel className="flex items-center gap-3 text-ellipsis">
-            <Earth size={16} className="opacity-60" aria-hidden="true" />
+            <Loader size={16} className="opacity-60" aria-hidden="true" />
             {dict.common.fetchingUserInfo}
           </DropdownMenuLabel>
         )}

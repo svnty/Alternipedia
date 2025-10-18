@@ -56,7 +56,7 @@ export default function WikipediaWrapper({ slug, language, bias, wikipediaData }
   }
 
   const stringified = JSON.parse(JSON.stringify(headings));
-  const canonicalTitle = title || null;
+  const canonicalTitle = title || slug.replace(/_/g, ' ');
 
   return (
     <WikipediaDataProvider headings={stringified}>

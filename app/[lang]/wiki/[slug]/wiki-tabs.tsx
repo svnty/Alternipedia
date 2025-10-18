@@ -38,6 +38,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const searchParams = useSearchParams();
   const mode = searchParams?.get('mode');
   const [headings, setHeadings] = useState<any[]>([]);
+  const [mounted, setMounted] = useState(false);
   
   const getDefaultTab = (mode?: string | null) => {
     switch (mode) {
@@ -62,6 +63,12 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     });
     setHeadings(newHeadings);
   }, [revision]);
+
+  useEffect(() => {
+    // Ensure we only render the interactive Tabs after client mount to avoid
+    // hydration mismatches caused by Radix's internally generated ids.
+    setMounted(true);
+  }, []);
 
   const handleInnerTabChange = (value: string) => {
     if (!searchParams) return;
@@ -88,7 +95,8 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
           spinner is visible on refresh/navigation before client hydration. */}
         </>
       )}
-      <Tabs defaultValue="tab-1" suppressHydrationWarning={true} id="wiki-tabs">
+      {mounted ? (
+        <Tabs defaultValue="tab-1" suppressHydrationWarning={true} id="wiki-tabs">
         <div className="relative flex items-end justify-between border-b border-border">
           {/* Title on the left */}
           <div
@@ -221,7 +229,26 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
             Talk
           </p>
         </TabsContent>
-      </Tabs>
+        </Tabs>
+      ) : (
+        // Non-interactive server fallback: keeps markup simple and stable so
+        // hydration won't see attribute differences for Radix-generated ids.
+        <div id="wiki-tabs" aria-hidden={true} className="pb-4">
+          <div className="relative flex items-end justify-between border-b border-border">
+            <div
+              data-article-title
+              className={`text-neutral-800 text-3xl font-normal pb-2 ${isWikipedia ? 'truncate' : ''}`}
+              style={isWikipedia ? { opacity: 0 } : {}}
+            >
+              {decodeURIComponent(slug.replaceAll('_', ' '))}
+            </div>
+            <div className="flex gap-2 opacity-50">
+              <span className="px-3 py-2 text-sm">Article</span>
+              <span className="px-3 py-2 text-sm">Talk</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

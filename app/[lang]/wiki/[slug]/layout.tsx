@@ -33,7 +33,7 @@ import { notFound } from 'next/navigation';
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
 import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/(client-renders)/language-switcher";
-import AdBanner from '@/app/[lang]/wiki/[slug]/advertisement';
+import AdBanner from '@/app/[lang]/wiki/[slug]/(client-renders)/advertisement';
 import { useSession } from "next-auth/react";
 
 export default function Article({
@@ -702,7 +702,7 @@ export default function Article({
           message={dict.common.loadingPerspective}
         />
         {children}
-        <AdBanner isProUser={session?.user.subscription?.tier === "PRO"} />
+        <AdBanner lang={currentLang} isProUser={session?.user.subscription?.tier === "PRO"} />
       </div>
 
     </div>

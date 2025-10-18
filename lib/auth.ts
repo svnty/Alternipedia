@@ -5,6 +5,7 @@ import GoogleProvider from "next-auth/providers/google"
 import AzureADProvider from "next-auth/providers/azure-ad"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
+import { withRetry } from "./retry";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -38,8 +39,9 @@ export const authOptions = {
 
         // If we have a user id, fetch subscription details from the database
         const userId = token.sub as string | undefined;
+        
         if (userId) {
-          const dbUser = await prisma.user.findUnique({
+          const dbUser = await withRetry(() => prisma.user.findUnique({
             where: { id: userId },
             select: {
               subscriptionTier: true,
@@ -47,7 +49,7 @@ export const authOptions = {
               subscriptionExpiresAt: true,
               stripeCustomerId: true,
             },
-          });
+          }));
 
           if (dbUser) {
             session.user.subscription = {

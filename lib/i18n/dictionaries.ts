@@ -5,6 +5,10 @@ const TermsofServiceUpdateDate = new Date("2025-10-01T00:00:00Z");
 
 // Dictionary type definition
 export type Dictionary = {
+  unauthorised: {
+    heading: string;
+    message: string;
+  },
   metadata: {
     description: string;
     wikipedia: {
@@ -209,10 +213,24 @@ export type Dictionary = {
   cookieMessage: string;
   accept: string;
   reject: string;
+  blockedAd: {
+    part1: string;
+    part2: string;
+    part3: string;
+  };
 };
 
 // English dictionary
 const en: Dictionary = {
+  unauthorised: {
+    heading: 'Access denied',
+    message: 'You are not authorized to access this page. Please verify you are logged in or contact support.'
+  },
+  blockedAd: {
+    part1: 'It looks like you\'re using an ad blocker. Please disable it to support our site — or',
+    part2: 'upgrade to PRO',
+    part3: 'for an ad-free experience.',
+  },
   metadata: {
     description: 'A comprehensive collection of resources and articles presenting diverse perspectives on knowledge and ideas.',
     wikipedia: {
@@ -586,6 +604,15 @@ const en: Dictionary = {
 
 // Spanish dictionary
 const es: Dictionary = {
+  unauthorised: {
+    heading: 'Acceso denegado',
+    message: 'No estás autorizado para acceder a esta página. Por favor, verifica que has iniciado sesión o contacta con soporte.'
+  },
+  blockedAd: {
+    part1: 'Parece que estás usando un bloqueador de anuncios. Por favor, desactívalo para apoyar nuestro sitio — o',
+    part2: 'actualiza a PRO',
+    part3: 'para una experiencia sin anuncios.',
+  },
   metadata: {
     description: 'Una colección completa de recursos y artículos que presentan diversas perspectivas sobre el conocimiento y las ideas.',
     wikipedia: {
@@ -876,6 +903,15 @@ const es: Dictionary = {
 
 // French dictionary
 const fr: Dictionary = {
+  unauthorised: {
+    heading: 'Accès non autorisé',
+    message: "Vous n'êtes pas autorisé à accéder à cette page. Veuillez vérifier que vous êtes connecté ou contacter le support."
+  },
+  blockedAd: {
+    part1: 'Il semble que vous utilisez un bloqueur de publicités. Veuillez le désactiver pour soutenir notre site — ou',
+    part2: 'passez à PRO',
+    part3: 'pour une expérience sans publicité.',
+  },
   metadata: {
     description: 'Une collection complète de ressources et d\'articles présentant diverses perspectives sur les connaissances et les idées.',
     wikipedia: {
@@ -1166,6 +1202,15 @@ const fr: Dictionary = {
 
 // German dictionary
 const de: Dictionary = {
+  unauthorised: {
+    heading: 'Zugriff verweigert',
+    message: 'Sie sind nicht berechtigt, auf diese Seite zuzugreifen. Bitte prüfen Sie, ob Sie angemeldet sind, oder kontaktieren Sie den Support.'
+  },
+  blockedAd: {
+    part1: 'Es scheint, dass Sie einen Werbeblocker verwenden. Bitte deaktivieren Sie ihn, um unsere Seite zu unterstützen — oder',
+    part2: 'steigen Sie auf PRO um',
+    part3: 'für ein werbefreies Erlebnis.',
+  },
   metadata: {
     description: 'Eine umfassende Sammlung von Ressourcen und Artikeln, die verschiedene Perspektiven auf Wissen und Ideen präsentieren.',
     wikipedia: {
@@ -1398,7 +1443,7 @@ const de: Dictionary = {
   },
   upgrade: {
     pro: 'PRO',
-    goPro: 'Pro werden',
+    goPro: 'PRO werden',
     upgradePrompt: 'Upgrade, um Premium-Funktionen freizuschalten',
     title: 'Wissen ist Macht – Verstärken Sie Ihres.',
     month: 'Monat',
@@ -1456,6 +1501,15 @@ const de: Dictionary = {
 
 // Italian dictionary
 const it: Dictionary = {
+  unauthorised: {
+    heading: 'Accesso negato',
+    message: "Non sei autorizzato ad accedere a questa pagina. Verifica di aver effettuato l'accesso o contatta il supporto."
+  },
+  blockedAd: {
+    part1: 'Sembra che tu stia utilizzando un blocco degli annunci. Disabilitalo per supportare il nostro sito — oppure', 
+    part2: 'aggiorna a PRO',
+    part3: 'per un\'esperienza senza annunci.'
+  },
   metadata: {
     description: 'Una collezione completa di risorse e articoli che presentano diverse prospettive sulla conoscenza e le idee.',
     wikipedia: {
@@ -1746,6 +1800,15 @@ const it: Dictionary = {
 
 // Portuguese dictionary
 const pt: Dictionary = {
+  unauthorised: {
+    heading: 'Acesso negado',
+    message: 'Você não está autorizado a acessar esta página. Verifique se está logado ou entre em contato com o suporte.'
+  },
+  blockedAd: {
+    part1: 'Parece que está a usar um bloqueador de anúncios. Desative-o para apoiar o nosso site — ou', 
+    part2: 'faça upgrade para PRO',
+    part3: 'para uma experiência sem anúncios.'
+  },
   metadata: {
     description: 'Uma coleção abrangente de recursos e artigos que apresentam diversas perspectivas sobre conhecimento e ideias.',
     wikipedia: {
@@ -2036,6 +2099,15 @@ const pt: Dictionary = {
 
 // Japanese dictionary
 const ja: Dictionary = {
+  unauthorised: {
+    heading: 'アクセス拒否',
+    message: 'このページにアクセスする権限がありません。ログインしているか、サポートにお問い合わせください。'
+  },
+  blockedAd: {
+    part1: '広告ブロッカーを使用しているようです。サイトをサポートするために無効にするか、',
+    part2: 'PROにアップグレード',
+    part3: 'して広告なしの体験をお楽しみください。'
+  },
   metadata: {
     description: '知識と思想に関する多様な視点を提示する包括的なリソースと記事のコレクション。',
     wikipedia: {
@@ -2397,6 +2469,15 @@ const ja: Dictionary = {
 
 // Chinese dictionary
 const zh: Dictionary = {
+  unauthorised: {
+    heading: '拒绝访问',
+    message: '您无权访问此页面。请检查您是否已登录，或联系支持。'
+  },
+  blockedAd: {
+    part1: '看起来您正在使用广告拦截器。请禁用它以支持我们的网站，或',
+    part2: '升级到PRO',
+    part3: '以享受无广告体验。'
+  },
   metadata: {
     description: '一个全面的资源和文章集合，展示了关于知识和思想的多样化观点。',
     wikipedia: {
@@ -2687,6 +2768,15 @@ const zh: Dictionary = {
 
 // Korean dictionary
 const ko: Dictionary = {
+  unauthorised: {
+    heading: '접근 거부됨',
+    message: '이 페이지에 접근할 권한이 없습니다. 로그인되어 있는지 확인하거나 지원팀에 문의하세요.'
+  },
+  blockedAd: {
+    part1: '광고 차단기를 사용 중인 것 같습니다. 사이트를 지원하려면 비활성화하거나',
+    part2: 'PRO로 업그레이드',
+    part3: '광고 없는 환경을 이용하세요.'
+  },
   metadata: {
     description: '지식과 아이디어에 대한 다양한 관점을 제공하는 포괄적인 리소스 및 기사 모음입니다.',
     wikipedia: {
@@ -2977,6 +3067,15 @@ const ko: Dictionary = {
 
 // Russian dictionary
 const ru: Dictionary = {
+  unauthorised: {
+    heading: 'Доступ запрещён',
+    message: 'У вас нет прав для доступа к этой странице. Пожалуйста, убедитесь, что вы вошли в систему, или свяжитесь со службой поддержки.'
+  },
+  blockedAd: {
+    part1: 'Похоже, вы используете блокировщик рекламы. Пожалуйста, отключите его, чтобы поддержать наш сайт — или',
+    part2: 'перейдите на PRO',
+    part3: 'для использования без рекламы.'
+  },
   metadata: {
     description: 'Всесторонний ресурс и коллекция статей, представляющих разнообразные точки зрения на знания и идеи.',
     wikipedia: {
@@ -3267,6 +3366,15 @@ const ru: Dictionary = {
 
 // Arabic
 const ar: Dictionary = {
+  unauthorised: {
+    heading: 'تم رفض الوصول',
+    message: 'أنت غير مخول للوصول إلى هذه الصفحة. يرجى التحقق من تسجيل الدخول أو الاتصال بالدعم.'
+  },
+  blockedAd: {
+    part1: 'يبدو أنك تستخدم مانع الإعلانات. الرجاء تعطيله لدعم موقعنا — أو',
+    part2: 'الترقية إلى PRO',
+    part3: 'لتجربة خالية من الإعلانات.'
+  },
   metadata: {
     description: 'مصدر شامل ومجموعة من المقالات التي تقدم وجهات نظر متنوعة حول المعرفة والأفكار.',
     wikipedia: {
@@ -3634,6 +3742,15 @@ const ar: Dictionary = {
 
 // Hindi
 const hi: Dictionary = {
+  unauthorised: {
+    heading: 'प्रवेश अस्वीकृत',
+    message: 'आपको इस पृष्ठ तक पहुँचने की अनुमति नहीं है। कृपया जांचें कि क्या आप लॉग इन हैं या समर्थन से संपर्क करें।'
+  },
+  blockedAd: {
+    part1: 'ऐसा लगता है आप एक विज्ञापन ब्लॉकर का उपयोग कर रहे हैं। कृपया इसे अक्षम करें ताकि आप हमारी साइट का समर्थन कर सकें — या',
+    part2: 'PRO में अपग्रेड करें',
+    part3: 'एक विज्ञापन-मुक्त अनुभव के लिए।'
+  },
   metadata: {
     description: 'एक व्यापक संसाधन और लेखों का संग्रह जो ज्ञान और विचारों पर विविध दृष्टिकोण प्रस्तुत करता है।',
     wikipedia: {
@@ -4000,6 +4117,15 @@ const hi: Dictionary = {
 
 // Bengali
 const bn: Dictionary = {
+  unauthorised: {
+    heading: 'অ্যাক্সেস অস্বীকৃত',
+    message: 'আপনি এই পৃষ্ঠায় অ্যাক্সেস করার অনুমোদন নেই। অনুগ্রহ করে যাচাই করুন যে আপনি লগইন করেছেন অথবা সহায়তার জন্য যোগাযোগ করুন।'
+  },
+  blockedAd: {
+    part1: 'মনে হচ্ছে আপনি একটি বিজ্ঞাপন ব্লকার ব্যবহার করছেন। অনুগ্রহ করে এটি অক্ষম করে আমাদের সাইটকে সমর্থন করুন — অথবা',
+    part2: 'PRO-এ আপগ্রেড করুন',
+    part3: 'বিজ্ঞাপনবিহীন অভিজ্ঞতার জন্য।'
+  },
   metadata: {
     description: 'একটি বিস্তৃত সম্পদ এবং নিবন্ধ সংগ্রহ যা জ্ঞান এবং ধারণা সম্পর্কে বিভিন্ন দৃষ্টিভঙ্গি উপস্থাপন করে।',
     wikipedia: {
@@ -4366,6 +4492,15 @@ const bn: Dictionary = {
 
 // Urdu
 const ur: Dictionary = {
+  unauthorised: {
+    heading: 'رسائی مسترد',
+    message: 'آپ کو اس صفحے تک رسائی کی اجازت نہیں ہے۔ براہ کرم چیک کریں کہ آیا آپ لاگ ان ہیں یا سپورٹ سے رابطہ کریں۔'
+  },
+  blockedAd: {
+    part1: 'لگتا ہے آپ اشتہاب روکنے والا استعمال کر رہے ہیں۔ براہ کرم ہماری سائٹ کی حمایت کے لیے اسے غیر فعال کریں — یا',
+    part2: 'PRO میں اپ گریڈ کریں',
+    part3: 'اشتہارات سے پاک تجربے کے لیے۔'
+  },
   metadata: {
     description: 'علم اور نظریات پر مختلف نقطہ نظر پیش کرنے والے ایک جامع وسائل اور مضامین کا مجموعہ۔',
     wikipedia: {
@@ -4721,6 +4856,15 @@ const ur: Dictionary = {
 
 // indonesia
 const id: Dictionary = {
+  unauthorised: {
+    heading: 'Akses Ditolak',
+    message: 'Anda tidak diizinkan mengakses halaman ini. Silakan periksa apakah Anda sudah masuk atau hubungi dukungan.'
+  },
+  blockedAd: {
+    part1: 'Sepertinya Anda menggunakan pemblokir iklan. Nonaktifkan untuk mendukung situs kami — atau',
+    part2: 'tingkatkan ke PRO',
+    part3: 'untuk pengalaman tanpa iklan.'
+  },
   metadata: {
     description: 'Sumber daya komprehensif dan kumpulan artikel yang menyajikan berbagai perspektif tentang pengetahuan dan ide.',
     wikipedia: {
@@ -5076,6 +5220,15 @@ const id: Dictionary = {
 
 // Marathi
 const mr: Dictionary = {
+  unauthorised: {
+    heading: 'प्रवेश नाकारला',
+    message: 'आपल्याला या पृष्ठावर प्रवेश करण्याची परवानगी नाही. कृपया तपासा की आपण प्रवेश केला आहे का किंवा सहाय्यासाठी संपर्क करा.'
+  },
+  blockedAd: {
+    part1: 'तुम्ही जाहिराती ब्लॉकर वापरत आहात असे दिसते. कृपया आमच्या साइटला समर्थन देण्यासाठी ते अक्षम करा — किंवा',
+    part2: 'PRO मध्ये अपग्रेड करा',
+    part3: 'जाहिरातविरहित अनुभवासाठी.'
+  },
   metadata: {
     description: 'ज्ञान आणि कल्पनांवरील विविध दृष्टीकोन सादर करण्यासाठी डिझाइन केलेले एक शैक्षणिक विकी.',
     wikipedia: {
@@ -5372,6 +5525,15 @@ const mr: Dictionary = {
 
 // Telugu
 const te: Dictionary = {
+  unauthorised: {
+    heading: 'ప్రవేశం నిరాకరించబడింది',
+    message: 'ఈ పేజీకి మీకు ప్రాక్సెస్ చేయడానికి అనుమతి లేదు. దయచేసి మీరు లాగిన్ అయి ఉన్నారా లేదా సపోర్ట్‌ను సంప్రదించండి అని నిర్ధారించండి.'
+  },
+  blockedAd: {
+    part1: 'మీరు ప్రకటన బ్లాకర్‌ను ఉపయోగిస్తున్నట్లు కనిపిస్తోంది. దయచేసి మా సైట్‌ను మద్దతు ఇవ్వడానికి దాన్ని నిలిపివేయండి — లేదా',
+    part2: 'PROకు అగ్రేడ్ చేయండి',
+    part3: 'జాహిరాతులేని అనుభవం కోసం.'
+  },
   metadata: {
     description: 'జ్ఞానం మరియు అభిప్రాయాలపై విభిన్న దృక్కోణాలను అందించడానికి రూపొందించబడిన విద్యా వికీ.',
     wikipedia: {
@@ -5634,6 +5796,15 @@ const te: Dictionary = {
 
 // Turkish dictionary
 const tr: Dictionary = {
+  unauthorised: {
+    heading: 'Erişim reddedildi',
+    message: 'Bu sayfaya erişim izniniz yok. Lütfen oturum açtığınızdan emin olun veya destek ile iletişime geçin.'
+  },
+  blockedAd: {
+    part1: 'Reklam engelleyici kullanıyor gibi görünüyorsunuz. Lütfen sitemizi desteklemek için devre dışı bırakın — veya',
+    part2: 'PRO\'ya yükseltin',
+    part3: 'reklamsız bir deneyim için.'
+  },
   metadata: {
     description: 'Bilgi ve fikirler üzerine farklı bakış açılarını sunmak için tasarlanmış bir eğitim vikisidir.',
     wikipedia: {
@@ -5930,7 +6101,7 @@ const tr: Dictionary = {
   },
   upgrade: {
     pro: 'PRO',
-    goPro: 'Pro Ol',
+    goPro: 'PRO Ol',
     upgradePrompt: 'Premium özelliklerin kilidini açmak için yükseltin',
     title: 'Bilgi Güçtür, Gücünüzü Artırın.',
     month: 'ay',
@@ -5988,6 +6159,15 @@ const tr: Dictionary = {
 
 // Tamil dictionary
 const ta: Dictionary = {
+  unauthorised: {
+    heading: 'அணுகல் மறுத்துவிடப்பட்டது',
+    message: 'இந்தப் பக்கத்தை அணுக நீங்கள் அனுமதிக்கப்படவில்லை. நீங்கள் உள்நுழைந்துள்ளீர்களா அல்லது ஆதரவு அணுகுமாறு பரிசீலிக்கவும்.'
+  },
+  blockedAd: {
+    part1: 'பிரசார தடுப்பாளியை பயன்படுத்துகிறீர்கள் போல் தோன்றுகிறது. எங்கள் தளத்தை ஆதரிக்க அதை முடக்கவோ அல்லது',
+    part2: 'PROக்கு மேம்படுத்தவும்',
+    part3: 'விளம்பரமில்லா அனுபவத்திற்காக.'
+  },
   metadata: {
     description: 'அறிவு மற்றும் எண்ணங்கள் குறித்த பல்வேறு பார்வைகளை வழங்க உருவாக்கப்பட்ட கல்வி விக்கி.',
     wikipedia: {
@@ -6268,6 +6448,15 @@ const ta: Dictionary = {
 
 // Cantonese dictionary
 const yue: Dictionary = {
+  unauthorised: {
+    heading: '拒絕存取',
+    message: '您無權存取此頁面。請確認您已登入或聯絡支援。'
+  },
+  blockedAd: {
+    part1: '你好像使用緊廣告阻擋器。為咗支持本站，請關閉佢，或者',
+    part2: '升級到 PRO',
+    part3: '以獲得無廣告體驗。',
+  },
   metadata: {
     description: '一個為呈現多角度知識同思想而設計嘅教育百科全書網站。',
     wikipedia: {
@@ -6556,6 +6745,15 @@ const yue: Dictionary = {
 
 // Vietnamese dictionary
 const vi: Dictionary = {
+  unauthorised: {
+    heading: 'Truy cập bị từ chối',
+    message: 'Bạn không có quyền truy cập trang này. Vui lòng kiểm tra xem bạn đã đăng nhập hay liên hệ bộ phận hỗ trợ.'
+  },
+  blockedAd: {
+    part1: 'Có vẻ bạn đang sử dụng trình chặn quảng cáo. Vui lòng tắt nó để ủng hộ trang, hoặc',
+    part2: 'nâng cấp lên PRO',
+    part3: 'để có trải nghiệm không quảng cáo.',
+  },
   metadata: {
     description: 'Một wiki giáo dục được tạo ra để trình bày nhiều góc nhìn khác nhau về tri thức và ý tưởng.',
     wikipedia: {
@@ -6840,6 +7038,15 @@ const vi: Dictionary = {
 
 // Filipino dictionary
 const fil: Dictionary = {
+  unauthorised: {
+    heading: 'Hindi pinapayagan ang pag-access',
+    message: 'Wala kang pahintulot upang ma-access ang pahinang ito. Mangyaring tiyakin na naka-log in ka o makipag-ugnayan sa suporta.'
+  },
+  blockedAd: {
+    part1: 'Mukhang gumagamit ka ng ad blocker. Paki-disable ito upang suportahan ang aming site, o',
+    part2: 'mag-upgrade sa PRO',
+    part3: 'para sa karanasang walang ad.',
+  },
   metadata: {
     description: 'Isang edukasyonal na wiki na nilikha upang ipakita ang iba\'t ibang pananaw sa kaalaman at mga ideya.',
     wikipedia: {
@@ -7124,6 +7331,15 @@ const fil: Dictionary = {
 
 // Hausa dictionary
 const ha: Dictionary = {
+  unauthorised: {
+    heading: 'An hana samun dama',
+    message: 'Ba ku da izinin shiga wannan shafin. Da fatan za a tabbatar kun shiga ko tuntuɓi tallafi.'
+  },
+  blockedAd: {
+    part1: 'Ya bayyana kamar kana amfani da mai toshe tallace-tallace. Don tallafawa shafinmu, don Allah ka kashe shi, ko',
+    part2: 'haɓaka zuwa PRO',
+    part3: 'don samun kwarewa ba tare da talla ba.',
+  },
   metadata: {
     description: 'Wani dandalin ilimi da aka ƙirƙira don gabatar da fannoni daban-daban na sani da ra’ayoyi.',
     wikipedia: {  
@@ -7408,6 +7624,15 @@ const ha: Dictionary = {
 
 // Egyptian Arabic dictionary
 const arz: Dictionary = {
+  unauthorised: {
+    heading: 'تم رفض الوصول',
+    message: 'أنت غير مخول للوصول إلى هذه الصفحة. من فضلك تحقق إن كنت مسجل الدخول أو تواصل مع الدعم.'
+  },
+  blockedAd: {
+    part1: 'يبدو إنك بتستخدم مانع إعلانات. من فضلك عطّله علشان تدعم موقعنا — أو',
+    part2: 'اشترك في PRO',
+    part3: 'عشان تستمتع بتجربة من غير إعلانات.',
+  },
   metadata: {
     description: 'موسوعة تعليمية مصممة لتقديم وجهات نظر متنوعة عن المعرفة والأفكار.',
     wikipedia: {  
@@ -7691,6 +7916,15 @@ const arz: Dictionary = {
 
 // Javanese dictionary
 const jv: Dictionary = {
+  unauthorised: {
+    heading: 'Akses ditolak',
+    message: 'Sampeyan ora duwe ijin kanggo ngakses kaca iki. Priksa manawa sampeyan wis mlebu utawa hubungi dukungan.'
+  },
+  blockedAd: {
+    part1: 'Kayaé kowé lagi nganggo pemblokir iklan. Mangga mateni supaya ndhukung situs iki, utawa',
+    part2: 'ng-upgrade menyang PRO',
+    part3: 'kanggo pengalaman tanpa iklan.',
+  },
   metadata: {
     description: 'Situs web edukatif sing dirancang kanggo nyedhiyakake perspektif sing beda-beda babagan ilmu lan gagasan.',
     wikipedia: {  
@@ -7977,6 +8211,15 @@ const jv: Dictionary = {
 
 // Dutch dictionary
 const nl: Dictionary = {
+  unauthorised: {
+    heading: 'Toegang geweigerd',
+    message: 'Je hebt geen toestemming om deze pagina te bekijken. Controleer of je bent ingelogd of neem contact op met ondersteuning.'
+  },
+  blockedAd: {
+    part1: 'Het lijkt erop dat je een adblocker gebruikt. Schakel deze uit om onze site te ondersteunen, of',
+    part2: 'upgrade naar PRO',
+    part3: 'voor een advertentievrije ervaring.',
+  },
   metadata: {
     description: 'Een educatieve wiki die is ontworpen om verschillende perspectieven op kennis en ideeën te presenteren.',
     wikipedia: {  
@@ -8260,6 +8503,15 @@ const nl: Dictionary = {
 
 // Greek dictionary
 const el: Dictionary = {
+  unauthorised: {
+    heading: 'Πρόσβαση απορρίφθηκε',
+    message: 'Δεν έχετε εξουσιοδότηση για πρόσβαση σε αυτή τη σελίδα. Ελέγξτε ότι έχετε συνδεθεί ή επικοινωνήστε με την υποστήριξη.'
+  },
+  blockedAd: {
+    part1: 'Φαίνεται ότι χρησιμοποιείτε πρόγραμμα αποκλεισμού διαφημίσεων. Απενεργοποιήστε το για να υποστηρίξετε τον ιστότοπό μας — ή',
+    part2: 'αναβαθμίστε σε PRO',
+    part3: 'για μια εμπειρία χωρίς διαφημίσεις.'
+  },
   metadata: {
     description: 'Ένα εκπαιδευτικό wiki σχεδιασμένο για να παρουσιάζει διαφορετικές οπτικές γωνίες σχετικά με τη γνώση και τις ιδέες.',
     wikipedia: {  
@@ -8543,6 +8795,15 @@ const el: Dictionary = {
 
 // Swedish dictionary
 const sv: Dictionary = {
+  unauthorised: {
+    heading: 'Åtkomst nekad',
+    message: 'Du är inte behörig att komma åt den här sidan. Kontrollera att du är inloggad eller kontakta supporten.'
+  },
+  blockedAd: {
+    part1: 'Det verkar som att du använder en annonsblockerare. Vänligen inaktivera den för att stödja vår sajt — eller',
+    part2: 'uppgradera till PRO',
+    part3: 'för en annonsfri upplevelse.'
+  },
   metadata: {
     description: 'En utbildningswiki som är utformad för att presentera olika perspektiv på kunskap och idéer.',
     wikipedia: {  
@@ -8825,6 +9086,15 @@ const sv: Dictionary = {
 
 // Norwegian dictionary
 const no: Dictionary = {
+  unauthorised: {
+    heading: 'Tilgang nektet',
+    message: 'Du har ikke tillatelse til å få tilgang til denne siden. Kontroller at du er logget inn, eller kontakt support.'
+  },
+  blockedAd: {
+    part1: 'Det ser ut som du bruker en annonseblokker. Vennligst deaktiver den for å støtte nettstedet vårt — eller',
+    part2: 'oppgrader til PRO',
+    part3: 'for en annonsefri opplevelse.'
+  },
   metadata: {
     description: 'Et utdanningswiki designet for å presentere ulike perspektiver på kunnskap og ideer.',
     wikipedia: {  
@@ -9109,6 +9379,15 @@ const no: Dictionary = {
 
 // Polish dictionary
 const pl: Dictionary = {
+  unauthorised: {
+    heading: 'Dostęp zabroniony',
+    message: 'Nie masz uprawnień do przeglądania tej strony. Sprawdź, czy jesteś zalogowany lub skontaktuj się z pomocą.'
+  },
+  blockedAd: {
+    part1: 'Wygląda na to, że używasz bloker reklam. Wyłącz go, aby wesprzeć naszą stronę — lub',
+    part2: 'zaktualizuj do PRO',
+    part3: 'aby korzystać z doświadczenia bez reklam.'
+  },
   metadata: {
     description: 'Edukacyjna wiki zaprojektowana, aby przedstawiać różne perspektywy na wiedzę i pomysły.',
     wikipedia: {  
@@ -9391,6 +9670,15 @@ const pl: Dictionary = {
 
 // Thai dictionary
 const th: Dictionary = {
+  unauthorised: {
+    heading: 'ปฏิเสธการเข้าถึง',
+    message: 'คุณไม่ได้รับอนุญาตให้เข้าถึงหน้านี้ โปรดตรวจสอบว่าคุณได้ลงชื่อเข้าใช้แล้ว หรือ ติดต่อฝ่ายสนับสนุน.'
+  },
+  blockedAd: {
+    part1: 'ดูเหมือนว่าคุณกำลังใช้ตัวบล็อกโฆษณา โปรดปิดใช้งานเพื่อสนับสนุนไซต์ของเรา — หรือ',
+    part2: 'อัปเกรดเป็น PRO',
+    part3: 'เพื่อประสบการณ์ปราศจากโฆษณา.'
+  },
   metadata: {
     description: 'วิกิการศึกษาออกแบบมาเพื่อแสดงมุมมองที่หลากหลายเกี่ยวกับความรู้และแนวคิด',
     wikipedia: {  
@@ -9675,6 +9963,15 @@ const th: Dictionary = {
 
 // Ukrainian dictionary
 const uk: Dictionary = {
+  unauthorised: {
+    heading: 'Доступ заборонено',
+    message: 'Ви не маєте дозволу на доступ до цієї сторінки. Перевірте, чи увійшли ви в систему, або зверніться до служби підтримки.'
+  },
+  blockedAd: {
+    part1: 'Схоже, ви використовуєте блокувальник реклами. Будь ласка, вимкніть його, щоб підтримати наш сайт — або',
+    part2: 'оновіть до PRO',
+    part3: 'для перегляду без реклами.'
+  },
   metadata: {
     description: 'Освітня вікі, створена для представлення різних поглядів на знання та ідеї',
     wikipedia: {  
@@ -9959,6 +10256,15 @@ const uk: Dictionary = {
 
 // Romanian dictionary
 const ro: Dictionary = {
+  unauthorised: {
+    heading: 'Acces interzis',
+    message: 'Nu sunteți autorizat să accesați această pagină. Verificați dacă sunteți autentificat sau contactați asistența.'
+  },
+  blockedAd: {
+    part1: 'Se pare că folosiți un blocator de reclame. Dezactivați-l pentru a susține site-ul nostru — sau',
+    part2: 'faceți upgrade la PRO',
+    part3: 'pentru o experiență fără reclame.'
+  },
   metadata: {
     description: 'Un wiki educațional conceput pentru a prezenta perspective diverse asupra cunoștințelor și ideilor',
     wikipedia: {  
@@ -10241,6 +10547,15 @@ const ro: Dictionary = {
 
 // Czech dictionary
 const cs: Dictionary = {
+  unauthorised: {
+    heading: 'Přístup odepřen',
+    message: 'Nemáte oprávnění k přístupu na tuto stránku. Zkontrolujte, zda jste přihlášeni, nebo kontaktujte podporu.'
+  },
+  blockedAd: {
+    part1: 'Zdá se, že používáte blokátor reklam. Deaktivujte ho prosím, aby jste podpořili náš web — nebo',
+    part2: 'přejděte na PRO',
+    part3: 'pro prostředí bez reklam.'
+  },
   metadata: {
     description: 'Vzdělávací wiki vytvořená k prezentaci různých pohledů na znalosti a nápady',
     wikipedia: {  
@@ -10523,6 +10838,15 @@ const cs: Dictionary = {
 
 // Hungarian dictionary
 const hu: Dictionary = {
+  unauthorised: {
+    heading: 'Hozzáférés megtagadva',
+    message: 'Nincs jogosultsága ennek az oldalnak a megtekintéséhez. Ellenőrizze, hogy be van-e jelentkezve, vagy lépjen kapcsolatba a támogatással.'
+  },
+  blockedAd: {
+    part1: 'Úgy tűnik, hirdetésblokkolót használsz. Kérjük, kapcsold ki, hogy támogathasd az oldalunkat — vagy',
+    part2: 'frissíts PRO-ra',
+    part3: 'egy reklámmentes élményért.'
+  },
   metadata: {
     description: 'Egy oktatási wiki, amelyet különböző nézőpontok bemutatására terveztek a tudásról és az ötletekről',
     wikipedia: {  
@@ -10805,6 +11129,15 @@ const hu: Dictionary = {
 
 // Finnish dictionary
 const fi: Dictionary = {
+  unauthorised: {
+    heading: 'Pääsy estetty',
+    message: 'Sinulla ei ole oikeutta käyttää tätä sivua. Tarkista, että olet kirjautunut sisään tai ota yhteyttä tukeen.'
+  },
+  blockedAd: {
+    part1: 'Näyttää siltä, että käytät mainosten estoa. Poista se käytöstä tukeaksesi sivustoamme — tai',
+    part2: 'päivitä PRO:hon',
+    part3: 'mainokseton käyttökokemus.'
+  },
   metadata: {
     description: 'Koulutuksellinen wiki, joka on suunniteltu esittämään erilaisia näkökulmia tietoon ja ideoihin',
     wikipedia: {  
@@ -11087,6 +11420,15 @@ const fi: Dictionary = {
 
 // Danish dictionary
 const da: Dictionary = {
+  unauthorised: {
+    heading: 'Adgang nægtet',
+    message: 'Du har ikke tilladelse til at få adgang til denne side. Kontroller, at du er logget ind, eller kontakt support.'
+  },
+  blockedAd: {
+    part1: 'Det ser ud til, at du bruger en annonceblokering. Deaktiver den for at støtte vores side — eller',
+    part2: 'opgrader til PRO',
+    part3: 'for en annoncefri oplevelse.'
+  },
   metadata: {
     description: 'En uddannelseswiki designet til at præsentere forskellige perspektiver på viden og idéer',
     wikipedia: {  
@@ -11369,6 +11711,15 @@ const da: Dictionary = {
 
 // Bulgarian dictionary
 const bg: Dictionary = {
+  unauthorised: {
+    heading: 'Достъпът е отказан',
+    message: 'Нямате разрешение за достъп до тази страница. Проверете дали сте влезли или се свържете с поддръжката.'
+  },
+  blockedAd: {
+    part1: 'Изглежда използвате блокиране на реклами. Моля, деактивирайте го, за да подкрепите сайта ни — или',
+    part2: 'надградете до PRO',
+    part3: 'за опит без реклами.'
+  },
   metadata: {
     description: 'Образователна уики, създадена да представя различни перспективи върху знанията и идеите',
     wikipedia: {  
@@ -11653,6 +12004,15 @@ const bg: Dictionary = {
 
 // Slovak dictionary
 const sk: Dictionary = {
+  unauthorised: {
+    heading: 'Prístup zamietnutý',
+    message: 'Nemáte oprávnenie na prístup na túto stránku. Skontrolujte, či ste prihlásení alebo kontaktujte podporu.'
+  },
+  blockedAd: {
+    part1: 'Zdá sa, že používate blokovač reklám. Deaktivujte ho prosím, aby ste podporili náš web — alebo',
+    part2: 'prejdite na PRO',
+    part3: 'pre zážitok bez reklám.'
+  },
   metadata: {
     description: 'Vzdelávacia wiki navrhnutá na prezentáciu rôznych pohľadov na vedomosti a nápady',
     wikipedia: {  
@@ -11937,6 +12297,15 @@ const sk: Dictionary = {
 
 // Croatian dictionary 
 const hr: Dictionary = {
+  unauthorised: {
+    heading: 'Pristup odbijen',
+    message: 'Nemate ovlasti za pristup ovoj stranici. Provjerite jeste li prijavljeni ili kontaktirajte podršku.'
+  },
+  blockedAd: {
+    part1: 'Izgleda da koristite blokator oglasa. Onemogućite ga da podržite našu stranicu — ili',
+    part2: 'nadogradite na PRO',
+    part3: 'za iskustvo bez oglasa.'
+  },
   metadata: {
     description: 'Obrazovna wiki dizajnirana za predstavljanje različitih perspektiva o znanju i idejama',
     wikipedia: {  
@@ -12221,6 +12590,15 @@ const hr: Dictionary = {
 
 // Lithuanian dictionary
 const lt: Dictionary = {
+  unauthorised: {
+    heading: 'Prieiga uždrausta',
+    message: 'Neturite teisės pasiekti šį puslapį. Patikrinkite, ar esate prisijungę, arba susisiekite su palaikymu.'
+  },
+  blockedAd: {
+    part1: 'Atrodo, kad naudojate skelbimų blokavimo įrankį. Išjunkite jį, kad palaikytumėte mūsų svetainę — arba',
+    part2: 'atnaujinkite į PRO',
+    part3: 'jei norite patirties be skelbimų.'
+  },
   metadata: {
     description: 'Švietimo wiki, skirta pateikti įvairias žinių ir idėjų perspektyvas',
     wikipedia: {  
@@ -12512,6 +12890,15 @@ const lt: Dictionary = {
 
 // Slovenian dictionary
 const sl: Dictionary = {
+  unauthorised: {
+    heading: 'Dostop zavrnjen',
+    message: 'Nimate dovoljenja za dostop do te strani. Preverite, ali ste prijavljeni, ali se obrnite na podporo.'
+  },
+  blockedAd: {
+    part1: 'Zdi se, da uporabljate blokator oglasov. Prosimo, onemogočite ga, da podprete našo stran — ali',
+    part2: 'nadgradite na PRO',
+    part3: 'za izkušnjo brez oglasov.'
+  },
   metadata: {
     description: 'Izobraževalni wiki, zasnovan za predstavitev različnih pogledov na znanje in ideje',
     wikipedia: {  
@@ -12804,6 +13191,15 @@ const sl: Dictionary = {
 
 // Latvian dictionary
 const lv: Dictionary = {
+  unauthorised: {
+    heading: 'Piekļuve liegta',
+    message: 'Jums nav atļaujas piekļūt šai lapai. Pārbaudiet, vai esat pieteicies, vai sazinieties ar atbalstu.'
+  },
+  blockedAd: {
+    part1: 'Izskatās, ka izmantojat reklāmu bloķētāju. Lūdzu, atspējojiet to, lai atbalstītu mūsu vietni — vai',
+    part2: 'jauniniet uz PRO',
+    part3: 'lai iegūtu pieredzi bez reklāmām.'
+  },
   metadata: {
     description: 'Izglītojošs vikivietne, kas izveidota, lai piedāvātu dažādus skatījumus uz zināšanām un idejām',
     wikipedia: {  
@@ -13096,6 +13492,15 @@ const lv: Dictionary = {
 
 // Estonian dictionary
 const et: Dictionary = {
+  unauthorised: {
+    heading: 'Juurdepääs keelatud',
+    message: 'Teil ei ole õigust sellele lehele juurde pääseda. Kontrollige, kas olete sisse logitud või võtke ühendust toega.'
+  },
+  blockedAd: {
+    part1: 'Tundub, et kasutate reklaamide blokeerijat. Palun keelake see meie saidi toetuseks — või',
+    part2: 'uuendage PRO-le',
+    part3: 'reklaamivaba kogemuse jaoks.'
+  },
   metadata: {
     description: 'Hariduslik vikileht, mis on loodud esitama erinevaid vaatenurki teadmistele ja ideedele',
     wikipedia: {  
@@ -13388,6 +13793,15 @@ const et: Dictionary = {
 
 // Icelandic dictionary
 const is: Dictionary = {
+  unauthorised: {
+    heading: 'Aðgangi neitað',
+    message: 'Þú hefur ekki heimild til að skoða þessa síðu. Gættu þess að þú sért innskráður eða hafðu samband við stuðning.'
+  },
+  blockedAd: {
+    part1: 'Það virðist sem þú sért að nota auglýsingablokka. Vinsamlegast slökktu á því til að styðja vefsíðuna okkar — eða',
+    part2: 'uppfærðu í PRO',
+    part3: 'fyrir auglýsinga-lausa reynslu.'
+  },
   metadata: {
     description: 'Fræðandi viki sem er hönnuð til að sýna fjölbreytt sjónarmið á þekkingu og hugmyndum',
     wikipedia: {  
@@ -13680,6 +14094,15 @@ const is: Dictionary = {
 
 // Albanian dictionary
 const sq: Dictionary = {
+  unauthorised: {
+    heading: 'Qasja e mohuar',
+    message: 'Nuk keni leje për të hyrë në këtë faqe. Ju lutemi kontrolloni nëse jeni regjistruar ose kontaktoni mbështetjen.'
+  },
+  blockedAd: {
+    part1: 'Duket se po përdorni një bllokues reklamash. Ju lutemi çaktivizojeni për të mbështetur uebsajtin tonë — ose',
+    part2: 'përmirësoni në PRO',
+    part3: 'për një përvojë pa reklama.'
+  },
   metadata: {
     description: 'Një wiki arsimore e krijuar për të prezantuar perspektiva të ndryshme mbi njohuritë dhe idetë',
     wikipedia: {  
@@ -13972,6 +14395,15 @@ const sq: Dictionary = {
 
 // Serbian dictionary
 const sr: Dictionary = {
+  unauthorised: {
+    heading: 'Pristup odbijen',
+    message: 'Nemate dozvolu za pristup ovoj stranici. Proverite da li ste prijavljeni ili kontaktirajte podršku.'
+  },
+  blockedAd: {
+    part1: 'Изгледа да користите блокатор огласа. Молимо онемогућите га да бисте подржали наш сајт — или',
+    part2: 'ажурирајте на PRO',
+    part3: 'за искуство без огласа.'
+  },
   metadata: {
     description: 'Obrazovna viki platforma dizajnirana da predstavi različite perspektive o znanju i idejama',
     wikipedia: {  
@@ -14264,6 +14696,15 @@ const sr: Dictionary = {
 
 // Macedonian dictionary
 const mk: Dictionary = {
+  unauthorised: {
+    heading: 'Пристапот е одбие',
+    message: 'Немате дозвола за пристап до оваа страница. Проверете дали сте најавени или контактирајте ја поддршката.'
+  },
+  blockedAd: {
+    part1: 'Изгледа дека користите блокатор на реклами. Ве молиме оневозможете го за да ја поддржите нашата страница — или',
+    part2: 'надградете на PRO',
+    part3: 'за искуство без реклами.'
+  },
   metadata: {
     description: 'Едукативна вики платформа создадена за прикажување на различни перспективи за знаење и идеи',
     wikipedia: {  
@@ -14556,6 +14997,15 @@ const mk: Dictionary = {
 
 // Bosnian dictionary
 const bs: Dictionary = {
+  unauthorised: {
+    heading: 'Pristup odbijen',
+    message: 'Nemate ovlaštenje za pristup ovoj stranici. Provjerite jeste li prijavljeni ili kontaktirajte podršku.'
+  },
+  blockedAd: {
+    part1: 'Izgleda da koristite blokator reklama. Onemogućite ga da podržite našu stranicu — ili',
+    part2: 'nadogradite na PRO',
+    part3: 'za iskustvo bez reklama.'
+  },
   metadata: {
     description: 'Obrazovna wiki platforma dizajnirana da predstavi različite perspektive o znanju i idejama',
     wikipedia: {  
@@ -14848,6 +15298,15 @@ const bs: Dictionary = {
 
 // Montenegrin dictionary
 const cnr: Dictionary = {
+  unauthorised: {
+    heading: 'Pristup odbijen',
+    message: 'Nemate dozvolu za pristup ovoj stranici. Provjerite da li ste prijavljeni ili kontaktirajte podršku.'
+  },
+  blockedAd: {
+    part1: 'Izgleda da koristite blokator oglasa. Onemogućite ga da podržite naš sajt — ili',
+    part2: 'nadogradite na PRO',
+    part3: 'za iskustvo bez oglasa.'
+  },
   metadata: {
     description: 'Obrazovna viki platforma dizajnirana da predstavi različite perspektive o znanju i idejama',
     wikipedia: {  
@@ -15140,6 +15599,15 @@ const cnr: Dictionary = {
 
 // Maltese dictionary
 const mt: Dictionary = {
+  unauthorised: {
+    heading: 'Aċċess miċħud',
+    message: "M'għandekx permess biex taċċessa din il-paġna. Iċċekkja jekk inti illoggjat jew ikkuntattja s-servizz ta' appoġġ."
+  },
+  blockedAd: {
+    part1: 'Jidher li qed tuża blocker ta\' reklami. Jekk jogħġbok iċċekkja biex tappoġġja s-sit tagħna — jew',
+    part2: 'aġġorna għal PRO',
+    part3: 'għal esperjenza mingħajr reklami.'
+  },
   metadata: {
     description: 'Pjattaforma wiki edukattiva mfassla biex tippreżenta prospettivi differenti dwar għarfien u ideat',
     wikipedia: {  

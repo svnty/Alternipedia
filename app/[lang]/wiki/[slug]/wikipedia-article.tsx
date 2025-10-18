@@ -516,14 +516,11 @@ function toWikipediaReference(citation: Record<string, any>): string {
 
 export default function WikipediaArticle({ slug, language, wiki, bias }: WikipediaArticleProps) {
   const nestedJsonSections = nestSections(wiki.sections);
-
-  if (!wiki) {
-    return ("Loading")
-  }
-
   const dict = getDictionary(language as Locale);
+  
+  console.log(Object.keys(wiki).length);
 
-  if (!wiki) {
+  if (!Object.keys(wiki).length) {
     return (
       <div className="wikipedia-article w-full flex flex-col justify-start items-center gap-8 p-8">
         <ClientLoadedSignal />

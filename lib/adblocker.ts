@@ -1,22 +1,42 @@
+// hooks/useAdBlockDetector.ts
 "use client";
-
 import { useEffect, useState } from "react";
 
 export function useAdBlockDetector() {
   const [isAdBlocked, setIsAdBlocked] = useState(false);
 
   useEffect(() => {
-    const testAd = document.createElement("div");
-    testAd.className = "adsbox";
-    testAd.style.display = "none";
-    document.body.appendChild(testAd);
+    let cancelled = false;
 
-    setTimeout(() => {
-      const blocked =
-        testAd.offsetHeight === 0 && !document.querySelector(".adsbygoogle");
-      setIsAdBlocked(blocked);
-      document.body.removeChild(testAd);
-    }, 200);
+    // 1️⃣ DOM-based check
+    const fakeAd = document.createElement("div");
+    fakeAd.className = "adsbygoogle";
+    fakeAd.style.display = "none";
+    document.body.appendChild(fakeAd);
+
+    const domCheck = fakeAd.offsetParent === null;
+
+    // 2️⃣ Network-based check
+    const testScript = document.createElement("script");
+    testScript.src =
+      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+    testScript.async = true;
+    testScript.type = "text/javascript";
+
+    testScript.onerror = () => {
+      if (!cancelled) setIsAdBlocked(true);
+    };
+    testScript.onload = () => {
+      if (!cancelled) setIsAdBlocked(domCheck);
+    };
+
+    document.head.appendChild(testScript);
+
+    return () => {
+      cancelled = true;
+      document.body.removeChild(fakeAd);
+      testScript.remove();
+    };
   }, []);
 
   return isAdBlocked;
