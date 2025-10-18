@@ -142,7 +142,7 @@ export default async function handler(
     const banned = await withRetry(() => prisma.biasBan.findFirst({
       where: {
         biasId: biasDb.id,
-        userId: user.id,
+        userEmail: user.email || '',
         expiresAt: { gt: new Date() },
       },
     }));
