@@ -39,6 +39,7 @@ model User {
   biasBans        BiasBan[]         // 🚫 bans received
   issuedBans      BiasBan[]         @relation("BiasBanModerator") // 🧑‍⚖️ bans given (mods)
   votes           RevisionVote[]
+  notes           Note[]
 
   currentEditableBias   Bias?    @relation(fields: [currentEditableBiasId], references: [id])
   currentEditableBiasId Int?
@@ -124,12 +125,11 @@ model Bias {
   ArticleCategory ArticleCategory[]
 }
 
-// TODO: Temporary bans?
 // TODO: Warning strikes?
 model BiasBan {
   id           Int       @id @default(autoincrement())
-  user         User      @relation(fields: [userId], references: [id])
-  userId       String
+  user         User      @relation(fields: [userEmail], references: [email])
+  userEmail    String 
   bias         Bias      @relation(fields: [biasId], references: [id])
   biasId       Int
   bannedBy     User?     @relation("BiasBanModerator", fields: [bannedByUserId], references: [id])
@@ -138,7 +138,7 @@ model BiasBan {
   createdAt    DateTime  @default(now())
   expiresAt    DateTime?
 
-  @@unique([userId, biasId]) // prevent duplicate bans per bias
+  @@unique([userEmail, biasId]) // prevent duplicate bans per bias
 }
 
 model Article {
@@ -180,6 +180,14 @@ model Block {
   content  Json
 
   revisionBlocks RevisionBlock[]
+}
+
+model Note {
+  id       Int      @id @default(autoincrement())
+  author   User?    @relation(fields: [authorId], references: [id])
+  authorId String?
+
+  content  Json
 }
 
 model RevisionBlock {

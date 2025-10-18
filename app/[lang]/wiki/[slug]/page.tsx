@@ -5,7 +5,7 @@ import BottomArrow from "@/app/[lang]/(client-renders)/bottom-arrow";
 import { Metadata } from "next";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Locale } from "@/lib/i18n/config";
-import WikiTabs from "./wiki-tabs";
+import WikiTabs from "@/app/[lang]/wiki/[slug]/wiki-tabs";
 import { prisma } from "@/lib/prisma";
 import { BlockType, Language } from "@prisma/client";
 import { fetchWikipediaPageWithWtf } from "@/lib/wikipedia-api";

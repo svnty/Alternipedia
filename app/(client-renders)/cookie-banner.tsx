@@ -128,28 +128,37 @@ export default function CookieBanner() {
   if (!open) return null;
 
   return (
-    <div
-      id="cookie-banner"
-      className={
-        `fixed left-0 right-0 z-50 border px-4 py-3 shadow-lg bg-gray-100 transition-all duration-300 ${isClosing ? "opacity-0 translate-y-full" : "opacity-100 translate-y-0"}`
-        + `${isMobile ? "" : " bottom-0"}`
-      }
-      style={{
-        bottom: isMobile ? "calc(env(safe-area-inset-bottom, 0px) + 0px)" : '',
-      }}>
-      <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center mx-10">
-        <p className="text-sm mx-2">
-          {dict.cookieMessage}
-        </p>
-        <div className="flex gap-2 max-md:flex-wrap">
-          <Button onClick={handleCookieAccept} className="bg-gray-800 hover:bg-gray-600 text-white px-4 text-sm rounded transition cursor-pointer">
-            {dict.accept}
-          </Button>
-          <Button onClick={handleCookieReject} className="bg-red-800 hover:bg-red-600 text-white px-4 text-sm rounded transition cursor-pointer">
-            {dict.reject}
-          </Button>
+    <>
+      {/* Dim overlay that appears while the cookie banner is open. It sits under the banner (z-40) */}
+      <div
+        id="cookie-overlay"
+        aria-hidden
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+      />
+
+      <div
+        id="cookie-banner"
+        className={
+          `fixed left-0 right-0 z-50 border px-4 py-3 shadow-lg bg-gray-100 transition-all duration-300 ${isClosing ? "opacity-0 translate-y-full" : "opacity-100 translate-y-0"}`
+          + `${isMobile ? "" : " bottom-0"}`
+        }
+        style={{
+          bottom: isMobile ? "calc(env(safe-area-inset-bottom, 0px) + 0px)" : '',
+        }}>
+        <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center mx-10">
+          <p className="text-sm mx-2">
+            {dict.cookieMessage}
+          </p>
+          <div className="flex gap-2 max-md:flex-wrap">
+            <Button onClick={handleCookieAccept} className="bg-gray-800 hover:bg-gray-600 text-white px-4 text-sm rounded transition cursor-pointer">
+              {dict.accept}
+            </Button>
+            <Button onClick={handleCookieReject} className="bg-red-800 hover:bg-red-600 text-white px-4 text-sm rounded transition cursor-pointer">
+              {dict.reject}
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

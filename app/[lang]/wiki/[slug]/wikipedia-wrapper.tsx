@@ -1,7 +1,7 @@
 import WikipediaArticle from "@/app/[lang]/wiki/[slug]/wikipedia-article";
-import { WikipediaDataProvider } from "./wikipedia-data-provider";
-import CanonicalUrlSync from './(client-renders)/canonical-url-sync';
-import CanonicalTitleSync from './(client-renders)/canonical-title-sync';
+import { WikipediaDataProvider } from "@/app/[lang]/wiki/[slug]/wikipedia-data-provider";
+import CanonicalUrlSync from '@/app/[lang]/wiki/[slug]/(client-renders)/canonical-url-sync';
+import CanonicalTitleSync from '@/app/[lang]/wiki/[slug]/(client-renders)/canonical-title-sync';
 
 interface WikipediaWrapperProps {
   slug: string;

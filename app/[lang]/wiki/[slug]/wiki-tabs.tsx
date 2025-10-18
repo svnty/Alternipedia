@@ -21,8 +21,8 @@ import WikipediaWrapper from "@/app/[lang]/wiki/[slug]/wikipedia-wrapper";
 import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/(client-renders)/load-signal';
 import Bias from "@/app/[lang]/wiki/[slug]/bias";
 import ContentEditorComponent from "@/app/[lang]/wiki/[slug]/(client-renders)/editor";
-import Read from './read';
-import { WikipediaDataProvider } from './wikipedia-data-provider';
+import Read from '@/app/[lang]/wiki/[slug]/read';
+import { WikipediaDataProvider } from '@/app/[lang]/wiki/[slug]/wikipedia-data-provider';
 import { useEffect, useState } from 'react';
 
 interface WikiTabsProps {

@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google"
 import AzureADProvider from "next-auth/providers/azure-ad"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import { withRetry } from "./retry";
+import { withRetry } from "@/lib/retry";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),

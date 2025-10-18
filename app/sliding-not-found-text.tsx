@@ -13,7 +13,9 @@ const getNotFoundMessages = () => {
       heading: dict.notFound.heading,
       message: dict.notFound.message,
     };
-  });
+  }).map(value => ({ value, sort: Math.random() }))
+  .sort((a, b) => a.sort - b.sort)
+  .map(({ value }) => value);
 };
 
 const notFoundMessages = getNotFoundMessages();
