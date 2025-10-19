@@ -1,5 +1,5 @@
 import { CircleX, Trash2, Flag, Flame, HandFist, Landmark, CircleAlertIcon } from "lucide-react"
-import { useId } from "react";
+import { use, useId } from "react";
 import { RadioGroup, RadioGroupItem } from "@/app/(components)/ui/radio-group";
 import { Label } from "@/app/(components)/ui/label";
 import { Button } from "@/app/(components)/ui/button";
@@ -120,6 +120,7 @@ export default async function SettingsPage() {
       email: session?.user.email,
     },
     include: {
+      sessions: true,
       biasBans: {
         select: {
           biasId: true,
@@ -130,6 +131,8 @@ export default async function SettingsPage() {
       }
     }
   }));
+
+  console.log(userSettings?.sessions);
 
   const biases = await withRetry(() => prisma.bias.findMany());
   const filteredBiases = [];
@@ -276,14 +279,14 @@ export default async function SettingsPage() {
 
       <div className="mx-4">
         <div className="px-4 py-2">
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col md:flex-row items-start justify-between gap-4">
             <div className="flex-1">
               <div className="text-sm text-gray-600 mt-1">Deleting your account is permanent and cannot be undone. All your data will be removed.</div>
             </div>
 
             <Dialog>
               <DialogTrigger asChild>
-                <div className="mt-3 flex flex-col items-center justify-between gap-4">
+                <div className="mt-3 flex flex-col items-center mx-auto md:m-0 md:justify-between sm:justify-center gap-4">
                   <Button type="button" className="bg-red-300 opacity-80 hover:opacity-100 hover:scale-101 w-10/12 hover:bg-red-600 text-white border-transparent px-10 flex-items-center py-2 cursor-pointer rounded-md gap-2">
                     <Trash2 size={16} />
                     Delete account
@@ -320,11 +323,11 @@ export default async function SettingsPage() {
                   </div>
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button type="button" variant="outline" className="flex-1 cursor-pointer w-10/12">
+                      <Button type="button" variant="outline" className="flex-1 cursor-pointer md:w-10/12">
                         Cancel
                       </Button>
                     </DialogClose>
-                    <FormSubmitButton busyLabel="Deleting..." type="submit" className="bg-red-300 opacity-80 hover:opacity-100 hover:scale-103 hover:bg-red-600 text-white border-transparent flex-items-center py-2 cursor-pointer rounded-md gap-2" >Delete</FormSubmitButton>
+                    <FormSubmitButton busyLabel="Deleting..." type="submit" className="bg-red-300 opacity-80 hover:opacity-100 hover:scale-103 hover:bg-red-600 text-white border-transparent flex-items-center py-2 cursor-pointer rounded-md gap-2">Delete</FormSubmitButton>
                   </DialogFooter>
                 </Form>
               </DialogContent>
@@ -332,16 +335,7 @@ export default async function SettingsPage() {
           </div>
         </div>
       </div>
-
-
-      {/* <Trash2
-        className="-ms-0.5 me-1.5 opacity-60 text-red-500"
-        size={16}
-        aria-hidden="true"
-      />
-      Delete account */}
-
-      {/* use a client-side submit button that disables itself when clicked */}
+      
       <FormSubmitButton type="submit" className="mx-auto w-full justify-center flex my-4 cursor-pointer hover:bg-gray-700 ">Save</FormSubmitButton>
     </Form>
   )

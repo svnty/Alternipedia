@@ -1,6 +1,6 @@
 import type { Locale } from './config';
 
-const PrivacyPolicyUpdateDate = new Date("2025-10-017T00:00:00Z");
+const PrivacyPolicyUpdateDate = new Date("2025-10-17T00:00:00Z");
 const TermsofServiceUpdateDate = new Date("2025-10-01T00:00:00Z");
 
 // Dictionary type definition
