@@ -50,7 +50,6 @@ async function deleteAccount(formData: FormData) {
       watching: true,
       savedArticles: true,
       moderatedBiases: true,
-      sessions: true,
       notes: true
     }
   }));
@@ -120,7 +119,6 @@ export default async function SettingsPage() {
       email: session?.user.email,
     },
     include: {
-      sessions: true,
       biasBans: {
         select: {
           biasId: true,
@@ -131,8 +129,6 @@ export default async function SettingsPage() {
       }
     }
   }));
-
-  console.log(userSettings?.sessions);
 
   const biases = await withRetry(() => prisma.bias.findMany());
   const filteredBiases = [];
@@ -316,9 +312,11 @@ export default async function SettingsPage() {
                   <div className="*:not-first:mt-2">
                     <Label htmlFor={id}>Confirm identity</Label>
                     <Input
+                      autoFocus={false}
                       id={id}
                       type="text"
                       placeholder="Type your email to delete account"
+                      className="text-base"
                     />
                   </div>
                   <DialogFooter>
