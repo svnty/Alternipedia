@@ -32,9 +32,32 @@ export default function ClientLoadedSignal() {
     // the listener is registered.
     const id = window.setTimeout(dispatchNow, 0);
 
+    const fallBackFiveSeconds = window.setTimeout(() => {
+      const wikiArticle = document.querySelectorAll('.wikipedia-article');
+      wikiArticle.forEach((article) => {
+        if (article.children.length > 0) {
+          console.log('Article content loaded (fallback)', article);
+          dispatchNow();
+        }
+      });
+    }, 5 * 1000);
+
+    const fallBackTenSeconds = window.setTimeout(() => {
+      const wikiArticle = document.querySelectorAll('.wikipedia-article');
+      wikiArticle.forEach((article) => {
+        if (article.children.length > 0) {
+          console.log('Article content loaded (fallback)', article);
+          dispatchNow();
+        }
+      });
+    }, 10 * 1000);
+
     return () => {
+      window.clearTimeout(fallBackFiveSeconds);
+      window.clearTimeout(fallBackTenSeconds);
       window.clearTimeout(id);
     };
   }, []);
+
   return null;
 }
