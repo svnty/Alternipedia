@@ -3,6 +3,7 @@ import { Button } from "@/app/(components)/ui/button";
 import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { notFound } from 'next/navigation';
+import Link from "next/link";
 
 export default async function Pricing({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -113,11 +114,13 @@ export default async function Pricing({ params }: { params: Promise<{ lang: stri
                 / {dict.upgrade.month}
               </span>
             </div>
+            <Link href={`/${lang}/stripe/pro`}>
             <Button className="w-full flex h-[57px] items-center justify-center gap-1.5 p-1.5 rounded-m cursor-pointer hover:bg-[#eecd1b] transition-colors duration-[2000ms] ease-in-out">
               <span className="[font-family:'Open_Sans-Bold',Helvetica] font-bold text-defaultbgmain text-base tracking-[0] leading-7">
                 {dict.upgrade.proPlan.buttonText}
               </span>
             </Button>
+            </Link>
           </div>
         </div>
       </div>

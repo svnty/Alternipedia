@@ -47,6 +47,7 @@ model User {
 
   subscriptionTier      SubscriptionTier @default(FREE)
   subscriptionStartedAt DateTime?
+  subscriptionHistory   Subscription[]
   subscriptionExpiresAt DateTime?
   stripeCustomerId      String?
 
@@ -68,20 +69,20 @@ model ModeratorBias {
   @@unique([userId, biasId]) // prevent duplicates
 }
 
-// TODO: Stripe integration for subscriptions
-/*
 model Subscription {
   id           String   @id @default(cuid())
   user         User     @relation(fields: [userId], references: [id])
   userId       String
+
   stripeSubId  String   @unique
   plan         SubscriptionTier
+
   status       String
   currentPeriodEnd DateTime
+  
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
-*/
 
 model Account {
   id                String  @id @default(cuid())

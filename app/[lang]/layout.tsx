@@ -126,12 +126,12 @@ export default async function Layout({
       {children}
 
       {/* <footer> */}
-      <div id="footer" className="w-full bg-white pt-4 border-t border-gray-300 z-50">
+      <div id="footer" className="w-full bg-white pt-4 border-t border-gray-300 z-40">
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-16 py-8">
           {/* Footer Content Container - 70/30 split on large screens */}
           <div className="flex flex-col md:flex-row gap-8 md:gap-12">
             <div className="w-full md:w-[5%] hidden md:block content-center -mt-2">
-              <Earth size={52} className="transform transition-transform duration-200 hover:scale-105 hover:cursor-pointer" />
+              <Link href={`/${lang}/stripe/donate`}><Earth size={52} className="transform transition-transform duration-200 hover:scale-105 hover:cursor-pointer" /></Link>
             </div>
             {/* Legal Text - 70% width on medium+ screens */}
             <div className="w-full md:w-[65%]">
@@ -165,7 +165,7 @@ export default async function Layout({
                 {session?.user && (
                   <Dialog>
                     <DialogTrigger asChild>
-                      <div className="text-blue-400 text-sm font-normal leading-normal cursor-pointer hover:underline w-fit">
+                      <div className="text-blue-400 text-sm font-normal leading-normal cursor-pointer hover:underline w-fit active:underline">
                         {dict.footer.contact}
                       </div>
                     </DialogTrigger>
@@ -191,15 +191,15 @@ export default async function Layout({
                     </DialogContent>
                   </Dialog>
                 )}
-                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.disclaimers}</Link>
-                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.codeOfConduct}</Link>
+                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.disclaimers}</Link>
+                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.codeOfConduct}</Link>
               </div>
 
               {/* Second Links Column */}
               <div className="flex flex-col gap-1">
-                <a href="https://github.com/svnty/Alternipedia" target="_blank" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.developers}</a>
-                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.statistics}</Link>
-                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit">{dict.footer.cookieStatement}</Link>
+                <a href="https://github.com/svnty/Alternipedia" target="_blank" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.developers}</a>
+                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.statistics}</Link>
+                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.cookieStatement}</Link>
               </div>
             </div>
           </div>
