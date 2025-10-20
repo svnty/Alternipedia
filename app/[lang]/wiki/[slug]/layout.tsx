@@ -35,6 +35,7 @@ import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
 import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/(client-renders)/language-switcher";
 import AdBanner from '@/app/[lang]/wiki/[slug]/(client-renders)/advertisement';
 import { useSession } from "next-auth/react";
+import { useReactToPrint } from "react-to-print";
 
 export default function Article({
   children,
@@ -48,9 +49,37 @@ export default function Article({
   const searchParams = useSearchParams();
   const dict = getDictionary(currentLang);
   const { data: session, status } = useSession();
-
   const [isSaved, setIsSaved] = useState<boolean>(false)
   const [saving, setSaving] = useState<boolean>(false)
+
+  const printRef = useRef<HTMLDivElement>(null);
+  const printPageStyle = `
+    @page { size: auto; margin: 12mm; }
+    @media print {
+      html, body {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+      }
+      .react-to-print-container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+      }
+      /* Hide sidebars and non-essential UI during print */
+      #left-sidebar, #right-sidebar, nav, header, footer, .hidden-print {
+        display: none !important;
+      }
+      img { max-width: 100% !important; height: auto !important; }
+      * { -webkit-print-color-adjust: exact; color-adjust: exact; }
+    }
+  `;
+
+  // use contentRef for compatibility with types; pageStyle injects @media print rules
+  const reactToPrintFn = useReactToPrint({ contentRef: printRef as any, pageStyle: printPageStyle as any });
 
   useEffect(() => {
     // Only run in browser
@@ -683,7 +712,6 @@ export default function Article({
                       </a>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-
                       <Dialog>
                         <DialogTrigger asChild>
                           <a className="hover:underline cursor-pointer">
@@ -709,19 +737,7 @@ export default function Article({
                       </Dialog>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <a href="" className="hover:underline">
-                        <div className="size- flex justify-start items-center gap-1.5">
-                          <div data-svg-wrapper data-property-1="Download" className="relative">
-                            <Download className="text-gray-500" size={16} />
-                          </div>
-                          <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.DownloadPDF}</div>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                    <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <a href="" className="hover:underline">
+                      <button type="button" onClick={(e) => { e.stopPropagation(); reactToPrintFn(); }} className="hover:underline cursor-pointer w-full text-left">
                         <div className="size- flex justify-start items-center gap-1.5">
                           <div data-svg-wrapper data-property-1="Print" className="relative">
                             <Printer className="text-gray-500" size={16} />
@@ -730,7 +746,7 @@ export default function Article({
                             <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.printPage}</div>
                           </div>
                         </div>
-                      </a>
+                      </button>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
                       <a href="" className="hover:underline">
@@ -754,7 +770,7 @@ export default function Article({
       {/* END RIGHT SIDEBAR */}
 
       {/* MAIN CONTENT */}
-      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden min-h-screen">
+      <div className="react-to-print-container lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden min-h-screen" ref={printRef}>
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
           isVisible={isLoadingBias}

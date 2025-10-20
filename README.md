@@ -56,3 +56,8 @@ Alternipedia now supports **51 languages** across the globe! 🌍
 49. 🇧🇦 **Bosnian** (bs) - Bosanski
 50. 🇲🇪 **Montenegrin** (cnr) - Crnogorski
 51. 🇲🇹 **Maltese** (mt) - Malti
+
+## Credits
+
+UI designed by (https://www.figma.com/@juxtopposed)[https://www.figma.com/@juxtopposed]
+
