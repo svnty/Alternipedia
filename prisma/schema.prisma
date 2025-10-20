@@ -144,16 +144,16 @@ model BiasBan {
 }
 
 model Article {
-  id         Int               @id @default(autoincrement())
-  title      String
-  slug       String
-  revisions  Revision[]
-  categories ArticleCategory[] // explicit join model with metadata
+  id          Int               @id @default(autoincrement())
+  title       String
+  slug        String
+  revisions   Revision[]
+  categories  ArticleCategory[] // explicit join model with metadata
   watchers    ArticleWatcher[]   // who’s watching this article
   savedBy     SavedArticle[] // who's saved this article
-  language   Language
-  createdAt  DateTime          @default(now())
-  updatedAt  DateTime          @updatedAt
+  language    Language
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
   
   @@unique([slug, language])
   @@unique([title, language])
@@ -312,23 +312,38 @@ model ArticleCategory {
 // ===================
 // WATCHERS & SAVERS
 // ===================
-
 model ArticleWatcher {
-  article     Article @relation(fields: [articleId], references: [id])
-  articleId   Int
+  id        String   @id @default(cuid())
+
+  article     Article? @relation(fields: [articleId], references: [id])
+  articleId   Int?
+
   user        User    @relation(fields: [userId], references: [id])
   userId      String
+
+  slug        String?
+  language  Language?
+
   watchedAt   DateTime @default(now())
 
-  @@id([articleId, userId])
+  @@unique([articleId, userId])
+  @@unique([slug, userId])
 }
 
 model SavedArticle {
-  article     Article @relation(fields: [articleId], references: [id])
-  articleId   Int
-  user        User    @relation(fields: [userId], references: [id])
-  userId      String
-  savedAt     DateTime @default(now())
+  id        String   @id @default(cuid())
 
-  @@id([articleId, userId])
+  article   Article? @relation(fields: [articleId], references: [id])
+  articleId Int?
+
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  slug      String?
+  language  Language?
+
+  savedAt   DateTime @default(now())
+
+  @@unique([articleId, userId])
+  @@unique([slug, userId])
 }

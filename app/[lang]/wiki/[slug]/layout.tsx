@@ -13,7 +13,7 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/app/(components)/ui/toggle-group";
-import { Bookmark, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check } from "lucide-react";
+import { Bookmark, BookmarkCheck, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check } from "lucide-react";
 import CurrentUrlQRCode from '@/app/[lang]/wiki/[slug]/(client-renders)/current-url-qr';
 import {
   Tooltip,
@@ -47,7 +47,58 @@ export default function Article({
   const currentLang = params?.lang as Locale || 'en';
   const searchParams = useSearchParams();
   const dict = getDictionary(currentLang);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  const [isSaved, setIsSaved] = useState<boolean>(false)
+  const [saving, setSaving] = useState<boolean>(false)
+
+  useEffect(() => {
+    // Only run in browser
+    if (status === "authenticated") {
+      const checkSaved = async () => {
+        try {
+          const slugParam = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug ?? ''
+          const res = await fetch(`/api/saved/status?slug=${encodeURIComponent(String(slugParam))}&language=${encodeURIComponent(currentLang)}`)
+          if (!res.ok) {
+            // keep default
+            return
+          }
+          const json = await res.json()
+          console.log(json);
+          if (typeof json.saved === 'boolean') setIsSaved(json.saved)
+        } catch (e) {
+          // ignore
+        }
+      }
+      checkSaved()
+    }
+  }, [params?.slug, currentLang, session?.user?.email, status]);
+
+  const toggleSaved = async () => {
+    if (!session || !session.user) return
+    if (!params?.slug) return
+    setSaving(true)
+    try {
+      const slugParam = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug ?? ''
+      if (!isSaved) {
+        const res = await fetch('/api/saved', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug: String(slugParam), language: currentLang }),
+        })
+        if (res.ok) setIsSaved(true)
+      } else {
+        const res = await fetch(`/api/saved?slug=${encodeURIComponent(String(slugParam))}&language=${encodeURIComponent(currentLang)}`, {
+          method: 'DELETE',
+        })
+        if (res.ok) setIsSaved(false)
+      }
+    } catch (e) {
+      // ignore
+    } finally {
+      setSaving(false)
+    }
+  }
 
   const [toolsOpen, setToolsOpen] = useState<boolean>(false);
   const [contentsOpen, setContentsOpen] = useState<boolean>(false);
@@ -597,16 +648,24 @@ export default function Article({
 
 
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <a className="hover:underline cursor-pointer">
+                      <button
+                        onClick={toggleSaved}
+                        disabled={saving}
+                        className={`hover:underline ${!session ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                      >
                         <div className="size- flex justify-start items-center gap-1.5">
                           <div data-svg-wrapper data-property-1="Watch" className="relative">
-                            <Bookmark className="text-gray-500" size={16} />
+                            {isSaved ? (
+                              <BookmarkCheck className="text-gray-500" size={16} />
+                            ) : (
+                              <Bookmark className="text-gray-500" size={16} />
+                            )}
                           </div>
                           <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{dict.tools.saveArticle}</div>
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{isSaved ? 'Article saved' : dict.tools.saveArticle}</div>
                           </div>
                         </div>
-                      </a>
+                      </button>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
                       <ShortURL mobile={false} />

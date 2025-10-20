@@ -14,6 +14,7 @@ declare module "next-auth" {
         expiresAt: string | null;
         stripeCustomerId: string | null;
       }
+      currentEditableBiasId?: number | null;
     }
   }
 }

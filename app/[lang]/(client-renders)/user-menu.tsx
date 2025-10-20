@@ -96,7 +96,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem className="cursor-pointer"  onClick={() => router.push(`/${lang}/saved`)}>
                 <BookMarked size={16} className="opacity-60" aria-hidden="true" />
                 <span>{dict.userMenu.savedArticles}</span>
               </DropdownMenuItem>
