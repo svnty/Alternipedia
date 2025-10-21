@@ -40,6 +40,7 @@ model User {
   issuedBans      BiasBan[]         @relation("BiasBanModerator") // 🧑‍⚖️ bans given (mods)
   votes           RevisionVote[]
   notes           Note[]
+  uploadedBlobs   UploadedBlobs[]
 
   currentEditableBias   Bias?    @relation(fields: [currentEditableBiasId], references: [id])
   currentEditableBiasId Int?
@@ -123,6 +124,7 @@ model Bias {
   bans            BiasBan[]
   moderators      ModeratorBias[]
   editableByUsers User[]
+  uploadedBlobs    UploadedBlobs[]
 
   ArticleCategory ArticleCategory[]
 }
@@ -214,6 +216,21 @@ model RevisionVote {
   createdAt  DateTime  @default(now())
 
   @@unique([revisionId, userId]) // each user can vote once per revision
+}
+
+model UploadedBlobs {
+  id        Int      @id @default(autoincrement())
+  url       String   @unique
+
+  bias      Bias      @relation(fields: [biasId], references: [id])
+  biasId    Int
+
+  tier     SubscriptionTier @default(FREE)
+
+  uploadedBy User    @relation(fields: [uploadedByUserId], references: [id])
+  uploadedByUserId String
+
+  uploadedAt DateTime @default(now())
 }
 
 enum BlockType {

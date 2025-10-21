@@ -44,6 +44,7 @@ export const authOptions = {
           const dbUser = await withRetry(() => prisma.user.findUnique({
             where: { email: session.user?.email || undefined },
             select: {
+              currentEditableBiasId: true,
               subscriptionTier: true,
               subscriptionStartedAt: true,
               subscriptionExpiresAt: true,
@@ -58,6 +59,7 @@ export const authOptions = {
               expiresAt: dbUser.subscriptionExpiresAt ? dbUser.subscriptionExpiresAt.toISOString() : null,
               stripeCustomerId: dbUser.stripeCustomerId ?? null,
             } as any;
+            session.user.currentEditableBiasId = dbUser.currentEditableBiasId;
           }
         }
       }

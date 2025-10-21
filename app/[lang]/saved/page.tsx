@@ -39,8 +39,6 @@ export default async function SavedArticlesPage({ params }: { params: Promise<{ 
     }
   }));
 
-  console.log('Saved articles: ', saved);
-  
   // Serialize saved articles into a lightweight shape for the client component
   const serializedSaved: any = saved.map((s) => ({
     articleId: s.articleId,

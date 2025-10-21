@@ -16,7 +16,7 @@ import Typography from "@tiptap/extension-typography";
 import { ImageUploadNode } from "@/app/(components)/ui/tiptap-node/image-upload-node";
 import { AudioUploadNode } from "@/app/(components)/ui/tiptap-node/audio-upload-node";
 import { VideoUploadNode } from "@/app/(components)/ui/tiptap-node/video-upload-node";
-import { handleImageUpload, handleAudioUpload, handleVideoUpload, MAX_FILE_SIZE_FREE, MAX_FILE_SIZE_PRO } from "@/lib/tiptap-utils";
+import { handleFileUpload, MAX_FILE_SIZE_FREE, MAX_FILE_SIZE_PRO } from "@/lib/tiptap-utils";
 import { debounce } from "@/lib/utils";
 import { useId } from "react";
 import { Tag, TagInput } from "emblor";
@@ -114,21 +114,21 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
         accept: "image/*",
         maxSize: session?.user.subscription?.tier === 'PRO' ? MAX_FILE_SIZE_PRO : MAX_FILE_SIZE_FREE,
         limit: 3,
-        upload: (file, onProgress, abortSignal) => handleImageUpload(file, onProgress, abortSignal, session?.user.subscription?.tier),
+        upload: (file, onProgress, abortSignal) => handleFileUpload(file, onProgress, abortSignal, session?.user.subscription?.tier),
         onError: (error) => console.error("Upload failed:", error),
       }),
       AudioUploadNode.configure({
         accept: "audio/*",
         maxSize: session?.user.subscription?.tier === 'PRO' ? MAX_FILE_SIZE_PRO : MAX_FILE_SIZE_FREE,
         limit: 1,
-        upload: (file: File, onProgress: (event: { progress: number }) => void, abortSignal: AbortSignal) => handleAudioUpload(file, onProgress, abortSignal, session?.user.subscription?.tier),
+        upload: (file: File, onProgress: ((event: { progress: number; }) => void) | undefined, abortSignal: AbortSignal | undefined) => handleFileUpload(file, onProgress, abortSignal, session?.user.subscription?.tier),
         onError: (error: Error) => console.error("Audio upload failed:", error),
       }),
       VideoUploadNode.configure({
         accept: "video/*",
         maxSize: session?.user.subscription?.tier === 'PRO' ? MAX_FILE_SIZE_PRO : MAX_FILE_SIZE_FREE,
         limit: 1,
-        upload: handleVideoUpload,
+        upload: (file: File, onProgress: ((event: { progress: number; }) => void) | undefined, abortSignal: AbortSignal | undefined) => handleFileUpload(file, onProgress, abortSignal, session?.user.subscription?.tier),
         onError: (error: Error) => console.error("Video upload failed:", error),
       }),
     ],

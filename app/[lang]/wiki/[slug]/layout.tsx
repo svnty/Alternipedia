@@ -393,6 +393,7 @@ export default function Article({
     };
 
     window.addEventListener("load-signal", onLoaded);
+
     return () => {
       try {
         delete (window as any).__alternipedia_on_load;
@@ -403,33 +404,43 @@ export default function Article({
     };
   }, []);
 
-  const handleApplyBias = (value: string, opts?: { replace?: boolean }) => {
-    setIsLoadingBias(true);
+  useEffect(() => {
+    const onUnload = () => {
+      setIsLoadingBias(true);
+      if (typeof window !== 'undefined') {
+        document.querySelectorAll('.wikipedia-article').forEach((el) => {
+          for (let i = 0; i < el.children.length; i++) {
+            el.children[i].remove();
+          }
+        });
+      }
+    };
 
-    if (!["socialist", "liberal", "wikipedia", "conservative", "nationalist"].includes(value)) {
-      value = 'wikipedia';
+    window.addEventListener("unload-signal", onUnload);
+    return () => window.removeEventListener("unload-signal", onUnload);
+  }, []);
+
+  const handleApplyBias = (bias: string, opts?: { replace?: boolean }) => {
+    window.dispatchEvent(new CustomEvent('unload-signal'));
+
+    if (!["socialist", "liberal", "wikipedia", "conservative", "nationalist"].includes(bias)) {
+      bias = 'wikipedia';
     }
 
-    if (typeof window !== 'undefined') {
-      document.querySelectorAll('.wikipedia-article').forEach((el) => {
-        for (let i = 0; i < el.children.length; i++) {
-          el.children[i].remove();
-        }
-      });
-    }
     const params = new URLSearchParams(searchParams?.toString());
-    params.set('bias', value);
+    params.set('bias', bias);
     params.delete('mode');
     params.delete('revision');
     
     const newPath = `${pathname}?${params.toString()}`;
-    setBias(value);
-
+    
     if (opts?.replace) {
       router.replace(newPath);
     } else {
       router.push(newPath);
     }
+    
+    setBias(bias);
   };
 
   useEffect(() => {
