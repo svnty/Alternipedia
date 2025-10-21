@@ -62,9 +62,6 @@ import { useCursorVisibility } from "@/app/(components)/hooks/use-cursor-visibil
 // --- Components ---
 import { ThemeToggle } from "@/app/(components)/ui/simple/theme-toggle"
 
-// --- Lib ---
-import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
-
 // --- Styles ---
 import "@/app/(components)/ui/simple/simple-editor.scss"
 
