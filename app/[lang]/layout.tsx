@@ -37,6 +37,7 @@ import GoPro from "@/app/[lang]/(client-renders)/go-pro";
 import { authOptions } from "@/lib/auth";
 import { Textarea } from "@/app/(components)/ui/textarea";
 import ClientAnalytics from "../(client-renders)/analytics";
+import CookieStatement from "./(client-renders)/cookie-statement";
 
 export async function generateMetadata({
   params,
@@ -199,7 +200,7 @@ export default async function Layout({
               <div className="flex flex-col gap-1">
                 <a href="https://github.com/svnty/Alternipedia" target="_blank" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.developers}</a>
                 <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.statistics}</Link>
-                <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.cookieStatement}</Link>
+                <CookieStatement lang={lang} />
               </div>
             </div>
           </div>

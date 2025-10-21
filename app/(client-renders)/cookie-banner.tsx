@@ -28,7 +28,7 @@ export default function CookieBanner() {
     setMounted(true);
 
     if (typeof window !== "undefined") {
-      const accepted = localStorage.getItem("cookiesAccepted");
+      const accepted = localStorage.getItem("cookie-consent");
       const expiraryDate = localStorage.getItem("cookieExpiryDateDate");
       const currentDate = new Date();
 
@@ -36,7 +36,7 @@ export default function CookieBanner() {
         const expiryDate = new Date(expiraryDate);
         if (currentDate > expiryDate) {
           setOpen(true);
-          localStorage.removeItem("cookiesAccepted");
+          localStorage.removeItem("cookie-consent");
           localStorage.removeItem("cookieExpiryDateDate");
         } else {
           setOpen(false);
@@ -73,7 +73,7 @@ export default function CookieBanner() {
       if (typeof window !== "undefined") {
         const date = new Date();
         date.setDate(date.getDate() + 30);
-        localStorage.setItem("cookiesAccepted", "true");
+        localStorage.setItem("cookie-consent", "true");
         localStorage.setItem("cookieExpiryDateDate", date.toISOString());
       }
       window.location.reload();
@@ -115,7 +115,7 @@ export default function CookieBanner() {
       if (typeof window !== "undefined") {
         const date = new Date();
         date.setDate(date.getDate() + 30);
-        localStorage.setItem("cookiesAccepted", "false");
+        localStorage.setItem("cookie-consent", "false");
         localStorage.setItem("cookieExpiryDateDate", date.toISOString());
       }
 

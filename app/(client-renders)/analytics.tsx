@@ -7,7 +7,7 @@ export default function ClientAnalytics() {
   const [cookiesAccepted, setCookiesAccepted] = useState<boolean>(true);
 
   useEffect(() => {
-    const accepted = localStorage.getItem("cookiesAccepted");
+    const accepted = localStorage.getItem("cookie-consent");
     if (accepted === "false") {
       setCookiesAccepted(false);
     }

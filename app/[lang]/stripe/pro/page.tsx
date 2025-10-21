@@ -15,11 +15,19 @@ export default function Checkout() {
   const { data: session, status } = useSession();
 
   if (status === 'loading') {
-    return <p>Loading...</p>;
+    return (
+      <section id="success" className="flex justify-center text-center mt-36 min-h-64">
+        <p>Loading...</p>
+      </section>
+    );
   }
 
   if (!session?.user) {
-    return <p>Please sign in to proceed to checkout.</p>;
+    return (
+      <section id="success" className="flex justify-center text-center mt-36 min-h-64">
+        <p>Please sign in to proceed to checkout.</p>
+      </section>
+    );
   }
 
   return (
