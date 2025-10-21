@@ -31,6 +31,12 @@ export default function Checkout() {
   }
 
   return (
+      <section id="success" className="flex justify-center text-center mt-36 min-h-64">
+        <p>Sorry, but this site is still in development. PRO will be available soon. In the mean time, considering <a href={`/stripe/donate`} className='text-blue-500 cursor-pointer hover:underline'>making a donation</a>.</p>
+      </section>
+  );
+
+  return (
     <div id="checkout" className='my-6'>
       <EmbeddedCheckoutProvider
         stripe={stripePromise}

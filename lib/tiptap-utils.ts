@@ -2,7 +2,8 @@ import type { Node as TiptapNode } from "@tiptap/pm/model"
 import { NodeSelection, Selection, TextSelection } from "@tiptap/pm/state"
 import type { Editor } from "@tiptap/react"
 
-export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+export const MAX_FILE_SIZE_FREE = 1 * 1024 * 1024; // 1MB
+export const MAX_FILE_SIZE_PRO = 5 * 1024 * 1024; // 5MB
 
 export const MAC_SYMBOLS: Record<string, string> = {
   mod: "⌘",
@@ -289,46 +290,102 @@ export function isNodeTypeSelected(
 export const handleImageUpload = async (
   file: File,
   onProgress?: (event: { progress: number }) => void,
-  abortSignal?: AbortSignal
-): Promise<string> => {
+  abortSignal?: AbortSignal,
+  subscription: "FREE" | "PRO" | null | undefined = 'FREE'
+): Promise<any> => {
   // Validate file
   if (!file) {
     throw new Error("No file provided")
   }
 
-  if (file.size > MAX_FILE_SIZE) {
+  if (file.size > MAX_FILE_SIZE_FREE && subscription === "FREE") {
     throw new Error(
-      `File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`
-    )
+      `File size exceeds maximum allowed (${MAX_FILE_SIZE_FREE / (1024 * 1024)}MB) for non-PRO subscription`
+    );
   }
 
-  // For demo/testing: Simulate upload progress. In production, replace the following code
-  // with your own upload implementation.
-  for (let progress = 0; progress <= 100; progress += 10) {
-    if (abortSignal?.aborted) {
-      throw new Error("Upload cancelled")
+  if (file.size > MAX_FILE_SIZE_PRO && subscription === "PRO") {
+    throw new Error(
+      `File size exceeds maximum allowed (${MAX_FILE_SIZE_PRO / (1024 * 1024)}MB) for non-PRO subscription`
+    );
+  }
+
+  // Use XMLHttpRequest to upload FormData so we can provide progress callbacks and support abort
+  return new Promise<string>((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    const form = new FormData()
+    form.append('file', file, file.name)
+    form.append('blobName', file.name)
+
+    xhr.open('POST', '/api/blob', true)
+    // include credentials so session cookie is sent to the API
+    xhr.withCredentials = true
+
+    xhr.upload.onprogress = (e: ProgressEvent) => {
+      if (e.lengthComputable && onProgress) {
+        const percent = Math.round((e.loaded / e.total) * 100)
+        onProgress({ progress: percent })
+      }
     }
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    onProgress?.({ progress })
-  }
 
-  return "/images/tiptap-ui-placeholder-image.jpg"
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const json = JSON.parse(xhr.responseText)
+          resolve(json)
+        } catch (err) {
+          reject(new Error('Invalid JSON response from upload'))
+        }
+      } else {
+        // try to extract error message from response
+        try {
+          const json = JSON.parse(xhr.responseText)
+          reject(new Error(json?.error || `Upload failed with status ${xhr.status}`))
+        } catch {
+          reject(new Error(`Upload failed with status ${xhr.status}`))
+        }
+      }
+    }
+
+    xhr.onerror = () => reject(new Error('Network error during upload'))
+    xhr.onabort = () => reject(new Error('Upload cancelled'))
+
+    if (abortSignal) {
+      if (abortSignal.aborted) {
+        xhr.abort()
+        return reject(new Error('Upload cancelled'))
+      }
+      const onAbort = () => {
+        xhr.abort()
+      }
+      abortSignal.addEventListener('abort', onAbort, { once: true })
+    }
+
+    xhr.send(form)
+  })
 }
 
 export const handleAudioUpload = async (
   file: File,
   onProgress?: (event: { progress: number }) => void,
-  abortSignal?: AbortSignal
+  abortSignal?: AbortSignal,
+  subscription: "FREE" | "PRO" | null | undefined = 'FREE'
 ): Promise<string> => {
   // Validate file
   if (!file) {
     throw new Error("No file provided")
   }
 
-  if (file.size > MAX_FILE_SIZE) {
+  if (file.size > MAX_FILE_SIZE_FREE && subscription === "FREE") {
     throw new Error(
-      `File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`
-    )
+      `File size exceeds maximum allowed (${MAX_FILE_SIZE_FREE / (1024 * 1024)}MB) for non-PRO subscription`
+    );
+  }
+
+  if (file.size > MAX_FILE_SIZE_PRO && subscription === "PRO") {
+    throw new Error(
+      `File size exceeds maximum allowed (${MAX_FILE_SIZE_PRO / (1024 * 1024)}MB) for non-PRO subscription`
+    );
   }
 
   // For demo/testing: Simulate upload progress. In production, replace the following code
@@ -347,17 +404,24 @@ export const handleAudioUpload = async (
 export const handleVideoUpload = async (
   file: File,
   onProgress?: (event: { progress: number }) => void,
-  abortSignal?: AbortSignal
+  abortSignal?: AbortSignal,
+  subscription: "FREE" | "PRO" | null | undefined = 'FREE'
 ): Promise<string> => {
   // Validate file
   if (!file) {
     throw new Error("No file provided")
   }
 
-  if (file.size > MAX_FILE_SIZE) {
+  if (file.size > MAX_FILE_SIZE_FREE && subscription === "FREE") {
     throw new Error(
-      `File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`
-    )
+      `File size exceeds maximum allowed (${MAX_FILE_SIZE_FREE / (1024 * 1024)}MB) for non-PRO subscription`
+    );
+  }
+
+  if (file.size > MAX_FILE_SIZE_PRO && subscription === "PRO") {
+    throw new Error(
+      `File size exceeds maximum allowed (${MAX_FILE_SIZE_PRO / (1024 * 1024)}MB) for non-PRO subscription`
+    );
   }
 
   // For demo/testing: Simulate upload progress. In production, replace the following code

@@ -593,7 +593,7 @@ export default function Article({
                     <LanguageSwitcher currentLang={currentLang} mobile={false} />
 
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-between items-center">
-                      <a href="" className="hover:underline">
+                      <a href="#" className="hover:underline">
                         <div className="size- flex justify-start items-center gap-1.5">
                           <div data-svg-wrapper data-property-1="Speech" className="relative">
                             <Speech className="text-gray-500" size={16} />

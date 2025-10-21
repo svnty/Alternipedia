@@ -14,7 +14,6 @@ import Typography from "@tiptap/extension-typography";
 import { ImageUploadNode } from "@/app/(components)/ui/tiptap-node/image-upload-node"
 import { AudioUploadNode } from "@/app/(components)/ui/tiptap-node/audio-upload-node"
 import { VideoUploadNode } from "@/app/(components)/ui/tiptap-node/video-upload-node";
-import { handleImageUpload, handleAudioUpload, handleVideoUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
 import Link from 'next/link';
 import { BulletList, ListItem, OrderedList } from '@tiptap/extension-list';
 
@@ -124,24 +123,12 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
               Selection,
               ImageUploadNode.configure({
                 accept: "image/*",
-                maxSize: MAX_FILE_SIZE,
-                limit: 3,
-                upload: handleImageUpload,
-                onError: (error) => console.error("Upload failed:", error),
               }),
               AudioUploadNode.configure({
                 accept: "audio/*",
-                maxSize: MAX_FILE_SIZE,
-                limit: 1,
-                upload: handleAudioUpload,
-                onError: (error: Error) => console.error("Audio upload failed:", error),
               }),
               VideoUploadNode.configure({
                 accept: "video/*",
-                maxSize: MAX_FILE_SIZE,
-                limit: 1,
-                upload: handleVideoUpload,
-                onError: (error: Error) => console.error("Video upload failed:", error),
               }),
             ]
           )
