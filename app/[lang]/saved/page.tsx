@@ -51,13 +51,13 @@ export default async function SavedArticlesPage({ params }: { params: Promise<{ 
   }));
 
   return (
-    <div className="mx-2 w-full md:max-w-2/3 md:m-auto min-h-64">
-      <div className="mt-8 text-xl font-medium">
+    <div className="w-full md:max-w-2/3 md:m-auto min-h-64">
+      <div className="mt-8 text-xl font-medium mx-2.5">
         Saved Articles
       </div>
-      <p className="text-muted-foreground">These are your saved articles.</p>
+      <p className="text-muted-foreground mx-2.5">These are your saved articles.</p>
 
-      <div className="my-6 mx-1 mb-10">
+      <div className="mt-6 mb-10 mx-4 md:mx-0">
         <List saved={serializedSaved} />
       </div>
 

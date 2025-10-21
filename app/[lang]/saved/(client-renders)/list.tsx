@@ -243,10 +243,10 @@ export default function Component({ saved }: { saved?: SerializedSaved[] }) {
 
   return (
     <div className="flex h-full flex-col gap-2 *:nth-2:grow">
-      <div className="relative">
+      <div className="relative w-full overflow-hidden">
         <Input
           ref={inputRef}
-          className="peer ps-9"
+          className="peer ps-9 w-full max-w-full min-w-0"
           value={searchValue}
           onChange={(e) => {
             const value = e.target.value
@@ -354,12 +354,12 @@ export default function Component({ saved }: { saved?: SerializedSaved[] }) {
                         name
                       )
                     ) : (
-                      <div className="flex flex-row w-full">
-                        <Link href={`/${lang}/wiki/${encodeURIComponent(slug)}`} className="inline-flex flex-10">{name}</Link>
-                        {watching && (
-                          <div className="inline-flex flex-1"><Eye size={22} /></div>
-                        )}
-                      </div>
+                        <div className="flex flex-row w-full min-w-0 items-center gap-2">
+                          <Link href={`/${lang}/wiki/${encodeURIComponent(slug)}`} className="inline-flex flex-1 min-w-0 truncate">{name}</Link>
+                          {watching && (
+                            <div className="inline-flex flex-none"><Eye size={22} /></div>
+                          )}
+                        </div>
                     )}
                   </span>
                 </TreeItemLabel>
