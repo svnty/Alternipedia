@@ -56,80 +56,6 @@ type Item = {
   // link to view the revision
   url?: string
 }
-const columns: ColumnDef<Item>[] = [
-  {
-    header: "Date",
-    accessorKey: "revisionDate",
-    cell: ({ row }) => {
-      const value = row.getValue("revisionDate") || row.original.revisionDate
-      if (!value) return <div className="text-muted-foreground">—</div>
-      // Format date safely
-      let formatted = String(value);
-      try {
-        formatted = new Intl.DateTimeFormat(undefined, {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }).format(new Date(String(value)))
-      } catch (e) {
-        // fallback to raw
-      }
-      return <div className="font-medium float-left mx-5">{formatted}</div>
-    },
-    size: 260,
-  },
-  {
-    id: "stars",
-    header: "",
-    accessorKey: "stars",
-    // middle column: small, float-right badge that shows star count when clicked
-    cell: ({ row }) => {
-      const stars = (row.getValue("stars") ?? row.original.stars ?? 0) as number
-      return (
-        <div className="w-full flex">
-          <div className="mx-auto">
-            <Badge
-              onClick={() => alert(`${stars} stars`)}
-              className="items-baseline gap-1.5 cursor-pointer"
-            >
-              Stars
-              <span className="text-[0.625rem] font-medium text-primary-foreground/60">
-                {String(stars)}
-              </span>
-            </Badge>
-          </div>
-        </div>
-      )
-    },
-    size: 120,
-  },
-  {
-    header: "",
-    accessorKey: "url",
-    // right column: small icon linking to the revision
-    cell: ({ row }) => {
-      const url = (row.getValue("url") || row.original.url) as string | undefined
-      return (
-        <div className="w-full flex">
-          <div className="ml-auto">
-            {url ? (
-              <a
-                href={url}
-                aria-label="View revision"
-                className="inline-flex h-8 w-8 items-center justify-center rounded hover:bg-muted"
-              >
-                <ExternalLink />
-              </a>
-            ) : (
-              <div className="h-8 w-8" />
-            )}
-          </div>
-        </div>
-      )
-    },
-    size: 80,
-  },
-]
 
 export default function HistoryPage() {
   const id = useId()
@@ -139,12 +65,90 @@ export default function HistoryPage() {
     pageIndex: 0,
     pageSize: 5,
   });
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [data, setData] = useState<Item[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [sorting, setSorting] = useState<SortingState>([])
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
-  const [data, setData] = useState<Item[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
+  const columns: ColumnDef<Item>[] = [
+    {
+      header: "Date",
+      accessorKey: "revisionDate",
+      cell: ({ row }) => {
+        const value = row.getValue("revisionDate") || row.original.revisionDate
+        if (!value) return <div className="text-muted-foreground">—</div>
+        // Format date safely
+        let formatted = String(value);
+        try {
+          formatted = new Intl.DateTimeFormat(undefined, {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }).format(new Date(String(value)))
+        } catch (e) {
+          // fallback to raw
+        }
+        return <div className="font-medium float-left mx-5">{formatted}</div>
+      },
+      size: window.innerWidth > 768 ? 260 : 140,
+    },
+    {
+      id: "stars",
+      header: "",
+      accessorKey: "stars",
+      // middle column: small, float-right badge that shows star count when clicked
+      cell: ({ row }) => {
+        const stars = (row.getValue("stars") ?? row.original.stars ?? 0) as number
+        return (
+          <div className="w-full flex">
+            <div className="mx-auto">
+              <Badge
+                onClick={() => alert(`${stars} stars`)}
+                className="items-baseline gap-1.5 cursor-pointer"
+              >
+                Stars
+                <span className="text-[0.625rem] font-medium text-primary-foreground/60">
+                  {String(stars)}
+                </span>
+              </Badge>
+            </div>
+          </div>
+        )
+      },
+      size: 120,
+    },
+    {
+      header: "",
+      accessorKey: "url",
+      // right column: small icon linking to the revision
+      cell: ({ row }) => {
+        const url = (row.getValue("url") || row.original.url) as string | undefined
+        return (
+          <div className="w-full flex">
+            <div className="ml-auto">
+              {url ? (
+                <a
+                  href={url}
+                  aria-label="View revision"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded hover:bg-muted"
+                >
+                  <ExternalLink />
+                </a>
+              ) : (
+                <div className="h-8 w-8" />
+              )}
+            </div>
+          </div>
+        )
+      },
+      size: 80,
+    },
+  ]
+
   useEffect(() => {
     async function load() {
       setLoading(true)
