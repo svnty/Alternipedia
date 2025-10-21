@@ -240,7 +240,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
           if (typeof apiError === "string" && apiError.toLowerCase().includes("banned")) {
             setEditorError("You are banned from editing this affiliation. If you believe this is a mistake, contact moderators.");
           } else {
-            setEditorError("You do not have permission to edit this affiliation. Join the affiliation or ask an admin to grant access.");
+            setEditorError("You do not have permission to edit this affiliation. Join the affiliation by setting your preference and try again.");
           }
         } else if (resp.status === 400) {
           // Bad request — show server message or a helpful hint
@@ -280,7 +280,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
   // Show loading state
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center p-8">
+      <div className="flex items-center justify-center p-8 wikipedia-article">
         <div className="text-muted-foreground">Loading editor...</div>
       </div>
     );
@@ -289,7 +289,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
   // Show error state
   if (editorError) {
     return (
-      <div className="p-4 border border-destructive/20 rounded-md bg-destructive/5">
+      <div className="p-4 border border-destructive/20 rounded-md bg-destructive/5 wikipedia-article">
         <div className="text-destructive font-medium">Editor Error</div>
         <div className="text-sm text-muted-foreground mt-1">{editorError}</div>
         <Button
@@ -308,7 +308,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full wikipedia-article">
       {/* Page-blocking overlay while saving to prevent accidental clicks */}
       {isSaving && (
         <div

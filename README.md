@@ -59,5 +59,5 @@ Alternipedia now supports **51 languages** across the globe! 🌍
 
 ## Credits
 
-UI designed by (https://www.figma.com/@juxtopposed)[https://www.figma.com/@juxtopposed]
+UI designed by [https://www.figma.com/@juxtopposed](https://www.figma.com/@juxtopposed)
 

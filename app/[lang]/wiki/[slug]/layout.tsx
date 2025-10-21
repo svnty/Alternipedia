@@ -410,9 +410,18 @@ export default function Article({
       value = 'wikipedia';
     }
 
+    if (typeof window !== 'undefined') {
+      document.querySelectorAll('.wikipedia-article').forEach((el) => {
+        for (let i = 0; i < el.children.length; i++) {
+          el.children[i].remove();
+        }
+      });
+    }
     const params = new URLSearchParams(searchParams?.toString());
     params.set('bias', value);
     params.delete('mode');
+    params.delete('revision');
+    
     const newPath = `${pathname}?${params.toString()}`;
     setBias(value);
 

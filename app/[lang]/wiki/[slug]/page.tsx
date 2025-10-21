@@ -16,7 +16,7 @@ export async function generateMetadata({
   searchParams,
 }: {
   params: Promise<{ slug: string; lang: string }>;
-  searchParams: Promise<{ bias?: string }>;
+  searchParams: Promise<{ bias?: string; revision?: string }>;
 }): Promise<Metadata> {
   const { slug, lang } = await params;
   const { bias } = await searchParams;
@@ -46,10 +46,10 @@ export default async function Page({
   searchParams
 }: {
   params: Promise<{ slug: string; lang: string }>;
-  searchParams: Promise<{ bias?: string }>
+  searchParams: Promise<{ bias?: string; revision?: string }>
 }) {
   const { slug, lang } = await params;
-  const { bias } = await searchParams;
+  const { bias, revision } = await searchParams;
   let mappedRevision: any = {};
   let wikipediaData: any = {};
 
@@ -133,58 +133,93 @@ export default async function Page({
   }
 
   if (bias !== 'wikipedia') {
-    const latestRevision = await withRetry(() => prisma.revision.findFirst({
-      where: {
-        article: {
-          slug: slug,
-          language: lang.toUpperCase() as Language,
-        },
-        bias: {
-          name: bias,
-        },
-      },
-      orderBy: { createdAt: "desc" },
-      include: {
-        article: {
+    // If a specific revision id is requested via ?revision=ID, try to load that first
+    let chosenRevision: any = null;
+    const requestedRevisionId = revision ? parseInt(String(revision), 10) : NaN;
+
+    if (!Number.isNaN(requestedRevisionId)) {
+      try {
+        const found = await withRetry(() => prisma.revision.findUnique({
+          where: { id: requestedRevisionId },
           include: {
-            // Only include ArticleCategory rows for this bias
-            categories: {
-              where: { bias: { name: bias } },
-              include: { category: true },
+            article: {
+              include: {
+                categories: {
+                  where: { bias: { name: bias } },
+                  include: { category: true },
+                },
+              },
+            },
+            bias: true,
+            revisionBlocks: {
+              include: { block: true },
+              orderBy: { order: 'asc' },
             },
           },
+        }));
+
+        // Validate that this revision belongs to the same article and bias
+        if (found && found.article && found.bias &&
+            found.article.slug === slug && String(found.article.language) === lang.toUpperCase() && found.bias.name === bias) {
+          chosenRevision = found;
+        }
+      } catch (e) {
+        console.warn('Error fetching requested revision, falling back to latest:', e);
+      }
+    }
+
+    // If we didn't pick a requested revision, load latest
+    if (!chosenRevision) {
+      chosenRevision = await withRetry(() => prisma.revision.findFirst({
+        where: {
+          article: {
+            slug: slug,
+            language: lang.toUpperCase() as Language,
+          },
+          bias: {
+            name: bias,
+          },
         },
-        revisionBlocks: {
-          include: { block: true },
-          orderBy: { order: "asc" },
+        orderBy: { createdAt: 'desc' },
+        include: {
+          article: {
+            include: {
+              categories: {
+                where: { bias: { name: bias } },
+                include: { category: true },
+              },
+            },
+          },
+          revisionBlocks: {
+            include: { block: true },
+            orderBy: { order: 'asc' },
+          },
         },
-      },
-    }));
+      }));
+    }
 
     const blockTypeMappingReverse: Record<BlockType, string> = {
-      PARAGRAPH: "paragraph",
-      HEADING: "heading",
-      QUOTE: "blockquote",
-      BULLET_LIST_ITEM: "bulletList",
-      NUMBERED_LIST_ITEM: "orderedList",
-      CODE_BLOCK: "codeBlock",
-      TABLE: "table",
-      IMAGE: "image",
-      VIDEO: "video",
-      AUDIO: "audio",
-      // Add more mappings as needed
+      PARAGRAPH: 'paragraph',
+      HEADING: 'heading',
+      QUOTE: 'blockquote',
+      BULLET_LIST_ITEM: 'bulletList',
+      NUMBERED_LIST_ITEM: 'orderedList',
+      CODE_BLOCK: 'codeBlock',
+      TABLE: 'table',
+      IMAGE: 'image',
+      VIDEO: 'video',
+      AUDIO: 'audio',
     };
 
-    // Map the block types to the correct string types for TipTap
-    mappedRevision = latestRevision ? {
-      ...latestRevision,
-      revisionBlocks: (latestRevision.revisionBlocks || []).map((rb: any) => ({
+    mappedRevision = chosenRevision ? {
+      ...chosenRevision,
+      revisionBlocks: (chosenRevision.revisionBlocks || []).map((rb: any) => ({
         ...rb,
         block: {
           ...rb.block,
-          type: blockTypeMappingReverse[rb.block.type as BlockType] ?? 'paragraph'
-        }
-      }))
+          type: blockTypeMappingReverse[rb.block.type as BlockType] ?? 'paragraph',
+        },
+      })),
     } : null;
 
     if (!mappedRevision) {
