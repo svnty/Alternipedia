@@ -289,7 +289,7 @@ export default async function SettingsPage() {
                   </Button>
                 </div>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent allowAutoFocus={false}>
                 <div className="flex flex-col items-center gap-2">
                   <div
                     className="flex size-9 shrink-0 items-center justify-center rounded-full border"
@@ -312,7 +312,6 @@ export default async function SettingsPage() {
                   <div className="*:not-first:mt-2">
                     <Label htmlFor={id}>Confirm identity</Label>
                     <Input
-                      autoFocus={false}
                       id={id}
                       type="text"
                       placeholder="Type your email to delete account"

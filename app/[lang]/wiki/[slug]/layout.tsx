@@ -13,7 +13,7 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/app/(components)/ui/toggle-group";
-import { Bookmark, BookmarkCheck, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check } from "lucide-react";
+import { Bookmark, BookmarkCheck, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check, Loader } from "lucide-react";
 import CurrentUrlQRCode from '@/app/[lang]/wiki/[slug]/(client-renders)/current-url-qr';
 import {
   Tooltip,
@@ -106,10 +106,10 @@ export default function Article({
   const toggleSaved = async () => {
     if (!session || !session.user) return
     if (!params?.slug) return
-    setSaving(true)
     try {
       const slugParam = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug ?? ''
       if (!isSaved) {
+        setSaving(true);
         const res = await fetch('/api/saved', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -680,18 +680,26 @@ export default function Article({
                       <button
                         onClick={toggleSaved}
                         disabled={saving}
-                        className={`hover:underline ${!session ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                        className={`hover:underline ${!session ? 'cursor-not-allowed' : saving ? 'cursor-wait' : 'cursor-pointer'} w-full text-left`}
                       >
                         <div className="size- flex justify-start items-center gap-1.5">
                           <div data-svg-wrapper data-property-1="Watch" className="relative">
-                            {isSaved ? (
-                              <BookmarkCheck className="text-gray-500" size={16} />
+                            {saving ? (
+                              <Loader className="text-gray-500 animate-spin" size={16} />
                             ) : (
-                              <Bookmark className="text-gray-500" size={16} />
+                              <>
+                                {isSaved ? (
+                                  <BookmarkCheck className="text-gray-500" size={16} />
+                                ) : (
+                                  <Bookmark className="text-gray-500" size={16} />
+                                )}
+                              </>
                             )}
                           </div>
                           <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden">
-                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">{isSaved ? 'Article saved' : dict.tools.saveArticle}</div>
+                            <div className="justify-start text-gray-500 text-sm font-normal leading-normal truncate">
+                              {saving ? 'Saving...' : (isSaved ? 'Article saved' : dict.tools.saveArticle)}
+                            </div>
                           </div>
                         </div>
                       </button>
@@ -749,7 +757,7 @@ export default function Article({
                       </button>
                     </div>
                     <div data-property-1="Default" className="self-stretch p-1.5 rounded-md inline-flex justify-start items-center gap-1.5">
-                      <a href="" className="hover:underline">
+                      <a href="#" className="hover:underline">
                         <div className="size- flex justify-start items-center gap-1.5">
                           <div data-svg-wrapper data-property-1="Info" className="relative">
                             <Info className="text-gray-500" size={16} />

@@ -298,6 +298,7 @@ function SectionContent({
           <MediaCard
             thumbnail={img.thumbnail}
             url={img.url}
+            loading={'eager'}
             caption={img.caption}
             alt={img.caption || 'Image'}
           />

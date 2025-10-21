@@ -46,11 +46,20 @@ function DialogOverlay({
   )
 }
 
+type DialogContentProps = React.ComponentProps<typeof DialogPrimitive.Content> & {
+  /**
+   * When true the dialog will allow Radix to move focus into the content on open.
+   * Defaults to false to avoid opening the mobile keyboard automatically.
+   */
+  allowAutoFocus?: boolean;
+}
+
 function DialogContent({
   className,
   children,
+  allowAutoFocus = false,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>) {
+}: DialogContentProps) {
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -60,6 +69,20 @@ function DialogContent({
           "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100%-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-xl border p-6 shadow-lg duration-200 sm:max-w-100",
           className
         )}
+        onOpenAutoFocus={(e) => {
+          // By default prevent Radix from moving focus into the dialog when it opens.
+          // This avoids opening the on-screen keyboard on mobile devices.
+          if (!allowAutoFocus) {
+            e.preventDefault();
+          }
+        }}
+        onCloseAutoFocus={(e) => {
+          // Prevent Radix from forcing focus back to the trigger when closing if it would steal focus
+          // (keeps behavior consistent). We still allow the default unless explicitly needed.
+          if (!allowAutoFocus) {
+            e.preventDefault();
+          }
+        }}
         {...props}
       >
         {children}

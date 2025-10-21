@@ -169,7 +169,7 @@ export default async function Layout({
                         {dict.footer.contact}
                       </div>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent allowAutoFocus={false}>
                       <DialogHeader>
                         <DialogTitle>Send us feedback</DialogTitle>
                         <DialogDescription className="mt-2">

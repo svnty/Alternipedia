@@ -125,7 +125,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
                   <span>{dict.userMenu.login}</span>
                 </DropdownMenuItem>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent allowAutoFocus={false}>
                 <div className="flex flex-col items-center gap-2">
                   <ScanFace size={52} />
                   <DialogHeader>
