@@ -411,13 +411,16 @@ export default function Article({
       (window as any).__page_loaded_handled__ = false;
 
       if (typeof window !== 'undefined') {
-        document.querySelectorAll('.wikipedia-article').forEach((el) => {
-          for (let i = 0; i < el.children.length; i++) {
-            el.children[i].remove();
+        const wikiArticles = document.querySelector('.wikipedia-article');
+        if (wikiArticles) {
+          while (wikiArticles.children.length > 0) {
+            const child = wikiArticles.children[0];
+            if (child) {
+              child.remove();
+            }
           }
-        });
+        }
       }
-      
     };
 
     window.addEventListener("unload-signal", onUnload);
@@ -440,15 +443,15 @@ export default function Article({
     params.delete('bias');
     params.delete('mode');
     params.delete('revision');
-    
+
     const newPath = `${pathnameOnly}?${params.toString()}`;
-    
+
     if (opts?.replace) {
       router.replace(newPath);
     } else {
       router.push(newPath);
     }
-    
+
     setBias(bias);
   };
 
