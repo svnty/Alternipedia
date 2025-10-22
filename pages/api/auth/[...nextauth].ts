@@ -7,6 +7,7 @@ declare module "next-auth" {
       id?: string;
       name?: string;
       email?: string;
+      role?: "USER" | "ADMIN" | "GLOBAL_ADMIN";
       image?: string;
       subscription?: {
         tier: "FREE" | "PRO" | null;

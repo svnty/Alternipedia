@@ -150,8 +150,24 @@ export default async function handler(
       return res.status(403).json({ error: "You are banned from editing this bias" });
     }
 
-    if (user.currentEditableBiasId !== biasDb.id && user.role !== "ADMIN" && user.moderatedBias?.id !== biasDb.id) {
-      return res.status(403).json({ error: "You do not have permission to edit this bias" });
+    // if the current user is not allowed to edit this bias, reject
+    // if the current user is an admin of this language allow
+    // if the current user is a moderator of this bias allow
+    let allowEdit = false;
+    if (user.role === "GLOBAL_ADMIN") {
+      allowEdit = true;
+    }
+    if (user.role === "ADMIN" && user.adminOfLang === lang.toUpperCase() as Language) {
+      allowEdit = true;
+    }
+    if (user.moderatedBias?.id === biasDb.id) {
+      allowEdit = true;
+    }
+    if (user.currentEditableBiasId === biasDb.id ) {
+      allowEdit = true;
+    }
+    if (!allowEdit) {
+      return res.status(403).json({ error: "You do not have permission to edit this bias" }); 
     }
 
     // Find or create the article

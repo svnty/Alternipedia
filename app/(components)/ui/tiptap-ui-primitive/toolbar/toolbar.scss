@@ -7,7 +7,11 @@
 
 /* Wrapper and gradient fades to indicate scrollability */
 .tiptap-toolbar-wrapper {
-  position: relative; /* contains the absolute fades */
+  /* Make the whole wrapper sticky so the toolbar and gradient fades stick together
+     when the nearest scrollable ancestor scrolls (e.g. the editor wrapper). */
+  position: sticky;
+  top: 0;
+  z-index: 10;
 
   .tiptap-toolbar {
     /* ensure the toolbar sits above the fades but under potential buttons */

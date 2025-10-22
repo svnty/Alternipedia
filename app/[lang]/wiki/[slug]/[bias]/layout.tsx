@@ -570,7 +570,7 @@ export default function Article({
                   <WikipediaContents
                     slug={params?.slug as string}
                     language={currentLang}
-                    bias={searchParams?.get('bias') || ''}
+                    bias={pathname?.split('/')[4] || ''}
                   />
                 </CollapsibleContent>
               </div>

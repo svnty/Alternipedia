@@ -7,6 +7,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import SuspenseImage from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/suspense-image";
 import SuspenseVideo from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/(suspense-video)";
 import ClientLoadedSignal from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/load-signal";
+import { CircleDollarSign } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/app/(components)/ui/tooltip";
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');
@@ -548,10 +550,26 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
       <ClientLoadedSignal />
       <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
         <img src='/wikipedia.png' alt="Wikpedia Bias" width={40} className="flex-shrink-0 mr-4" />
-        <p className="text-sm text-blue-800 flex-1">
-          {dict.article.biasIntro.wikipedia.part1}
-          <a href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(wiki.title)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline active:underline">{dict.article.biasIntro.wikipedia.part2}</a>
-        </p>
+        <div className="relative">
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a href="https://donate.wikimedia.org/" target="_blank" rel="noopener noreferrer" className="block float-right mt-1 mb-1 max-w-[25vw] bg-white border border-gray-200 rounded-sm p-3 cursor-pointer hover:bg-gray-100">
+                  <CircleDollarSign />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent className="text-xs">
+                Wikipedia provides their content for free. Consider donating to help keep it that way.
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <div>
+            <p className="text-sm text-blue-800 flex-1">
+              {dict.article.biasIntro.wikipedia.part1}
+              <a href={`https://${language}.wikipedia.org/wiki/${encodeURIComponent(wiki.title)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline active:underline">{dict.article.biasIntro.wikipedia.part2}</a>
+            </p>
+          </div>
+        </div>
       </div>
 
       <main className="mx-auto">

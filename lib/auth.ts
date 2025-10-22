@@ -50,6 +50,7 @@ export const authOptions = {
               subscriptionExpiresAt: true,
               stripeCustomerId: true,
               moderatedBias: { select: { id: true } },
+              role: true,
             },
           }));
 
@@ -64,6 +65,7 @@ export const authOptions = {
             session.user.moderatedBias = {
               id: dbUser.moderatedBias?.id,
             };
+            session.user.role = dbUser.role;
           }
         }
       }

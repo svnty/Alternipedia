@@ -43,7 +43,7 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
     <>
       <ClientLoadedSignal />
       <div
-        className="generated-html [&>p]:mb-[20px] min-w-0 w-full"
+        className="generated-html [&>p]:mb-[20px] [&>img]:mb-[20px] min-w-0 w-full"
         dangerouslySetInnerHTML={{
           __html: generateHTML(doc,
             [

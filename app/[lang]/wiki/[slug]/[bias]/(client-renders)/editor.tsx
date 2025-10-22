@@ -393,7 +393,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
         <Button
           onClick={handleSave}
           disabled={isSaving}
-          className="mt-4 cursor-pointer bg-gray-800 hover:bg-gray-600"
+          className="mt-4 cursor-pointer bg-blue-500 hover:bg-blue-600 text-white"
         >
           {isSaving ? "Saving..." : "Submit Changes"}
         </Button>

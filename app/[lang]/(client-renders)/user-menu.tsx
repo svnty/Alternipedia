@@ -30,6 +30,8 @@ import {
   ScanFace,
   CircleUserRound,
   Loader,
+  ShieldUser,
+  Gavel,
 } from "lucide-react"
 import {
   RiFacebookFill,
@@ -49,7 +51,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
   const router = useRouter();
 
   const { data: session, status } = useSession();
- 
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild
@@ -96,7 +98,7 @@ export default function UserMenu({ lang }: { lang: Locale }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="cursor-pointer"  onClick={() => router.push(`/${lang}/saved`)}>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push(`/${lang}/saved`)}>
                 <BookMarked size={16} className="opacity-60" aria-hidden="true" />
                 <span>{dict.userMenu.savedArticles}</span>
               </DropdownMenuItem>
@@ -108,6 +110,18 @@ export default function UserMenu({ lang }: { lang: Locale }) {
                 <Settings size={16} className="opacity-60" aria-hidden="true" />
                 <span>{dict.userMenu.preferences}</span>
               </DropdownMenuItem>
+              {session.user.moderatedBias?.id && (
+                <DropdownMenuItem className="cursor-pointer" onClick={() => router.push(`/${lang}/settings`)}>
+                  <Gavel size={16} className="opacity-60" aria-hidden="true" />
+                  <span>Moderator panel</span>
+                </DropdownMenuItem>
+              )}
+              {(session.user.role === "ADMIN" || session.user.role === "GLOBAL_ADMIN") && (
+                <DropdownMenuItem className="cursor-pointer" onClick={() => router.push(`/${lang}/admin`)}>
+                  <ShieldUser size={16} className="opacity-60" aria-hidden="true" />
+                  <span>Admin panel</span>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer" onClick={() => signOut()}>
