@@ -6,31 +6,37 @@ import { Language } from '@prisma/client'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions as any)
-  const s = session as any
-  if (!s || !s.user?.email) return res.status(200).json({ saved: false })
+  const s = session as any;
+  if (!s || !s.user?.email) return res.status(500).json({ saved: false });
 
-  const { slug, language } = req.query
-  if (!slug || !language) return res.status(200).json({ saved: false })
+  const { slug, language } = req.query;
+  if (!slug || !language) return res.status(500).json({ saved: false });
 
   try {
-    const slugStr = Array.isArray(slug) ? slug[0] : slug
-    const languageStr = Array.isArray(language) ? language[0] : language
-    const article = await prisma.article.findFirst({ where: { slug: slugStr, language: (languageStr.toUpperCase() as unknown) as Language } })
+    const slugStr = Array.isArray(slug) ? slug[0] : slug;
+    const languageStr = Array.isArray(language) ? language[0] : language;
+    let parsedSlug = decodeURI(slugStr);
 
-    if (article) {
-      const saved = await prisma.savedArticle.findFirst({
-        where: {
-          articleId: article.id,
-          user: { email: s.user.email }
-        }
-      });
-      return res.status(200).json({ saved: !!saved })
+    const article = await prisma.article.findFirst({ 
+      where: { 
+        slug: parsedSlug, 
+        language: languageStr.toUpperCase() as Language 
+      }
+    });
+
+    if (!article) {
+      throw new Error("Article not found");
     }
 
-    // fallback: check slug-only saved entries (use any to bypass typing until prisma client is regenerated)
-    const savedFallback = await prisma.savedArticle.findFirst({ where: { slug: slugStr, user: { email: s.user.email } } })
-    return res.status(200).json({ saved: !!savedFallback })
+    const saved = await prisma.savedArticle.findFirst({
+      where: {
+        articleId: article.id,
+        user: { email: s.user.email }
+      }
+    });
+    
+    return res.status(200).json({ saved: !!saved })
   } catch (e: any) {
-    return res.status(200).json({ saved: false })
+    return res.status(500).json({ error: e })
   }
 }

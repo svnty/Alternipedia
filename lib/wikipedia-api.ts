@@ -7,7 +7,7 @@
 // development to avoid unbounded RAM use in production.
 // Use require for CommonJS compatibility if needed
 // @ts-ignore
-const wtf = require('wtf_wikipedia');
+import wtf from '@/lib/wtf';
 const ENABLE_CACHE = process.env.NODE_ENV === 'development';
 const cache = ENABLE_CACHE ? new Map<string, any | null>() : null;
 

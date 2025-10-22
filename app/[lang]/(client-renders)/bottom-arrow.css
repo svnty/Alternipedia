@@ -1,0 +1,6 @@
+#scroll-to-top {
+
+  @media print {
+    display: none;
+  }
+}

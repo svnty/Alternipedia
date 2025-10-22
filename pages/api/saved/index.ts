@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { Language } from '@prisma/client'
+import wtf from '@/lib/wtf'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions as any)
@@ -16,10 +17,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { slug, language } = req.body
     if (!slug || !language) return res.status(400).json({ error: 'Missing parameters' })
 
-    try {
-      const article = await prisma.article.findFirst({ where: { slug, language: (language.toUpperCase() as unknown) as Language } })
+    let parsedSlug = decodeURI(slug);
 
-      let saved
+    try {
+      const article = await prisma.article.findFirst({ where: { slug: parsedSlug, language: (language.toUpperCase() as unknown) as Language } })
+
+      let saved;
       if (article) {
         saved = await prisma.savedArticle.create({
           data: {
@@ -28,11 +31,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
         })
       } else {
-        // Create saved entry using slug + language fallback (use any to bypass generated client typing until prisma client is regenerated)
-        saved = await (prisma as any).savedArticle.create({
+        let valid = await wtf.fetch(parsedSlug, {
+          lang: language,
+        });
+
+        if (Array.isArray(valid)) {
+          valid = valid[0];
+        }
+
+        if (!valid) {
+          throw new Error("Article does not exist on Wikipedia");
+        }
+
+        const article = await prisma.article.create({
           data: {
-            slug,
-            language: (language.toUpperCase() as unknown) as Language,
+            title: valid.title(),
+            slug: parsedSlug,
+            language: language.toUpperCase() as Language,
+          }
+        });
+
+        // Create saved entry using slug + language fallback (use any to bypass generated client typing until prisma client is regenerated)
+        saved = await prisma.savedArticle.create({
+          data: {
+            article: { connect: { id: article.id } },
             user: { connect: { email: s.user.email } },
           }
         })
@@ -51,15 +73,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const slugStr = Array.isArray(slug) ? slug[0] : slug
       const languageStr = Array.isArray(language) ? language[0] : language
-      const article = await prisma.article.findFirst({ where: { slug: slugStr, language: (languageStr.toUpperCase() as unknown) as Language } })
-      if (article) {
-        // delete by articleId & userId
-        await (prisma as any).savedArticle.delete({ where: { articleId_userId: { articleId: article.id, userId: s.user.email } } })
-        return res.status(200).json({ ok: true })
+      const parsedSlug = decodeURI(slugStr);
+      const article = await prisma.article.findFirst({ where: { slug: parsedSlug, language: languageStr.toUpperCase() as Language } })
+
+      if (!article) {
+        throw new Error("Article not found");
       }
 
-      // No article row — delete entries matching slug + userId
-  await (prisma as any).savedArticle.deleteMany({ where: { slug: slugStr, userId: s.user.email } })
+      const user = await prisma.user.findUnique({
+        where: {
+          email: s.user.email
+        }
+      });
+
+      if (!user) {
+        throw new Error("this error is impossible??");
+      }
+
+      await prisma.savedArticle.delete({ where: { articleId_userId: { articleId: article.id, userId: user.id } } })
       return res.status(200).json({ ok: true })
     } catch (e: any) {
       res.status(500).json({ error: e?.message || 'Server error' })

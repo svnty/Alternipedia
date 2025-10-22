@@ -355,7 +355,7 @@ export default function Component({ saved }: { saved?: SerializedSaved[] }) {
                       )
                     ) : (
                         <div className="flex flex-row w-full min-w-0 items-center gap-2">
-                          <Link href={`/${lang}/wiki/${encodeURIComponent(slug)}`} className="inline-flex flex-1 min-w-0 truncate">{name}</Link>
+                          <Link href={`/${lang}/wiki/${encodeURIComponent(slug)}/wikipedia`} className="inline-flex flex-1 min-w-0 truncate">{name}</Link>
                           {watching && (
                             <div className="inline-flex flex-none"><Eye size={22} /></div>
                           )}

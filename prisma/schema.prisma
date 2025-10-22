@@ -140,13 +140,18 @@ model Bias {
 // TODO: Warning strikes?
 model BiasBan {
   id           Int       @id @default(autoincrement())
+
   user         User      @relation(fields: [userEmail], references: [email])
   userEmail    String 
+
   bias         Bias      @relation(fields: [biasId], references: [id])
   biasId       Int
-  bannedBy     User?     @relation("BiasBanModerator", fields: [bannedByUserId], references: [id])
-  bannedByUserId String?
+
+  bannedBy     User     @relation("BiasBanModerator", fields: [bannedByUserId], references: [id])
+  bannedByUserId String
+
   reason       String?
+  
   createdAt    DateTime  @default(now())
   expiresAt    DateTime?
 
@@ -155,8 +160,11 @@ model BiasBan {
 
 model Feedback {
   id        Int      @id @default(autoincrement())
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String
+
+  language  Language
 
   content   String @db.VarChar(1000)
   createdAt DateTime @default(now())
@@ -166,11 +174,13 @@ model Article {
   id          Int               @id @default(autoincrement())
   title       String
   slug        String
+  language    Language
+
   revisions   Revision[]
   categories  ArticleCategory[] // explicit join model with metadata
   watchers    ArticleWatcher[]   // who’s watching this article
   savedBy     SavedArticle[] // who's saved this article
-  language    Language
+  
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
   
@@ -194,8 +204,8 @@ model Revision {
 
 model Block {
   id       Int      @id @default(autoincrement())
-  author   User?    @relation(fields: [authorId], references: [id])
-  authorId String?
+  author   User    @relation(fields: [authorId], references: [id])
+  authorId String
 
   type     BlockType
   content  Json
@@ -205,8 +215,9 @@ model Block {
 
 model Note {
   id       Int      @id @default(autoincrement())
-  author   User?    @relation(fields: [authorId], references: [id])
-  authorId String?
+
+  author   User    @relation(fields: [authorId], references: [id])
+  authorId String
 
   content  Json
 }
@@ -317,12 +328,32 @@ enum Language {
   MT // Maltese
 }
 
-model Category {
-  id        Int               @id @default(autoincrement())
-  name      String
-  articles  ArticleCategory[]
-  language Language           @default(EN) // categories are language-specific
-  @@unique([name, language])
+model ArticleWatcher {
+  id        String   @id @default(cuid())
+
+  article     Article @relation(fields: [articleId], references: [id])
+  articleId   Int
+
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String
+
+  watchedAt   DateTime @default(now())
+
+  @@unique([articleId, userId])
+}
+
+model SavedArticle {
+  id        String   @id @default(cuid())
+
+  article   Article @relation(fields: [articleId], references: [id])
+  articleId Int
+
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  savedAt   DateTime @default(now())
+
+  @@unique([articleId, userId])
 }
 
 model ArticleCategory {
@@ -336,48 +367,19 @@ model ArticleCategory {
   bias          Bias  @relation(fields: [biasId], references: [id])
 
   addedBy       User     @relation(fields: [addedByUserId], references: [id])
-  addedByUserId String   // ✅ matches User.id
+  addedByUserId String
 
   addedAt       DateTime @default(now())
 
   @@id([articleId, categoryId, biasId]) // composite primary key includes bias so categories can vary per-bias
 }
 
-// ===================
-// WATCHERS & SAVERS
-// ===================
-model ArticleWatcher {
-  id        String   @id @default(cuid())
+model Category {
+  id        Int               @id @default(autoincrement())
+  name      String
+  articles  ArticleCategory[]
+  language  Language
 
-  article     Article? @relation(fields: [articleId], references: [id])
-  articleId   Int?
-
-  user        User    @relation(fields: [userId], references: [id])
-  userId      String
-
-  slug        String?
-  language  Language?
-
-  watchedAt   DateTime @default(now())
-
-  @@unique([articleId, userId])
-  @@unique([slug, userId])
+  @@unique([name, language])
 }
 
-model SavedArticle {
-  id        String   @id @default(cuid())
-
-  article   Article? @relation(fields: [articleId], references: [id])
-  articleId Int?
-
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-
-  slug      String?
-  language  Language?
-
-  savedAt   DateTime @default(now())
-
-  @@unique([articleId, userId])
-  @@unique([slug, userId])
-}

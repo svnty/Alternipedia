@@ -12,7 +12,7 @@ export default function CanonicalUrlSync({ canonicalSlug, language }: Props) {
   const router = useRouter();
 
   useEffect(() => {
-    const pathnameOnly = `/${language}/wiki/${encodeURIComponent(canonicalSlug)}`;
+    const pathnameOnly = `/${language}/wiki/${encodeURIComponent(canonicalSlug)}/wikipedia`;
     // Preserve the current search/query and hash (so ?bias=... isn't dropped)
     if (typeof window === 'undefined') return;
 

@@ -62,6 +62,7 @@ export default async function Page({
       const rawData = await fetchWikipediaPageWithWtf(slug, lang);
       if (rawData) {
         wikipediaData = {
+          html: rawData.html(),
           url: rawData.url(),
           timestamp: rawData.timestamp(),
           categories: rawData.categories(),

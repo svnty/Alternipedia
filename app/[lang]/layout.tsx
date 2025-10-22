@@ -41,8 +41,8 @@ import ClientAnalytics from "../(client-renders)/analytics";
 import CookieStatement from "./(client-renders)/cookie-statement";
 import Form from "next/form";
 import { prisma } from "@/lib/prisma";
-const wtf = require('wtf_wikipedia');
-wtf.extend(require('wtf-plugin-api'));
+import wtf from '@/lib/wtf';
+import { Language } from "@prisma/client";
 
 export async function generateMetadata({
   params,
@@ -99,6 +99,7 @@ export default async function Layout({
       try {
         await prisma.feedback.create({
           data: {
+            language: lang.toUpperCase() as Language,
             user: {
               connect: { email: session?.user.email! }
             },
@@ -199,7 +200,7 @@ export default async function Layout({
                       <TooltipTrigger className="text-blue-400 text-sm font-normal leading-normal cursor-not-allowed w-fit">
                         {dict.footer.contact}
                       </TooltipTrigger>
-                      <TooltipContent className="px-2 py-1 text-xs" side="top" withBackdrop={true} collisionPadding={8}>
+                      <TooltipContent className="px-2 py-1 text-xs" side="top" withBackdrop={true} collisionPadding={8} showArrow={true}>
                         {dict.footer.pleaseLogin}
                       </TooltipContent>
                     </Tooltip>

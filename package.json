@@ -96,7 +96,9 @@
     "stripe": "^19.1.0",
     "tailwind-merge": "^3.3.1",
     "wtf_wikipedia": "^10.4.0",
-    "wtf-plugin-api": "^2.0.1"
+    "wtf-plugin-api": "^2.0.1",
+    "wtf-plugin-html": "^1.0.0",
+    "wtf-plugin-i18n": "^1.0.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

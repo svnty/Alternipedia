@@ -51,6 +51,7 @@ export default function Article({
   const { data: session, status } = useSession();
   const [isSaved, setIsSaved] = useState<boolean>(false)
   const [saving, setSaving] = useState<boolean>(false)
+  const approvedBiases = ["socialist", "liberal", "wikipedia", "conservative", "nationalist"];
 
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -141,14 +142,7 @@ export default function Article({
   const [isLoadingBias, setIsLoadingBias] = useState<boolean>(true);
   const [activeBias, setBias] = useState<string>(pathname?.split('/')[4] || '');
   const prevPathname = useRef<string | null>(pathname || null);
-  const initialBiasAppliedRef = useRef(false);
-
-  useEffect(() => {
-  }, [isLoadingBias]);
-
-  if (!isValidLocale(currentLang)) {
-    notFound();
-  }
+  // const initialBiasAppliedRef = useRef(false);
 
   /* ================== RESPONSIVE SIDEBAR ================== */
   useEffect(() => {
@@ -380,6 +374,18 @@ export default function Article({
 
   /* ================== BIAS AND PATHNAME HANDLING ================== */
   useEffect(() => {
+    if (!activeBias || !approvedBiases.includes(activeBias)) {
+      notFound();
+    }
+  }, [activeBias]);
+
+  useEffect(() => {
+    if (!isValidLocale(currentLang)) {
+      notFound();
+    }
+  }, [currentLang]);
+
+  useEffect(() => {
     const onLoaded = () => {
       (window as any).__page_loaded_handled__ = true;
       setIsLoadingBias(false);
@@ -427,7 +433,6 @@ export default function Article({
     return () => window.removeEventListener("unload-signal", onUnload);
   }, []);
 
-
   const handleApplyBias = (bias: string, opts?: { replace?: boolean }) => {
     window.dispatchEvent(new CustomEvent('unload-signal'));
 
@@ -455,14 +460,14 @@ export default function Article({
     setBias(bias);
   };
 
-  useEffect(() => {
-    // Guard against React Strict Mode or double mounts calling this twice in dev.
-    if (!activeBias && !initialBiasAppliedRef.current) {
-      initialBiasAppliedRef.current = true;
-      // Use replace for the automatic default so we don't create a duplicate history entry.
-      handleApplyBias('wikipedia', { replace: true });
-    }
-  }, [activeBias]);
+  // useEffect(() => {
+  //   // Guard against React Strict Mode or double mounts calling this twice in dev.
+  //   if (!activeBias && !initialBiasAppliedRef.current) {
+  //     initialBiasAppliedRef.current = true;
+  //     // Use replace for the automatic default so we don't create a duplicate history entry.
+  //     handleApplyBias('wikipedia', { replace: true });
+  //   }
+  // }, [activeBias]);
 
 
   useEffect(() => {
@@ -494,7 +499,7 @@ export default function Article({
                     <span>?</span>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent className="px-2 py-1 text-xs" side="left" withBackdrop={true} collisionPadding={16}>
+                <TooltipContent className="px-2 py-1 text-xs" side="left" withBackdrop={true} collisionPadding={16} showArrow={true}>
                   <div className="space-y-1">
                     <p className="text-[13px] font-medium">{dict.bias.heading}</p>
                     <p className="text-muted-foreground text-xs">{dict.bias.explanation}</p>

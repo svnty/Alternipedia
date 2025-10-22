@@ -42,8 +42,8 @@ export default async function SavedArticlesPage({ params }: { params: Promise<{ 
   // Serialize saved articles into a lightweight shape for the client component
   const serializedSaved: any = saved.map((s) => ({
     articleId: s.articleId,
-    title: s.article?.title || decodeURI(s.slug || '').replace(/_/g, ' '),
-    slug: s.article?.slug || s.slug,
+    title: s.article?.title,
+    slug: s.article?.slug,
     savedAt: s.savedAt.toISOString(),
     watching: (s.article?.watchers?.length ?? 0) > 0,
   }));
