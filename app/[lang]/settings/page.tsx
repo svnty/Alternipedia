@@ -49,7 +49,7 @@ async function deleteAccount(formData: FormData) {
     include: {
       watching: true,
       savedArticles: true,
-      moderatedBiases: true,
+      moderatedBias: true,
       notes: true
     }
   }));
