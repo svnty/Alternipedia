@@ -100,7 +100,7 @@ export default async function Layout({
         await prisma.feedback.create({
           data: {
             user: {
-              connect: { email: session.user.email! }
+              connect: { email: session?.user.email! }
             },
             content: String(content),
           },
