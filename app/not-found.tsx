@@ -1,4 +1,4 @@
-import SlidingNotFoundText from '@/app/sliding-not-found-text';
+import SlidingNotFoundText from '@/app/(client-renders)/sliding-not-found-text';
 
 import '@/app/globals.css';
 

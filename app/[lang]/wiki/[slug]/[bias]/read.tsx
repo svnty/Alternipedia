@@ -1,5 +1,5 @@
 import { generateHTML } from '@tiptap/html';
-import ClientLoadedSignal from "@/app//[lang]/wiki/[slug]/(client-renders)/load-signal";
+import ClientLoadedSignal from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/load-signal";
 import StarterKit from "@tiptap/starter-kit";
 import Heading from '@tiptap/extension-heading'
 import Blockquote from '@tiptap/extension-blockquote'
@@ -159,7 +159,7 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
           <div className="flex flex-wrap items-center gap-1">
             {categories.map((cat: string, index: number) => (
               <div key={index} className="inline-flex items-center gap-2 px-2 rounded">
-                <Link href={`/${lang}/wiki/Category${encodeURIComponent(':' + cat)}?bias=${bias}`} className="hover:underline inline-flex items-center gap-2 whitespace-nowrap">
+                <Link href={`/${lang}/wiki/Category${encodeURIComponent(':' + cat)}/${bias}`} className="hover:underline inline-flex items-center gap-2 whitespace-nowrap">
                   <svg width="3" height="4" viewBox="0 0 3 4" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="1.5" cy="2" r="1.5" fill="#D8753C"></circle></svg>
                   <div className="text-orange-400 text-sm font-normal leading-normal">{cat}</div>
                 </Link>

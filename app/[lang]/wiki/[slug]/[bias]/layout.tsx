@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { locales, localeNames, type Locale, isValidLocale } from '@/lib/i18n/config';
-import WikipediaContents from "@/app/[lang]/wiki/[slug]/(client-renders)/wikipedia-contents";
+import WikipediaContents from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/wikipedia-contents";
 import {
   Collapsible,
   CollapsibleContent,
@@ -14,7 +14,7 @@ import {
   ToggleGroupItem,
 } from "@/app/(components)/ui/toggle-group";
 import { Bookmark, BookmarkCheck, Bot, Download, Earth, Info, Languages, Link, NotebookPen, Printer, QrCode, Quote, Speech, Star, Waypoints, Search, Check, Loader } from "lucide-react";
-import CurrentUrlQRCode from '@/app/[lang]/wiki/[slug]/(client-renders)/current-url-qr';
+import CurrentUrlQRCode from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/current-url-qr';
 import {
   Tooltip,
   TooltipContent,
@@ -31,9 +31,9 @@ import {
 } from "@/app/(components)/ui/dialog";
 import { notFound } from 'next/navigation';
 import { getDictionary } from "@/lib/i18n/dictionaries";
-import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
-import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/(client-renders)/language-switcher";
-import AdBanner from '@/app/[lang]/wiki/[slug]/(client-renders)/advertisement';
+import ShortURL from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/short-url";
+import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/language-switcher";
+import AdBanner from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/advertisement';
 import { useSession } from "next-auth/react";
 import { useReactToPrint } from "react-to-print";
 
@@ -53,6 +53,7 @@ export default function Article({
   const [saving, setSaving] = useState<boolean>(false)
 
   const printRef = useRef<HTMLDivElement>(null);
+
   const printPageStyle = `
     @page { size: auto; margin: 12mm; }
     @media print {
@@ -138,7 +139,7 @@ export default function Article({
 
   // loading spinner
   const [isLoadingBias, setIsLoadingBias] = useState<boolean>(true);
-  const [activeBias, setBias] = useState<string>(searchParams?.get('bias') || '');
+  const [activeBias, setBias] = useState<string>(pathname?.split('/')[4] || '');
   const prevPathname = useRef<string | null>(pathname || null);
   const initialBiasAppliedRef = useRef(false);
 
@@ -407,6 +408,8 @@ export default function Article({
   useEffect(() => {
     const onUnload = () => {
       setIsLoadingBias(true);
+      (window as any).__page_loaded_handled__ = false;
+
       if (typeof window !== 'undefined') {
         document.querySelectorAll('.wikipedia-article').forEach((el) => {
           for (let i = 0; i < el.children.length; i++) {
@@ -414,11 +417,13 @@ export default function Article({
           }
         });
       }
+      
     };
 
     window.addEventListener("unload-signal", onUnload);
     return () => window.removeEventListener("unload-signal", onUnload);
   }, []);
+
 
   const handleApplyBias = (bias: string, opts?: { replace?: boolean }) => {
     window.dispatchEvent(new CustomEvent('unload-signal'));
@@ -427,12 +432,16 @@ export default function Article({
       bias = 'wikipedia';
     }
 
+    const slugs = pathname?.split('/') || [];
+    slugs[4] = bias; // /[lang]/wiki/[slug]/[bias] -> index 4
+    const pathnameOnly = slugs.join('/');
+
     const params = new URLSearchParams(searchParams?.toString());
-    params.set('bias', bias);
+    params.delete('bias');
     params.delete('mode');
     params.delete('revision');
     
-    const newPath = `${pathname}?${params.toString()}`;
+    const newPath = `${pathnameOnly}?${params.toString()}`;
     
     if (opts?.replace) {
       router.replace(newPath);
@@ -451,6 +460,7 @@ export default function Article({
       handleApplyBias('wikipedia', { replace: true });
     }
   }, [activeBias]);
+
 
   useEffect(() => {
     const prev = prevPathname.current;

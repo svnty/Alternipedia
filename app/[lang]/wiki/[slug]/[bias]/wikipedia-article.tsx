@@ -4,9 +4,9 @@ import Link from "next/link";
 import { Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/(components)/ui/table";
-import SuspenseImage from "@/app/[lang]/wiki/[slug]/(client-renders)/suspense-image";
-import SuspenseVideo from "@/app/[lang]/wiki/[slug]/(client-renders)/(suspense-video)";
-import ClientLoadedSignal from "@/app/[lang]/wiki/[slug]/(client-renders)/load-signal";
+import SuspenseImage from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/suspense-image";
+import SuspenseVideo from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/(suspense-video)";
+import ClientLoadedSignal from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/load-signal";
 
 // @ts-ignore
 const sanitizeHtml = require('sanitize-html');

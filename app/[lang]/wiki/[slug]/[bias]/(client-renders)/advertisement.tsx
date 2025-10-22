@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
 import { useAdBlockDetector } from "@/lib/adblocker";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Locale } from "@/lib/i18n/config";
-import '@/app/[lang]/wiki/[slug]/(client-renders)/advertisement.css';
+import '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/advertisement.css';
 
 interface AdBannerProps {
   isProUser?: boolean;

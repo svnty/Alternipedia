@@ -3,13 +3,13 @@
 import { Bookmark, Bot, Download, Earth, Info, NotebookPen, Printer, QrCode, Quote, Speech, Star, Sword, Waypoints, X } from "lucide-react";
 import { Button } from "@/app/(components)/ui/button";
 import { useEffect, useState, useRef } from "react";
-import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/(client-renders)/language-switcher";
+import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/language-switcher";
 import { useParams } from "next/navigation";
 import { type Locale } from '@/lib/i18n/config';
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/app/(components)/ui/dialog";
-import CurrentUrlQRCode from "@/app/[lang]/wiki/[slug]/(client-renders)/current-url-qr";
-import ShortURL from "@/app/[lang]/wiki/[slug]/(client-renders)/short-url";
+import CurrentUrlQRCode from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/current-url-qr";
+import ShortURL from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/short-url";
 
 export default function BottomTools() {
   const [showText, setShowText] = useState<boolean>(true);

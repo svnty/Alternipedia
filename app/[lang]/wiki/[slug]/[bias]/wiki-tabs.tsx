@@ -12,19 +12,19 @@ import {
   HouseIcon,
   PanelsTopLeftIcon,
 } from "lucide-react";
-import ArticleText from "@/app/[lang]/wiki/[slug]/(client-renders)/article-text";
-import DiscussionText from "@/app/[lang]/wiki/[slug]/(client-renders)/discussion-text";
-import ReadText from "@/app/[lang]/wiki/[slug]/(client-renders)/read-text";
-import EditText from "@/app/[lang]/wiki/[slug]/(client-renders)/edit-text";
-import HistoryText from "@/app/[lang]/wiki/[slug]/(client-renders)/history-text";
-import WikipediaWrapper from "@/app/[lang]/wiki/[slug]/wikipedia-wrapper";
-import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/(client-renders)/load-signal';
-import Bias from "@/app/[lang]/wiki/[slug]/bias";
-import ContentEditorComponent from "@/app/[lang]/wiki/[slug]/(client-renders)/editor";
-import Read from '@/app/[lang]/wiki/[slug]/read';
-import { WikipediaDataProvider } from '@/app/[lang]/wiki/[slug]/wikipedia-data-provider';
+import ArticleText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/article-text";
+import DiscussionText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/discussion-text";
+import ReadText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/read-text";
+import EditText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/edit-text";
+import HistoryText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/history-text";
+import WikipediaWrapper from "@/app/[lang]/wiki/[slug]/[bias]/wikipedia-wrapper";
+import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/load-signal';
+import Bias from "@/app/[lang]/wiki/[slug]/[bias]/bias";
+import ContentEditorComponent from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/editor";
+import Read from '@/app/[lang]/wiki/[slug]/[bias]/read';
+import { WikipediaDataProvider } from '@/app/[lang]/wiki/[slug]/[bias]/wikipedia-data-provider';
 import { useEffect, useState } from 'react';
-import HistoryPage from '@/app/[lang]/wiki/[slug]/(client-renders)/history';
+import HistoryPage from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/history';
 
 interface WikiTabsProps {
   bias: string;

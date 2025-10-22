@@ -29,7 +29,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       
       <br />
 
-      <span className="inline mt-8">{dict.common.exampleArticle} <Link href={`/${lang}/wiki/Cat`} className="text-blue-600 hover:underline active:underline">Cats</Link></span>
+      <span className="inline mt-8">{dict.common.exampleArticle} <Link href={`/${lang}/wiki/Cat/wikipedia`} className="text-blue-600 hover:underline active:underline">Cats</Link></span>
 
     </div>
   );

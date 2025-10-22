@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Contents from "@/app/[lang]/wiki/[slug]/(client-renders)/contents";
-import { getWikipediaHeadings } from "@/app/[lang]/wiki/[slug]/wikipedia-data-provider";
+import Contents from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/contents";
+import { getWikipediaHeadings } from "@/app/[lang]/wiki/[slug]/[bias]/wikipedia-data-provider";
 
 interface WikipediaContentsProps {
   slug: string;

@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
 
-import BottomTools from "@/app/[lang]/wiki/[slug]/(client-renders)/bottom-tools";
+import BottomTools from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/bottom-tools";
 import BottomArrow from "@/app/[lang]/(client-renders)/bottom-arrow";
 import { Metadata } from "next";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Locale } from "@/lib/i18n/config";
-import WikiTabs from "@/app/[lang]/wiki/[slug]/wiki-tabs";
+import WikiTabs from "@/app/[lang]/wiki/[slug]/[bias]/wiki-tabs";
 import { prisma } from "@/lib/prisma";
 import { BlockType, Language } from "@prisma/client";
 import { fetchWikipediaPageWithWtf } from "@/lib/wikipedia-api";
@@ -15,11 +15,12 @@ export async function generateMetadata({
   params,
   searchParams,
 }: {
-  params: Promise<{ slug: string; lang: string }>;
-  searchParams: Promise<{ bias?: string; revision?: string }>;
+  params: Promise<{ slug: string; lang: string; bias?: string }>;
+  searchParams: Promise<{ revision?: string }>;
 }): Promise<Metadata> {
-  const { slug, lang } = await params;
-  const { bias } = await searchParams;
+  const p = await params;
+  const { slug, lang } = p;
+  const bias = p.bias;
   const dict = getDictionary(lang as Locale);
   let description;
 
@@ -45,11 +46,14 @@ export default async function Page({
   params,
   searchParams
 }: {
-  params: Promise<{ slug: string; lang: string }>;
-  searchParams: Promise<{ bias?: string; revision?: string }>
+  params: Promise<{ slug: string; lang: string; bias: string }>;
+  searchParams: Promise<{ revision?: string }>
 }) {
-  const { slug, lang } = await params;
-  const { bias, revision } = await searchParams;
+  const p = await params;
+  const s = await searchParams;
+  const { slug, lang, bias } = p;
+  const revision = s.revision;
+
   let mappedRevision: any = {};
   let wikipediaData: any = {};
 
