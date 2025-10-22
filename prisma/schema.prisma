@@ -41,6 +41,7 @@ model User {
   votes           RevisionVote[]
   notes           Note[]
   uploadedBlobs   UploadedBlobs[]
+  feedbacks       Feedback[]
 
   currentEditableBias   Bias?    @relation(fields: [currentEditableBiasId], references: [id])
   currentEditableBiasId Int?
@@ -143,6 +144,15 @@ model BiasBan {
   expiresAt    DateTime?
 
   @@unique([userEmail, biasId]) // prevent duplicate bans per bias
+}
+
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+
+  content   String @db.VarChar(1000)
+  createdAt DateTime @default(now())
 }
 
 model Article {

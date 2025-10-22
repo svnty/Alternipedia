@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useId, useState } from "react"
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams, usePathname, useSearchParams } from 'next/navigation'
 import {
   ColumnDef,
   flexRender,
@@ -58,8 +58,9 @@ type Item = {
 }
 
 export default function HistoryPage() {
-  const id = useId()
-  const params = useParams()
+  const id = useId();
+  const path = usePathname();
+  const params = useParams();
   const searchParams = useSearchParams()
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -156,7 +157,8 @@ export default function HistoryPage() {
       try {
         const slug = params?.slug
         const lang = params?.lang || 'en'
-        const bias = searchParams?.get('bias') || ''
+        const bias = path?.split('/')[4] || '';
+        
         if (!slug || !bias) {
           // nothing to fetch
           setData([])
@@ -171,9 +173,8 @@ export default function HistoryPage() {
         const mapped: Item[] = (body.revisions || []).map((r: any) => {
           const slugVal = String(slug)
           const langVal = String(lang)
-          const biasVal = String(bias)
-          const qp = new URLSearchParams({ bias: biasVal, revision: String(r.id) })
-          const url = `/${encodeURIComponent(langVal)}/wiki/${encodeURIComponent(slugVal)}?${qp.toString()}`
+          const qp = new URLSearchParams({ revision: String(r.id) })
+          const url = `/${encodeURIComponent(langVal)}/wiki/${encodeURIComponent(slugVal)}/${bias}?${qp.toString()}`
           return {
             id: String(r.id),
             revisionDate: r.createdAt,

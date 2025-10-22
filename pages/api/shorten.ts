@@ -15,8 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       redirect: 'follow',
     })
 
-    console.log('is.gd response status:', r.status)
-
     if (!r.ok) {
       const txt = await r.text().catch(() => '')
       return res.status(502).json({ error: 'shortener failed', details: txt })

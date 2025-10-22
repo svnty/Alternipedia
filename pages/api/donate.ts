@@ -21,8 +21,6 @@ export default async function handler(
     const { lang, price_id } = JSON.parse(req.body);
     const origin = req.headers.origin;
 
-    console.log("Price ID:", price_id);
-
     try {
       // try to get signed-in user's email and attach as metadata (optional)
       let metadata: Record<string,string> | undefined

@@ -61,8 +61,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           // Called by Vercel API on client upload completion
           // Use tools like ngrok if you want this to work locally
 
-          console.log('blob upload completed', blob, tokenPayload);
-
           try {
             const biasIdNum = Number(biasId);
             

@@ -279,6 +279,16 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
     }
   };
 
+
+  if (status === "unauthenticated") { 
+    return (
+      <div className="p-4 border border-destructive/20 rounded-md bg-destructive/5 wikipedia-article">
+        <div className="text-destructive font-medium">Editor Unavailable</div>
+        <div className="text-sm text-muted-foreground mt-1">You must be signed in to edit articles. Please sign in and try again.</div>
+      </div>
+    )
+  }
+
   // Show loading state
   if (!isLoaded) {
     return (

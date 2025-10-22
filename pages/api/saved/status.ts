@@ -18,7 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const article = await prisma.article.findFirst({ where: { slug: slugStr, language: (languageStr.toUpperCase() as unknown) as Language } })
 
     if (article) {
-      console.log('Article found, checking saved by articleId & userId');
       const saved = await prisma.savedArticle.findFirst({
         where: {
           articleId: article.id,
@@ -27,8 +26,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
       return res.status(200).json({ saved: !!saved })
     }
-
-    console.log('No article found, checking slug-only saved entries');
 
     // fallback: check slug-only saved entries (use any to bypass typing until prisma client is regenerated)
     const savedFallback = await prisma.savedArticle.findFirst({ where: { slug: slugStr, user: { email: s.user.email } } })

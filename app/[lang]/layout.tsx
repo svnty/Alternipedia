@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import React from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import '@/app/globals.css';
 import { notFound } from 'next/navigation';
 import { isValidLocale, type Locale } from '@/lib/i18n/config';
@@ -38,6 +39,8 @@ import { authOptions } from "@/lib/auth";
 import { Textarea } from "@/app/(components)/ui/textarea";
 import ClientAnalytics from "../(client-renders)/analytics";
 import CookieStatement from "./(client-renders)/cookie-statement";
+import Form from "next/form";
+import { prisma } from "@/lib/prisma";
 const wtf = require('wtf_wikipedia');
 wtf.extend(require('wtf-plugin-api'));
 
@@ -79,11 +82,34 @@ export default async function Layout({
     // wtf_wikipedia documents sometimes expose title() as a function
     const title = typeof randomDoc?.title === 'function' ? randomDoc.title() : randomDoc?.title;
     if (title) {
-      randomHref = `/${lang}/wiki/${encodeURI(String(title))}`;
+      randomHref = `/${lang}/wiki/${encodeURI(String(title))}/wikipedia`;
     }
   } catch (err) {
     // If the call fails, keep the fallback link to the wiki index
     // Optionally: log the error server-side or report to monitoring
+  }
+
+  const onSubmitFeedback = async (data: FormData) => {
+    "use server";
+
+    const content = data.get("feedback");
+    console.log("Feedback content:", content);  
+
+    if (content && session?.user) {
+      try {
+        await prisma.feedback.create({
+          data: {
+            user: {
+              connect: { email: session.user.email! }
+            },
+            content: String(content),
+          },
+        });
+        toast.success("Thank you for your feedback!");
+      } catch (err) {
+        console.error("Error submitting feedback:", err);
+      }
+    }
   }
 
   return (
@@ -193,18 +219,21 @@ export default async function Layout({
                           We will use your email to get back to you if necessary.
                         </DialogDescription>
                       </DialogHeader>
-                      <form className="space-y-5">
+                      <Form action={onSubmitFeedback} className="space-y-5">
                         <Textarea
                           id="feedback"
+                          name="feedback"
                           placeholder="How can we improve alternipedia?"
                           aria-label="Send feedback"
+                          maxLength={1000}
+                          minLength={10}
                         />
                         <DialogClose asChild>
                           <div className="flex flex-col sm:flex-row sm:justify-end">
-                            <Button className="cursor-pointer" type="button">Send feedback</Button>
+                            <Button className="cursor-pointer" type="submit">Send feedback</Button>
                           </div>
                         </DialogClose>
-                      </form>
+                      </Form>
                     </DialogContent>
                   </Dialog>
                 )}

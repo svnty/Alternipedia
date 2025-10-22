@@ -245,7 +245,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       default:
         // Unhandled events are ignored
-        console.log(`Unhandled event type ${event.type}`)
+        console.error(`Unhandled event type ${event.type}`)
     }
 
     return res.status(200).json({ received: true })
