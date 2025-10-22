@@ -49,6 +49,7 @@ export const authOptions = {
               subscriptionStartedAt: true,
               subscriptionExpiresAt: true,
               stripeCustomerId: true,
+              moderatedBias: { select: { id: true } },
             },
           }));
 
@@ -60,6 +61,9 @@ export const authOptions = {
               stripeCustomerId: dbUser.stripeCustomerId ?? null,
             } as any;
             session.user.currentEditableBiasId = dbUser.currentEditableBiasId;
+            session.user.moderatedBias = {
+              id: dbUser.moderatedBias?.id,
+            };
           }
         }
       }

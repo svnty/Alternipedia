@@ -131,7 +131,7 @@ export default async function handler(
     const user = await withRetry(() => prisma.user.findUnique({
       where: { email: session.user.email },
       include: {
-        moderatedBiases: true,
+        moderatedBias: true,
         biasBans: true,
       },
     }));
@@ -150,7 +150,7 @@ export default async function handler(
       return res.status(403).json({ error: "You are banned from editing this bias" });
     }
 
-    if (user.currentEditableBiasId !== biasDb.id && user.role !== "ADMIN") {
+    if (user.currentEditableBiasId !== biasDb.id && user.role !== "ADMIN" && user.moderatedBias?.id !== biasDb.id) {
       return res.status(403).json({ error: "You do not have permission to edit this bias" });
     }
 

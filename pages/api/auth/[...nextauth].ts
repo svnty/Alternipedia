@@ -13,8 +13,11 @@ declare module "next-auth" {
         startedAt: string | null;
         expiresAt: string | null;
         stripeCustomerId: string | null;
-      }
+      };
       currentEditableBiasId?: number | null;
+      moderatedBias?: {
+        id?: number | null;
+      } | null;
     }
   }
 }

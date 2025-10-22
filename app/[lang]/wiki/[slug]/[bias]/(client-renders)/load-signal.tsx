@@ -52,9 +52,20 @@ export default function ClientLoadedSignal() {
       });
     }, 10 * 1000);
 
+    const fallBackThirtySeconds = window.setTimeout(() => {
+      const wikiArticle = document.querySelectorAll('.wikipedia-article');
+      wikiArticle.forEach((article) => {
+        if (article.children.length > 0) {
+          console.log('Article content loaded (fallback)', article);
+          dispatchNow();
+        }
+      });
+    }, 30 * 1000);
+
     return () => {
       window.clearTimeout(fallBackFiveSeconds);
       window.clearTimeout(fallBackTenSeconds);
+      window.clearTimeout(fallBackThirtySeconds);
       window.clearTimeout(id);
     };
   }, []);
