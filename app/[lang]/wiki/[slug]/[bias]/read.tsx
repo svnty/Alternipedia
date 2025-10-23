@@ -151,7 +151,7 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
               }),
               TableHeader.extend({
                 renderHTML({ HTMLAttributes }) {
-                  return ['th', mergeAttributes(HTMLAttributes, { 'data-slot': 'table-head', class: 'text-muted-foreground h-12 px-3 text-left align-middle font-medium has-[role=checkbox]:w-px [&:has([role=checkbox])]:pr-0' }), 0] as DOMOutputSpec;
+                  return ['th', mergeAttributes(HTMLAttributes, { 'data-slot': 'table-head', class: 'font-bold bg-accent h-12 px-3 text-left align-middle has-[role=checkbox]:w-px [&:has([role=checkbox])]:pr-0' }), 0] as DOMOutputSpec;
                 },
               }),
               TableCell.extend({
