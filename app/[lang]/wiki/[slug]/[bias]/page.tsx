@@ -202,6 +202,11 @@ export default async function Page({
           $('figure img').addClass('m-auto');
           $('figure figcaption').addClass('text-center text-sm mb-2');
           $('.thumbinner .multiimageinner').addClass('flex flex-col items-end gap-4 max-w-[360px]');
+          $('table').addClass('w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
+          $('table th').addClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2');
+          $('table tbody').addClass('p-2 m-2');
+          $('ol').addClass('list-decimal ml-6');
+          $('ol li').addClass('ml-6');
           $("a").each((i, el) => {
             const href = $(el).attr("href");
             const text = $(el).text();
