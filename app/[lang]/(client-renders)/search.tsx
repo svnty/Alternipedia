@@ -124,6 +124,7 @@ export default function Search() {
                   setInputValue('');
                   setResults([]);
                   inputRef.current?.blur()
+                  window.dispatchEvent(new CustomEvent('unload-signal'));
                 }}
                 className={`px-3 hover:bg-gray-100 py-2 cursor-pointer text-foreground`}
               >
