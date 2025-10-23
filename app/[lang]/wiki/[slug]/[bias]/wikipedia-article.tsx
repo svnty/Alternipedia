@@ -44,14 +44,15 @@ function mergeListsDeduplicateLines(lists: any[]): any[] {
   ];
 }
 
-function MediaCard({ url, caption, alt, thumbnail, loading }: { url: string; caption?: string; alt?: string; thumbnail: string; loading?: 'lazy' | 'eager' }) {
+function MediaCard({ url, caption, alt, thumbnail, backupUrl }: { url: string; caption?: string; alt?: string; thumbnail: string; backupUrl?: string; }) {
   const isVideo = /\.(webm|mp4|avi|mov|wmv|flv|mkv)$/i.test(url);
+
   return (
     <>
       {isVideo ? (
-        <SuspenseVideo thumbnail={thumbnail} src={url} alt={alt || caption || 'Media'} loading={loading} />
+        <SuspenseVideo thumbnail={thumbnail} src={url} alt={alt || caption || 'Media'} />
       ) : (
-        <SuspenseImage thumbnail={thumbnail} src={url} alt={alt || caption || 'Media'} loading={loading} />
+        <SuspenseImage thumbnail={thumbnail} src={url} backupUrl={backupUrl} alt={alt || caption || 'Media'} />
       )}
       {caption && (
         <p className="text-sm text-gray-600 mt-2 text-center">{caption}</p>
@@ -300,7 +301,6 @@ function SectionContent({
           <MediaCard
             thumbnail={img.thumbnail}
             url={img.url}
-            loading={'eager'}
             caption={img.caption}
             alt={img.caption || 'Image'}
           />
@@ -309,6 +309,7 @@ function SectionContent({
 
       {/* ✅ 3. Now render text paragraphs with NO images inside */}
       {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
+
         const raw = jsonToLinkedParagraph(para, language, bias);
 
         let tableText: any = {};
@@ -328,6 +329,7 @@ function SectionContent({
         if (tableData) {
           return (
             <div key={pIndex} className="mb-4">
+
               {tableData.title && (
                 <div className="my-4 text-sm font-bold w-full text-center">
                   {tableData.title}
@@ -554,7 +556,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
           <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <a href="https://donate.wikimedia.org/" target="_blank" rel="noopener noreferrer" className="block ml-1.5 float-right mt-1 mb-1 max-w-[25vw] bg-white border border-gray-200 rounded-sm p-3 cursor-pointer hover:bg-gray-100">
+                <a href="https://donate.wikimedia.org/" target="_blank" rel="noopener noreferrer" className="block ml-1.5 float-right mt-1 mb-1.5 max-w-[25vw] bg-white border border-gray-200 rounded-sm p-3 cursor-pointer hover:bg-gray-100">
                   <CircleDollarSign />
                 </a>
               </TooltipTrigger>
@@ -591,9 +593,17 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                         </div>
                       )}
                       <div className="relative">
-                        {wiki.pageImage && wiki.pageImage.url && wiki.pageImage.url !== 'https://wikipedia.org/wiki/Special:Redirect/file/' && (
+                        {wiki.pageImage && wiki.pageImage.url && !/Special:Redirect/i.test(wiki.pageImage.url) && !wiki.pageImage.url.includes('/wiki/Special:Redirect') && (
                           <div className="block md:float-right md:ml-4 mb-4 md:max-w-[30vw] lg:max-w-[25vw] bg-white border border-gray-200 rounded-sm p-4">
-                            <MediaCard loading='eager' thumbnail={wiki.pageImage.thumbnail} url={wiki.pageImage.url} caption={wiki.pageImage.caption} alt={wiki.pageImage.alt} />
+                            <MediaCard thumbnail={wiki.pageImage.thumbnail} url={wiki.pageImage.url} caption={wiki.pageImage.caption} alt={wiki.pageImage.alt} />
+                            {wiki.infobox.html && (
+                              <>
+                                {/* 
+                                // TODO: style this
+                                // <div dangerouslySetInnerHTML={{ __html: wiki.infobox.html }} />
+                              */}
+                              </>
+                            )}
                           </div>
                         )}
                         <SectionContent section={section} language={language} bias={bias} wiki={wiki} mobile={false} pageImageUrl={wiki.pageImage?.url} />

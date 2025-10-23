@@ -93,7 +93,6 @@ export default async function Layout({
     "use server";
 
     const content = data.get("feedback");
-    console.log("Feedback content:", content);  
 
     if (content && session?.user) {
       try {

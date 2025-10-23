@@ -1,14 +1,13 @@
 'use client';
-
 import { useEffect, useRef, useState } from 'react';
 
 interface SuspenseImageProps {
-  src: string;        // full image URL
-  thumbnail: string;  // small fast version
+  src: string; // full image URL
+  thumbnail: string; // small fast version
   alt?: string;
+  backupUrl?: string;
   className?: string;
   rootMargin?: string;
-  loading?: 'lazy' | 'eager';
 }
 
 const loadedImages = new Set<string>();
@@ -17,14 +16,15 @@ export default function SuspenseImage({
   src,
   thumbnail,
   alt = '',
+  backupUrl = '',
   className = '',
-  loading = 'lazy',
   rootMargin = '200px',
 }: SuspenseImageProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setVisible] = useState(false);
   const [thumbLoaded, setThumbLoaded] = useState(false);
   const [fullLoaded, setFullLoaded] = useState(loadedImages.has(src));
+  const [currentSrc, setCurrentSrc] = useState(src);
 
   // 👀 Observe wrapper visibility
   useEffect(() => {
@@ -53,18 +53,30 @@ export default function SuspenseImage({
     return () => observer.disconnect();
   }, [rootMargin]);
 
-  // 🖼️ When visible, start loading full image *after* thumbnail
+  // 🖼️ When visible, start loading full image in background
   useEffect(() => {
     if (!isVisible || fullLoaded) return;
 
     const img = new Image();
-    img.src = src;
+    img.src = currentSrc;
+
     img.onload = () => {
-      loadedImages.add(src);
+      loadedImages.add(currentSrc);
       setFullLoaded(true);
     };
-    img.onerror = () => setFullLoaded(true);
-  }, [isVisible, src, fullLoaded]);
+
+    img.onerror = () => {
+      // If primary src fails and we have a backup, try that
+      if (currentSrc === src && backupUrl) {
+        console.log(`Primary image failed (${src}), trying backup: ${backupUrl}`);
+        setCurrentSrc(backupUrl);
+      } else {
+        // No backup or backup also failed, mark as loaded to stop trying
+        setCurrentSrc(thumbnail);
+        setFullLoaded(true);
+      }
+    };
+  }, [isVisible, currentSrc, fullLoaded, src, backupUrl]);
 
   return (
     <div
@@ -73,28 +85,29 @@ export default function SuspenseImage({
     >
       {/* 🟩 Gray skeleton until thumbnail loads */}
       {!thumbLoaded && (
-        <div className="absolute inset-0 animate-pulse bg-gray-300" />
+        <div className="absolute inset-0 animate-pulse bg-gray-300" style={{ zIndex: 2 }} />
       )}
 
-      {/* 🟦 Thumbnail (always visible first) */}
+      {/* 🟦 Thumbnail (always loads first with eager) */}
       <img
         src={thumbnail}
         alt={alt}
-        onLoad={() => () => { console.log("thumb loaded"); setThumbLoaded(true); }}
-        className={`w-full h-auto rounded object-contain transition-opacity duration-500 ${
-          thumbLoaded ? 'opacity-100' : 'opacity-0'
-        }`}
-        loading='eager'
+        onLoad={() => setThumbLoaded(true)}
+        className={`w-full h-auto rounded object-contain transition-opacity duration-500 ${thumbLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+        style={{ zIndex: 1 }}
+        loading="eager"
         decoding="async"
       />
 
-      {/* 🟥 Full image (fades in after scroll + load) */}
-      {fullLoaded && (
+      {/* 🟥 Full image (fades in after scroll + load, positioned absolutely over thumbnail) */}
+      {fullLoaded && currentSrc !== thumbnail && (
         <img
           src={src}
           alt={alt}
-          className="absolute inset-0 w-full h-auto rounded object-contain transition-opacity duration-700 opacity-100"
-          style={{ zIndex: 2 }}
+          className="absolute inset-0 w-full h-full rounded object-contain transition-opacity duration-700 opacity-100"
+          style={{ zIndex: 3 }}
+          loading="lazy"
           decoding="async"
         />
       )}

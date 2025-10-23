@@ -98,7 +98,8 @@
     "wtf_wikipedia": "^10.4.0",
     "wtf-plugin-api": "^2.0.1",
     "wtf-plugin-html": "^1.0.0",
-    "wtf-plugin-i18n": "^1.0.2"
+    "wtf-plugin-i18n": "^1.0.2",
+    "wtf-plugin-image": "^1.1.1"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

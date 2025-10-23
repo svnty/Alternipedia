@@ -10,6 +10,7 @@ import { prisma } from "@/lib/prisma";
 import { BlockType, Language } from "@prisma/client";
 import { fetchWikipediaPageWithWtf } from "@/lib/wikipedia-api";
 import { withRetry } from "@/lib/retry";
+import { info } from "console";
 
 export async function generateMetadata({
   params,
@@ -58,20 +59,39 @@ export default async function Page({
   let wikipediaData: any = {};
 
   if (bias === 'wikipedia') {
+
+    const imageToJSON = (rawData: any) => {
+      try {
+        const img = typeof rawData.pageImage === 'function' ? rawData.pageImage() : rawData.pageImage;
+        if (!img) return null;
+        const object = {
+          url: typeof img.commonsURL === 'function' ? img.commonsURL() : (typeof img.url === 'function' ? img.url() : null),
+          backupUrl: typeof img.url === 'function' ? img.url() : null,
+          caption: typeof img.caption === 'function' ? img.caption() : null,
+          alt: typeof img.alt === 'function' ? img.alt() : null,
+          thumbnail: typeof img.thumb === 'function' ? img.thumb() : null,
+        };
+        return object;
+      } catch (e) {
+        return null;
+      }
+    };
+
     try {
       const rawData = await fetchWikipediaPageWithWtf(slug, lang);
       if (rawData) {
         wikipediaData = {
+          infobox: {
+            infobox: rawData.infobox(),
+            json: typeof rawData.infobox() === "function" ? rawData.infobox().json() : {},
+            wikitext: typeof rawData.infobox() === "function" ? rawData.infobox().wikitext() : "",
+            html: typeof rawData.infobox() === "function" ? rawData.infobox().html() : "",
+          },
           html: rawData.html(),
           url: rawData.url(),
           timestamp: rawData.timestamp(),
           categories: rawData.categories(),
-          pageImage: {
-            url: rawData.pageImage().url(),
-            caption: rawData.pageImage().caption(),
-            alt: rawData.pageImage().alt(),
-            thumbnail: rawData.pageImage().url() + `?width=${300}`
-          },
+          pageImage: imageToJSON(rawData),
           title: rawData.title(),
           references: rawData.references().map((ref: any) => ({
             title: ref.title(),
@@ -81,9 +101,18 @@ export default async function Page({
           })),
           sections: rawData.sections().map((section: any) => ({
             title: section.title(),
+            table: section.tables().map((table: any) => ({
+              html: table.html(),
+              wikitext: table.wikitext(),
+              json: table.json(),
+            })),
             depth: section.depth(),
             index: section.index(),
-            infoboxes: section.infoboxes(),
+            infoboxes: section.infoboxes().map((infobox: any) => ({
+              json: infobox.json(),
+              wikitext: infobox.wikitext(),
+              html: infobox.html(),
+            })),
             lists: section.lists().map((list: any) => ({
               text: list.text(),
               lines: list.lines().map((line: any) => ({
@@ -96,15 +125,17 @@ export default async function Page({
             })),
             wikitext: section.wikitext(),
             images: section.images().map((image: any) => ({
-              url: image.url(),
+              url: image.commonsURL(),
+              backupUrl: image.url(),
               caption: image.caption(),
-              thumbnail: image.url() + `?width=${300}`,
+              thumbnail: image.thumb(),
             })),
             paragraphs: section.paragraphs().map((paragraph: any) => ({
               images: paragraph.images().map((img: any) => ({
-                url: img.url(),
+                url: img.commonsURL(),
+                backupUrl: img.url(),
                 caption: img.caption(),
-                thumbnail: img.url() + `?width=${300}`,
+                thumbnail: img.thumb(),
               })),
               lists: paragraph.lists().map((list: any) => ({
                 text: list.text(),
@@ -118,6 +149,7 @@ export default async function Page({
               })),
               sentences: paragraph.sentences().map((sentence: any) => ({
                 text: sentence.text(),
+                html: sentence.html(),
                 links: sentence.links().map((link: any) => ({
                   text: link.text(),
                   page: link.page(),
@@ -165,7 +197,7 @@ export default async function Page({
 
         // Validate that this revision belongs to the same article and bias
         if (found && found.article && found.bias &&
-            found.article.slug === slug && String(found.article.language) === lang.toUpperCase() && found.bias.name === bias) {
+          found.article.slug === slug && String(found.article.language) === lang.toUpperCase() && found.bias.name === bias) {
           chosenRevision = found;
         }
       } catch (e) {

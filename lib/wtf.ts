@@ -3,5 +3,6 @@ const wtf = require('wtf_wikipedia');
 wtf.extend(require('wtf-plugin-api'));
 wtf.extend(require('wtf-plugin-i18n'));
 wtf.extend(require('wtf-plugin-html'));
+wtf.extend(require('wtf-plugin-image'));
 
 export default wtf;
