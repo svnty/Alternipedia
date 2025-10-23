@@ -23,6 +23,18 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+
+  // Do not cache API requests; serve them fresh to avoid 304/stale responses
+  try {
+    const url = new URL(event.request.url);
+    if (url.pathname.startsWith('/api/')) {
+      event.respondWith(fetch(event.request).catch(() => new Response(null, { status: 503 })));
+      return;
+    }
+  } catch (e) {
+    // ignore URL parsing failures and fall back to default behavior
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {

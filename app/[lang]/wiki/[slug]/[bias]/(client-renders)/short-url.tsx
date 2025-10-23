@@ -48,33 +48,89 @@ export default function ShortURL({ mobile }: { mobile: boolean }) {
   const embedRef = useRef<HTMLTextAreaElement | null>(null)
   const [toast, setToast] = useState<string | null>(null)
 
+  // Module-level cache for shortener results/promises to avoid duplicate POSTs
+  // Keyed by `${lang}::${normalizedSlug}`
+  const shortenerCacheRef = useRef<Map<string, string | Promise<string>> | null>(null)
+  if (!shortenerCacheRef.current) shortenerCacheRef.current = new Map()
+  const shortenerCache = shortenerCacheRef.current!
+  const debounceTimer = useRef<number | null>(null)
+
   useEffect(() => {
-    if (params?.slug) {
-      async function makeShort(url: string) {
+    // Clear any previous debounce
+    if (debounceTimer.current) {
+      window.clearTimeout(debounceTimer.current)
+      debounceTimer.current = null
+    }
+
+    if (!params?.slug) {
+      setLink(`https://alternipedia.vercel.app/`)
+      return
+    }
+
+    // Debounce so quick slug toggles (canonicalization, encoding) don't spam the shortener
+    debounceTimer.current = window.setTimeout(async () => {
+      const rawSlug = Array.isArray(params.slug) ? params.slug[0] : params.slug
+      const normalizedSlug = decodeURIComponent(String(rawSlug)).replace(/_/g, ' ')
+      const encodedPath = encodeURIComponent(normalizedSlug)
+      const key = `${currentLang}::${normalizedSlug}`
+
+      const fallback = `https://alternipedia.vercel.app/${currentLang}/wiki/${encodedPath}`
+
+      // If we already have a cached string, use it
+      const cached = shortenerCache.get(key)
+      if (typeof cached === 'string') {
+        setLink(cached)
+        return
+      }
+
+      // If there's an in-flight promise, await and use it
+      if (cached && typeof (cached as any).then === 'function') {
+        try {
+          const url = await (cached as Promise<string>)
+          setLink(url)
+          return
+        } catch (e) {
+          setLink(fallback)
+          return
+        }
+      }
+
+      // Otherwise create a promise, store it immediately to dedupe concurrent requests
+      const p = (async () => {
         try {
           const res = await fetch('/api/shorten', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url }),
+            body: JSON.stringify({ url: fallback }),
           })
           if (!res.ok) throw new Error('Shortener service failed')
           const json = await res.json()
           return json.shortUrl as string
         } catch (err) {
           console.warn('shorten failed', err)
-          return url
+          return fallback
         }
-      }
+      })()
 
-      makeShort(`https://alternipedia.vercel.app/${currentLang}/wiki/${params.slug}`).then(shortUrl => {
-        setLink(shortUrl);
-      }).catch(() => {
-        setLink(`https://alternipedia.vercel.app/${currentLang}/wiki/${params.slug}`)
-      });
-    } else {
-      setLink(`https://alternipedia.vercel.app/`);
+      shortenerCache.set(key, p)
+
+      try {
+        const shortUrl = await p
+        shortenerCache.set(key, shortUrl)
+        setLink(shortUrl)
+      } catch (e) {
+        shortenerCache.set(key, fallback)
+        setLink(fallback)
+      }
+    }, 250)
+
+    return () => {
+      if (debounceTimer.current) {
+        window.clearTimeout(debounceTimer.current)
+        debounceTimer.current = null
+      }
     }
-  }, [params?.slug]);
+  }, [params?.slug, currentLang, shortenerCache])
 
   const handleCopy = () => {
     if (inputRef.current) {

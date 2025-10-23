@@ -1,6 +1,6 @@
 "use client";
 
-import { Bookmark, Bot, Download, Earth, Info, NotebookPen, Printer, QrCode, Quote, Speech, Star, Sword, Waypoints, X } from "lucide-react";
+import { Bookmark, BookmarkCheck, Bot, Download, Earth, Info, Loader, NotebookPen, Printer, QrCode, Quote, Speech, Star, Sword, Waypoints, X } from "lucide-react";
 import { Button } from "@/app/(components)/ui/button";
 import { useEffect, useState, useRef } from "react";
 import LanguageSwitcher from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/language-switcher";
@@ -10,6 +10,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/app/(components)/ui/dialog";
 import CurrentUrlQRCode from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/current-url-qr";
 import ShortURL from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/short-url";
+import { useSession } from "next-auth/react";
 
 export default function BottomTools() {
   const [showText, setShowText] = useState<boolean>(true);
@@ -20,6 +21,88 @@ export default function BottomTools() {
   const params = useParams();
   const currentLang = params?.lang as Locale || 'en';
   const dict = getDictionary(currentLang);
+  const { data: session, status } = useSession();
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [saving, setSaving] = useState<boolean>(false);
+  const timerRef = useRef<number | null>(null);
+  const bodyObserverRef = useRef<MutationObserver | null>(null);
+  const targetObserverRef = useRef<MutationObserver | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const getTarget = () => document.getElementById("article-saved");
+
+    const attach = () => {
+      const target = getTarget();
+
+      const observer = new MutationObserver((_mutations) => {
+        if (timerRef.current) {
+          window.clearTimeout(timerRef.current);
+        }
+        timerRef.current = window.setTimeout(() => {
+          const t = getTarget();
+          const found = t ? t.querySelector('#article-is-saved') : document.getElementById('article-is-saved');
+          setIsSaved(Boolean(found));
+          timerRef.current = null;
+        }, 100);
+      });
+
+      if (target) {
+        // initial read
+        setIsSaved(Boolean(target.querySelector('#article-is-saved')));
+
+        observer.observe(target, {
+          childList: true,
+          characterData: true,
+          subtree: true,
+        });
+
+        targetObserverRef.current = observer;
+      } else {
+        // watch for the element to be inserted into the document
+        setIsSaved(false);
+
+        const bodyObserver = new MutationObserver((_mutations) => {
+          const foundTarget = getTarget();
+          if (foundTarget) {
+            // capture initial state
+            setIsSaved(Boolean(foundTarget.querySelector('#article-is-saved')));
+
+            // start observing the real target for subsequent changes
+            observer.observe(foundTarget, {
+              childList: true,
+              characterData: true,
+              subtree: true,
+            });
+
+            targetObserverRef.current = observer;
+
+            // stop observing body for insertion
+            bodyObserver.disconnect();
+            bodyObserverRef.current = null;
+          }
+        });
+
+        bodyObserver.observe(document.body, { childList: true, subtree: true });
+        bodyObserverRef.current = bodyObserver;
+      }
+    };
+
+    // init
+    attach();
+
+    return () => {
+      if (bodyObserverRef.current) {
+        bodyObserverRef.current.disconnect();
+        bodyObserverRef.current = null;
+      }
+      if (timerRef.current) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const nav = document.getElementById("nav");
@@ -123,6 +206,34 @@ export default function BottomTools() {
       window.removeEventListener("resize", updateBottom);
     };
   }, []);
+
+  const toggleSaved = async () => {
+    if (!session || !session.user) return
+    if (!params?.slug) return
+
+    try {
+      const rawSlug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug ?? ''
+      const slugParam = decodeURIComponent(String(rawSlug)).replace(/_/g, ' ')
+      if (!isSaved) {
+        setSaving(true);
+        const res = await fetch('/api/saved', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug: String(slugParam), language: currentLang }),
+        })
+        if (res.ok) setIsSaved(true)
+      } else {
+        const res = await fetch(`/api/saved?slug=${encodeURIComponent(String(slugParam))}&language=${encodeURIComponent(currentLang)}`, {
+          method: 'DELETE',
+        })
+        if (res.ok) setIsSaved(false)
+      }
+    } catch (e) {
+      // ignore
+    } finally {
+      setSaving(false)
+    }
+  }
 
   return (
     <>
@@ -240,12 +351,27 @@ export default function BottomTools() {
             </div>
 
             <div className="flex-row gap-1 inline-flex items-center w-full">
-              <button className="px-4 w-full py-2.5 text-left text-sm text-white bg-gray-700 hover:bg-gray-900 rounded-md transition-colors cursor-pointer flex items-center gap-2">
+              <button
+                onClick={toggleSaved}
+                disabled={saving}
+                className="px-4 w-full py-2.5 text-left text-sm text-white bg-gray-700 hover:bg-gray-900 rounded-md transition-colors flex items-center gap-2">
                 <div data-svg-wrapper data-property-1="Notes" className="relative">
-                  <Bookmark className="text-gray-500" size={16} />
+                  {saving ? (
+                    <Loader className="text-gray-500 animate-spin" size={16} />
+                  ) : (
+                    <>
+                      {isSaved ? (
+                        <BookmarkCheck className="text-gray-500" size={16} />
+                      ) : (
+                        <Bookmark className="text-gray-500" size={16} />
+                      )}
+                    </>
+                  )}
                 </div>
                 <div className="size- pr-1.5 flex justify-start items-center gap-2.5 overflow-hidden text-white text-sm">
-                  <div className="justify-start text-white text-sm font-normal leading-normal truncate">{dict.tools.saveArticle}</div>
+                  <div className="justify-start text-white text-sm font-normal leading-normal truncate">
+                    {saving ? 'Saving...' : (isSaved ? 'Article saved' : dict.tools.saveArticle)}
+                  </div>
                 </div>
               </button>
             </div>

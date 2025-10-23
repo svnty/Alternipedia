@@ -49,11 +49,23 @@ export default function Article({
   const searchParams = useSearchParams();
   const dict = getDictionary(currentLang);
   const { data: session, status } = useSession();
-  const [isSaved, setIsSaved] = useState<boolean>(false)
-  const [saving, setSaving] = useState<boolean>(false)
-  const approvedBiases = ["socialist", "liberal", "wikipedia", "conservative", "nationalist"];
 
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [saving, setSaving] = useState<boolean>(false);
+  const approvedBiases = ["socialist", "liberal", "wikipedia", "conservative", "nationalist"];
+  const [toolsOpen, setToolsOpen] = useState<boolean>(false);
+  const [contentsOpen, setContentsOpen] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
+  const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
+  const initialBiasAppliedRef = useRef<boolean>(false);
   const printRef = useRef<HTMLDivElement>(null);
+  const lastSavedStatusRequest = useRef<string | null>(null);
+
+  // loading spinner
+  const [isLoadingBias, setIsLoadingBias] = useState<boolean>(true);
+  const [activeBias, setBias] = useState<string>(pathname?.split('/')[4] || '');
+  const prevPathname = useRef<string | null>(pathname || null);
 
   const printPageStyle = `
     @page { size: auto; margin: 12mm; }
@@ -88,11 +100,18 @@ export default function Article({
     if (status === "authenticated") {
       const checkSaved = async () => {
         try {
-          const slugParam = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug ?? ''
-          const res = await fetch(`/api/saved/status?slug=${encodeURIComponent(String(slugParam))}&language=${encodeURIComponent(currentLang)}`)
+          const rawSlug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug ?? ''
+          // Normalize: decode any existing percent-encoding, replace underscores with spaces, then re-encode once
+          const normalized = decodeURIComponent(String(rawSlug)).replace(/_/g, ' ')
+          const key = `${normalized}::${currentLang}`
+          // Deduplicate same request (helps avoid double requests from StrictMode / re-renders)
+          if (lastSavedStatusRequest.current === key) return
+          lastSavedStatusRequest.current = key
+
+          const res = await fetch(`/api/saved/status?slug=${encodeURIComponent(normalized)}&language=${encodeURIComponent(currentLang)}`, { cache: 'no-store' })
           if (!res.ok) {
             // keep default
-            return
+            return;
           }
           const json = await res.json()
           console.log(json);
@@ -101,6 +120,7 @@ export default function Article({
           // ignore
         }
       }
+
       checkSaved()
     }
   }, [params?.slug, currentLang, session?.user?.email, status]);
@@ -130,19 +150,6 @@ export default function Article({
       setSaving(false)
     }
   }
-
-  const [toolsOpen, setToolsOpen] = useState<boolean>(false);
-  const [contentsOpen, setContentsOpen] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isMobile, setIsMobile] = useState(false);
-  const [sidebarTop, setSidebarTop] = useState(112); // 7rem in pixels
-  const [sidebarHeight, setSidebarHeight] = useState('calc(100vh - 112px)'); // 112px + 24px margin
-
-  // loading spinner
-  const [isLoadingBias, setIsLoadingBias] = useState<boolean>(true);
-  const [activeBias, setBias] = useState<string>(pathname?.split('/')[4] || '');
-  const prevPathname = useRef<string | null>(pathname || null);
-  // const initialBiasAppliedRef = useRef(false);
 
   /* ================== RESPONSIVE SIDEBAR ================== */
   useEffect(() => {
@@ -242,7 +249,6 @@ export default function Article({
         }, 300);
       }
     };
-
     const updateAnimation = (el1: any, el2: any) => {
       if (!el1 || !el2) return;
 
@@ -459,16 +465,6 @@ export default function Article({
 
     setBias(bias);
   };
-
-  // useEffect(() => {
-  //   // Guard against React Strict Mode or double mounts calling this twice in dev.
-  //   if (!activeBias && !initialBiasAppliedRef.current) {
-  //     initialBiasAppliedRef.current = true;
-  //     // Use replace for the automatic default so we don't create a duplicate history entry.
-  //     handleApplyBias('wikipedia', { replace: true });
-  //   }
-  // }, [activeBias]);
-
 
   useEffect(() => {
     const prev = prevPathname.current;
@@ -721,15 +717,15 @@ export default function Article({
                         className={`hover:underline ${!session ? 'cursor-not-allowed' : saving ? 'cursor-wait' : 'cursor-pointer'} w-full text-left`}
                       >
                         <div className="size- flex justify-start items-center gap-1.5">
-                          <div data-svg-wrapper data-property-1="Watch" className="relative">
+                          <div data-svg-wrapper data-property-1="Watch" className="relative" id="article-saved">
                             {saving ? (
                               <Loader className="text-gray-500 animate-spin" size={16} />
                             ) : (
                               <>
                                 {isSaved ? (
-                                  <BookmarkCheck className="text-gray-500" size={16} />
+                                  <BookmarkCheck id="article-is-saved" className="text-gray-500" size={16} />
                                 ) : (
-                                  <Bookmark className="text-gray-500" size={16} />
+                                  <Bookmark id="article-not-saved" className="text-gray-500" size={16} />
                                 )}
                               </>
                             )}

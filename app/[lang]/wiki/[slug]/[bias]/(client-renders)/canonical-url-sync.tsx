@@ -24,6 +24,18 @@ export default function CanonicalUrlSync({ canonicalSlug, language }: Props) {
     // a Next.js client navigation (router.replace causes data fetching).
     try {
       const url = new URL(window.location.href);
+      // If the decoded current pathname already equals the decoded desired pathname,
+      // don't call replaceState (prevents unnecessary history updates and re-renders).
+      try {
+        const currentDecoded = decodeURIComponent(url.pathname || '');
+        const desiredDecoded = decodeURIComponent(pathnameOnly || '');
+        if (currentDecoded === desiredDecoded && url.search === search && url.hash === hash) {
+          return
+        }
+      } catch (e) {
+        // If decoding fails, fall through and replace
+      }
+
       url.pathname = pathnameOnly;
       url.search = search;
       url.hash = hash;

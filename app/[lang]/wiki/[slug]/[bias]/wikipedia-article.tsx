@@ -554,7 +554,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
           <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <a href="https://donate.wikimedia.org/" target="_blank" rel="noopener noreferrer" className="block ml-1 float-right mt-1 mb-1 max-w-[25vw] bg-white border border-gray-200 rounded-sm p-3 cursor-pointer hover:bg-gray-100">
+                <a href="https://donate.wikimedia.org/" target="_blank" rel="noopener noreferrer" className="block ml-1.5 float-right mt-1 mb-1 max-w-[25vw] bg-white border border-gray-200 rounded-sm p-3 cursor-pointer hover:bg-gray-100">
                   <CircleDollarSign />
                 </a>
               </TooltipTrigger>

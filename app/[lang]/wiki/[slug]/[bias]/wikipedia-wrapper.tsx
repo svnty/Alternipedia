@@ -58,9 +58,12 @@ export default function WikipediaWrapper({ slug, language, bias, wikipediaData }
   const stringified = JSON.parse(JSON.stringify(headings));
   const canonicalTitle = title || slug.replace(/_/g, ' ');
 
+  const decodedRequested = decodeURIComponent(String(slug || '')).replace(/\s+/g, ' ').trim();
+  const decodedCanonical = canonicalSlug ? decodeURIComponent(String(canonicalSlug)).replace(/\s+/g, ' ').trim() : null;
+
   return (
     <WikipediaDataProvider headings={stringified}>
-      {canonicalSlug && canonicalSlug !== slug && (
+      {canonicalSlug && decodedCanonical && decodedCanonical !== decodedRequested && (
         // client-side URL sync: replace state without reload
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
