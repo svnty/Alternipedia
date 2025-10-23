@@ -81,3 +81,30 @@ body,
     padding: calc(1rem + var(--tt-toolbar-height)) 1.5rem 30vh;
   }
 }
+
+/* Basic table styles for Tiptap table nodes so inserted tables are visible */
+.simple-editor-content .tiptap.ProseMirror.simple-editor table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0 1rem 0;
+  table-layout: auto;
+}
+
+.simple-editor-content .tiptap.ProseMirror.simple-editor table th,
+.simple-editor-content .tiptap.ProseMirror.simple-editor table td {
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 0.5rem 0.75rem;
+  vertical-align: top;
+  text-align: left;
+}
+
+.simple-editor-content .tiptap.ProseMirror.simple-editor table th {
+  background: rgba(0,0,0,0.03);
+  font-weight: 600;
+}
+
+/* Make sure long content doesn't break layout */
+.simple-editor-content .tiptap.ProseMirror.simple-editor table td {
+  word-break: break-word;
+}

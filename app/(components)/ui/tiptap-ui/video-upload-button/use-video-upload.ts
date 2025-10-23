@@ -15,7 +15,8 @@ import {
 } from "@/lib/tiptap-utils"
 
 // --- Icons ---
-import { VideoIcon } from "@/app/(components)/ui/tiptap-icons/video-icon"
+
+import { Video } from "lucide-react"
 
 export const VIDEO_UPLOAD_SHORTCUT_KEY = "mod+shift+v"
 
@@ -179,6 +180,6 @@ export function useVideoUpload(config?: UseVideoUploadConfig) {
     label: "Insert video",
     isActive,
     shortcutKeys: VIDEO_UPLOAD_SHORTCUT_KEY,
-    Icon: VideoIcon,
+    Icon: Video,
   }
 }

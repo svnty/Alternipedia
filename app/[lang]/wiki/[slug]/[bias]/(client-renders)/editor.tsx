@@ -11,7 +11,8 @@ import Subscript from "@tiptap/extension-subscript";
 import Image from "@tiptap/extension-image";
 import BlockQuote from '@tiptap/extension-blockquote';
 import { Selection } from "@tiptap/extensions";
-import { Table, TableRow, TableCell, TableHeader } from '@tiptap/extension-table';
+import { TableKit } from '@tiptap/extension-table';
+// import { Table, TableRow, TableCell, TableHeader } from '@tiptap/extension-table';
 import Typography from "@tiptap/extension-typography";
 import { ImageUploadNode } from "@/app/(components)/ui/tiptap-node/image-upload-node";
 import { AudioUploadNode } from "@/app/(components)/ui/tiptap-node/audio-upload-node";
@@ -103,12 +104,7 @@ export default function ContentEditorComponent({ slug, lang, bias, revision }: {
       Typography,
       Superscript,
       Subscript,
-      Table.configure({
-        resizable: false,
-      }),
-      TableRow,
-      TableCell,
-      TableHeader,
+      TableKit,
       Selection,
       ImageUploadNode.configure({
         accept: "image/*",

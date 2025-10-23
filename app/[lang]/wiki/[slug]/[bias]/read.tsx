@@ -9,6 +9,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Subscript from "@tiptap/extension-subscript";
 import Image from "@tiptap/extension-image";
 import { Selection } from "@tiptap/extensions"
+import { createColGroup, TableKit } from '@tiptap/extension-table'
 import { Table, TableRow, TableCell, TableHeader } from '@tiptap/extension-table'
 import Typography from "@tiptap/extension-typography";
 import { ImageUploadNode } from "@/app/(components)/ui/tiptap-node/image-upload-node"
@@ -16,6 +17,8 @@ import { AudioUploadNode } from "@/app/(components)/ui/tiptap-node/audio-upload-
 import { VideoUploadNode } from "@/app/(components)/ui/tiptap-node/video-upload-node";
 import Link from 'next/link';
 import { BulletList, ListItem, OrderedList } from '@tiptap/extension-list';
+import { DOMOutputSpec } from '@tiptap/pm/model';
+import { mergeAttributes } from '@tiptap/react';
 
 export default function Read({ slug, lang, bias, revision }: { slug: string, lang: string, bias: string, revision: any }) {
   const doc = {
@@ -114,12 +117,48 @@ export default function Read({ slug, lang, bias, revision }: { slug: string, lan
               Typography,
               Superscript,
               Subscript,
-              Table.configure({
-                resizable: false,
+              TableKit.configure({
+                tableHeader: {
+                  HTMLAttributes: { class: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 font-semibold text-left px-2' },
+                },
+                tableCell: {
+                  HTMLAttributes: { class: 'px-2 border border-gray-200' },
+                },
+                table: {
+                  HTMLAttributes: { class: 'table-auto w-11/12 mb-4 mx-6 !border !border-gray-300 !dark:border-gray-600 !rounded-lg' },
+                  resizable: false,
+                },
               }),
-              TableRow,
-              TableCell,
-              TableHeader,
+
+              /* Render HTML that mirrors the project's UI table components so
+                 generated content uses the same DOM structure and classes. We
+                 override only the Table, TableRow, TableHeader (th) and
+                 TableCell (td) nodes to add wrapper, data-slot attributes and
+                 classes. */
+              Table.extend({
+                renderHTML({ HTMLAttributes }) {
+                  return [
+                    'div',
+                    { class: 'relative w-full overflow-auto' },
+                    ['table', mergeAttributes(HTMLAttributes, { 'data-slot': 'table', class: 'w-full caption-bottom text-sm' }), 0],
+                  ] as DOMOutputSpec;
+                },
+              }),
+              TableRow.extend({
+                renderHTML({ HTMLAttributes }) {
+                  return ['tr', mergeAttributes(HTMLAttributes, { 'data-slot': 'table-row', class: 'hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors' }), 0] as DOMOutputSpec;
+                },
+              }),
+              TableHeader.extend({
+                renderHTML({ HTMLAttributes }) {
+                  return ['th', mergeAttributes(HTMLAttributes, { 'data-slot': 'table-head', class: 'text-muted-foreground h-12 px-3 text-left align-middle font-medium has-[role=checkbox]:w-px [&:has([role=checkbox])]:pr-0' }), 0] as DOMOutputSpec;
+                },
+              }),
+              TableCell.extend({
+                renderHTML({ HTMLAttributes }) {
+                  return ['td', mergeAttributes(HTMLAttributes, { 'data-slot': 'table-cell', class: 'p-3 align-middle [&:has([role=checkbox])]:pr-0' }), 0] as DOMOutputSpec;
+                },
+              }),
               Selection,
               ImageUploadNode.configure({
                 accept: "image/*",

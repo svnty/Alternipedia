@@ -195,6 +195,92 @@
   }
 }
 
+
+
+
+
+
+
+/* TipTap / generated HTML table styles (Tailwind v4 utility style) */
+@layer components {
+  /* Responsive wrapper for wide tables inside generated HTML */
+  .generated-html .table-wrapper {
+    @apply relative w-full overflow-auto rounded-md;
+  }
+
+  /* Base table styling matching project's design tokens */
+  .generated-html table {
+    @apply w-full border-collapse table-auto min-w-[480px];
+    border-spacing: 0;
+  }
+
+  /* Table container used when we need horizontal scrolling */
+  .generated-html .table-container {
+    @apply w-full overflow-auto;
+  }
+
+  /* Table element visual styles */
+  .generated-html table {
+    border: 1px solid var(--border);
+    @apply bg-transparent text-sm text-foreground;
+    border-radius: 0.5rem;
+  }
+
+  .generated-html thead th {
+    @apply text-left font-semibold px-3 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200; 
+    border-bottom: 1px solid var(--border);
+  }
+
+  .generated-html tbody td,
+  .generated-html thead th {
+    @apply px-3 py-2 align-top;
+  }
+
+  /* Zebra striping for readability */
+  .generated-html tbody tr:nth-child(odd) {
+    @apply bg-white/50 dark:bg-white/2;
+  }
+
+  /* Borders between cells */
+  .generated-html td,
+  .generated-html th {
+    border: 1px solid var(--border);
+  }
+
+  /* Small screens: allow the table to scroll horizontally and reduce min-width */
+  @media (max-width: 640px) {
+    .generated-html table {
+      min-width: 320px;
+    }
+    .generated-html th,
+    .generated-html td {
+      @apply px-2 py-1 text-sm;
+    }
+  }
+
+  /* Caption styling */
+  .generated-html caption {
+    @apply text-xs text-muted mb-2; /* tailwind v4 compatible */
+  }
+
+  /* Utility: make images inside tables responsive */
+  .generated-html table img {
+    @apply max-w-full h-auto;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Collapsible animations */
 @keyframes collapsible-down {
   from {

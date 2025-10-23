@@ -122,7 +122,7 @@ function jsonToLinkedParagraph(data: any, language: string, bias: string) {
         }
       }
 
-      const hrefAttr = hrefValue ? `href=\"${hrefValue}\?bias=${bias}"` : '';
+      const hrefAttr = hrefValue ? `href=\"${hrefValue}/${bias}"` : '';
       const regex = new RegExp(`\\b${escapeRegExp(link.text)}\\b`, 'g');
       text = text.replace(regex, `<a class="cursor-pointer hover:underline text-blue-500 active:underline" ${hrefAttr}>${link.text}</a>`);
     });
@@ -393,7 +393,7 @@ function SectionContent({
                     <li key={lineIndex}>
                       {linkWithPage ? (
                         <Link
-                          href={linkWithPage.page}
+                          href={`/${language}/wiki/${encodeURI(linkWithPage.page)}/${bias}`}
                           rel="noopener noreferrer"
                           className="cursor-pointer hover:underline text-blue-500"
                         >

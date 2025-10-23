@@ -39,6 +39,10 @@ import { HeadingDropdownMenu } from "@/app/(components)/ui/tiptap-ui/heading-dro
 import { ImageUploadButton } from "@/app/(components)/ui/tiptap-ui/image-upload-button"
 import { AudioUploadButton } from "@/app/(components)/ui/tiptap-ui/audio-upload-button"
 import { VideoUploadButton } from "@/app/(components)/ui/tiptap-ui/video-upload-button"
+import { InsertTableButton } from "@/app/(components)/ui/tiptap-ui/insert-table-button/insert-table-button"
+import { DeleteTableButton } from "@/app/(components)/ui/tiptap-ui/delete-table-button/delete-table-button"
+import { AddRowButton } from "@/app/(components)/ui/tiptap-ui/add-row-button/add-row-button"
+import { AddColumnButton } from "@/app/(components)/ui/tiptap-ui/add-column-button/add-column-button"
 import { ListDropdownMenu } from "@/app/(components)/ui/tiptap-ui/list-dropdown-menu"
 import { BlockquoteButton } from "@/app/(components)/ui/tiptap-ui/blockquote-button"
 import { CodeBlockButton } from "@/app/(components)/ui/tiptap-ui/code-block-button"
@@ -116,6 +120,15 @@ const MainToolbarContent = ({
         <ImageUploadButton text="" />
         <AudioUploadButton text="" />
         <VideoUploadButton text="" />
+      </ToolbarGroup>
+
+      <ToolbarSeparator />
+
+      <ToolbarGroup>
+        <InsertTableButton text="" />
+        <DeleteTableButton text="" />
+        <AddRowButton text="" />
+        <AddColumnButton text="" />
       </ToolbarGroup>
 
       <Spacer />
