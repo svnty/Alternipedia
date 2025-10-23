@@ -287,7 +287,7 @@ function SectionContent({
   return (
     <div className="collapsible-content">
       {/* ✅ 2. Render ALL images first, stacked as floats */}
-      {sectionImages[0] && sectionImages[0]?.url && sectionImages[0]?.url !== pageImageUrl && sectionImages.map((img: any, i: number) => (
+      {sectionImages[0] && sectionImages[0]?.url && sectionImages[0]?.url !== pageImageUrl && sectionImages[0].commonsURL !== pageImageUrl && sectionImages[0].thumb !== pageImageUrl && sectionImages.map((img: any, i: number) => (
         <div
           key={i}
           className="
@@ -301,6 +301,7 @@ function SectionContent({
           <MediaCard
             thumbnail={img.thumbnail}
             url={img.url}
+            backupUrl={img.backupUrl}
             caption={img.caption}
             alt={img.caption || 'Image'}
           />

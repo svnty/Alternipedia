@@ -1,4 +1,5 @@
 'use client';
+import { convertSegmentPathToStaticExportFilename } from 'next/dist/shared/lib/segment-cache/segment-value-encoding';
 import { useEffect, useRef, useState } from 'react';
 
 interface SuspenseImageProps {
@@ -26,7 +27,7 @@ export default function SuspenseImage({
   const [fullLoaded, setFullLoaded] = useState(loadedImages.has(src));
   const [currentSrc, setCurrentSrc] = useState(src);
 
-  // 👀 Observe wrapper visibility
+  // Observe wrapper visibility
   useEffect(() => {
     if (typeof window === 'undefined' || !wrapperRef.current) {
       setVisible(true);
@@ -53,30 +54,56 @@ export default function SuspenseImage({
     return () => observer.disconnect();
   }, [rootMargin]);
 
-  // 🖼️ When visible, start loading full image in background
+  const tryLoad = (url: string) =>
+    new Promise<string>((resolve, reject) => {
+      if (!url) return reject(new Error('empty url'));
+      const img = new Image();
+      let settled = false;
+
+      const cleanup = () => {
+        img.onload = null;
+        img.onerror = null;
+      };
+
+      img.onload = () => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        resolve(url);
+      };
+
+      img.onerror = () => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        reject(new Error('failed to load ' + url));
+      };
+
+      // Start loading after handlers attached
+      img.src = url;
+    });
+
+  // When visible, start loading full image in background
   useEffect(() => {
     if (!isVisible || fullLoaded) return;
+    const tryLoadFunc = async () => {
+      const sources = [src, backupUrl, thumbnail];
+      for (let i = 0; i < sources.length; i++) {
+        try {
+          await tryLoad(sources[i]);
+          setCurrentSrc(sources[i]);
+          loadedImages.add(sources[i]);
+          setFullLoaded(true);
+          return;
+        } catch (e) {
 
-    const img = new Image();
-    img.src = currentSrc;
-
-    img.onload = () => {
-      loadedImages.add(currentSrc);
-      setFullLoaded(true);
-    };
-
-    img.onerror = () => {
-      // If primary src fails and we have a backup, try that
-      if (currentSrc === src && backupUrl) {
-        console.log(`Primary image failed (${src}), trying backup: ${backupUrl}`);
-        setCurrentSrc(backupUrl);
-      } else {
-        // No backup or backup also failed, mark as loaded to stop trying
-        setCurrentSrc(thumbnail);
-        setFullLoaded(true);
+        }
       }
-    };
-  }, [isVisible, currentSrc, fullLoaded, src, backupUrl]);
+    }
+
+    tryLoadFunc();
+
+  }, [isVisible, currentSrc, fullLoaded, src, backupUrl, thumbnail]);
 
   return (
     <div
@@ -101,9 +128,9 @@ export default function SuspenseImage({
       />
 
       {/* 🟥 Full image (fades in after scroll + load, positioned absolutely over thumbnail) */}
-      {fullLoaded && currentSrc !== thumbnail && (
+      {fullLoaded && (
         <img
-          src={src}
+          src={currentSrc}
           alt={alt}
           className="absolute inset-0 w-full h-full rounded object-contain transition-opacity duration-700 opacity-100"
           style={{ zIndex: 3 }}
