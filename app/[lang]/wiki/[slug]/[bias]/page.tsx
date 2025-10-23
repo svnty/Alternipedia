@@ -205,6 +205,7 @@ export default async function Page({
           $('table').addClass('w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
           $('table.infobox').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 m-6');
           $('table th').addClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2');
+          $('table.sidebar th').removeClass('text-left').addClass('text-center');
           $('table.infobox th').removeClass('text-left border-b border-gray-300 dark:border-gray-600 px-4 py-2');
           $('table tbody').addClass('p-2 m-2');
           $('ol').addClass('list-decimal ml-6');
