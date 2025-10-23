@@ -101,12 +101,17 @@
     }
 
     @media (max-width: 480px) {
-      position: absolute;
-      top: auto;
-      height: calc(var(--tt-toolbar-height) + var(--tt-safe-area-bottom));
-      border-top: 1px solid var(--tt-toolbar-border-color);
-      border-bottom: none;
-      padding: 0 0.5rem var(--tt-safe-area-bottom);
+      /* Keep the toolbar in the document flow on small screens so it sits at the
+         top of the page and doesn't overlap content. Use sticky instead of
+         absolute positioning and apply safe-area padding for devices with
+         notches/status bars. */
+      position: sticky;
+      top: 0;
+      height: calc(var(--tt-toolbar-height) + env(safe-area-inset-top, 0px));
+      border-bottom: 1px solid var(--tt-toolbar-border-color);
+      border-top: none;
+      padding: 0 0.5rem;
+      padding-top: env(safe-area-inset-top, 0px);
       flex-wrap: nowrap;
       justify-content: flex-start;
 

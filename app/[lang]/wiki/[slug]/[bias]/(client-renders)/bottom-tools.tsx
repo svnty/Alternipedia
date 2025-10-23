@@ -27,7 +27,9 @@ export default function BottomTools() {
   const timerRef = useRef<number | null>(null);
   const bodyObserverRef = useRef<MutationObserver | null>(null);
   const targetObserverRef = useRef<MutationObserver | null>(null);
+  const lastSavedStatusRequest = useRef<string | null>(null);
 
+  // ========= Effect: Monitor saved article status =========
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -104,6 +106,38 @@ export default function BottomTools() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isSaved) {
+          if (status === "authenticated") {
+      const checkSaved = async () => {
+        try {
+          const rawSlug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug ?? ''
+          // Normalize: decode any existing percent-encoding, replace underscores with spaces, then re-encode once
+          const normalized = decodeURIComponent(String(rawSlug)).replace(/_/g, ' ')
+          const key = `${normalized}::${currentLang}`
+          // Deduplicate same request (helps avoid double requests from StrictMode / re-renders)
+          if (lastSavedStatusRequest.current === key) return
+          lastSavedStatusRequest.current = key
+
+          const res = await fetch(`/api/saved/status?slug=${encodeURIComponent(normalized)}&language=${encodeURIComponent(currentLang)}`, { cache: 'no-store' })
+          if (!res.ok) {
+            // keep default
+            return;
+          }
+          const json = await res.json()
+          console.log(json);
+          if (typeof json.saved === 'boolean') setIsSaved(json.saved)
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      checkSaved()
+    }
+    }
+  }, [currentLang, params?.slug, status]);
+
+  // ========= Effect: Handle scroll and outside clicks =========
   useEffect(() => {
     const nav = document.getElementById("nav");
 

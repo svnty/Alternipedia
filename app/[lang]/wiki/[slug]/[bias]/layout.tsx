@@ -123,7 +123,7 @@ export default function Article({
 
       checkSaved()
     }
-  }, [params?.slug, currentLang, session?.user?.email, status]);
+  }, [params?.slug, currentLang, status]);
 
   const toggleSaved = async () => {
     if (!session || !session.user) return

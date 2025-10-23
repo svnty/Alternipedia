@@ -77,6 +77,7 @@ body,
 
 @media screen and (max-width: 480px) {
   .simple-editor-content .tiptap.ProseMirror.simple-editor {
-    padding: 1rem 1.5rem 30vh;
+    /* Add top padding to account for the mobile toolbar height + small gap */
+    padding: calc(1rem + var(--tt-toolbar-height)) 1.5rem 30vh;
   }
 }
