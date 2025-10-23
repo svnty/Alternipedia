@@ -595,6 +595,12 @@ export default function WikipediaArticle({ slug, language, wiki, bias, wikipedia
           text-align: center!important;
           margin: 0 auto!important;
         }
+
+        @media (max-width: 768px) { /* mobile breakpoint */
+         .sidebar {
+            width: 100% !important; /* override fixed width */
+          }
+        }
       `}</style>
 
       <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center mb-0.5">

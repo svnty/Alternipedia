@@ -212,6 +212,7 @@ export default async function Page({
           $('ol li').addClass('ml-6');
           $('table.infobox').removeClass('w-full');
           $('table.infobox').removeAttr('style');
+          $('.mw-parser-output .sidebar').removeAttr('width');
           $("a").each((i, el) => {
             const href = $(el).attr("href");
             const text = $(el).text();
