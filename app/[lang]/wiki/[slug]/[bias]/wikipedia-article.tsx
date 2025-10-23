@@ -18,6 +18,7 @@ interface WikipediaArticleProps {
   language: string;
   bias: string;
   wiki?: any; // Accept wiki data as a prop
+  wikipediaHtml: string;
 }
 
 function mergeListsDeduplicateLines(lists: any[]): any[] {
@@ -279,14 +280,14 @@ function SectionContent({
   showImages?: boolean,
   pageImageUrl?: string
 }) {
-  // ✅ 1. Collect ALL images from all paragraphs (in order)
+  // Collect ALL images from all paragraphs (in order)
   const sectionImages = showImages && section.paragraphs
     ? section.paragraphs.flatMap((p: any) => p.images || [])
     : [];
 
   return (
     <div className="collapsible-content">
-      {/* ✅ 2. Render ALL images first, stacked as floats */}
+      {/* 1. Render ALL images first, stacked as floats */}
       {sectionImages[0] && sectionImages[0]?.url && sectionImages[0]?.url !== pageImageUrl && sectionImages[0].commonsURL !== pageImageUrl && sectionImages[0].thumb !== pageImageUrl && sectionImages.map((img: any, i: number) => (
         <div
           key={i}
@@ -308,10 +309,73 @@ function SectionContent({
         </div>
       ))}
 
-      {/* ✅ 3. Now render text paragraphs with NO images inside */}
-      {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
-
+      {/* 2. Render text paragraphs with NO images inside */}
+      {section.paragraphs && section.paragraphs.map((para: any, index: any) => {
         const raw = jsonToLinkedParagraph(para, language, bias);
+
+        const paragraphSanitizedHtml = sanitizeHtml(raw, {
+          allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
+          allowedAttributes: {
+            '*': ['class'],
+            a: ['href', 'class', 'target', 'rel']
+          },
+          allowedSchemes: ['http', 'https', 'mailto'],
+          transformTags: {
+            'a': (tagName: string, attribs: Record<string, string>) => {
+              attribs.rel = attribs.rel || 'noopener noreferrer';
+              return { tagName, attribs };
+            }
+          }
+        });
+
+        const paragraphLists: any = mergeListsDeduplicateLines(para.lists);
+
+        return (
+          <div key={index} className="mb-4">
+
+            {para.sentences && para.sentences.map((sentence: any, index: any) => {
+              return (
+                <div key={index} className="mb-2">
+                  <div dangerouslySetInnerHTML={{ __html: sentence.html }} />
+                </div>
+              )
+            })}
+
+            {/* <p
+              className="leading-relaxed text-base"
+              dangerouslySetInnerHTML={{ __html: paragraphSanitizedHtml }}
+            /> */}
+
+            {/* 3. Render any lists in the paragraph */}
+            {paragraphLists && paragraphLists.map((list: any, listsIndex: number) => (
+              <ul className="list-disc mx-6 mt-3" key={listsIndex}>
+                {list.lines && list.lines.map((line: any, lineIndex: number) => {
+                  const linkWithPage = line.links.find((link: any) => link.page);
+
+                  return (
+                    <li key={lineIndex}>
+                      {linkWithPage ? (
+                        <Link
+                          href={`/${language}/wiki/${encodeURI(linkWithPage.page)}/${bias}`}
+                          rel="noopener noreferrer"
+                          className="cursor-pointer hover:underline text-blue-500"
+                        >
+                          {line.text}
+                        </Link>
+                      ) : (
+                        <span>{line.text}</span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            ))}
+          </div>
+        );
+      })}
+
+      {/* 4. Render tables */}
+      {section.paragraphs && section.paragraphs.map((para: any, pIndex: number) => {
 
         let tableText: any = {};
 
@@ -330,7 +394,6 @@ function SectionContent({
         if (tableData) {
           return (
             <div key={pIndex} className="mb-4">
-
               {tableData.title && (
                 <div className="my-4 text-sm font-bold w-full text-center">
                   {tableData.title}
@@ -359,59 +422,9 @@ function SectionContent({
             </div>
           );
         }
-
-        const safe = sanitizeHtml(raw, {
-          allowedTags: ['a', 'b', 'i', 'em', 'strong', 'span'],
-          allowedAttributes: {
-            '*': ['class'],
-            a: ['href', 'class', 'target', 'rel']
-          },
-          allowedSchemes: ['http', 'https', 'mailto'],
-          transformTags: {
-            'a': (tagName: string, attribs: Record<string, string>) => {
-              attribs.rel = attribs.rel || 'noopener noreferrer';
-              return { tagName, attribs };
-            }
-          }
-        });
-
-        const newPara: any = mergeListsDeduplicateLines(para.lists);
-
-        return (
-          <div key={pIndex} className="mb-4">
-            <p
-              className="leading-relaxed text-base"
-              dangerouslySetInnerHTML={{ __html: safe }}
-            />
-
-            {newPara && newPara.map((list: any, listsIndex: number) => (
-              <ul className="list-disc mx-6 mt-3" key={listsIndex}>
-                {list.lines && list.lines.map((line: any, lineIndex: number) => {
-                  const linkWithPage = line.links.find((link: any) => link.page);
-
-                  return (
-                    <li key={lineIndex}>
-                      {linkWithPage ? (
-                        <Link
-                          href={`/${language}/wiki/${encodeURI(linkWithPage.page)}/${bias}`}
-                          rel="noopener noreferrer"
-                          className="cursor-pointer hover:underline text-blue-500"
-                        >
-                          {line.text}
-                        </Link>
-                      ) : (
-                        <span>{line.text}</span>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            ))}
-          </div>
-        );
       })}
 
-      {/* ✅ Recurse for subsections */}
+      {/* 5. Recurse for subsections */}
       {section.sections && section.sections.length > 0 && section.sections.map((subSection: any, index: number) => (
         <div key={index}>
           {subSection.title && subSection.depth === 1 && (
@@ -449,6 +462,7 @@ function SectionContent({
         </div>
       ))}
 
+      {/* 6. Render references */}
       <References section={section} wiki={wiki} />
     </div>
   );
@@ -520,8 +534,7 @@ function toWikipediaReference(citation: Record<string, any>): string {
   return parts.filter(Boolean).join(". ") + ".";
 }
 
-export default function WikipediaArticle({ slug, language, wiki, bias }: WikipediaArticleProps) {
-  const nestedJsonSections = nestSections(wiki.sections);
+export default function WikipediaArticle({ slug, language, wiki, bias, wikipediaHtml }: WikipediaArticleProps) {
   const dict = getDictionary(language as Locale);
 
   if (!Object.keys(wiki).length) {
@@ -551,7 +564,40 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
   return (
     <article className="wikipedia-article max-w-none">
       <ClientLoadedSignal />
-      <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
+
+      <style>{`
+        #wiki-html .infobox img {
+          float: revert!important;
+          display: block!important;
+          justify-content: center!important;
+          text-align: center!important;
+          margin: 0 auto!important;
+        }
+
+        #wiki-html .infobox .infobox-caption {
+          text-align: center!important;
+        }
+
+        #wiki-html td {
+          padding-left: 1rem;
+          max-width: 200px;
+        }
+
+        #wiki-html .reflist {
+          margin-left: 48px;
+          margin-right: 48px;
+        }
+
+        #wiki-html .sidebar-image img {
+          float: revert!important;
+          display: block!important;
+          justify-content: center!important;
+          text-align: center!important;
+          margin: 0 auto!important;
+        }
+      `}</style>
+
+      <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center mb-0.5">
         <img src='/wikipedia.png' alt="Wikpedia Bias" width={40} className="flex-shrink-0 mr-4" />
         <div className="relative">
           <TooltipProvider delayDuration={0}>
@@ -575,6 +621,10 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
         </div>
       </div>
 
+      <div id="wiki-html" dangerouslySetInnerHTML={{ __html: wikipediaHtml }} className="mb-6 [&_p]:mb-2 [&_a]:text-blue-500 [&_a]:hover:underline" />
+
+
+{/* 
       <main className="mx-auto">
         <div>
           {nestedJsonSections.length > 0 && (
@@ -599,10 +649,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
                             <MediaCard thumbnail={wiki.pageImage.thumbnail} url={wiki.pageImage.url} caption={wiki.pageImage.caption} alt={wiki.pageImage.alt} />
                             {wiki.infobox.html && (
                               <>
-                                {/* 
-                                // TODO: style this
-                                // <div dangerouslySetInnerHTML={{ __html: wiki.infobox.html }} />
-                              */}
+
                               </>
                             )}
                           </div>
@@ -687,7 +734,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias }: Wikiped
             </div>
           )}
         </div>
-      </main>
+      </main> */}
     </article>
   );
 }

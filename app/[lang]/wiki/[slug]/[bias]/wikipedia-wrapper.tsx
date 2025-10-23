@@ -8,9 +8,10 @@ interface WikipediaWrapperProps {
   language: string;
   bias: string;
   wikipediaData: any;
+  wikipediaHtml: string;
 }
 
-export default function WikipediaWrapper({ slug, language, bias, wikipediaData }: WikipediaWrapperProps) {
+export default function WikipediaWrapper({ slug, language, bias, wikipediaData, wikipediaHtml }: WikipediaWrapperProps) {
   // Only render Wikipedia data if bias is 'wikipedia'
   if (bias !== 'wikipedia') {
     return null;
@@ -78,7 +79,7 @@ export default function WikipediaWrapper({ slug, language, bias, wikipediaData }
       {/* Intercept clicks on wiki links inserted via innerHTML and route client-side */}
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore */}
-      <WikipediaArticle slug={slug} language={language} wiki={wikipediaData} bias={bias} />
+      <WikipediaArticle wikipediaHtml={wikipediaHtml} slug={slug} language={language} wiki={wikipediaData} bias={bias} />
     </WikipediaDataProvider>
   );
 }

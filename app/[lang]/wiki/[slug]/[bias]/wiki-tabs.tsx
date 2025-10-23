@@ -32,9 +32,10 @@ interface WikiTabsProps {
   lang: string;
   revision?: any;
   wikipediaData?: any;
+  wikipediaHtml?: string;
 }
 
-export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaData = null }: WikiTabsProps) {
+export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaData = null, wikipediaHtml = '' }: WikiTabsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams?.get('mode');
@@ -173,7 +174,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
               <TabsContent value="tab-1">
                 {/* Start Article */}
                 {isWikipedia ? (
-                  <WikipediaWrapper slug={slug} language={lang} bias={bias || 'en'} wikipediaData={wikipediaData} />
+                  <WikipediaWrapper wikipediaHtml={wikipediaHtml} slug={slug} language={lang} bias={bias || 'en'} wikipediaData={wikipediaData} />
                 ) : (
                   <Bias language={lang} slug={slug} bias={bias} />
                 )}

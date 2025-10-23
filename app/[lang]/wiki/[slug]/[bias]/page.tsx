@@ -10,7 +10,7 @@ import { prisma } from "@/lib/prisma";
 import { BlockType, Language } from "@prisma/client";
 import { fetchWikipediaPageWithWtf } from "@/lib/wikipedia-api";
 import { withRetry } from "@/lib/retry";
-import { info } from "console";
+import { load } from "cheerio";
 
 export async function generateMetadata({
   params,
@@ -38,8 +38,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: "Alternipedia",
-    description: description || 'Error: Description not available',
+    title: "Alternipedia | " + description,
+    description: dict.metadata.description,
   };
 }
 
@@ -57,9 +57,10 @@ export default async function Page({
 
   let mappedRevision: any = {};
   let wikipediaData: any = {};
+  let wikipediaJson: any = {};
+  let wikipediaHtml = '';
 
   if (bias === 'wikipedia') {
-
     const imageToJSON = (rawData: any) => {
       try {
         const img = typeof rawData.pageImage === 'function' ? rawData.pageImage() : rawData.pageImage;
@@ -87,6 +88,7 @@ export default async function Page({
             wikitext: typeof rawData.infobox() === "function" ? rawData.infobox().wikitext() : "",
             html: typeof rawData.infobox() === "function" ? rawData.infobox().html() : "",
           },
+          wikitext: rawData.wikitext(),
           html: rawData.html(),
           url: rawData.url(),
           timestamp: rawData.timestamp(),
@@ -100,14 +102,16 @@ export default async function Page({
             json: ref.json(),
           })),
           sections: rawData.sections().map((section: any) => ({
+            html: section.html(),
             title: section.title(),
+            depth: section.depth(),
+            index: section.index(),
+            wikitext: section.wikitext(),
             table: section.tables().map((table: any) => ({
               html: table.html(),
               wikitext: table.wikitext(),
               json: table.json(),
             })),
-            depth: section.depth(),
-            index: section.index(),
             infoboxes: section.infoboxes().map((infobox: any) => ({
               json: infobox.json(),
               wikitext: infobox.wikitext(),
@@ -123,7 +127,6 @@ export default async function Page({
                 })),
               })),
             })),
-            wikitext: section.wikitext(),
             images: section.images().map((image: any) => ({
               url: image.commonsURL(),
               backupUrl: image.url(),
@@ -131,6 +134,7 @@ export default async function Page({
               thumbnail: image.thumb(),
             })),
             paragraphs: section.paragraphs().map((paragraph: any) => ({
+              html: paragraph.html(),
               images: paragraph.images().map((img: any) => ({
                 url: img.commonsURL(),
                 backupUrl: img.url(),
@@ -148,8 +152,9 @@ export default async function Page({
                 })),
               })),
               sentences: paragraph.sentences().map((sentence: any) => ({
-                text: sentence.text(),
                 html: sentence.html(),
+                text: sentence.text(),
+                wikitext: sentence.wikitext(),
                 links: sentence.links().map((link: any) => ({
                   text: link.text(),
                   page: link.page(),
@@ -162,6 +167,55 @@ export default async function Page({
         };
 
         wikipediaData = JSON.parse(JSON.stringify(wikipediaData));
+
+        const params = new URLSearchParams({
+          action: "parse",
+          page: wikipediaData.title,
+          prop: 'text',
+          formatversion: '2',
+          format: "json",
+        });
+
+        const url = `https://en.wikipedia.org/w/api.php?${params}`;
+
+        const response = await fetch(url);
+
+        wikipediaJson = await response.json();
+        if (wikipediaJson) {
+          const $ = load(wikipediaJson.parse.text);
+          $('.infobox').addClass('flex justify-center md:float-right m-6');
+          $('.mw-editsection').remove();
+          $('.sistersitebox').remove();
+          $('.mw-image-border').remove();
+          $('h2').addClass('text-2xl font-bold mt-8 mb-4');
+          $('h3').addClass('text-xl font-semibold mt-6 mb-3');
+          $('h4').addClass('text-lg font-semibold mt-4 mb-2');
+          $('figure img').addClass('rounded-md shadow-sm');
+          $('table.infobox').addClass('border border-gray-300 dark:border-gray-600 p-2 rounded-lg m-2 p-2 !border-separate');
+          $('.hatnote').addClass('mb-1 text-center');
+          $('.skin-invert-image').remove();
+          $('.box-More_citations_needed').remove();
+          $('ul').addClass('list-disc ml-6');
+          $('.tright').addClass('float-right m-2 border border-gray-300 dark:border-gray-600 p-1 bg-gray-100 dark:bg-gray-800 rounded-md border-separate justify-space-between text-center margin-auto');
+          $('.thumb .thumbcaption').addClass('!text-center !justify-center !m-auto');
+          $('figure').addClass('flex flex-col max-w-[20vw] float-right clear-both m-4');
+          $('figure img').addClass('m-auto');
+          $('figure figcaption').addClass('text-center text-sm mb-2');
+          $('.thumbinner .multiimageinner').addClass('flex flex-col items-end gap-4 max-w-[360px]');
+          $("a").each((i, el) => {
+            const href = $(el).attr("href");
+            const text = $(el).text();
+
+            if (href) {
+              // Example: modify internal Wikipedia links
+              if (href.startsWith("/wiki/")) {
+                let newLink = `/${lang}${href}/wikipedia`;
+                $(el).attr("href", newLink);
+              }
+            }
+          });
+          wikipediaHtml = $.html();
+        }
       }
     } catch (error) {
       console.error('Error fetching Wikipedia page:', error);
@@ -281,7 +335,7 @@ export default async function Page({
         )}
 
         {bias === 'wikipedia' && (
-          <WikiTabs slug={slug} lang={lang} bias={bias} wikipediaData={wikipediaData} />
+          <WikiTabs slug={slug} lang={lang} bias={bias} wikipediaData={wikipediaData} wikipediaHtml={wikipediaHtml} />
         )}
 
         {bias === 'conservative' && (
