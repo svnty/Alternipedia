@@ -21,7 +21,8 @@ export default function Search() {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const params = useParams();
   const lang = params?.lang as string;
-  const router = useRouter()
+  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   
   // Get dictionary for the current language (fallback to 'en' if invalid)
   const dict = getDictionary(isValidLocale(lang) ? lang : 'en');
@@ -72,9 +73,10 @@ export default function Search() {
   })
 
   return (
-    <div className="*:not-first:mt-2 w-full max-w-2xl px-2.5 py-1.5 mx-4">
+    <div className="*:not-first:mt-2 w-full max-w-2xl px-2.5 py-1.5 mx-1 md:mx-4">
       <div className="relative" ref={containerRef}>
         <Input
+          ref={inputRef}
           id={id}
           className="peer ps-9 pe-9 bg-gray-100 text-gray-400"
           placeholder={dict.common.searchPlaceholder}
@@ -121,6 +123,7 @@ export default function Search() {
                   router.push(`/${lang}/wiki/${r.slug}/wikipedia`);
                   setInputValue('');
                   setResults([]);
+                  inputRef.current?.blur()
                 }}
                 className={`px-3 hover:bg-gray-100 py-2 cursor-pointer text-foreground`}
               >
