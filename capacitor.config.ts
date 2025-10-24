@@ -4,7 +4,7 @@ const config: CapacitorConfig = {
   appId: 'org.alternipedia.app',
   appName: 'Alternipedia',
   server: {
-    url: 'https://alternipedia.vercel.app'
+    url: 'https://alternipedia.org'
   }
 };
 

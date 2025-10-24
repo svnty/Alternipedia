@@ -51,7 +51,7 @@ export default function AdBanner({ lang, isProUser = false }: AdBannerProps) {
       className="adsbygoogle my-2"
       style={{ display: "block" }}
       data-ad-client="ca-pub-7936619142942349"
-      data-ad-slot="3304896788"
+      data-ad-slot="7132626421"  
       data-ad-format="auto"
       data-full-width-responsive="true"></ins>
   );
