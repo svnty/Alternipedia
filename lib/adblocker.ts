@@ -2,6 +2,8 @@
 "use client";
 import { useEffect, useState } from "react";
 
+// hello world
+
 async function detectAdBlock(timeout = 1500): Promise<boolean> {
   return new Promise((resolve) => {
     let resolved = false;
