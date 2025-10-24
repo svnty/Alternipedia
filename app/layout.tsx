@@ -33,7 +33,9 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SwRegister />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+        </Providers>
         <CookieBanner />
       </body>
     </html>

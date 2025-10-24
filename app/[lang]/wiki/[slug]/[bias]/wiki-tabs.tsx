@@ -40,7 +40,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const searchParams = useSearchParams();
   const mode = searchParams?.get('mode');
   const [headings, setHeadings] = useState<any[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);  
 
   const getDefaultTab = (mode?: string | null) => {
     switch (mode) {
@@ -70,6 +70,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     // Ensure we only render the interactive Tabs after client mount to avoid
     // hydration mismatches caused by Radix's internally generated ids.
     setMounted(true);
+    throw new Error("Test error overlay");
   }, []);
 
   const handleInnerTabChange = (value: string) => {
