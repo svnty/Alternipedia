@@ -12,7 +12,11 @@ export default function GlobalError({
     <html>
       <body>
         <div className={`m-auto h-screen align-middle text-center justify-center flex flex-col w-full`}>
+          {error.name}
+          <br />
           {error.message}
+          <br />
+          {error.cause !== "undefined" && <div>Cause: {String(error.cause)}</div>}
         </div>
       </body>
     </html>
