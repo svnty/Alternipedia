@@ -21,7 +21,6 @@ export default function RootLayout({
   return (
     <html>
       <head>
-        {/* PWA: web manifest and theme color */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="mobile-web-app-capable" content="yes" />
