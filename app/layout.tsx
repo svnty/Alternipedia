@@ -27,7 +27,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="google-adsense-account" content="ca-pub-7936619142942349" />
-        <meta name="google-site-verification" content="SrQ_rlBoc9Zy29IslbozDC_bZoEt9KgXEcIriKcUmRA" />
+        <meta name="google-site-verification" content="6Kk7v2LWoOHW8Bi-jxaqGWR3NrrlsvksdAhLUxwRr1k" />
         <link rel="apple-touch-icon" href="/icon.png" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7936619142942349" crossOrigin="anonymous" />
       </head>
