@@ -13,11 +13,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const dict = getDictionary(lang);
 
   return (
-    <div className="relative min-h-96 bg-white text-center flex flex-col justify-center items-center">
+    <div className="relative min-h-96 bg-white text-center flex flex-col justify-center items-center gap-28">
       
       {dict.metadata.description}
       
-      <br />
+      {/* <br />
 
       <br />
 
@@ -25,7 +25,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       <br />
 
-      {dict.common.stayTuned}
+      {dict.common.stayTuned} */}
       
       <br />
 

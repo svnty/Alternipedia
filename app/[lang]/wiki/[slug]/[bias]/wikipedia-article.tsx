@@ -604,7 +604,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias, wikipedia
         }
       `}</style>
 
-      <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center mb-0.5">
+      <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
         <img src='/wikipedia.png' alt="Wikpedia Bias" width={40} className="flex-shrink-0 mr-4" />
         <div className="relative">
           <TooltipProvider delayDuration={0}>
