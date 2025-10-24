@@ -40,7 +40,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const searchParams = useSearchParams();
   const mode = searchParams?.get('mode');
   const [headings, setHeadings] = useState<any[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);  
 
   const getDefaultTab = (mode?: string | null) => {
     switch (mode) {

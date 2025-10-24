@@ -232,7 +232,7 @@ export default async function Page({
               return $(this).find('img').length > 3;
             })
             .addClass('gap-8');
-          $('.clade-gallery').addClass('w-full');
+          $('.clade-gallery').addClass('w-full !hidden md:!block');
           $('ul > li > span.noviewer.sister-inline-image').addClass('hidden');
           $('td.cladogram > div.clade > table.clade').addClass('!w-full');
           $('div.clade-gallery div.main-content').removeClass('main-content');
@@ -241,11 +241,10 @@ export default async function Page({
           $('table th').addClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2');
           $('table.sidebar th').removeClass('text-left').addClass('text-center');
           $('table.infobox th').removeClass('text-left border-b border-gray-300 dark:border-gray-600 px-4 py-2').addClass('align-top');
-          
           $('table.navbox-subgroup').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
           $('table.nowraplinks.hlist').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
           $('div.navbox > table').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
-
+          $('td.infobox-image').addClass('flex flex-col');
           $('table.clade').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
           $('table.gallery-element').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
           $('table.gallery-element th').removeClass('text-left border-b border-gray-300 dark:border-gray-600 px-4');

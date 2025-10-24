@@ -43,7 +43,7 @@ export default function ShortURL({ mobile }: { mobile: boolean }) {
   const id = useId()
   const [copied, setCopied] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
-  const [link, setLink] = useState<string>('https://alternipedia.vercel.app/');
+  const [link, setLink] = useState<string>('https://alternipedia.org/');
   const [embedOpen, setEmbedOpen] = useState<boolean>(false)
   const embedRef = useRef<HTMLTextAreaElement | null>(null)
   const [toast, setToast] = useState<string | null>(null)
@@ -63,7 +63,7 @@ export default function ShortURL({ mobile }: { mobile: boolean }) {
     }
 
     if (!params?.slug) {
-      setLink(`https://alternipedia.vercel.app/`)
+      setLink(`https://alternipedia.org/`)
       return
     }
 
@@ -74,7 +74,7 @@ export default function ShortURL({ mobile }: { mobile: boolean }) {
       const encodedPath = encodeURIComponent(normalizedSlug)
       const key = `${currentLang}::${normalizedSlug}`
 
-      const fallback = `https://alternipedia.vercel.app/${currentLang}/wiki/${encodedPath}`
+      const fallback = `https://alternipedia.org/${currentLang}/wiki/${encodedPath}`
 
       // If we already have a cached string, use it
       const cached = shortenerCache.get(key)

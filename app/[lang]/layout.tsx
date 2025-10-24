@@ -66,7 +66,7 @@ export default async function Layout({
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
   // Validate if the language is supported
   if (!isValidLocale(lang)) {
@@ -243,7 +243,7 @@ export default async function Layout({
 
               {/* Second Links Column */}
               <div className="flex flex-col gap-1">
-                <a href="https://github.com/svnty/Alternipedia" target="_blank" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.developers}</a>
+                <a href="https://github.com/svnty/Alternipedia" target="_blank" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline cursor-pointer">{dict.footer.developers}</a>
                 <Link href="/" className="text-blue-400 text-sm font-normal leading-normal hover:underline inline-block w-fit active:underline">{dict.footer.statistics}</Link>
                 <CookieStatement lang={lang} />
               </div>

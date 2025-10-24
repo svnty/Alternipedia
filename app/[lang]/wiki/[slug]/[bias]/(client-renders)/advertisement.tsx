@@ -19,18 +19,19 @@ interface AdBannerProps {
 
 export default function AdBanner({ lang, isProUser = false }: AdBannerProps) {
   const isAdBlocked = useAdBlockDetector();
-  const adRef = useRef<HTMLDivElement | null>(null);
+  const adRef = useRef<HTMLModElement | null>(null);
   const hasPushed = useRef(false);
   const dict = getDictionary(lang as Locale || 'en');
 
   useEffect(() => {
     if (!isProUser && !isAdBlocked && !hasPushed.current) {
       try {
-        if (window.adsbygoogle && adRef.current) {
+        if (typeof window !== 'undefined' && window.adsbygoogle && adRef.current) {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
           hasPushed.current = true;
         }
       } catch (e) {
+        // Catch any unexpected runtime errors (sandboxed previews can be weird)
         console.error("AdSense error:", e);
       }
     }
@@ -46,12 +47,13 @@ export default function AdBanner({ lang, isProUser = false }: AdBannerProps) {
     );
 
   return (
-    <ins 
+    <ins
+      ref={adRef}
       id="ad"
       className="adsbygoogle my-2"
       style={{ display: "block" }}
       data-ad-client="ca-pub-7936619142942349"
-      data-ad-slot="3304896788"
+      data-ad-slot="7132626421"
       data-ad-format="auto"
       data-full-width-responsive="true"></ins>
   );
