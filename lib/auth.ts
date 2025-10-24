@@ -1,4 +1,4 @@
-import { Session, User } from "next-auth"
+import { Account, Session, User } from "next-auth"
 import type { JWT } from "next-auth/jwt";
 import FacebookProvider from "next-auth/providers/facebook"
 import GoogleProvider from "next-auth/providers/google"
@@ -6,6 +6,7 @@ import AzureADProvider from "next-auth/providers/azure-ad"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { withRetry } from "@/lib/retry";
+import { AdapterUser } from "next-auth/adapters";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -32,7 +33,11 @@ export const authOptions = {
     strategy: "jwt" as const,
   },
   callbacks: {
-    async signIn({ user, account, profile }: { user: User; account: any; profile: any }) {
+    async signIn({ user, account, profile }: {
+      user: User | AdapterUser;
+      account: Account | null;
+      profile?: any;
+    }) {
       // Azure AD returns verified corporate emails — safe to trust
       if (!user?.email || !account) return false;
 
