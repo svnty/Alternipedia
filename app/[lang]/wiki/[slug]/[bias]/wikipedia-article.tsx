@@ -537,6 +537,12 @@ function toWikipediaReference(citation: Record<string, any>): string {
 export default function WikipediaArticle({ slug, language, wiki, bias, wikipediaHtml }: WikipediaArticleProps) {
   const dict = getDictionary(language as Locale);
 
+  if (!wiki) {
+    return (
+      <div className="text-red-300">No Wikipedia article found.</div>
+    );
+  }
+
   if (!Object.keys(wiki).length) {
     return (
       <div className="wikipedia-article w-full flex flex-col justify-start items-center gap-8 p-8">

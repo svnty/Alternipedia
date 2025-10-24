@@ -80,6 +80,7 @@ export default async function Page({
 
     try {
       const rawData = await fetchWikipediaPageWithWtf(slug, lang);
+
       if (rawData) {
         wikipediaData = {
           infobox: {
@@ -174,13 +175,38 @@ export default async function Page({
           prop: 'text',
           formatversion: '2',
           format: "json",
+          // include origin=* so the API returns CORS-friendly responses when needed
+          origin: '*',
         });
 
-        const url = `https://en.wikipedia.org/w/api.php?${params}`;
+        const url = `https://${lang}.wikipedia.org/w/api.php?${params}`;
 
-        const response = await fetch(url);
+        // Use a descriptive User-Agent; Wikimedia asks for a descriptive UA for automated requests.
+        const userAgent = process.env.WIKIPEDIA_USER_AGENT || 'Alternipedia/1.0 (+https://alternipedia.org)';
+
+        const response = await fetch(url, {
+          headers: {
+            Accept: 'application/json',
+            'User-Agent': userAgent,
+          },
+        });
+
+        const contentType = response.headers.get('content-type') || '';
+
+        if (!response.ok) {
+          const body = await response.text();
+          console.error(`Wikipedia API returned ${response.status} ${response.statusText} for ${url}:`, body.slice(0, 800));
+          throw new Error(`Wikipedia API error ${response.status} ${response.statusText}`);
+        }
+
+        if (!contentType.includes('application/json')) {
+          const body = await response.text();
+          console.error(`Unexpected Content-Type from Wikipedia API (${contentType}) for ${url}:`, body.slice(0, 800));
+          throw new Error(`Expected JSON from Wikipedia API but got ${contentType}`);
+        }
 
         wikipediaJson = await response.json();
+
         if (wikipediaJson) {
           const $ = load(wikipediaJson.parse.text);
           $('.infobox').addClass('flex justify-center md:float-right m-6');
