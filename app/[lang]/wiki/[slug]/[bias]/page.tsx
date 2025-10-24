@@ -191,28 +191,45 @@ export default async function Page({
           $('h3').addClass('text-xl font-semibold mt-6 mb-3');
           $('h4').addClass('text-lg font-semibold mt-4 mb-2');
           $('figure img').addClass('rounded-md shadow-sm');
+          $('figure video').addClass('rounded-md shadow-sm');
           $('table.infobox').addClass('border border-gray-300 dark:border-gray-600 p-2 rounded-lg m-2 p-2 !border-separate');
           $('.hatnote').addClass('mb-1 text-center');
           $('.skin-invert-image').remove();
           $('.box-More_citations_needed').remove();
-          $('ul').addClass('list-disc ml-6');
           $('.tright').addClass('float-right m-2 border border-gray-300 dark:border-gray-600 p-1 bg-gray-100 dark:bg-gray-800 rounded-md border-separate justify-space-between text-center margin-auto');
           $('.thumb .thumbcaption').addClass('!text-center !justify-center !m-auto');
           $('figure').addClass('flex flex-col max-w-[20vw] float-right clear-both m-4');
           $('figure img').addClass('m-auto');
           $('figure figcaption').addClass('text-center text-sm mb-2');
-          $('.thumbinner .multiimageinner').addClass('flex flex-col items-end gap-4 max-w-[360px]');
+          $('div.thumbinner.multiimageinner')
+            .filter(function () {
+              return $(this).find('img').length > 3;
+            })
+            .addClass('gap-8');
+          $('.clade-gallery').addClass('w-full');
+          $('ul > li > span.noviewer.sister-inline-image').addClass('hidden');
+          $('td.cladogram > div.clade > table.clade').addClass('!w-full');
+          $('div.clade-gallery div.main-content').removeClass('main-content');
           $('table').addClass('w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
           $('table.infobox').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 m-6');
           $('table th').addClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2');
           $('table.sidebar th').removeClass('text-left').addClass('text-center');
           $('table.infobox th').removeClass('text-left border-b border-gray-300 dark:border-gray-600 px-4 py-2');
+          $('table.navbox-subgroup').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
+          $('table.nowraplinks.hlist').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
+          $('table.clade').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
+          $('table.gallery-element').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
+          $('table.gallery-element th').removeClass('text-left border-b border-gray-300 dark:border-gray-600 px-4');
           $('table tbody').addClass('p-2 m-2');
           $('ol').addClass('list-decimal ml-6');
           $('ol li').addClass('ml-6');
+          $('ul').addClass('list-disc ml-6');
+          $('ul li').addClass('ml-6');  
+          $('.reflist').addClass('mx-6 md:mx-12');
           $('table.infobox').removeClass('w-full');
           $('table.infobox').removeAttr('style');
-          $('.mw-parser-output .sidebar').removeAttr('width');
+          $('.spoken-wikipedia').remove();
+          // $('.mw-parser-output .sidebar');
           $("a").each((i, el) => {
             const href = $(el).attr("href");
             const text = $(el).text();

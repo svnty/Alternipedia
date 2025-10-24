@@ -583,11 +583,6 @@ export default function WikipediaArticle({ slug, language, wiki, bias, wikipedia
           max-width: 200px;
         }
 
-        #wiki-html .reflist {
-          margin-left: 48px;
-          margin-right: 48px;
-        }
-
         #wiki-html .sidebar-image img {
           float: revert!important;
           display: block!important;
@@ -627,7 +622,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias, wikipedia
         </div>
       </div>
 
-      <div id="wiki-html" dangerouslySetInnerHTML={{ __html: wikipediaHtml }} className="mb-6 [&_p]:mb-2 [&_a]:text-blue-500 [&_a]:hover:underline" />
+      <div id="wiki-html" dangerouslySetInnerHTML={{ __html: wikipediaHtml }} className="mb-6 [&_p]:mb-2.5 [&_a]:text-blue-500 [&_a]:hover:underline" />
 
 
 {/* 
