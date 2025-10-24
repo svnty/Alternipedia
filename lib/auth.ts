@@ -22,7 +22,7 @@ export const authOptions = {
     AzureADProvider({
       clientId: process.env.AZURE_AD_CLIENT_ID!,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
-      tenantId: process.env.AZURE_AD_TENANT_ID,
+      tenantId: process.env.AZURE_AD_TENANT_ID!,
     }),
   ],
   pages: {
@@ -32,6 +32,47 @@ export const authOptions = {
     strategy: "jwt" as const,
   },
   callbacks: {
+    async signIn({ user, account, profile }: { user: User; account: any; profile: any }) {
+      // Azure AD returns verified corporate emails — safe to trust
+      if (!user?.email || !account) return false;
+
+      try {
+        // Find if a user already exists with this email
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          include: { accounts: true },
+        });
+
+        if (existingUser) {
+          // Check if this provider is already linked
+          const isLinked = existingUser.accounts.some(
+            (acc) => acc.provider === account.provider
+          );
+
+          if (!isLinked) {
+            // 👇 Manually create the provider link
+            await prisma.account.create({
+              data: {
+                userId: existingUser.id,
+                type: account.type,
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+                access_token: account.access_token,
+                token_type: account.token_type,
+                scope: account.scope,
+                id_token: account.id_token,
+                expires_at: account.expires_at,
+              },
+            });
+          }
+        }
+
+        return true;
+      } catch (err) {
+        console.error("Sign-in error:", err);
+        return false;
+      }
+    },
     async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user) {
         // Attach the user id from the token
