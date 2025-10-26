@@ -9,6 +9,7 @@ import {
 } from "@/app/(components)/ui/tabs";
 import {
   BoxIcon,
+  CircleDollarSign,
   History,
   HouseIcon,
   PanelsTopLeftIcon,
@@ -19,15 +20,16 @@ import DiscussionText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/dis
 import ReadText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/read-text";
 import EditText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/edit-text";
 import HistoryText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/history-text";
-import WikipediaWrapper from "@/app/[lang]/wiki/[slug]/[bias]/wikipedia-wrapper";
 import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/load-signal';
 import Bias from "@/app/[lang]/wiki/[slug]/[bias]/bias";
 import ContentEditorComponent from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/editor";
 import Read from '@/app/[lang]/wiki/[slug]/[bias]/read';
-import { WikipediaDataProvider } from '@/app/[lang]/wiki/[slug]/[bias]/wikipedia-data-provider';
 import { useEffect, useState } from 'react';
 import HistoryPage from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/history';
 import TalkPage from './(client-renders)/talk';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/(components)/ui/tooltip';
+import { getDictionary } from '@/lib/i18n/dictionaries';
+import { Locale } from '@/lib/i18n/config';
 
 interface WikiTabsProps {
   bias: string;
@@ -45,6 +47,9 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const content = searchParams?.get('content');
   const [headings, setHeadings] = useState<any[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [wikiCss, setWikiCss] = useState('');
+  const [loadedCss, setLoadedCss] = useState<boolean>(false);
+  const dict = getDictionary(lang as Locale);
 
   const getDefaultOuterTab = (content?: string | null) => {
     switch (content) {
@@ -91,7 +96,11 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
       case 'tab-2': talk = 'talk'; break;
       default: talk = '';
     }
-    params.set('content', talk);
+    if (!talk) {
+      params.delete('content');
+    } else {
+      params.set('content', talk);
+    }
     params.delete('mode');
     // Update URL without triggering navigation
     window.history.replaceState(null, '', `?${params.toString()}`);
@@ -113,6 +122,74 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   };
 
   const isWikipedia = bias === 'wikipedia';
+
+  // If this is a Wikipedia page, derive headings from the server-provided
+  // `wikipediaData` (already fetched in `page.tsx`) and set them into state.
+  useEffect(() => {
+    if (!isWikipedia) return;
+    if (!wikipediaData || !Array.isArray(wikipediaData.sections)) {
+      setHeadings([]);
+      return;
+    }
+
+    const newHeadings: any[] = wikipediaData.sections.map((s: any, idx: number) => {
+      const title = s.title || `Section ${idx + 1}`;
+      const depth = typeof s.depth === 'number' ? s.depth : 1;
+      const id = String(title).replace(/\s+/g, '_');
+      return { id, depth, title };
+    });
+    
+    newHeadings.splice(0, 1);
+
+    setHeadings(newHeadings);
+  }, [isWikipedia, wikipediaData]);
+
+  // Publish headings to the global store so sidebar/components can read them
+  // without needing a dedicated provider component. This mimics the old
+  // `WikipediaDataProvider` behavior but keeps the source of truth here.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      (window as any).__wikipediaHeadings = headings || [];
+      const evt = new CustomEvent('wikipediaHeadingsUpdated', { detail: headings || [] });
+      window.dispatchEvent(evt);
+    } catch (e) {
+      // ignore
+    }
+  }, [headings]);
+
+  useEffect(() => {
+    if (!isWikipedia) return;
+
+    function scopeWikipediaCss(css: string, scopeClass = '.wikipedia-scope') {
+      // This regex roughly matches CSS selectors (excluding @ rules)
+      return css.replace(/(^|})\s*([^@}{]+)\s*{/g, (_, brace, selector) => {
+        // Don’t prefix keyframes, media queries, etc.
+        if (selector.includes('@')) return `${brace}${selector}{`;
+        // Prefix each selector group
+        const scoped = selector
+          .split(',')
+          .map((s: any) => `${scopeClass} ${s.trim()}`)
+          .join(', ');
+        return `${brace} ${scoped} {`;
+      });
+    }
+
+    const getWikipediaCss = async () => {
+      const data = await fetch(
+        'https://en.wikipedia.org/w/load.php?lang=en&modules=site.styles|skins.vector.styles.legacy&only=styles&skin=vector'
+      );
+      if (!data.ok) {
+        throw new Error('Failed to fetch Wikipedia CSS');
+      }
+      const cssText = await data.text();
+      let scopedCss = scopeWikipediaCss(cssText, "#wiki-article ");
+      setWikiCss(scopedCss);
+      setLoadedCss(true);
+    };
+
+    getWikipediaCss();
+  }, [isWikipedia, wikipediaData]);
 
   const requestedRevisionParam = searchParams?.get('revision');
   const isRevisionParamNumeric = !!requestedRevisionParam && /^\d+$/.test(requestedRevisionParam);
@@ -169,7 +246,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
               className={`text-neutral-800 text-3xl font-normal pb-2 ${isWikipedia ? 'truncate' : ''}`}
               style={isWikipedia ? { opacity: 0 } : {}}
             >
-              {decodeURIComponent(slug.replaceAll('_', ' '))}
+              {wikipediaData?.title ? String(wikipediaData.title) : revision?.title ? String(revision.title) : decodeURIComponent(slug.replaceAll('_', ' '))}
             </div>
 
             {/* Article and Talk tabs floated to the right */}
@@ -237,14 +314,50 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
               <TabsContent value="tab-1">
                 {/* Start Article */}
                 {isWikipedia ? (
-                  <WikipediaWrapper wikipediaHtml={wikipediaHtml} slug={slug} language={lang} bias={bias || 'en'} wikipediaData={wikipediaData} />
+                  <>
+                    {loadedCss && (
+                      <ClientLoadedSignal />
+                    )}
+
+                    <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
+                      <img src='/wikipedia.png' alt="Wikpedia Bias" width={40} className="flex-shrink-0 mr-4" />
+                      <div className="relative">
+                        <TooltipProvider delayDuration={0}>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <a href="https://donate.wikimedia.org/" target="_blank" rel="noopener noreferrer" className="block ml-1.5 float-right mt-1 mb-1.5 max-w-[25vw] bg-white border border-gray-200 rounded-sm p-3 cursor-pointer hover:bg-gray-100">
+                                <CircleDollarSign />
+                              </a>
+                            </TooltipTrigger>
+                            <TooltipContent className="text-xs" showArrow={true}>
+                              Wikipedia provides their content for free. Consider donating to help keep it that way.
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                        <div>
+                          <p className="text-sm text-blue-800 flex-1">
+                            {dict.article.biasIntro.wikipedia.part1}
+                            <a href={`https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline active:underline">{dict.article.biasIntro.wikipedia.part2}</a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <section>
+                      {isWikipedia && wikiCss && (
+                        <style jsx global>{`
+                        ${wikiCss}
+                      `}</style>
+                      )}
+                      <div id="wiki-article" className="wikipedia-article mb-6" dangerouslySetInnerHTML={{ __html: wikipediaHtml }} />
+                    </section>
+
+                  </>
                 ) : (
-                  <Bias language={lang} slug={slug} bias={bias} />
-                )}
-                {!isWikipedia && (
-                  <WikipediaDataProvider headings={headings}>
+                  <>
+                    <Bias language={lang} slug={slug} bias={bias} />
                     <Read slug={slug} lang={lang} bias={bias} revision={revision} />
-                  </WikipediaDataProvider>
+                  </>
                 )}
               </TabsContent>
               <TabsContent value="tab-2">

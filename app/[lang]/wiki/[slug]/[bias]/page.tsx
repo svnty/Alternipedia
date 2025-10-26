@@ -209,64 +209,14 @@ export default async function Page({
 
         if (wikipediaJson) {
           const $ = load(wikipediaJson.parse.text);
-          $('.infobox').addClass('flex justify-center md:float-right m-6');
-          $('.infobox .infobox-image').addClass('stupid-image-fix');
+          $('.infobox-image img').addClass('mx-auto');
+          $('.sidebar-image img').addClass('mx-auto');
           $('.mw-editsection').remove();
-          $('.sistersitebox').remove();
-          $('.mw-image-border').remove();
-          $('h2').addClass('text-2xl font-bold mt-8 mb-4');
-          $('h3').addClass('text-xl font-semibold mt-6 mb-3');
-          $('h4').addClass('text-lg font-semibold mt-4 mb-2');
-          $('figure img').addClass('rounded-md shadow-sm');
-          $('figure video').addClass('rounded-md shadow-sm');
-          $('table.infobox').addClass('border border-gray-300 dark:border-gray-600 p-2 rounded-lg m-2 p-2 !border-separate');
-          $('.hatnote').addClass('mb-1 text-center !px-0');
-          $('.skin-invert-image').remove();
-          $('.box-More_citations_needed').remove();
-          $('.tright').addClass('float-right m-2 border border-gray-300 dark:border-gray-600 p-1 bg-gray-100 dark:bg-gray-800 rounded-md border-separate justify-space-between text-center margin-auto');
-          $('.thumb .thumbcaption').addClass('!text-center !justify-center !m-auto');
-          $('figure').addClass('flex flex-col max-w-[20vw] float-right clear-both m-4');
-          $('figure img').addClass('m-auto');
-          $('figure figcaption').addClass('text-center text-sm mb-2');
-          $('div.thumbinner.multiimageinner')
-            .filter(function () {
-              return $(this).find('img').length > 3;
-            })
-            .addClass('gap-8');
-          $('.clade-gallery').addClass('w-full !hidden md:!block');
-          $('ul > li > span.noviewer.sister-inline-image').addClass('hidden');
-          $('td.cladogram > div.clade > table.clade').addClass('!w-full');
-          $('div.clade-gallery div.main-content').removeClass('main-content');
-          $('table').addClass('w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
-          $('table.infobox').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 m-6');
-          $('table th').addClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2');
-          $('table.sidebar th').removeClass('text-left').addClass('text-center');
-          $('table.infobox th').removeClass('text-left border-b border-gray-300 dark:border-gray-600 px-4 py-2').addClass('align-top');
-          $('table.navbox-subgroup').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
-          $('table.nowraplinks.hlist').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
-          $('div.navbox > table').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 w-full table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
-          $('td.infobox-image').addClass('flex flex-col');
-          $('table.clade').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
-          $('table.gallery-element').removeClass('text-left font-semibold border-b border-gray-300 dark:border-gray-600 px-4 py-2 table-auto mb-4 border-gray-200 border border-separate rounded-lg px-6 py-1');
-          $('table.gallery-element th').removeClass('text-left border-b border-gray-300 dark:border-gray-600 px-4');
-          $('table tbody').addClass('p-2 m-2');
-          $('ol').addClass('list-decimal ml-6');
-          $('ol li').addClass('ml-6');
-          $('div.sidebar-list-title').addClass('!text-center');
-          $('.sidebar-below img').addClass('hidden');
-          $('ul').addClass('!list-disc ml-6');
-          $('ul li').addClass('ml-6');  
-          $('.infobox-data > ul.list-disc.ml-6 > li.ml-6').removeClass('ml-6').addClass('ml-2');
-          $('.infobox-data > ul.list-disc.ml-6').removeClass('ml-6');
-          $('.reflist').addClass('mx-6 md:mx-12');
-          $('table.infobox').removeClass('w-full');
-          $('table.infobox').removeAttr('style');
-          $('.infobox .vcard').addClass('flex flex-col');
-          $('.spoken-wikipedia').remove();
-          // $('.mw-parser-output .sidebar');
+          $('.side-box').remove();
+          $('ul').addClass('list-disc ml-6');
+
           $("a").each((i, el) => {
             const href = $(el).attr("href");
-            const text = $(el).text();
 
             if (href) {
               // Example: modify internal Wikipedia links
@@ -276,6 +226,7 @@ export default async function Page({
               }
             }
           });
+
           wikipediaHtml = $.html();
         }
       }
@@ -394,32 +345,13 @@ export default async function Page({
 
   return (
     <div>
-      <style>
-        {`.stupid-image-fix {
-          display: revert !important;
-        }`}
-      </style>
-      <span>
-        {bias === 'socialist' && (
-          <WikiTabs revision={mappedRevision} slug={slug} lang={lang} bias={bias} />
-        )}
+      {bias !== 'wikipedia' && (
+        <WikiTabs revision={mappedRevision} slug={slug} lang={lang} bias={bias} />
+      )}
 
-        {bias === 'liberal' && (
-          <WikiTabs revision={mappedRevision} slug={slug} lang={lang} bias={bias} />
-        )}
-
-        {bias === 'wikipedia' && (
-          <WikiTabs slug={slug} lang={lang} bias={bias} wikipediaData={wikipediaData} wikipediaHtml={wikipediaHtml} />
-        )}
-
-        {bias === 'conservative' && (
-          <WikiTabs revision={mappedRevision} slug={slug} lang={lang} bias={bias} />
-        )}
-
-        {bias === 'nationalist' && (
-          <WikiTabs revision={mappedRevision} slug={slug} lang={lang} bias={bias} />
-        )}
-      </span>
+      {bias === 'wikipedia' && (
+        <WikiTabs slug={slug} lang={lang} bias={bias} wikipediaData={wikipediaData} wikipediaHtml={wikipediaHtml} />
+      )}
 
       <BottomTools />
       <BottomArrow />
