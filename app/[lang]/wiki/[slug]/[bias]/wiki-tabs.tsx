@@ -138,7 +138,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
       const id = String(title).replace(/\s+/g, '_');
       return { id, depth, title };
     });
-    
+
     newHeadings.splice(0, 1);
 
     setHeadings(newHeadings);
@@ -243,8 +243,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
             {/* Title on the left */}
             <div
               data-article-title
-              className={`text-neutral-800 text-3xl font-normal pb-2 ${isWikipedia ? 'truncate' : ''}`}
-              style={isWikipedia ? { opacity: 0 } : {}}
+              className={`text-neutral-800 text-3xl font-normal pb-2 truncate`}
             >
               {wikipediaData?.title ? String(wikipediaData.title) : revision?.title ? String(revision.title) : decodeURIComponent(slug.replaceAll('_', ' '))}
             </div>
@@ -319,48 +318,48 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                       <ClientLoadedSignal />
                     )}
 
-<div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
-  <img
-    src="/wikipedia.png"
-    alt="Wikipedia Bias"
-    width={40}
-    className="flex-shrink-0 mr-4"
-  />
+                    <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
+                      <img
+                        src="/wikipedia.png"
+                        alt="Wikipedia Bias"
+                        width={40}
+                        className="flex-shrink-0 mr-4"
+                      />
 
-  <div className="flex flex-col justify-center flex-1 relative">
-    <div className="flex items-center justify-between">
-      <p className="text-sm text-blue-800">
-        {dict.article.biasIntro.wikipedia.part1}
-        <a
-          href={`https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ml-1 text-blue-600 hover:underline active:underline"
-        >
-          {dict.article.biasIntro.wikipedia.part2}
-        </a>
-      </p>
+                      <div className="flex flex-col justify-center flex-1 relative">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-blue-800">
+                            {dict.article.biasIntro.wikipedia.part1}
+                            <a
+                              href={`https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="ml-1 text-blue-600 hover:underline active:underline"
+                            >
+                              {dict.article.biasIntro.wikipedia.part2}
+                            </a>
+                          </p>
 
-      <TooltipProvider delayDuration={0}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <a
-              href="https://donate.wikimedia.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-2 bg-white border border-gray-200 rounded-sm p-2 cursor-pointer hover:bg-gray-100"
-            >
-              <CircleDollarSign className="w-4 h-4" />
-            </a>
-          </TooltipTrigger>
-          <TooltipContent className="text-xs" showArrow>
-            Wikipedia provides their content for free. Consider donating to help keep it that way.
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </div>
-  </div>
-</div>
+                          <TooltipProvider delayDuration={0}>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <a
+                                  href="https://donate.wikimedia.org/"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="ml-2 bg-white border border-gray-200 rounded-sm p-2 cursor-pointer hover:bg-gray-100"
+                                >
+                                  <CircleDollarSign className="w-4 h-4" />
+                                </a>
+                              </TooltipTrigger>
+                              <TooltipContent className="text-xs" showArrow>
+                                Wikipedia provides their content for free. Consider donating to help keep it that way.
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
+                      </div>
+                    </div>
 
                     <section>
                       {isWikipedia && wikiCss && (
@@ -413,10 +412,9 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
           <div className="relative flex items-end justify-between border-b border-border">
             <div
               data-article-title
-              className={`text-neutral-800 text-3xl font-normal pb-2 ${isWikipedia ? 'truncate' : ''}`}
-              style={isWikipedia ? { opacity: 0 } : {}}
+              className={`text-neutral-800 text-3xl font-normal pb-2 truncate`}
             >
-              {decodeURIComponent(slug.replaceAll('_', ' '))}
+              {wikipediaData?.title ? String(wikipediaData.title) : revision?.title ? String(revision.title) : decodeURIComponent(slug.replaceAll('_', ' '))}
             </div>
             <div className="flex gap-2 opacity-50">
               <span className="px-3 py-2 text-sm">Article</span>
