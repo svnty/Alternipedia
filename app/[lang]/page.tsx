@@ -3,6 +3,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import FeaturedArticles from '@/app/(client-renders)/FeaturedArticles';
+import { XMLParser } from "fast-xml-parser";
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -10,7 +11,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   if (!isValidLocale(lang)) {
     notFound();
   }
+  
+  const SITE_MAP = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+  const BASE_URL = `${SITE_MAP}/sitemap.xml`;
 
+  const res = await fetch(BASE_URL);
+  const xml = await res.text();
+  const parser = new XMLParser({ ignoreAttributes: false });
+  const json = parser.parse(xml);
+
+  const urls = json.urlset.url.filter((url: any) => url.loc.includes(lang));
+  const exploreIndex = Math.floor(Math.random() * urls.length);
+  const exploreUrl = urls[exploreIndex].loc.split(process.env.NEXTAUTH_URL)[1];
+  
   const dict = getDictionary(lang);
 
   return (
@@ -21,7 +34,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           Alternipedia is a collaborative encyclopedia showing how the same topic is explained from different political, cultural, and ideological perspectives.
         </p>
         <div className="mt-12">
-          <Link href={`/${lang}/random`} className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">
+          <Link href={`${exploreUrl}`} className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">
             Explore an Article
           </Link>
         </div>
