@@ -9,8 +9,10 @@ import {
 } from "@/app/(components)/ui/tabs";
 import {
   BoxIcon,
+  History,
   HouseIcon,
   PanelsTopLeftIcon,
+  Pencil,
 } from "lucide-react";
 import ArticleText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/article-text";
 import DiscussionText from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/discussion-text";
@@ -112,6 +114,11 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
 
   const isWikipedia = bias === 'wikipedia';
 
+  const requestedRevisionParam = searchParams?.get('revision');
+  const isRevisionParamNumeric = !!requestedRevisionParam && /^\d+$/.test(requestedRevisionParam);
+  const showRevisionBanner = isRevisionParamNumeric && !(revision && revision.violatesLaw);
+  const revisionDateString = revision?.createdAt ? new Date(revision.createdAt).toLocaleString(lang || 'en') : null;
+
   return (
     <div className={`relative w-full mb-6 ${isWikipedia ? '' : 'wikipedia-article'}`}>
       {isWikipedia && (
@@ -123,6 +130,38 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
       )}
       {mounted ? (
         <Tabs onValueChange={handleOuterTabChange} defaultValue={getDefaultOuterTab(content)} suppressHydrationWarning={true} id="wiki-tabs">
+          {/* If the URL explicitly requested a numeric revision (e.g. ?revision=123),
+              show an informational banner reminding the user they're viewing a
+              specific revision (don't hit the DB again — page.tsx already loaded it). */}
+          {showRevisionBanner && (
+            <div className="mb-4 rounded border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-900">
+              <div className="flex items-start gap-3">
+                <BoxIcon className="mt-0.5" size={18} aria-hidden="true" />
+                <div>
+                  <div>
+                    {revisionDateString ? `You are viewing a specific revision from ${revisionDateString}.` : `You are viewing a specific revision (${requestedRevisionParam}).`}
+                  </div>
+                  <div className="mt-1">
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (!searchParams) return;
+                        const params = new URLSearchParams(searchParams.toString());
+                        params.delete('revision');
+                        const qs = params.toString();
+                        const url = `${window.location.pathname}${qs ? `?${qs}` : ''}`;
+                        router.push(url);
+                      }}
+                      className="underline"
+                    >
+                      View the latest version
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="relative flex items-end justify-between border-b border-border">
             {/* Title on the left */}
             <div
@@ -175,7 +214,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                   value="tab-2"
                   className={`hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none ${isWikipedia ? 'cursor-not-allowed pointer-events-auto!' : 'data-[state=inactive]:cursor-pointer'} transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out`}
                 >
-                  <PanelsTopLeftIcon
+                  <Pencil
                     className="-ms-0.5 me-1.5 opacity-60"
                     size={16}
                     aria-hidden="true"
@@ -187,7 +226,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                   value="tab-3"
                   className={`hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary relative after:absolute after:left-0 after:right-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:shadow-none ${isWikipedia ? 'cursor-not-allowed pointer-events-auto!' : 'data-[state=inactive]:cursor-pointer'} transition-all duration-150 ease-out [&[data-state=active]]:bg-transparent [&[data-state=active]]:transition-all [&[data-state=active]]:duration-1000 [&[data-state=active]]:ease-out`}
                 >
-                  <BoxIcon
+                  <History
                     className="-ms-0.5 me-1.5 opacity-60"
                     size={16}
                     aria-hidden="true"

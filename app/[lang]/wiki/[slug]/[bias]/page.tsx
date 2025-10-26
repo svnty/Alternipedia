@@ -261,6 +261,7 @@ export default async function Page({
           $('.reflist').addClass('mx-6 md:mx-12');
           $('table.infobox').removeClass('w-full');
           $('table.infobox').removeAttr('style');
+          $('.infobox .vcard').addClass('flex flex-col');
           $('.spoken-wikipedia').remove();
           // $('.mw-parser-output .sidebar');
           $("a").each((i, el) => {

@@ -3,7 +3,7 @@
 import { Alert, AlertDescription, AlertTitle } from '@/app/(components)/ui/alert';
 import { useEffect, useId, useMemo, useState } from 'react'
 import { useParams, usePathname } from 'next/navigation'
-import { ExternalLink, TriangleAlert, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { ExternalLink, TriangleAlert, ChevronLeftIcon, ChevronRightIcon, MessagesSquare } from 'lucide-react'
 import { Badge } from '@/app/(components)/ui/badge'
 import { Button } from '@/app/(components)/ui/button'
 import { Label } from '@/app/(components)/ui/label'
@@ -201,15 +201,17 @@ export default function Talk({ language, slug, bias }: { language: string; slug:
       {loading ? (
         <>
           <Alert>
+            <MessagesSquare />
             <AlertTitle>{bias.charAt(0).toUpperCase() + bias.slice(1)} Talk Page</AlertTitle>
             <AlertDescription>This is the talk page for discussing improvements to the {decodeURI(slug.replaceAll('_', ' '))} article.<br />
               <em>This is not a forum for general discussion of personal interests.</em></AlertDescription>
           </Alert>
-          <div className="text-center text-sm text-muted-foreground">Loading threads…</div>
+          <div className="text-center text-sm text-muted-foreground mt-4">Loading threads…</div>
         </>
       ) : error ? (
         <>
           <Alert>
+            <MessagesSquare />
             <AlertTitle>{bias.charAt(0).toUpperCase() + bias.slice(1)} Talk Page</AlertTitle>
             <AlertDescription>This is the talk page for discussing improvements to the {decodeURI(slug.replaceAll('_', ' '))} article.<br />
               <em>This is not a forum for general discussion of personal interests.</em></AlertDescription>
@@ -219,13 +221,21 @@ export default function Talk({ language, slug, bias }: { language: string; slug:
       ) : (
         <>
           <Alert>
+            <MessagesSquare />
             <AlertTitle>{bias.charAt(0).toUpperCase() + bias.slice(1)} Talk Page</AlertTitle>
             <AlertDescription>This is the talk page for discussing improvements to the {decodeURI(slug.replaceAll('_', ' '))} article.<br />
               <em>This is not a forum for general discussion of personal interests.</em></AlertDescription>
           </Alert>
 
           <div className="flex items-start justify-between">
-            <div />
+            {/* Left: Create new button */}
+            <div className="flex items-center gap-2 my-auto">
+              <Button size="sm" className='cursor-pointer' onClick={() => { /* TODO: open composer/modal to create a new thread */ }}>
+                Create new
+              </Button>
+            </div>
+
+            {/* Right: filter dropdown stays right-aligned */}
             <div className="flex items-center gap-2">
               <Label htmlFor={`filter-${id}`} className="hidden">Filter</Label>
               <Select value={filter} onValueChange={(v) => { setFilter(v as any); setPageIndex(0) }}>
