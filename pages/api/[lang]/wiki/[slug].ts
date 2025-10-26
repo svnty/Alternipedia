@@ -139,7 +139,7 @@ export default async function handler(
       return res.status(401).json({ error: "User not found" });
     }
 
-    const banned = await withRetry(() => prisma.biasBan.findFirst({
+    const banned = await withRetry(() => prisma.ban.findFirst({
       where: {
         biasId: biasDb.id,
         userEmail: user.email || '',
