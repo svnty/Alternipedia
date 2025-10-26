@@ -24,7 +24,7 @@ import ClientLoadedSignal from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)
 import Bias from "@/app/[lang]/wiki/[slug]/[bias]/bias";
 import ContentEditorComponent from "@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/editor";
 import Read from '@/app/[lang]/wiki/[slug]/[bias]/read';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import HistoryPage from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/history';
 import TalkPage from './(client-renders)/talk';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/(components)/ui/tooltip';
@@ -47,9 +47,10 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const content = searchParams?.get('content');
   const [headings, setHeadings] = useState<any[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [wikiCss, setWikiCss] = useState('');
+  const [wikipediaCss, setWikiCss] = useState('');
   const [loadedCss, setLoadedCss] = useState<boolean>(false);
   const dict = getDictionary(lang as Locale);
+  const wikipediaContainerRef = useRef<HTMLDivElement>(null);
 
   const getDefaultOuterTab = (content?: string | null) => {
     switch (content) {
@@ -161,35 +162,37 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   useEffect(() => {
     if (!isWikipedia) return;
 
-    function scopeWikipediaCss(css: string, scopeClass = '.wikipedia-scope') {
-      // This regex roughly matches CSS selectors (excluding @ rules)
-      return css.replace(/(^|})\s*([^@}{]+)\s*{/g, (_, brace, selector) => {
-        // Don’t prefix keyframes, media queries, etc.
-        if (selector.includes('@')) return `${brace}${selector}{`;
-        // Prefix each selector group
-        const scoped = selector
-          .split(',')
-          .map((s: any) => `${scopeClass} ${s.trim()}`)
-          .join(', ');
-        return `${brace} ${scoped} {`;
-      });
-    }
-
     const getWikipediaCss = async () => {
       const data = await fetch(
-        'https://en.wikipedia.org/w/load.php?lang=en&modules=site.styles|skins.vector.styles.legacy&only=styles&skin=vector'
+        `https://${lang}.wikipedia.org/w/load.php?lang=${lang}&modules=site.styles|skins.vector.styles.legacy|mediawiki.ui.gallery|mediawiki.special.gallery&only=styles&skin=vector`
       );
       if (!data.ok) {
         throw new Error('Failed to fetch Wikipedia CSS');
       }
       const cssText = await data.text();
-      let scopedCss = scopeWikipediaCss(cssText, "#wiki-article ");
+      let scopedCss = cssText.replace(
+        /url\((['"]?)(\/w\/[^'")]+)\1\)/g,
+        (_, quote, path) => `url(${quote}https://${lang}.wikipedia.org${path}${quote})`
+      );
       setWikiCss(scopedCss);
       setLoadedCss(true);
     };
 
     getWikipediaCss();
   }, [isWikipedia, wikipediaData]);
+
+  useEffect(() => {
+    if (!wikipediaContainerRef.current) return;
+
+    const shadow = wikipediaContainerRef.current.attachShadow({ mode: 'open' });
+    const style = document.createElement('style');
+    style.textContent = wikipediaCss;
+    shadow.appendChild(style);
+
+    const content = document.createElement('div');
+    content.innerHTML = wikipediaHtml;
+    shadow.appendChild(content);
+  }, [wikipediaHtml, wikipediaCss]);
 
   const requestedRevisionParam = searchParams?.get('revision');
   const isRevisionParamNumeric = !!requestedRevisionParam && /^\d+$/.test(requestedRevisionParam);
@@ -360,16 +363,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                         </div>
                       </div>
                     </div>
-
-                    <section>
-                      {isWikipedia && wikiCss && (
-                        <style jsx global>{`
-                        ${wikiCss}
-                      `}</style>
-                      )}
-                      <div id="wiki-article" className="wikipedia-article" dangerouslySetInnerHTML={{ __html: wikipediaHtml }} />
-                    </section>
-
+                    <div id="wiki-article" className="wikipedia-article" ref={wikipediaContainerRef} />
                   </>
                 ) : (
                   <>
