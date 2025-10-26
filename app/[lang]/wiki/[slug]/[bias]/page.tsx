@@ -209,8 +209,13 @@ export default async function Page({
 
         if (wikipediaJson) {
           const $ = load(wikipediaJson.parse.text);
+          $('table.infobox').addClass('border-separate md:!ml-4 md:!mb-2');
+          $('table.infobox.vevent img').addClass('mx-auto');
+          $('table.box-Update').addClass('!my-6');
           $('.infobox-image img').addClass('mx-auto');
           $('.sidebar-image img').addClass('mx-auto');
+          $('.noviewer').remove();
+          $('.mw-valign-text-top').remove();
           $('.mw-editsection').remove();
           $('.side-box').remove();
           $('ul').addClass('list-disc ml-6');

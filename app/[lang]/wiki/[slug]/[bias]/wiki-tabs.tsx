@@ -319,29 +319,48 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                       <ClientLoadedSignal />
                     )}
 
-                    <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
-                      <img src='/wikipedia.png' alt="Wikpedia Bias" width={40} className="flex-shrink-0 mr-4" />
-                      <div className="relative">
-                        <TooltipProvider delayDuration={0}>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <a href="https://donate.wikimedia.org/" target="_blank" rel="noopener noreferrer" className="block ml-1.5 float-right mt-1 mb-1.5 max-w-[25vw] bg-white border border-gray-200 rounded-sm p-3 cursor-pointer hover:bg-gray-100">
-                                <CircleDollarSign />
-                              </a>
-                            </TooltipTrigger>
-                            <TooltipContent className="text-xs" showArrow={true}>
-                              Wikipedia provides their content for free. Consider donating to help keep it that way.
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        <div>
-                          <p className="text-sm text-blue-800 flex-1">
-                            {dict.article.biasIntro.wikipedia.part1}
-                            <a href={`https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`} target="_blank" rel="noopener noreferrer" className="ml-1 text-blue-600 hover:underline active:underline">{dict.article.biasIntro.wikipedia.part2}</a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+<div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
+  <img
+    src="/wikipedia.png"
+    alt="Wikipedia Bias"
+    width={40}
+    className="flex-shrink-0 mr-4"
+  />
+
+  <div className="flex flex-col justify-center flex-1 relative">
+    <div className="flex items-center justify-between">
+      <p className="text-sm text-blue-800">
+        {dict.article.biasIntro.wikipedia.part1}
+        <a
+          href={`https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-1 text-blue-600 hover:underline active:underline"
+        >
+          {dict.article.biasIntro.wikipedia.part2}
+        </a>
+      </p>
+
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <a
+              href="https://donate.wikimedia.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 bg-white border border-gray-200 rounded-sm p-2 cursor-pointer hover:bg-gray-100"
+            >
+              <CircleDollarSign className="w-4 h-4" />
+            </a>
+          </TooltipTrigger>
+          <TooltipContent className="text-xs" showArrow>
+            Wikipedia provides their content for free. Consider donating to help keep it that way.
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+  </div>
+</div>
 
                     <section>
                       {isWikipedia && wikiCss && (
@@ -349,7 +368,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                         ${wikiCss}
                       `}</style>
                       )}
-                      <div id="wiki-article" className="wikipedia-article mb-6" dangerouslySetInnerHTML={{ __html: wikipediaHtml }} />
+                      <div id="wiki-article" className="wikipedia-article" dangerouslySetInnerHTML={{ __html: wikipediaHtml }} />
                     </section>
 
                   </>

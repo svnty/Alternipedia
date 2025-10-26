@@ -484,7 +484,7 @@ export default function Article({
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
       {/* HEADER - ToggleGroup shown first on mobile, positioned in center on desktop */}
-      <div className="lg:mx-72 xl:mx-80 2xl:mx-96 px-4 pt-2 overflow-x-hidden sm:-mb-4 md:-mb-4 lg:relative lg:z-10">
+      <div className="lg:mx-72 xl:mx-72 2xl:mx-96 px-4 pt-2 overflow-x-hidden sm:-mb-4 md:-mb-4 lg:relative lg:z-10">
         <div className="flex items-center justify-between pb-1">
           <span className="text-xl pl-2">{dict.bias.title}</span>
           <span className="text-md pr-2 pointer-default cursor-context-menu">
@@ -539,16 +539,16 @@ export default function Article({
       {/* LEFT SIDEBAR  */}
       <div
         id="left-sidebar"
-        className="w-full lg:w-64 lg:fixed lg:left-4 xl:left-8 2xl:left-20 px-4 lg:px-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
+        className="w-full lg:w-64 lg:fixed lg:left-2 xl:left-2 2xl:left-20 px-4 lg:px-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
           height: isMobile ? 'auto' : sidebarHeight,
         }}
       >
-        <div className="w-full lg:w-64 relative overflow-x-hidden">
+        <div className="w-full relative overflow-x-hidden">
           <Collapsible open={contentsOpen} onOpenChange={setContentsOpen}>
-            <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
-              <div className="w-full lg:w-64 relative inline-flex flex-col justify-start items-start overflow-x-hidden">
+            <div className="w-full flex justify-between items-start overflow-x-hidden">
+              <div className="w-full relative inline-flex flex-col justify-start items-start overflow-x-hidden px-0.5">
                 <div className="relative w-full">
                   <CollapsibleTrigger className="h-10 px-1.5 py-[5px] inline-flex justify-between items-center gap-2.5 w-full transition-colors cursor-pointer">
                     <div className="justify-start text-neutral-800 text-sm font-bold ">{dict.article.content}</div>
@@ -585,16 +585,16 @@ export default function Article({
       <div
         id="right-sidebar"
         data-property-1="Default"
-        className="w-full lg:w-64 lg:fixed lg:right-4 xl:right-8 2xl:right-20 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block overscroll-none"
+        className="w-full lg:w-64 lg:fixed lg:right-2 xl:right-2 2xl:right-20 px-4 lg:px-0 py-4 lg:py-0 overflow-y-auto overflow-x-hidden lg:z-10 hidden lg:block overscroll-none"
         style={{
           top: isMobile ? 'auto' : `${sidebarTop}px`,
           height: isMobile ? 'auto' : sidebarHeight,
         }}
       >
-        <div className="w-full lg:w-64 relative overflow-x-hidden">
+        <div className="w-full relative overflow-x-hidden">
           <Collapsible open={toolsOpen} onOpenChange={setToolsOpen}>
-            <div className="w-full lg:w-64 flex justify-between items-start overflow-x-hidden">
-              <div className="w-full lg:w-64 relative inline-flex flex-col justify-start items-start overflow-x-hidden">
+            <div className="w-full flex justify-between items-start overflow-x-hidden">
+              <div className="w-full relative inline-flex flex-col justify-start items-start overflow-x-hidden px-0.5">
                 <div className="relative w-full">
                   <CollapsibleTrigger className="h-10 px-1.5 py-[5px] inline-flex justify-between items-center gap-2.5 w-full transition-colors cursor-pointer">
                     <div className="justify-start text-neutral-800 text-sm font-bold ">{dict.article.tools}</div>
@@ -812,7 +812,7 @@ export default function Article({
       {/* END RIGHT SIDEBAR */}
 
       {/* MAIN CONTENT */}
-      <div className="react-to-print-container lg:mx-72 xl:mx-80 2xl:mx-96 px-4 py-2 overflow-x-hidden min-h-screen" ref={printRef}>
+      <div className="react-to-print-container lg:mx-64 xl:mx-64 2xl:mx-96 px-4 py-2 overflow-x-hidden min-h-screen" ref={printRef}>
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay
           isVisible={isLoadingBias}
