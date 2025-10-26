@@ -821,7 +821,6 @@ export default function Article({
         {children}
         <AdBanner lang={currentLang} isProUser={session?.user.subscription?.tier === "PRO"} />
       </div>
-
     </div>
   );
 }

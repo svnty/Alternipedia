@@ -586,7 +586,7 @@ export default function WikipediaArticle({ slug, language, wiki, bias, wikipedia
 
         #wiki-html td {
           padding-left: 1rem;
-          max-width: 200px;
+          max-width: 160px;
         }
 
         #wiki-html .sidebar-image img {

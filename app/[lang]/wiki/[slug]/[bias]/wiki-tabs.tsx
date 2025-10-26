@@ -25,6 +25,7 @@ import Read from '@/app/[lang]/wiki/[slug]/[bias]/read';
 import { WikipediaDataProvider } from '@/app/[lang]/wiki/[slug]/[bias]/wikipedia-data-provider';
 import { useEffect, useState } from 'react';
 import HistoryPage from '@/app/[lang]/wiki/[slug]/[bias]/(client-renders)/history';
+import TalkPage from './(client-renders)/talk';
 
 interface WikiTabsProps {
   bias: string;
@@ -39,10 +40,18 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams?.get('mode');
+  const content = searchParams?.get('content');
   const [headings, setHeadings] = useState<any[]>([]);
-  const [mounted, setMounted] = useState(false);  
+  const [mounted, setMounted] = useState(false);
 
-  const getDefaultTab = (mode?: string | null) => {
+  const getDefaultOuterTab = (content?: string | null) => {
+    switch (content) {
+      case 'talk': return 'tab-2';
+      default: return 'tab-1'; // article
+    }
+  };
+
+  const getDefaultInnerTab = (mode?: string | null) => {
     switch (mode) {
       case 'edit': return 'tab-2';
       case 'history': return 'tab-3';
@@ -72,6 +81,20 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     setMounted(true);
   }, []);
 
+  const handleOuterTabChange = (value: string) => {
+    if (!searchParams) return;
+    const params = new URLSearchParams(searchParams.toString());
+    let talk: string;
+    switch (value) {
+      case 'tab-2': talk = 'talk'; break;
+      default: talk = '';
+    }
+    params.set('content', talk);
+    params.delete('mode');
+    // Update URL without triggering navigation
+    window.history.replaceState(null, '', `?${params.toString()}`);
+  }
+
   const handleInnerTabChange = (value: string) => {
     if (!searchParams) return;
     const params = new URLSearchParams(searchParams.toString());
@@ -82,6 +105,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
       default: mode = 'read';
     }
     params.set('mode', mode);
+    params.delete('content');
     // Update URL without triggering navigation
     window.history.replaceState(null, '', `?${params.toString()}`);
   };
@@ -98,7 +122,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
         </>
       )}
       {mounted ? (
-        <Tabs defaultValue="tab-1" suppressHydrationWarning={true} id="wiki-tabs">
+        <Tabs onValueChange={handleOuterTabChange} defaultValue={getDefaultOuterTab(content)} suppressHydrationWarning={true} id="wiki-tabs">
           <div className="relative flex items-end justify-between border-b border-border">
             {/* Title on the left */}
             <div
@@ -129,7 +153,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
           <TabsContent value="tab-1">
             {/* Edit tabs */}
             <Tabs
-              defaultValue={getDefaultTab(mode)}
+              defaultValue={getDefaultInnerTab(mode)}
               onValueChange={handleInnerTabChange}
               suppressHydrationWarning={true}
               id="inner-tabs"
@@ -207,10 +231,8 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
             </Tabs>
           </TabsContent>
           <TabsContent value="tab-2">
-            <p className="text-muted-foreground p-4 text-center text-xs">
-              <ClientLoadedSignal />
-              Talk
-            </p>
+            <ClientLoadedSignal />
+            <TalkPage language={lang} slug={slug} bias={bias} />
           </TabsContent>
         </Tabs>
       ) : (

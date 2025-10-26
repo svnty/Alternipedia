@@ -75,20 +75,6 @@ export default async function Layout({
 
   const dict = getDictionary(lang as Locale);
 
-  // Resolve a random article title on the server so we don't pass a Promise into the JSX
-  let randomHref = `/${lang}/wiki`;
-  try {
-    const randomDoc: any = await wtf.random({ lang });
-    // wtf_wikipedia documents sometimes expose title() as a function
-    const title = typeof randomDoc?.title === 'function' ? randomDoc.title() : randomDoc?.title;
-    if (title) {
-      randomHref = `/${lang}/wiki/${encodeURI(String(title))}/wikipedia`;
-    }
-  } catch (err) {
-    // If the call fails, keep the fallback link to the wiki index
-    // Optionally: log the error server-side or report to monitoring
-  }
-
   const onSubmitFeedback = async (data: FormData) => {
     "use server";
 
@@ -135,7 +121,7 @@ export default async function Layout({
               <DropdownMenuContent collisionPadding={8}>
                 <DropdownMenuItem className="cursor-pointer" asChild><Link href={`/${lang}`}>{dict.navigation.aboutUs}</Link></DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer" asChild><Link href={`/${lang}/news`}>{dict.navigation.currentEvents}</Link></DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" asChild><Link href={randomHref}>{dict.navigation.randomArticle}</Link></DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer" asChild><Link href={`/${lang}/random`}>{dict.navigation.randomArticle}</Link></DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer" asChild><Link href={`/${lang}/help`}>{dict.navigation.help}</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

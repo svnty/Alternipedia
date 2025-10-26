@@ -210,6 +210,7 @@ export default async function Page({
         if (wikipediaJson) {
           const $ = load(wikipediaJson.parse.text);
           $('.infobox').addClass('flex justify-center md:float-right m-6');
+          $('.infobox .infobox-image').addClass('stupid-image-fix');
           $('.mw-editsection').remove();
           $('.sistersitebox').remove();
           $('.mw-image-border').remove();
@@ -253,7 +254,7 @@ export default async function Page({
           $('ol li').addClass('ml-6');
           $('div.sidebar-list-title').addClass('!text-center');
           $('.sidebar-below img').addClass('hidden');
-          $('ul').addClass('list-disc ml-6');
+          $('ul').addClass('!list-disc ml-6');
           $('ul li').addClass('ml-6');  
           $('.infobox-data > ul.list-disc.ml-6 > li.ml-6').removeClass('ml-6').addClass('ml-2');
           $('.infobox-data > ul.list-disc.ml-6').removeClass('ml-6');
@@ -373,6 +374,13 @@ export default async function Page({
       })),
     } : null;
 
+    // If the chosen revision is marked as violating law, keep a flag and
+    // avoid exposing the revision blocks to the reader. This lets the UI
+    // show a blocked/forbidden message instead of rendering content.
+    if (mappedRevision && mappedRevision.violatesLaw) {
+      mappedRevision.revisionBlocks = [];
+    }
+
     if (!mappedRevision) {
       mappedRevision = {
         id: null,
@@ -385,6 +393,11 @@ export default async function Page({
 
   return (
     <div>
+      <style>
+        {`.stupid-image-fix {
+          display: revert !important;
+        }`}
+      </style>
       <span>
         {bias === 'socialist' && (
           <WikiTabs revision={mappedRevision} slug={slug} lang={lang} bias={bias} />
