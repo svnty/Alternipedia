@@ -420,6 +420,7 @@ export default function Article({
   useEffect(() => {
     const onUnload = () => {
       setIsLoadingBias(true);
+
       (window as any).__page_loaded_handled__ = false;
 
       if (typeof window !== 'undefined') {
@@ -433,6 +434,10 @@ export default function Article({
           }
         }
       }
+      
+      const params = new URLSearchParams(window.location.search);
+      params.delete('content');
+      window.history.replaceState(null, '', `?${params.toString()}`);
     };
 
     window.addEventListener("unload-signal", onUnload);

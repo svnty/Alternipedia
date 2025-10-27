@@ -64,7 +64,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   </style>
 `);
 
-  $('head').append(`<script src="https://unpkg.com/iframe-resizer/js/iframeResizer.contentWindow.min.js"></script>`)
+  $('head').append(`
+    <script>
+function sendHeight() {
+  const body = document.getElementById("bodyContent") || document.body;
+  if (!body) return; // fail-safe
+  const height = body.scrollHeight;
+  window.parent.postMessage({ type: "wiki-height", height }, "*");
+}
+
+function setupObserver() {
+  const body = document.getElementById("bodyContent") || document.body;
+  if (!body) return;
+
+  sendHeight(); // initial height
+
+  const observer = new MutationObserver(sendHeight);
+  observer.observe(body, { childList: true, subtree: true });
+}
+
+window.addEventListener("load", setupObserver);
+</script>
+  `);
 
   const head = $('head').html();
   const bodyContent = $('#bodyContent').html(); // includes parent for safety

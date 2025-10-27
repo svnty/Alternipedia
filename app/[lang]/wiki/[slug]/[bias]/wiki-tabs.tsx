@@ -196,19 +196,19 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   //   }
   // }, [wikipediaHtml, wikipediaCss]);
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [height, setHeight] = useState("0px");
+
   useEffect(() => {
-    import('iframe-resizer/js/iframeResizer').then(({ default: iframeResizer }) => {
-      iframeResizer(
-        {
-          license: "GPLv3",
-          log: false,
-          checkOrigin: false,
-          heightCalculationMethod: 'max',
-        },
-        '#wikiFrame'
-      );
-    });
-  }, []);
+    const handleMessage = (event: MessageEvent) => {
+      // if (event.origin !== new URL(`/api/wiki-proxy?slug=${slug}&lang=${lang}`).origin) return;
+      if (event.data.type === "wiki-height") {
+        setHeight(event.data.height + "px");
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [isWikipedia, slug, lang]);
 
   const requestedRevisionParam = searchParams?.get('revision');
   const isRevisionParamNumeric = !!requestedRevisionParam && /^\d+$/.test(requestedRevisionParam);
@@ -381,11 +381,13 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                     </div>
 
                     <iframe
+                      ref={iframeRef}
                       onLoad={() => setLoaded(true)}
                       id="wikiFrame"
                       src={`/api/wiki-proxy?slug=${slug}&lang=${lang}`}
                       style={{
                         width: '100%',
+                        height: height,
                         border: 'none',
                         overflow: 'hidden',
                       }}
