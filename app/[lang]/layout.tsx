@@ -211,7 +211,7 @@ export default async function Layout({
                           name="feedback"
                           placeholder="How can we improve alternipedia?"
                           aria-label="Send feedback"
-                          maxLength={1000}
+                          maxLength={2000}
                           minLength={10}
                         />
                         <DialogClose asChild>

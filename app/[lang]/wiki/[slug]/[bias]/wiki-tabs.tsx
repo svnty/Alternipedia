@@ -53,6 +53,10 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const isWikipedia = bias === 'wikipedia';
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [height, setHeight] = useState("0px");
+  const requestedRevisionParam = searchParams?.get('revision');
+  const isRevisionParamNumeric = !!requestedRevisionParam && /^\d+$/.test(requestedRevisionParam);
+  const showRevisionBanner = isRevisionParamNumeric && !(revision && revision.violatesLaw);
+  const revisionDateString = revision?.createdAt ? new Date(revision.createdAt).toLocaleString(lang || 'en') : null;
 
   const getDefaultOuterTab = (isTalkTab: boolean) => {
     return isTalkTab ? 'tab-2' : 'tab-1'; // article
@@ -156,9 +160,6 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     }
   }, [headings]);
 
-
-
-
   useEffect(() => {
     if (isTalkTab && isWikipedia) {
       // delete content param and reset to article tab
@@ -172,7 +173,6 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     }
   }, [bias, slug, lang, isTalkTab, mode]);
 
-
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       // if (event.origin !== new URL(`/api/wiki-proxy?slug=${slug}&lang=${lang}`).origin) return;
@@ -183,11 +183,6 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, [isWikipedia, slug, lang]);
-
-  const requestedRevisionParam = searchParams?.get('revision');
-  const isRevisionParamNumeric = !!requestedRevisionParam && /^\d+$/.test(requestedRevisionParam);
-  const showRevisionBanner = isRevisionParamNumeric && !(revision && revision.violatesLaw);
-  const revisionDateString = revision?.createdAt ? new Date(revision.createdAt).toLocaleString(lang || 'en') : null;
 
   return (
     <div className={`relative w-full mb-6 ${isWikipedia ? '' : 'wikipedia-article'}`}>

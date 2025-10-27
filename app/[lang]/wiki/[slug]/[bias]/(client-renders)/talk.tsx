@@ -9,6 +9,10 @@ import { Button } from '@/app/(components)/ui/button'
 import { Label } from '@/app/(components)/ui/label'
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/app/(components)/ui/select'
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from '@/app/(components)/ui/tooltip'
+import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter, DialogHeader, DialogTrigger, DialogClose } from '@/app/(components)/ui/dialog'
+import { Input } from '@/app/(components)/ui/input'
+import { Textarea } from '@/app/(components)/ui/textarea'
+import { useSession } from 'next-auth/react';
 
 type ThreadItem = {
   id: string
@@ -31,47 +35,53 @@ export default function Talk({ language, slug, bias }: { language: string; slug:
   const [filter, setFilter] = useState<'all' | 'open' | 'closed'>('all')
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(5)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [newTitle, setNewTitle] = useState('')
+  const [newContent, setNewContent] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [formError, setFormError] = useState<string | null>(null)
+  const { data: session, status } = useSession();
+
+  // Extracted loader so we can call it after creating a thread as well
+  async function loadThreads() {
+    setLoading(true)
+    setError(null)
+    const slugVal = slug || params?.slug
+    const lang = language || params?.lang || 'en'
+    const biasVal = bias || (path?.split('/')[4] ?? '')
+    try {
+      if (!slugVal || !biasVal) {
+        setData([])
+        setLoading(false)
+        return
+      }
+
+      const q = new URLSearchParams({ slug: String(slugVal), lang: String(lang), bias: String(biasVal) })
+      const resp = await fetch(`/api/threads?${q.toString()}`)
+      if (!resp.ok) throw new Error(`API error: ${resp.status}`)
+      const body = await resp.json()
+      const mapped: ThreadItem[] = (body.threads || []).map((t: any) => ({
+        id: String(t.id),
+        title: t.title,
+        content: t.content,
+        comments: t.comments || [],
+        status: t.status,
+        violatesLaw: !!t.violatesLaw,
+        createdAt: t.createdAt,
+        url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/${t.id}`,
+      }))
+      setData(mapped);
+    } catch (e: any) {
+      console.error(e)
+      setError(null)
+      setData([]);
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    async function load() {
-      setLoading(true)
-      setError(null)
-      const slugVal = slug || params?.slug
-      const lang = language || params?.lang || 'en'
-      const biasVal = bias || (path?.split('/')[4] ?? '')
-      try {
-        if (!slugVal || !biasVal) {
-          setData([])
-          setLoading(false)
-          return
-        }
-
-        const q = new URLSearchParams({ slug: String(slugVal), lang: String(lang), bias: String(biasVal) })
-        // API not implemented yet - expected shape: { threads: Thread[] }
-        const resp = await fetch(`/api/threads?${q.toString()}`)
-        if (!resp.ok) throw new Error(`API error: ${resp.status}`)
-        const body = await resp.json()
-        const mapped: ThreadItem[] = (body.threads || []).map((t: any) => ({
-          id: String(t.id),
-          title: t.title,
-          content: t.content,
-          comments: t.comments || [],
-          status: t.status,
-          violatesLaw: !!t.violatesLaw,
-          createdAt: t.createdAt,
-          url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/${t.id}`,
-        }))
-        setData(mapped);
-      } catch (e: any) {
-        console.error(e)
-        setError(null)
-        setData([]);
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    load()
+    loadThreads()
   }, [language, slug, bias, params, path])
 
   const filtered = useMemo(() => {
@@ -136,9 +146,102 @@ export default function Talk({ language, slug, bias }: { language: string; slug:
           <div className="flex items-start justify-between">
             {/* Left: Create new button */}
             <div className="flex items-center gap-2 my-auto">
-              <Button size="sm" className='cursor-pointer' onClick={() => { /* TODO: open composer/modal to create a new thread */ }}>
-                Create new
-              </Button>
+              {status !== 'authenticated' && (
+                <TooltipProvider delayDuration={0}>
+                  <Tooltip persistOnClick={true}>
+                    <TooltipTrigger asChild>
+                      <Button size="sm" className='cursor-pointer' disabled={true}>
+                        Create new
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="px-2 py-1 text-xs" side="top" withBackdrop={true} collisionPadding={8} showArrow={true}>
+                      You must be logged in to create a new thread.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+              {status === 'authenticated' && (
+                <Dialog open={isDialogOpen} onOpenChange={(o) => setIsDialogOpen(o)}>
+                  <DialogTrigger asChild>
+                    <Button size="sm" className='cursor-pointer' disabled={status !== 'authenticated'}>
+                      Create new
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-xl">
+                    <DialogHeader>
+                      <DialogTitle>Create new thread</DialogTitle>
+                      <DialogDescription>Start a new discussion about improvements to this article.</DialogDescription>
+                    </DialogHeader>
+
+                    <form
+                      onSubmit={async (e) => {
+                        e.preventDefault()
+                        setFormError(null)
+                        const titleTrim = newTitle.trim()
+                        const contentTrim = newContent.trim()
+                        if (!titleTrim) { setFormError('Title is required'); return }
+                        if (titleTrim.length > 300) { setFormError('Title must be 300 characters or fewer'); return }
+                        if (!contentTrim) { setFormError('Content is required'); return }
+                        if (contentTrim.length > 2000) { setFormError('Content must be 2000 characters or fewer'); return }
+
+                        setSubmitting(true);
+                        try {
+                          const slugVal = slug || params?.slug
+                          const lang = language || params?.lang || 'en'
+                          const biasVal = bias || (path?.split('/')[4] ?? '')
+                          const resp = await fetch('/api/threads', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ title: titleTrim, content: contentTrim, slug: slugVal, lang, bias: biasVal })
+                          });
+                          if (!resp.ok) {
+                            const body = await resp.json().catch(() => ({}))
+                            throw new Error(body?.message || `API error: ${resp.status}`)
+                          }
+
+                          // success: close modal, reset and reload
+                          setIsDialogOpen(false);
+                          setNewTitle('');
+                          setNewContent('');
+                          await loadThreads();
+                        } catch (err: any) {
+                          console.error(err);
+                          setFormError(err?.message || 'Failed to create thread');
+                        } finally {
+                          setSubmitting(false);
+                        }
+                      }}
+                    >
+                      <div className="grid gap-2">
+                        {/* <Label htmlFor={`new-title-${id}`}>Title</Label> */}
+                        <Input id={`new-title-${id}`} value={newTitle} onChange={(e) => setNewTitle(e.target.value)} maxLength={300} placeholder="Title (max 300 chars)" />
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <div />
+                          <div>{newTitle.length}/300</div>
+                        </div>
+
+                        {/* <Label htmlFor={`new-content-${id}`}>Content</Label> */}
+                        <Textarea id={`new-content-${id}`} value={newContent} onChange={(e) => setNewContent(e.target.value)} maxLength={2000} placeholder="Describe the issue or suggested change (max 2000 chars)" />
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <div />
+                          <div>{newContent.length}/2000</div>
+                        </div>
+
+                        {formError ? <div className="text-sm text-red-500">{formError}</div> : null}
+
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <Button variant="outline" type="button" className='cursor-pointer'>Cancel</Button>
+                          </DialogClose>
+                          <Button type="submit" disabled={submitting} className='cursor-pointer'>
+                            {submitting ? 'Creating…' : 'Create'}
+                          </Button>
+                        </DialogFooter>
+                      </div>
+                    </form>
+                  </DialogContent>
+                </Dialog>
+              )}
             </div>
 
             {/* Right: filter dropdown stays right-aligned */}

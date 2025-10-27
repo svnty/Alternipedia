@@ -83,6 +83,8 @@ model ModeratorBias {
 
   bias      Bias     @relation(fields: [biasId], references: [id])
   biasId    Int
+  
+  language  Language
 
   assignedBy User   @relation("ModeratorBiasAssignedByAdmin", fields: [assignedByAdminId], references: [id])
   assignedByAdminId String
@@ -253,6 +255,7 @@ model Thread {
   reports Reports[]
   title   String   @db.VarChar(300)
   content    String   @db.VarChar(2000)
+  language   Language
 
   createdAt DateTime @default(now())
 }
