@@ -65,6 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       </style>`);
 
     $('#toc').remove();
+    $('.clade-gallery').remove();
   }
 
   // Keep head for CSS/JS
