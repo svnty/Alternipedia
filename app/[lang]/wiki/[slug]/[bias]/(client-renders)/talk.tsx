@@ -61,105 +61,11 @@ export default function Talk({ language, slug, bias }: { language: string; slug:
           createdAt: t.createdAt,
           url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/${t.id}`,
         }))
-
-        // If API returned no threads, fall back to mock data for preview
-        if (!mapped.length) {
-          const sample: ThreadItem[] = [
-            {
-              id: '1',
-              title: 'Typo in the introduction',
-              content: 'There is a small typo in the first paragraph that should be fixed.',
-              comments: [],
-              status: 'OPEN',
-              violatesLaw: false,
-              createdAt: new Date().toISOString(),
-              url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/1`,
-            },
-            {
-              id: '2',
-              title: 'Potential biased wording',
-              content: 'This sentence might be biased and could use a neutral rewording.',
-              comments: [],
-              status: 'IN_REVIEW',
-              violatesLaw: false,
-              createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-              url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/2`,
-            },
-            {
-              id: '3',
-              title: 'Removed defamatory content',
-              content: 'Moderator removed content violating policy.',
-              comments: [],
-              status: 'RESOLVED',
-              violatesLaw: true,
-              createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
-              url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/3`,
-            },
-            {
-              id: '4',
-              title: 'Duplicate discussion about sources',
-              content: 'Duplicate of thread #5 about reliable sources.',
-              comments: [],
-              status: 'DUPLICATE',
-              violatesLaw: false,
-              createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
-              url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/4`,
-            },
-          ]
-
-          setData(sample)
-        } else {
-          setData(mapped)
-        }
+        setData(mapped);
       } catch (e: any) {
-        // If the API fails (404, network error, etc.) fall back to sample data so
-        // the UI can be iterated on during development.
         console.error(e)
-        const sample: ThreadItem[] = [
-          {
-            id: '1',
-            title: 'Typo in the introduction',
-            content: 'There is a small typo in the first paragraph that should be fixed.',
-            comments: [],
-            status: 'OPEN',
-            violatesLaw: false,
-            createdAt: new Date().toISOString(),
-            url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/1`,
-          },
-          {
-            id: '2',
-            title: 'Potential biased wording',
-            content: 'This sentence might be biased and could use a neutral rewording.',
-            comments: [],
-            status: 'IN_REVIEW',
-            violatesLaw: false,
-            createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-            url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/2`,
-          },
-          {
-            id: '3',
-            title: 'Removed defamatory content',
-            content: 'Moderator removed content violating policy.',
-            comments: [],
-            status: 'RESOLVED',
-            violatesLaw: true,
-            createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
-            url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/3`,
-          },
-          {
-            id: '4',
-            title: 'Duplicate discussion about sources',
-            content: 'Duplicate of thread #5 about reliable sources.',
-            comments: [],
-            status: 'DUPLICATE',
-            violatesLaw: false,
-            createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
-            url: `/${encodeURIComponent(String(lang))}/wiki/${encodeURIComponent(String(slugVal))}/${encodeURIComponent(String(biasVal))}/thread/4`,
-          },
-        ]
-
         setError(null)
-        setData(sample)
+        setData([]);
       } finally {
         setLoading(false)
       }
