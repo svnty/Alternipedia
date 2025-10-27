@@ -434,15 +434,30 @@ export default function Article({
           }
         }
       }
-      
-      const params = new URLSearchParams(window.location.search);
-      params.delete('content');
-      window.history.replaceState(null, '', `?${params.toString()}`);
     };
 
     window.addEventListener("unload-signal", onUnload);
     return () => window.removeEventListener("unload-signal", onUnload);
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.delete('content');
+
+    const newPathSegments = pathname?.split('/');
+    console.log(newPathSegments)
+
+    const newPathSegmentsSplitIndex = newPathSegments?.indexOf('thread');
+
+    if (newPathSegmentsSplitIndex && newPathSegmentsSplitIndex > -1) {
+      newPathSegments?.splice(newPathSegmentsSplitIndex, newPathSegments.length);
+    }
+
+    const newPathname = newPathSegments?.join('/');
+    console.log(newPathname);
+
+    window.history.replaceState(null, '', `${newPathname}?${params.toString()}`);
+  }, [pathname]);
 
   const handleApplyBias = (bias: string, opts?: { replace?: boolean }) => {
     window.dispatchEvent(new CustomEvent('unload-signal'));

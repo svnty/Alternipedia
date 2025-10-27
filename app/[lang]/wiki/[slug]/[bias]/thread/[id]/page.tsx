@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string;
   // Load thread with comments, article and bias for permission checks
   const threadId = parseInt(id, 10)
   const thread = await withRetry(() => prisma.thread.findUnique({
-    where: { id: threadId },
+    where: { id: threadId, bias: { name: String(bias) } },
     include: {
       author: { select: { id: true, name: true } },
       comments: { include: { author: { select: { id: true, name: true } } }, orderBy: { createdAt: 'asc' } },
