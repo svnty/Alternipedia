@@ -44,7 +44,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-semibold mb-4">What is Alternipedia?</h2>
           <p className="text-gray-700 leading-relaxed">
-            On Alternipedia, every article can be viewed through multiple perspectives — from conservative to socialist, secular to religious.
+            On Alternipedia, every article can be viewed through multiple perspectives — from conservative to socialist, agnostic to religious.
             We believe that understanding bias helps readers form balanced opinions and make informed decisions.
             Articles are collaboratively edited by users, just like Wikipedia, but with open acknowledgment of differing viewpoints.
           </p>

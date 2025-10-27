@@ -62,7 +62,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .infobox.biota {
         width: 100% !important;
       }
-      </style>`);
+      .mw-parser-output div.hatnote {
+        padding-left: 0 !important;
+      }
+      </style>
+    `);
 
     $('#toc').remove();
     $('.clade-gallery').remove();
@@ -70,9 +74,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     $('head').append(`
       <style>
         #mw-content-text {
-          line-height: 1.33 !important;
+          line-height: 1.5 !important;
         }
-      </style>`);
+      </style>
+    `);
+
+    $('#contentSub').remove();
   }
 
   // Keep head for CSS/JS

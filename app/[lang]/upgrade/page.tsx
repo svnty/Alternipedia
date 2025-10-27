@@ -4,7 +4,6 @@ import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { notFound } from 'next/navigation';
 import Link from "next/link";
-import { Zap } from "lucide-react";
 
 export default async function Pricing({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
