@@ -352,9 +352,10 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                       ref={iframeRef}
                       onLoad={() => setLoaded(true)}
                       id="wikiFrame"
-                      src={`/api/wiki-proxy?slug=${slug}&lang=${lang}&mobile=${isMobile ? '1' : '0'}`}
+                      src={`/api/wiki-proxy?slug=${slug}&lang=${lang}`}
+                      className={`${isMobile ? '-mx-4' : ''}`}
                       style={{
-                        width: '100%',
+                        width: isMobile ? '110%' : '100%',
                         height: height,
                         border: 'none',
                         overflow: 'hidden',

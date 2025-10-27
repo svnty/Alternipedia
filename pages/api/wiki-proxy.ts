@@ -5,15 +5,20 @@ import * as cheerio from 'cheerio';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug as string;
   const lang = req.query.lang || 'en';
-  const isMobile = req.query.mobile === '1';
-  let url = '';
+  const userAgent = req.headers["user-agent"] || "";
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(userAgent);
+  let url = `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`;
   if (isMobile) {
     url = `https://${lang}.m.wikipedia.org/wiki/${encodeURIComponent(slug)}`;
-  } else {
-    url = `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`;
   }
 
-  const html = await fetch(url).then(r => r.text());
+  const html = await fetch(url, {
+    headers: {
+      "User-Agent": userAgent,
+      "Accept": req.headers["accept"] || "*/*",
+    },
+  }).then(r => r.text());
+
   const $ = cheerio.load(html);
 
   $('link[rel="stylesheet"]').each((_, el) => {
@@ -49,6 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   $('.navbox').remove();
   $('.vector-body-before-content').remove();
   $('.mwe-popups').remove();
+  $('.mw-editsection').remove();
 
   // Keep head for CSS/JS
   $('head').append(`
@@ -95,7 +101,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   `);
 
   const head = $('head').html();
-  const bodyContent = $('#bodyContent').html(); // includes parent for safety
+  const bodyContent = $('#bodyContent').html();
 
   // Build stripped HTML
   const minimalHtml = `
@@ -103,7 +109,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     <html lang="${lang}">
       <head>${head}</head>
       <body>
-        <div id="bodyContentWrapper">
+        <div id="bodyContentWrapper" class="content">
           ${bodyContent}
         </div>
       </body>
