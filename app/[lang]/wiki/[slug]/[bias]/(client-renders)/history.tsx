@@ -181,7 +181,7 @@ export default function HistoryPage() {
           <div className="flex items-start justify-between">
             <div />
             <div className="flex items-center gap-2">
-              <Label htmlFor={`sort-${id}`} className="hidden">Sort</Label>
+              <Label htmlFor={`sort-${id}`} className="text-sm text-muted-foreground font-normal">Sort by:</Label>
               <Select value={sortMode} onValueChange={(v) => { setSortMode(v as any); setPageIndex(0) }}>
                 <SelectTrigger id={`sort-${id}`} className="w-44">
                   <SelectValue placeholder="Sort" />

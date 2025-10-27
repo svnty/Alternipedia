@@ -812,6 +812,7 @@ export default function Article({
       {/* END RIGHT SIDEBAR */}
 
       {/* MAIN CONTENT */}
+      {/* <div className="react-to-print-container lg:mx-[calc(var(--spacing)*59)] xl:mx-[calc(var(--spacing)*59)] 2xl:mx-96 px-6 py-2 overflow-x-hidden min-h-screen" ref={printRef}> */}
       <div className="react-to-print-container lg:mx-64 xl:mx-64 2xl:mx-96 px-6 py-2 overflow-x-hidden min-h-screen" ref={printRef}>
         {/* Loading overlay when bias is changing */}
         <LoadingOverlay

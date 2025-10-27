@@ -48,9 +48,10 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const [headings, setHeadings] = useState<any[]>([]);
   const [mounted, setMounted] = useState(false);
   const [wikipediaCss, setWikiCss] = useState('');
-  const [loadedCss, setLoadedCss] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
   const dict = getDictionary(lang as Locale);
   const wikipediaContainerRef = useRef<HTMLDivElement>(null);
+  const isWikipedia = bias === 'wikipedia';
 
   const getDefaultOuterTab = (content?: string | null) => {
     switch (content) {
@@ -66,28 +67,6 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
       default: return 'tab-1'; // read
     }
   };
-
-  useEffect(() => {
-    if (!revision) return;
-    if (!revision.revisionBlocks) {
-      setHeadings([]);
-      return;
-    }
-    let newHeadings: any[] = [];
-    revision.revisionBlocks.forEach((rb: any) => {
-      if (rb.block.type === 'heading') {
-        let heading = { title: rb.block.content.content[0].text, depth: rb.block.content.attrs.level };
-        newHeadings.push(heading);
-      }
-    });
-    setHeadings(newHeadings);
-  }, [revision]);
-
-  useEffect(() => {
-    // Ensure we only render the interactive Tabs after client mount to avoid
-    // hydration mismatches caused by Radix's internally generated ids.
-    setMounted(true);
-  }, []);
 
   const handleOuterTabChange = (value: string) => {
     if (!searchParams) return;
@@ -122,7 +101,27 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     window.history.replaceState(null, '', `?${params.toString()}`);
   };
 
-  const isWikipedia = bias === 'wikipedia';
+  useEffect(() => {
+    if (!revision) return;
+    if (!revision.revisionBlocks) {
+      setHeadings([]);
+      return;
+    }
+    let newHeadings: any[] = [];
+    revision.revisionBlocks.forEach((rb: any) => {
+      if (rb.block.type === 'heading') {
+        let heading = { title: rb.block.content.content[0].text, depth: rb.block.content.attrs.level };
+        newHeadings.push(heading);
+      }
+    });
+    setHeadings(newHeadings);
+  }, [revision]);
+
+  useEffect(() => {
+    // Ensure we only render the interactive Tabs after client mount to avoid
+    // hydration mismatches caused by Radix's internally generated ids.
+    setMounted(true);
+  }, []);
 
   // If this is a Wikipedia page, derive headings from the server-provided
   // `wikipediaData` (already fetched in `page.tsx`) and set them into state.
@@ -159,40 +158,57 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     }
   }, [headings]);
 
+  // useEffect(() => {
+  //   if (!isWikipedia) return;
+
+  //   const getWikipediaCss = async () => {
+  //     const data = await fetch(
+  //       `https://${lang}.wikipedia.org/w/load.php?lang=${lang}&modules=site.styles|skins.vector.styles.legacy|mediawiki.ui.gallery|mediawiki.special.gallery&only=styles&skin=vector`
+  //     );
+  //     if (!data.ok) {
+  //       throw new Error('Failed to fetch Wikipedia CSS');
+  //     }
+  //     const cssText = await data.text();
+  //     let scopedCss = cssText.replace(
+  //       /url\((['"]?)(\/w\/[^'")]+)\1\)/g,
+  //       (_, quote, path) => `url(${quote}https://${lang}.wikipedia.org${path}${quote})`
+  //     );
+  //     setWikiCss(scopedCss);
+  //     setLoadedCss(true);
+  //   };
+
+  //   getWikipediaCss();
+  // }, [isWikipedia, wikipediaData]);
+
+  // useEffect(() => {
+  //   if (!wikipediaContainerRef.current) return;
+  //   try {
+  //     const shadow = wikipediaContainerRef.current.attachShadow({ mode: 'open' });
+  //     const style = document.createElement('style');
+  //     style.textContent = wikipediaCss;
+  //     shadow.appendChild(style);
+
+  //     const content = document.createElement('div');
+  //     content.innerHTML = wikipediaHtml;
+  //     shadow.appendChild(content);
+  //   } catch (err) {
+  //     console.error('Error setting up Wikipedia shadow DOM:', err);
+  //   }
+  // }, [wikipediaHtml, wikipediaCss]);
+
   useEffect(() => {
-    if (!isWikipedia) return;
-
-    const getWikipediaCss = async () => {
-      const data = await fetch(
-        `https://${lang}.wikipedia.org/w/load.php?lang=${lang}&modules=site.styles|skins.vector.styles.legacy|mediawiki.ui.gallery|mediawiki.special.gallery&only=styles&skin=vector`
+    import('iframe-resizer/js/iframeResizer').then(({ default: iframeResizer }) => {
+      iframeResizer(
+        {
+          license: "GPLv3",
+          log: false,
+          checkOrigin: false,
+          heightCalculationMethod: 'max',
+        },
+        '#wikiFrame'
       );
-      if (!data.ok) {
-        throw new Error('Failed to fetch Wikipedia CSS');
-      }
-      const cssText = await data.text();
-      let scopedCss = cssText.replace(
-        /url\((['"]?)(\/w\/[^'")]+)\1\)/g,
-        (_, quote, path) => `url(${quote}https://${lang}.wikipedia.org${path}${quote})`
-      );
-      setWikiCss(scopedCss);
-      setLoadedCss(true);
-    };
-
-    getWikipediaCss();
-  }, [isWikipedia, wikipediaData]);
-
-  useEffect(() => {
-    if (!wikipediaContainerRef.current) return;
-
-    const shadow = wikipediaContainerRef.current.attachShadow({ mode: 'open' });
-    const style = document.createElement('style');
-    style.textContent = wikipediaCss;
-    shadow.appendChild(style);
-
-    const content = document.createElement('div');
-    content.innerHTML = wikipediaHtml;
-    shadow.appendChild(content);
-  }, [wikipediaHtml, wikipediaCss]);
+    });
+  }, []);
 
   const requestedRevisionParam = searchParams?.get('revision');
   const isRevisionParamNumeric = !!requestedRevisionParam && /^\d+$/.test(requestedRevisionParam);
@@ -317,11 +333,11 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                 {/* Start Article */}
                 {isWikipedia ? (
                   <>
-                    {loadedCss && (
+                    {loaded && (
                       <ClientLoadedSignal />
                     )}
 
-                    <div className="self-stretch p-4 m-6 mt-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
+                    <div className="self-stretch p-4 m-2 bg-blue-50 border-l-4 border-blue-400 rounded-r flex items-center">
                       <img
                         src="/wikipedia.png"
                         alt="Wikipedia Bias"
@@ -363,7 +379,17 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                         </div>
                       </div>
                     </div>
-                    <div id="wiki-article" className="wikipedia-article" ref={wikipediaContainerRef} />
+
+                    <iframe
+                      onLoad={() => setLoaded(true)}
+                      id="wikiFrame"
+                      src={`/api/wiki-proxy?slug=${slug}&lang=${lang}`}
+                      style={{
+                        width: '100%',
+                        border: 'none',
+                        overflow: 'hidden',
+                      }}
+                    />
                   </>
                 ) : (
                   <>
