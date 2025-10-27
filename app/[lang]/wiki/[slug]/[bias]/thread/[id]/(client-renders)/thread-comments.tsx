@@ -18,20 +18,6 @@ export default function ThreadComments({ threadId, canModerate, threadStatus }: 
 
   useEffect(() => {
     let mounted = true;
-    async function loadPermissions() {
-      try {
-        const resp = await fetch(`/api/thread-comments?threadId=${encodeURIComponent(String(threadId))}`)
-        if (!resp.ok) return
-        const body = await resp.json()
-        if (!mounted) return
-        setCanModerate(!!body.moderator)
-        setThreadStatus(body.status ?? null)
-        setSelectedStatus(body.status ?? 'OPEN')
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    loadPermissions()
     return () => { mounted = false }
   }, [threadId])
 
@@ -90,7 +76,7 @@ export default function ThreadComments({ threadId, canModerate, threadStatus }: 
         <Textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="Write a comment..." maxLength={2000} />
         {error ? <div className="text-sm text-red-500">{error}</div> : null}
         <div className="flex justify-end">
-          <Button type="submit" disabled={submitting}>{submitting ? 'Posting…' : 'Post comment'}</Button>
+          <Button type="submit" disabled={submitting} className='cursor-pointer'>{submitting ? 'Posting…' : 'Post comment'}</Button>
         </div>
       </form>
     </div>

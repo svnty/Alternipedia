@@ -122,7 +122,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string;
             <div className="space-y-3">
               {thread.comments && thread.comments.length ? (
                 thread.comments.map((c: any) => (
-                  <div key={c.id} className="rounded-md border bg-background p-3">
+                  <div key={c.id} className="rounded-md border bg-background p-3 mx-12">
                     <div className="flex items-center justify-between">
                       <div className="text-sm font-medium">{c.author?.name ?? 'Unknown'}</div>
                       <div className="text-xs text-muted-foreground">{new Date(c.createdAt).toLocaleString(lang || 'en')}</div>
