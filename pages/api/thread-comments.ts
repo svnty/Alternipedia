@@ -22,7 +22,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const thread = await withRetry(() => prisma.thread.findUnique({ where: { id: Number(threadId) }, include: { article: { select: { language: true } }, bias: { select: { id: true } } } }))
       if (!thread) return res.status(400).json({ error: 'Thread not found' })
 
-      if (user.currentEditableBiasId !== thread.bias.id) {
+      let canComment = false;
+
+      if (user.currentEditableBiasId === thread.bias.id) {
+        canComment = true;
+      }
+
+      if (user.role === 'GLOBAL_ADMIN') {
+        canComment = true;
+      }
+
+      if (user.role === "ADMIN" && user.adminOfLang === thread.article.language) {
+        canComment = true;
+      }
+
+      if (!canComment) {
         return res.status(403).json({ error: 'You do not have permission to comment on this thread' })
       }
 
