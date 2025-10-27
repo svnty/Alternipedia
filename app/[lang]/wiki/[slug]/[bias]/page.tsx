@@ -57,8 +57,6 @@ export default async function Page({
 
   let mappedRevision: any = {};
   let wikipediaData: any = {};
-  let wikipediaJson: any = {};
-  let wikipediaHtml = '';
 
   if (bias === 'wikipedia') {
     const imageToJSON = (rawData: any) => {
@@ -168,73 +166,6 @@ export default async function Page({
         };
 
         wikipediaData = JSON.parse(JSON.stringify(wikipediaData));
-
-        const params = new URLSearchParams({
-          action: "parse",
-          page: wikipediaData.title,
-          prop: 'text',
-          formatversion: '2',
-          format: "json",
-          // include origin=* so the API returns CORS-friendly responses when needed
-          origin: '*',
-        });
-
-        const url = `https://${lang}.wikipedia.org/w/api.php?${params}`;
-
-        // Use a descriptive User-Agent; Wikimedia asks for a descriptive UA for automated requests.
-        const userAgent = process.env.WIKIPEDIA_USER_AGENT || 'Alternipedia/1.0 (+https://alternipedia.org)';
-
-        const response = await fetch(url, {
-          headers: {
-            Accept: 'application/json',
-            'User-Agent': userAgent,
-          },
-        });
-
-        const contentType = response.headers.get('content-type') || '';
-
-        if (!response.ok) {
-          const body = await response.text();
-          console.error(`Wikipedia API returned ${response.status} ${response.statusText} for ${url}:`, body.slice(0, 800));
-          throw new Error(`Wikipedia API error ${response.status} ${response.statusText}`);
-        }
-
-        if (!contentType.includes('application/json')) {
-          const body = await response.text();
-          console.error(`Unexpected Content-Type from Wikipedia API (${contentType}) for ${url}:`, body.slice(0, 800));
-          throw new Error(`Expected JSON from Wikipedia API but got ${contentType}`);
-        }
-
-        wikipediaJson = await response.json();
-
-        if (wikipediaJson) {
-          const $ = load(wikipediaJson.parse.text);
-          // $('table.infobox').addClass('border-separate md:!ml-4 md:!mb-2');
-          // $('table.infobox.vevent img').addClass('mx-auto');
-          // $('table.box-Update').addClass('!my-6');
-          // $('.infobox-image img').addClass('mx-auto');
-          // $('.sidebar-image img').addClass('mx-auto');
-          // $('.noviewer').remove();
-          // $('.mw-valign-text-top').remove();
-          // $('.mw-editsection').remove();
-          // $('.side-box').remove();
-          // $('div.navbox').addClass('!hidden xl:!block');
-          // $('ul').addClass('list-disc ml-6');
-
-          $("a").each((i, el) => {
-            const href = $(el).attr("href");
-
-            if (href) {
-              // Example: modify internal Wikipedia links
-              if (href.startsWith("/wiki/")) {
-                let newLink = `/${lang}${href}/wikipedia`;
-                $(el).attr("href", newLink);
-              }
-            }
-          });
-
-          wikipediaHtml = $.html();
-        }
       }
     } catch (error) {
       console.error('Error fetching Wikipedia page:', error);
@@ -356,7 +287,7 @@ export default async function Page({
       )}
 
       {bias === 'wikipedia' && (
-        <WikiTabs slug={slug} lang={lang} bias={bias} wikipediaData={wikipediaData} wikipediaHtml={wikipediaHtml} />
+        <WikiTabs slug={slug} lang={lang} bias={bias} wikipediaData={wikipediaData} />
       )}
 
       <BottomTools />

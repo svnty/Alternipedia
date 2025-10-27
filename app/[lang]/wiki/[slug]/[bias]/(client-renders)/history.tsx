@@ -106,7 +106,7 @@ export default function HistoryPage() {
 
         const q = new URLSearchParams({ slug: String(slug), lang: String(lang), bias: String(bias) })
         const resp = await fetch(`/api/revisions?${q.toString()}`)
-        if (!resp.ok) throw new Error(`API error: ${resp.status}`)
+        if (!resp.ok) throw new Error(`API error: ${resp.status}`);
         const body = await resp.json()
         const mapped: Item[] = (body.revisions || []).map((r: any) => {
           const slugVal = String(slug)
@@ -121,7 +121,7 @@ export default function HistoryPage() {
             violatesLaw: !!r.violatesLaw,
             url,
           }
-        })
+        });
         setData(mapped)
         setStarredMap(mapped.reduce((acc, it) => { acc[it.id] = !!it.starred; return acc }, {} as Record<string, boolean>))
       } catch (err: any) {

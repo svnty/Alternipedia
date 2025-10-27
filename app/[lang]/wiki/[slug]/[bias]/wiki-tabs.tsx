@@ -37,14 +37,13 @@ interface WikiTabsProps {
   lang: string;
   revision?: any;
   wikipediaData?: any;
-  wikipediaHtml?: string;
 }
 
-export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaData = null, wikipediaHtml = '' }: WikiTabsProps) {
+export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaData = null }: WikiTabsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams?.get('mode');
-  const content = searchParams?.get('content');
+  const [isTalkTab, setIsTalkTab] = useState(searchParams?.get('content') === 'talk');
   const [headings, setHeadings] = useState<any[]>([]);
   const [mounted, setMounted] = useState(false);
   const [wikipediaCss, setWikiCss] = useState('');
@@ -52,12 +51,11 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const dict = getDictionary(lang as Locale);
   const wikipediaContainerRef = useRef<HTMLDivElement>(null);
   const isWikipedia = bias === 'wikipedia';
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [height, setHeight] = useState("0px");
 
-  const getDefaultOuterTab = (content?: string | null) => {
-    switch (content) {
-      case 'talk': return 'tab-2';
-      default: return 'tab-1'; // article
-    }
+  const getDefaultOuterTab = (isTalkTab: boolean) => {
+    return isTalkTab ? 'tab-2' : 'tab-1'; // article
   };
 
   const getDefaultInnerTab = (mode?: string | null) => {
@@ -158,46 +156,22 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
     }
   }, [headings]);
 
-  // useEffect(() => {
-  //   if (!isWikipedia) return;
 
-  //   const getWikipediaCss = async () => {
-  //     const data = await fetch(
-  //       `https://${lang}.wikipedia.org/w/load.php?lang=${lang}&modules=site.styles|skins.vector.styles.legacy|mediawiki.ui.gallery|mediawiki.special.gallery&only=styles&skin=vector`
-  //     );
-  //     if (!data.ok) {
-  //       throw new Error('Failed to fetch Wikipedia CSS');
-  //     }
-  //     const cssText = await data.text();
-  //     let scopedCss = cssText.replace(
-  //       /url\((['"]?)(\/w\/[^'")]+)\1\)/g,
-  //       (_, quote, path) => `url(${quote}https://${lang}.wikipedia.org${path}${quote})`
-  //     );
-  //     setWikiCss(scopedCss);
-  //     setLoadedCss(true);
-  //   };
 
-  //   getWikipediaCss();
-  // }, [isWikipedia, wikipediaData]);
 
-  // useEffect(() => {
-  //   if (!wikipediaContainerRef.current) return;
-  //   try {
-  //     const shadow = wikipediaContainerRef.current.attachShadow({ mode: 'open' });
-  //     const style = document.createElement('style');
-  //     style.textContent = wikipediaCss;
-  //     shadow.appendChild(style);
+  useEffect(() => {
+    if (isTalkTab && isWikipedia) {
+      // delete content param and reset to article tab
+      if (!searchParams) return;
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete('content');
+      const qs = params.toString();
+      const url = `${window.location.pathname}${qs ? `?${qs}` : ''}`;
+      router.replace(url);
+      setIsTalkTab(false);
+    }
+  }, [bias, slug, lang, isTalkTab, mode]);
 
-  //     const content = document.createElement('div');
-  //     content.innerHTML = wikipediaHtml;
-  //     shadow.appendChild(content);
-  //   } catch (err) {
-  //     console.error('Error setting up Wikipedia shadow DOM:', err);
-  //   }
-  // }, [wikipediaHtml, wikipediaCss]);
-
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [height, setHeight] = useState("0px");
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -225,7 +199,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
         </>
       )}
       {mounted ? (
-        <Tabs onValueChange={handleOuterTabChange} defaultValue={getDefaultOuterTab(content)} suppressHydrationWarning={true} id="wiki-tabs">
+        <Tabs onValueChange={handleOuterTabChange} defaultValue={getDefaultOuterTab(isTalkTab)} suppressHydrationWarning={true} id="wiki-tabs">
           {/* If the URL explicitly requested a numeric revision (e.g. ?revision=123),
               show an informational banner reminding the user they're viewing a
               specific revision (don't hit the DB again — page.tsx already loaded it). */}
@@ -423,8 +397,12 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
             </Tabs>
           </TabsContent>
           <TabsContent value="tab-2">
-            <ClientLoadedSignal />
-            <TalkPage language={lang} slug={slug} bias={bias} />
+            {!isWikipedia && (
+              <section>
+                <ClientLoadedSignal />
+                <TalkPage language={lang} slug={slug} bias={bias} />
+              </section>
+            )}
           </TabsContent>
         </Tabs>
       ) : (
