@@ -109,7 +109,6 @@
     "@capacitor/cli": "^7.4.3",
     "@tailwindcss/postcss": "^4",
     "@types/culori": "^4.0.1",
-    "@types/iframe-resizer": "^4.0.0",
     "@types/lodash.throttle": "^4.1.9",
     "@types/negotiator": "^0.6.4",
     "@types/node": "^20",
