@@ -66,6 +66,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     $('#toc').remove();
     $('.clade-gallery').remove();
+  } else {
+    $('head').append(`
+      <style>
+        #mw-content-text {
+          line-height: 1.33 !important;
+        }
+      </style>`);
   }
 
   // Keep head for CSS/JS

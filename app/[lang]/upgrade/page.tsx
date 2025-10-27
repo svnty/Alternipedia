@@ -4,6 +4,7 @@ import { isValidLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { notFound } from 'next/navigation';
 import Link from "next/link";
+import { Zap } from "lucide-react";
 
 export default async function Pricing({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -18,8 +19,8 @@ export default async function Pricing({ params }: { params: Promise<{ lang: stri
     <div className="bg-defaultbgmain w-full py-12 px-[15%]">
       {/* Header Section */}
       <div className="mx-auto text-center mb-8">
-        <h1 className="font-h1 font-[number:var(--h1-font-weight)] text-black text-2xl sm:text-3xl lg:text-[length:var(--h1-font-size)] tracking-[var(--h1-letter-spacing)] leading-[var(--h1-line-height)] [font-style:var(--h1-font-style)] mb-6">
-          {dict.upgrade.title}
+        <h1 className="font-h1 cursor-default font-[number:var(--h1-font-weight)] text-black text-2xl sm:text-3xl lg:text-[length:var(--h1-font-size)] tracking-[var(--h1-letter-spacing)] leading-[var(--h1-line-height)] [font-style:var(--h1-font-style)] mb-6">
+          📚 {dict.upgrade.title} ⚡
         </h1>
       </div>
 
