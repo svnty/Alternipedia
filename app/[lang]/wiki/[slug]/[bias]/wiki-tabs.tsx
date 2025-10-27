@@ -353,10 +353,10 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                       onLoad={() => setLoaded(true)}
                       id="wikiFrame"
                       src={`/api/wiki-proxy?slug=${slug}&lang=${lang}`}
-                      className={`${isMobile ? '-mx-4' : ''}`}
+                      className="block relative left-1/2 -translate-x-1/2"
                       style={{
-                        width: isMobile ? '110%' : '100%',
-                        height: height,
+                        width: isMobile ? 'calc(100% + 2rem)' : '100%', // expands 1rem (16px) on both sides
+                        height,
                         border: 'none',
                         overflow: 'hidden',
                       }}

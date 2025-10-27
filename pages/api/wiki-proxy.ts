@@ -56,6 +56,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   $('.mwe-popups').remove();
   $('.mw-editsection').remove();
 
+  if (isMobile) {
+    $('head').append(`
+      <style>
+      .infobox.biota {
+        width: 100% !important;
+      }
+      </style>`);
+
+    $('#toc').remove();
+  }
+
   // Keep head for CSS/JS
   $('head').append(`
   <style>
