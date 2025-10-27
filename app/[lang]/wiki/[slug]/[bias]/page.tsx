@@ -10,7 +10,6 @@ import { prisma } from "@/lib/prisma";
 import { BlockType, Language } from "@prisma/client";
 import { fetchWikipediaPageWithWtf } from "@/lib/wikipedia-api";
 import { withRetry } from "@/lib/retry";
-import { load } from "cheerio";
 
 export async function generateMetadata({
   params,

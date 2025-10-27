@@ -30,6 +30,7 @@ import TalkPage from './(client-renders)/talk';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/(components)/ui/tooltip';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Locale } from '@/lib/i18n/config';
+import { isMobile } from 'react-device-detect';
 
 interface WikiTabsProps {
   bias: string;
@@ -46,10 +47,8 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
   const [isTalkTab, setIsTalkTab] = useState(searchParams?.get('content') === 'talk');
   const [headings, setHeadings] = useState<any[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [wikipediaCss, setWikiCss] = useState('');
   const [loaded, setLoaded] = useState<boolean>(false);
   const dict = getDictionary(lang as Locale);
-  const wikipediaContainerRef = useRef<HTMLDivElement>(null);
   const isWikipedia = bias === 'wikipedia';
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [height, setHeight] = useState("0px");
@@ -353,7 +352,7 @@ export default function WikiTabs({ bias, slug, lang, revision = null, wikipediaD
                       ref={iframeRef}
                       onLoad={() => setLoaded(true)}
                       id="wikiFrame"
-                      src={`/api/wiki-proxy?slug=${slug}&lang=${lang}`}
+                      src={`/api/wiki-proxy?slug=${slug}&lang=${lang}&mobile=${isMobile ? '1' : '0'}`}
                       style={{
                         width: '100%',
                         height: height,

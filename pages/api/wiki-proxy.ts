@@ -5,7 +5,13 @@ import * as cheerio from 'cheerio';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug as string;
   const lang = req.query.lang || 'en';
-  const url = `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`;
+  const isMobile = req.query.mobile === '1';
+  let url = '';
+  if (isMobile) {
+    url = `https://${lang}.m.wikipedia.org/wiki/${encodeURIComponent(slug)}`;
+  } else {
+    url = `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(slug)}`;
+  }
 
   const html = await fetch(url).then(r => r.text());
   const $ = cheerio.load(html);
@@ -25,6 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       $(el).attr('target', '_parent'); // make sure it opens in the parent window
     }
   });
+
   $('script').each((_, el) => {
     const src = $(el).attr('src');
     if (src?.startsWith('/w/')) {
@@ -51,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       padding: 0 !important;
       overflow-x: hidden !important;
       max-width: 100% !important;
-            background: transparent !important;
+      background: transparent !important;
       color: inherit !important;
     }
     body {
@@ -62,34 +69,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       height: auto;
     }
   </style>
-`);
+  `);
 
   $('head').append(`
-    <script>
-function sendHeight() {
-  const body = document.getElementById("bodyContent") || document.body;
-  if (!body) return; // fail-safe
-  const height = body.scrollHeight;
-  window.parent.postMessage({ type: "wiki-height", height }, "*");
-}
+  <script>
+    function sendHeight() {
+      const body = document.getElementById("bodyContent") || document.body;
+      if (!body) return; // fail-safe
+      const height = body.scrollHeight;
+      window.parent.postMessage({ type: "wiki-height", height }, "*");
+    }
 
-function setupObserver() {
-  const body = document.getElementById("bodyContent") || document.body;
-  if (!body) return;
+    function setupObserver() {
+      const body = document.getElementById("bodyContent") || document.body;
+      if (!body) return;
 
-  sendHeight(); // initial height
+      sendHeight(); // initial height
 
-  const observer = new MutationObserver(sendHeight);
-  observer.observe(body, { childList: true, subtree: true });
-}
+      const observer = new MutationObserver(sendHeight);
+      observer.observe(body, { childList: true, subtree: true });
+    }
 
-window.addEventListener("load", setupObserver);
-</script>
+    window.addEventListener("load", setupObserver);
+  </script>
   `);
 
   const head = $('head').html();
   const bodyContent = $('#bodyContent').html(); // includes parent for safety
-
 
   // Build stripped HTML
   const minimalHtml = `

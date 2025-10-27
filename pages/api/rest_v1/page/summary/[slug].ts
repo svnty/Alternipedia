@@ -1,6 +1,4 @@
-import type { NextRequest } from 'next/server';
 import { NextApiRequest, NextApiResponse } from "next";
-import { decode } from 'punycode';
 
 export default async function handler(
   req: NextApiRequest,
