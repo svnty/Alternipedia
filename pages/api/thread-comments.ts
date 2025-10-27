@@ -16,11 +16,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const session = await getServerSession(req as any, res as any, authOptions as any) as any
       if (!session?.user?.email) return res.status(401).json({ error: 'Unauthorized' })
 
-      const user = await withRetry(() => prisma.user.findUnique({ where: { email: session.user.email }, select: { id: true, role: true, adminOfLang: true } }))
+      const user = await withRetry(() => prisma.user.findUnique({ where: { email: session.user.email }, select: { id: true, role: true, adminOfLang: true, currentEditableBiasId: true } }))
       if (!user) return res.status(401).json({ error: 'Unauthorized' })
 
       const thread = await withRetry(() => prisma.thread.findUnique({ where: { id: Number(threadId) }, include: { article: { select: { language: true } }, bias: { select: { id: true } } } }))
       if (!thread) return res.status(400).json({ error: 'Thread not found' })
+
+      if (user.currentEditableBiasId !== thread.bias.id) {
+        return res.status(403).json({ error: 'You do not have permission to comment on this thread' })
+      }
 
       // Create comment
       const created = await withRetry(() => prisma.threadComment.create({
