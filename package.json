@@ -74,7 +74,6 @@
     "graphql-yoga": "^5.16.0",
     "happy-dom": "^20.0.2",
     "i": "^0.3.7",
-    "iframe-resizer": "^5.5.7",
     "install": "^0.13.0",
     "lodash.throttle": "^4.1.1",
     "lucide-react": "^0.544.0",
