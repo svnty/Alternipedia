@@ -39,6 +39,16 @@ export async function generateMetadata({
   return {
     title: "Alternipedia | " + description,
     description: dict.metadata.description,
+    keywords: [
+      "alternipedia",
+      "alternative wikipedia",
+      "multiple perspectives",
+      "bias",
+      "politics",
+      "encyclopedia",
+      "grokipedia",
+      "wikipedia alternative"
+    ],
   };
 }
 

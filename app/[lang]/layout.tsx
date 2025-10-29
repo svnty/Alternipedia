@@ -41,7 +41,6 @@ import ClientAnalytics from "../(client-renders)/analytics";
 import CookieStatement from "./(client-renders)/cookie-statement";
 import Form from "next/form";
 import { prisma } from "@/lib/prisma";
-import wtf from '@/lib/wtf';
 import { Language } from "@prisma/client";
 
 export async function generateMetadata({
@@ -55,6 +54,16 @@ export async function generateMetadata({
   return {
     title: "Alternipedia",
     description: dict.metadata.description,
+    keywords: [
+      "alternipedia",
+      "alternative wikipedia",
+      "multiple perspectives",
+      "bias",
+      "politics",
+      "encyclopedia",
+      "grokipedia",
+      "wikipedia alternative"
+    ],
   };
 }
 
