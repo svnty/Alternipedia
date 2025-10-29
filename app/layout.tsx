@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import SwRegister from "@/app/components/pwa/SwRegister";
 import CookieBanner from "@/app/(client-renders)/cookie-banner";
 import { Providers } from "@/app/(client-renders)/providers";
@@ -50,7 +51,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <PageView />
+        <Suspense fallback={null}>
+          <PageView />
+        </Suspense>
         <SwRegister />
         <Providers>
           {children}
