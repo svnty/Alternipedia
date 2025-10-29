@@ -154,6 +154,7 @@ model Bias {
   blobs           Blob[]
   threads         Thread[]
   categories      ArticleCategory[]
+  views           PageView[]
 }
 
 // TODO: Warning strikes?
@@ -215,13 +216,17 @@ model PageView {
   articleId   Int?
   revision    Revision?  @relation(fields: [revisionId], references: [id])
   revisionId  Int?
+  bias        Bias?     @relation(fields: [biasId], references: [id])
+  biasId      Int?
+  uri         String   @db.VarChar(2000)
 
   viewer        User?     @relation(fields: [viewerId], references: [id])
   viewerId      String?
+  language      Language?
 
-  ipAddress  String?
-  userAgent  String?
-  createdAt  DateTime @default(now())
+  ipAddress     String? // store hashed IP for privacy
+  userAgent     String? // store user agent string
+  createdAt     DateTime @default(now())
 }
 
 enum ThreadStatus {
