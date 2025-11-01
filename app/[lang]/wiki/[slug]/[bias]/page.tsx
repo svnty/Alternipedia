@@ -23,17 +23,18 @@ export async function generateMetadata({
   const bias = p.bias;
   const dict = getDictionary(lang as Locale);
   let description;
+  let fixedSlug = decodeURIComponent(slug.replaceAll('_', ' '));
 
   if (bias === 'wikipedia') {
-    description = `${dict.metadata.wikipedia.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.wikipedia.part2}`;
+    description = `${dict.metadata.wikipedia.part1} ${fixedSlug} ${dict.metadata.wikipedia.part2}`;
   } else if (bias === 'socialist') {
-    description = `${dict.metadata.socialist.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.socialist.part2}`;
+    description = `${dict.metadata.socialist.part1} ${fixedSlug} ${dict.metadata.socialist.part2}`;
   } else if (bias === 'liberal') {
-    description = `${dict.metadata.liberal.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.liberal.part2}`;
+    description = `${dict.metadata.liberal.part1} ${fixedSlug} ${dict.metadata.liberal.part2}`;
   } else if (bias === 'conservative') {
-    description = `${dict.metadata.conservative.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.conservative.part2}`;
+    description = `${dict.metadata.conservative.part1} ${fixedSlug} ${dict.metadata.conservative.part2}`;
   } else if (bias === 'nationalist') {
-    description = `${dict.metadata.nationalist.part1} ${decodeURIComponent(slug.replaceAll('_', ' '))} ${dict.metadata.nationalist.part2}`;
+    description = `${dict.metadata.nationalist.part1} ${fixedSlug} ${dict.metadata.nationalist.part2}`;
   }
 
   return {
@@ -47,7 +48,8 @@ export async function generateMetadata({
       "politics",
       "encyclopedia",
       "grokipedia",
-      "wikipedia alternative"
+      "wikipedia alternative",
+      fixedSlug
     ],
   };
 }

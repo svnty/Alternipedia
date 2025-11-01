@@ -51,9 +51,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Suspense fallback={null}>
+        {/* <Suspense fallback={null}>
           <PageView />
-        </Suspense>
+        </Suspense> */}
         <SwRegister />
         <Providers>
           {children}
